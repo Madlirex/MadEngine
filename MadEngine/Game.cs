@@ -10,6 +10,7 @@ namespace MadEngine;
 public class Game : GameWindow
 {
     private int _vertexBufferObject;
+    private int _vertexArrayObject;
     private Shape _triangle = new Shape([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]);
     private Shader _shader;
     
@@ -23,15 +24,19 @@ public class Game : GameWindow
     {
         base.OnLoad();
         
+        GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
+        
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         
         _vertexBufferObject = GL.GenBuffer();
         GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
         GL.BufferData(BufferTarget.ArrayBuffer, _triangle.Vertices.Length * sizeof(float), _triangle.Vertices, BufferUsageHint.StaticDraw);
         
-        GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
-
+        _vertexArrayObject = GL.GenVertexArray();
+        GL.BindVertexArray(_vertexArrayObject);
         
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 3, 0);
+        GL.EnableVertexAttribArray(0);
     }
 
     protected override void OnUnload()
@@ -49,6 +54,10 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit);
+        
+        _shader.Use();
+        GL.BindVertexArray(_vertexArrayObject);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
         
         SwapBuffers();
     }
