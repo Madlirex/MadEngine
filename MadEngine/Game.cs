@@ -39,4 +39,11 @@ public class Game : GameWindow
             Close();
         }
     }
+
+    protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
+    {
+        base.OnFramebufferResize(e);
+        
+        GL.Viewport(0f, 0f, e.Width, e.Height);
+    }
 }
