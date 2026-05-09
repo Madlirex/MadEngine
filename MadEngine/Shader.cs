@@ -2,9 +2,10 @@
 
 namespace MadEngine;
 
-public class Shader
+public class Shader : IDisposable
 {
-    private int Handle;
+    private int _handle;
+    private bool _disposedValue = false;
 
     public Shader(string vertexPath, string fragmentPath)
     {
@@ -34,5 +35,51 @@ public class Shader
             string infoLog = GL.GetShaderInfoLog(fragmentShader);
             Console.WriteLine(infoLog);
         }
+        
+        _handle = GL.CreateProgram();
+
+        GL.AttachShader(_handle, vertexShader);
+        GL.AttachShader(_handle, fragmentShader);
+
+        GL.LinkProgram(_handle);
+
+        GL.GetProgram(_handle, GetProgramParameterName.LinkStatus, out success);
+        if (success == 0)
+        {
+            string infoLog = GL.GetProgramInfoLog(_handle);
+            Console.WriteLine(infoLog);
+        }
+        
+        GL.DetachShader(_handle, vertexShader);
+        GL.DetachShader(_handle, fragmentShader);
+        GL.DeleteShader(fragmentShader);
+        GL.DeleteShader(vertexShader);
+    }
+
+    public void Use()
+    {
+        GL.UseProgram(_handle);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposedValue) return;
+        GL.DeleteProgram(_handle);
+
+        _disposedValue = true;
+    }
+
+    ~Shader()
+    {
+        if (!_disposedValue)
+        {
+            Console.WriteLine("GPU Resource leak! Did you forget to call Dispose()?");
+        }
+    }
+    
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 }

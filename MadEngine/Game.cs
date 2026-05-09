@@ -9,8 +9,9 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private int VertexBufferObject;
-    private Shape Triangle = new Shape([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]);
+    private int _vertexBufferObject;
+    private Shape _triangle = new Shape([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]);
+    private Shader _shader;
     
     public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -22,19 +23,25 @@ public class Game : GameWindow
     {
         base.OnLoad();
         
-        VertexBufferObject = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
-        GL.BufferData(BufferTarget.ArrayBuffer, Triangle.Vertices.Length * sizeof(float), Triangle.Vertices, BufferUsageHint.StaticDraw);
+        _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+        
+        _vertexBufferObject = GL.GenBuffer();
+        GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
+        GL.BufferData(BufferTarget.ArrayBuffer, _triangle.Vertices.Length * sizeof(float), _triangle.Vertices, BufferUsageHint.StaticDraw);
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
+
+        
     }
 
-    protected override void OnClosing(CancelEventArgs e)
+    protected override void OnUnload()
     {
-        base.OnClosing(e);
+        base.OnUnload();
+
+        _shader.Dispose();
         
         GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-        GL.DeleteBuffer(VertexBufferObject);
+        GL.DeleteBuffer(_vertexBufferObject);
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
