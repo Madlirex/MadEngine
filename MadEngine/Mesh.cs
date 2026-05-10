@@ -5,16 +5,19 @@ namespace MadEngine;
 public class Mesh : IDisposable
 {
     public float[] Vertices { get; }
+    public uint[]  Indices { get; }
 
     private int _vertexBufferObject;
     private int _vertexArrayObject;
+    private int _elementBufferObject;
 
     private bool _initialized;
     private bool _disposedValue;
 
-    public Mesh(float[] vertices)
+    public Mesh(float[] vertices, uint[] indices)
     {
         Vertices = vertices;
+        Indices = indices;
     }
 
     public void Initialize()
@@ -23,6 +26,7 @@ public class Mesh : IDisposable
         
         _vertexArrayObject = GL.GenVertexArray();
         _vertexBufferObject = GL.GenBuffer();
+        _elementBufferObject = GL.GenBuffer();
         
         GL.BindVertexArray(_vertexArrayObject);
         
@@ -32,8 +36,14 @@ public class Mesh : IDisposable
             Vertices, 
             BufferUsageHint.StaticDraw);
         
-        GL.VertexAttribPointer(0, 
-            3, 
+        GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
+        GL.BufferData(BufferTarget.ElementArrayBuffer,
+            Indices.Length * sizeof(uint),
+            Indices,
+            BufferUsageHint.StaticDraw);
+        
+        GL.VertexAttribPointer(0,  // Can use GL.GetAttribLocation(Handle, "aPosition") instead of hard-coded values - in future
+            3,                  
             VertexAttribPointerType.Float, 
             false, 
             sizeof(float) * 3, 0);
@@ -48,7 +58,7 @@ public class Mesh : IDisposable
     public void Draw()
     {
         GL.BindVertexArray(_vertexArrayObject);
-        GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+        GL.DrawElements(PrimitiveType.Triangles, Indices.Length, DrawElementsType.UnsignedInt, 0);
     }
 
     public void Dispose()

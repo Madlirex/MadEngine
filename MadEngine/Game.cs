@@ -8,8 +8,7 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private Mesh[] _triangles = [new([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]),
-                                new ([-0.75f, -0.5f, 0.0f, -0.65f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f])];
+    private Mesh[] _triangles = [];
     private Shader _shader;
 
     public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -19,6 +18,21 @@ public class Game : GameWindow
     })
     {
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+
+        float[] vertices =
+        [
+            0.5f, 0.5f, 0.0f, // top right
+            0.5f, -0.5f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f, // bottom left
+            -0.5f, 0.5f, 0.0f
+        ];
+        
+        uint[] indices =
+        [
+            0, 1, 3,   // first triangle
+            1, 2, 3    // second triangle
+        ];
+        _triangles = [new Mesh(vertices, indices)];
     }
 
     protected override void OnLoad()
