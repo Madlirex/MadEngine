@@ -9,8 +9,8 @@ public class Mesh : IDisposable
     private int _vertexBufferObject;
     private int _vertexArrayObject;
 
-    private bool _initialized = false;
-    private bool _disposedValue = false;
+    private bool _initialized;
+    private bool _disposedValue;
 
     public Mesh(float[] vertices)
     {

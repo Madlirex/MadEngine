@@ -8,7 +8,8 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private Mesh _triangle = new Mesh([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]);
+    private Mesh[] _triangles = [new([-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f]),
+                                new ([-0.75f, -0.5f, 0.0f, -0.65f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f])];
     private Shader _shader;
 
     public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -23,8 +24,11 @@ public class Game : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
-        
-        _triangle.Initialize();
+
+        foreach (Mesh triangle in _triangles)
+        {
+            triangle.Initialize();
+        }
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
     }
@@ -43,7 +47,11 @@ public class Game : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit);
         
         _shader.Use();
-        _triangle.Draw();
+
+        foreach (Mesh triangle in _triangles)
+        {
+            triangle.Draw();
+        }
         
         SwapBuffers();
     }
