@@ -67,6 +67,7 @@ public class Mesh : IDisposable
         
         GL.DeleteBuffer(_vertexBufferObject);
         GL.DeleteVertexArray(_vertexArrayObject);
+        GL.DeleteBuffer(_elementBufferObject);
         
         _disposedValue = true;
     }

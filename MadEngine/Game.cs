@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Numerics;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -8,7 +9,7 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private Mesh[] _triangles = [];
+    private GameObject[] _scene = [];
     private Shader _shader;
 
     public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
@@ -32,16 +33,33 @@ public class Game : GameWindow
             0, 1, 3,   // first triangle
             1, 2, 3    // second triangle
         ];
-        _triangles = [new Mesh(vertices, indices)];
+        MeshRenderer meshRenderer1 = new MeshRenderer(new Mesh(vertices, indices), new Material(_shader, new Vector4(1f, 0f, 0f, 1f)));
+
+        float[] vertices2 =
+        [
+            0.8f, 0.8f, 0.5f,
+            0.8f, -0.8f, 0f,
+            -0.8f, -0.8f, 0f,
+            -0.8f, 0.8f, 0f
+        ];
+
+        uint[] indices2 =
+        [
+            0, 1, 3,
+            1, 2, 3
+        ];
+        MeshRenderer meshRenderer2 = new MeshRenderer(new Mesh(vertices2, indices2), new Material(_shader, new Vector4(0f, 0f, 1f, 1f)));
+        
+        _scene = [new GameObject(meshRenderer1), new GameObject(meshRenderer2)];
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
 
-        foreach (Mesh triangle in _triangles)
+        foreach (GameObject gameObject in _scene)
         {
-            triangle.Initialize();
+            gameObject.MeshRenderer.Mesh.Initialize();
         }
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
@@ -59,12 +77,10 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit);
-        
-        _shader.Use();
 
-        foreach (Mesh triangle in _triangles)
+        foreach (GameObject gameObject in _scene)
         {
-            triangle.Draw();
+            gameObject.MeshRenderer.Draw();
         }
         
         SwapBuffers();

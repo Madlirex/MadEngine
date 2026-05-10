@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using System.Numerics;
+using OpenTK.Graphics.OpenGL4;
 
 namespace MadEngine;
 
@@ -59,6 +60,18 @@ public class Shader : IDisposable
     public void Use()
     {
         GL.UseProgram(_handle);
+    }
+
+    public void SetVector4(string name, float x, float y, float z, float w)
+    {
+        int location = GL.GetUniformLocation(_handle, name);
+        GL.Uniform4(location, x, y, z, w);
+        Console.WriteLine((location, name, x, y, z, w));
+    }
+    
+    public void SetVector4(string name, Vector4 v)
+    {
+        SetVector4(name, v.X, v.Y, v.Z, v.W);
     }
 
     protected virtual void Dispose(bool disposing)
