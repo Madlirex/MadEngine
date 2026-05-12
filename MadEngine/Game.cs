@@ -9,8 +9,9 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private GameObject[] _scene = [];
+    private GameObject[] _scene;
     private Shader _shader;
+    private double _deltaTime;
 
     public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
     {
@@ -74,6 +75,7 @@ public class Game : GameWindow
 
     protected override void OnRenderFrame(FrameEventArgs args)
     {
+        _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit);

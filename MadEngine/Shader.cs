@@ -6,7 +6,7 @@ namespace MadEngine;
 public class Shader : IDisposable
 {
     private int _handle;
-    private bool _disposedValue = false;
+    private bool _disposedValue;
 
     public Shader(string vertexPath, string fragmentPath)
     {
@@ -66,7 +66,6 @@ public class Shader : IDisposable
     {
         int location = GL.GetUniformLocation(_handle, name);
         GL.Uniform4(location, x, y, z, w);
-        Console.WriteLine((location, name, x, y, z, w));
     }
     
     public void SetVector4(string name, Vector4 v)
