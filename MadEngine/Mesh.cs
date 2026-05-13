@@ -46,8 +46,11 @@ public class Mesh : IDisposable
             3,                  
             VertexAttribPointerType.Float, 
             false, 
-            sizeof(float) * 3, 0);
+            sizeof(float) * 5, 0);
         GL.EnableVertexAttribArray(0);
+        
+        GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, sizeof(float) * 5, sizeof(float) * 3);
+        GL.EnableVertexAttribArray(1);
         
         GL.BindVertexArray(0);
         GL.BindBuffer(BufferTarget.ArrayBuffer, 0);

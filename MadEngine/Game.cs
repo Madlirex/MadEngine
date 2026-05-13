@@ -23,10 +23,10 @@ public class Game : GameWindow
 
         float[] vertices =
         [
-            0.5f, 0.5f, 0.0f, // top right
-            0.5f, -0.5f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, // bottom left
-            -0.5f, 0.5f, 0.0f
+            0.5f, 0.5f, 0.0f, 1f, 1f, // top right
+            0.5f, -0.5f, 0.0f, 1f, 0f, // bottom right
+            -0.5f, -0.5f, 0.0f, 0f, 0f, // bottom left
+            -0.5f, 0.5f, 0.0f, 0f, 1f
         ];
         
         uint[] indices =
@@ -34,24 +34,9 @@ public class Game : GameWindow
             0, 1, 3,   // first triangle
             1, 2, 3    // second triangle
         ];
-        MeshRenderer meshRenderer1 = new MeshRenderer(new Mesh(vertices, indices), new Material(_shader, new Vector4(1f, 0f, 0f, 1f)));
-
-        float[] vertices2 =
-        [
-            0.8f, 0.8f, 0.5f,
-            0.8f, -0.8f, 0f,
-            -0.8f, -0.8f, 0f,
-            -0.8f, 0.8f, 0f
-        ];
-
-        uint[] indices2 =
-        [
-            0, 1, 3,
-            1, 2, 3
-        ];
-        MeshRenderer meshRenderer2 = new MeshRenderer(new Mesh(vertices2, indices2), new Material(_shader, new Vector4(0f, 0f, 1f, 1f)));
+        MeshRenderer meshRenderer1 = new MeshRenderer(new Mesh(vertices, indices), new Material(_shader, new Texture("Textures/container.jpg"), new Vector4(1f, 1f, 1f, 1f)));
         
-        _scene = [new GameObject(meshRenderer1), new GameObject(meshRenderer2)];
+        _scene = [new GameObject(meshRenderer1)];
     }
 
     protected override void OnLoad()
