@@ -1,5 +1,6 @@
-﻿using System.Numerics;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using Vector4 = System.Numerics.Vector4;
 
 namespace MadEngine;
 
@@ -60,6 +61,13 @@ public class Shader : IDisposable
     public void Use()
     {
         GL.UseProgram(_handle);
+
+        Matrix4 rotation = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(90f));
+        Matrix4 scale = Matrix4.CreateScale(new Vector3(0.5f, 0.5f, 0.5f));
+        Matrix4 trans = rotation * scale;
+        
+        int location = GL.GetUniformLocation(_handle, "transform");
+        GL.UniformMatrix4(location, true, ref trans);
     }
 
     public void SetVector4(string name, float x, float y, float z, float w)
