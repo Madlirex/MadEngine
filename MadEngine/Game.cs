@@ -13,10 +13,10 @@ public class Game : GameWindow
     private GameObject[] _scene;
     private Shader _shader;
     private double _deltaTime;
-    private Camera _camera = new Camera();
+    private Camera _camera = new();
 
-    public float Height;
-    public float Width;
+    private Vector2 _lastPos;
+    private bool _firstMove = true;
     
     public Game(int width, int height, string title) : base(new GameWindowSettings()
     {
@@ -28,9 +28,11 @@ public class Game : GameWindow
 
     })
     {
-        Width = width;
-        Height = height;
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+
+        CursorState = CursorState.Grabbed;
+        _camera.Width = width;
+        _camera.Height = height;
         
         float[] vertices = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -124,7 +126,7 @@ public class Game : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit);
         
         Matrix4 view = _camera.GetViewMatrix();
-        Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Width / Height, 0.1f, 100f);
+        Matrix4 projection = _camera.GetPerspectiveMatrix();
         _shader.SetMatrix4("view", view);
         _shader.SetMatrix4("projection", projection);
         
@@ -140,14 +142,15 @@ public class Game : GameWindow
     {
         base.OnUpdateFrame(args);
 
-        if (KeyboardState.IsKeyDown(Keys.Escape))
-        {
-            Close();
-        }
-
         if (!IsFocused)
         {
             return;
+        }
+
+
+        if (KeyboardState.IsKeyDown(Keys.Escape))
+        {
+            Close();
         }
 
         KeyboardState input = KeyboardState;
@@ -182,13 +185,38 @@ public class Game : GameWindow
         {
             _camera.Transform.Position -= _camera.Up * speed; //Down
         }
+        
+        const float sensitivity = 0.2f;
+        
+        MouseState mouse = MouseState;
+        if (_firstMove)
+        {
+            _lastPos = new Vector2(mouse.X, mouse.Y);
+            _firstMove = false;
+        }
+        else
+        {
+            float deltaX = mouse.X - _lastPos.X;
+            float deltaY = mouse.Y - _lastPos.Y;
+            _lastPos = new Vector2(mouse.X, mouse.Y);
+            
+            _camera.Yaw += deltaX * sensitivity;
+            _camera.Pitch -= deltaY * sensitivity;
+        }
+    }
+    
+    protected override void OnMouseWheel(MouseWheelEventArgs e)
+    {
+        base.OnMouseWheel(e);
+
+        _camera.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
         base.OnFramebufferResize(e);
-        Width = e.Width;
-        Height = e.Height;
+        _camera.Width = e.Width;
+        _camera.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
     }
 }
