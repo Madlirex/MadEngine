@@ -13,7 +13,7 @@ public class Game : GameWindow
     private GameObject[] _scene;
     private Shader _shader;
     private double _deltaTime;
-    private Camera _camera = new();
+    private Camera _camera = new Camera();
 
     public float Height;
     public float Width;
@@ -31,7 +31,7 @@ public class Game : GameWindow
         Width = width;
         Height = height;
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
-
+        
         float[] vertices = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -123,7 +123,7 @@ public class Game : GameWindow
         GL.Clear(ClearBufferMask.DepthBufferBit);
         GL.Clear(ClearBufferMask.ColorBufferBit);
         
-        Matrix4 view = Matrix4.CreateTranslation(Position.Position.X, Position.Position.Y, Position.Position.Z);
+        Matrix4 view = _camera.GetViewMatrix();
         Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Width / Height, 0.1f, 100f);
         _shader.SetMatrix4("view", view);
         _shader.SetMatrix4("projection", projection);
@@ -151,7 +151,37 @@ public class Game : GameWindow
         }
 
         KeyboardState input = KeyboardState;
-        float speed = _camera.speed * (float)args.Time;
+        float speed = _camera.Speed * (float)args.Time;
+        
+        if (input.IsKeyDown(Keys.W))
+        {
+            _camera.Transform.Position += _camera.Front * speed; //Forward 
+        }
+
+        if (input.IsKeyDown(Keys.S))
+        {
+            _camera.Transform.Position -= _camera.Front * speed; //Backwards
+        }
+
+        if (input.IsKeyDown(Keys.A))
+        {
+            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * speed; //Left
+        }
+
+        if (input.IsKeyDown(Keys.D))
+        {
+            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * speed; //Right
+        }
+
+        if (input.IsKeyDown(Keys.Space))
+        {
+            _camera.Transform.Position += _camera.Up * speed; //Up 
+        }
+
+        if (input.IsKeyDown(Keys.LeftShift))
+        {
+            _camera.Transform.Position -= _camera.Up * speed; //Down
+        }
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
