@@ -2,6 +2,7 @@
 
 public class MeshRenderer
 {
+    public GameObject? GameObject;
     public Mesh Mesh;
     public Material Material;
 
@@ -14,6 +15,9 @@ public class MeshRenderer
     public void Draw()
     {
         Material.Draw();
+        
+        Material.Shader.SetMatrix4("transform", GameObject.Transform.GetModuleMatrix());
+        
         Mesh.Draw();
     }
 }

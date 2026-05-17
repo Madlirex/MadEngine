@@ -61,12 +61,6 @@ public class Shader : IDisposable
     public void Use()
     {
         GL.UseProgram(_handle);
-
-        Matrix4 rotation = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(90f)) * Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-55f)) * Matrix4.CreateRotationY(MathHelper.DegreesToRadians(DateTime.Now.Millisecond/5));
-        Matrix4 scale = Matrix4.CreateScale(new Vector3(0.5f, 0.5f, 0.5f));
-        Matrix4 trans = rotation * scale;
-        
-        SetMatrix4("transform", trans);
     }
 
     public void SetVector4(string name, float x, float y, float z, float w)

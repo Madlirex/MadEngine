@@ -13,11 +13,16 @@ public class Game : GameWindow
     private GameObject[] _scene;
     private Shader _shader;
     private double _deltaTime;
+    private Camera _camera = new();
 
     public float Height;
     public float Width;
     
-    public Game(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings()
+    public Game(int width, int height, string title) : base(new GameWindowSettings()
+    {
+        UpdateFrequency = 60
+    },
+        new NativeWindowSettings()
     {
         ClientSize = (width, height), Title = title
 
@@ -81,7 +86,10 @@ public class Game : GameWindow
         };
         MeshRenderer meshRenderer1 = new MeshRenderer(new Mesh(vertices, indices), new Material(_shader, new Texture("Textures/container.jpg"), new Vector4(1f, 1f, 1f, 1f)));
         
-        _scene = [new GameObject(meshRenderer1)];
+        Transform transform = new Transform();
+        transform.Position = new Vector3(0f, 0f, 0f);
+        
+        _scene = [new GameObject(meshRenderer1, transform)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -108,11 +116,14 @@ public class Game : GameWindow
     {
         _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
+
+        _scene[0].Transform.Rotation.Y += 60 * (float)_deltaTime;
+        _scene[0].Transform.Rotation.X += 60 * (float)_deltaTime;
         
         GL.Clear(ClearBufferMask.DepthBufferBit);
         GL.Clear(ClearBufferMask.ColorBufferBit);
         
-        Matrix4 view = Matrix4.CreateTranslation(0f, 0f, -3f);
+        Matrix4 view = Matrix4.CreateTranslation(Position.Position.X, Position.Position.Y, Position.Position.Z);
         Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45f), Width / Height, 0.1f, 100f);
         _shader.SetMatrix4("view", view);
         _shader.SetMatrix4("projection", projection);
@@ -133,6 +144,14 @@ public class Game : GameWindow
         {
             Close();
         }
+
+        if (!IsFocused)
+        {
+            return;
+        }
+
+        KeyboardState input = KeyboardState;
+        float speed = _camera.speed * (float)args.Time;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
