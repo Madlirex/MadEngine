@@ -93,11 +93,13 @@ public class Game : GameWindow
         MeshRenderer meshRenderer2 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
         MeshRenderer meshRenderer3 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/house.jpg"), color));
         MeshRenderer meshRenderer4 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/matovic.jpg"), color));
+        MeshRenderer meshRenderer5 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
         
         Transform transform1 = new()
         {
             Position = new Vector3(1.5f, 0f, -1.5f),
-            Rotation = new Vector3(90f, 45f, 0f)
+            Rotation = new Vector3(90f, 45f, 0f),
+            Scale = new Vector3(10f, 10f, 3f)
         };
         
         Transform transform2 = new()
@@ -116,8 +118,14 @@ public class Game : GameWindow
             Position = new Vector3(-1.5f, 0f, 1.5f),
             Rotation = new Vector3(90f, 45f, 0f)
         };
+        Transform transform5 = new()
+        {
+            Position = new Vector3(1.5f, 0f, -1.5f),
+            Rotation = new Vector3(90f, 45f, 0f),
+            Scale = new Vector3(90f, 90f, 50f)
+        };
 
-        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(meshRenderer2, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4)];
+        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(meshRenderer2, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4), new GameObject(meshRenderer5, transform5)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -188,6 +196,11 @@ public class Game : GameWindow
 
         KeyboardState input = KeyboardState;
         float speed = _camera.Speed * (float)args.Time;
+
+        if (input.IsKeyDown(Keys.LeftControl))
+        {
+            speed *= 5;
+        }
         
         if (input.IsKeyDown(Keys.W))
         {
