@@ -46,6 +46,14 @@
       <Content Include="Audio\background.wav">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Textures\romana.jpg" />
+      <Content Include="Textures\romana.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Textures\peter-pellegrini.jpg" />
+      <Content Include="Textures\peter-pellegrini.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
