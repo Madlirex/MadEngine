@@ -26,6 +26,22 @@
       <Content Include="Textures\container.jpg">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Textures\charlie.jpg" />
+      <Content Include="Textures\charlie.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Textures\house.jpg" />
+      <Content Include="Textures\house.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Textures\matovic.jpg" />
+      <Content Include="Textures\matovic.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Textures\simkovicova.jpg" />
+      <Content Include="Textures\simkovicova.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

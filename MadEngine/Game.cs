@@ -86,12 +86,38 @@ public class Game : GameWindow
             24, 25, 26, 27, 28, 29,
             30, 31, 32, 33, 34, 35
         };
-        MeshRenderer meshRenderer1 = new MeshRenderer(new Mesh(vertices, indices), new Material(_shader, new Texture("Textures/container.jpg"), new Vector4(1f, 1f, 1f, 1f)));
         
-        Transform transform = new Transform();
-        transform.Position = new Vector3(0f, 0f, 0f);
+        Vector4 color =  new Vector4(1f, 1f, 1f, 1f);
+        Mesh mesh = new Mesh(vertices, indices);
+        MeshRenderer meshRenderer1 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/simkovicova.jpg"), color));
+        MeshRenderer meshRenderer2 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
+        MeshRenderer meshRenderer3 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/house.jpg"), color));
+        MeshRenderer meshRenderer4 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/matovic.jpg"), color));
         
-        _scene = [new GameObject(meshRenderer1, transform)];
+        Transform transform1 = new()
+        {
+            Position = new Vector3(1.5f, 0f, -1.5f),
+            Rotation = new Vector3(90f, 45f, 0f)
+        };
+        
+        Transform transform2 = new()
+        {
+            Position = new Vector3(-1.5f, 0f, -1.5f),
+            Rotation = new Vector3(90f, 45f, 0f)
+        };
+        
+        Transform transform3 = new()
+        {
+            Position = new Vector3(1.5f, 0f, 1.5f),
+            Rotation = new Vector3(90f, 45f, 0f)
+        };
+        Transform transform4 = new()
+        {
+            Position = new Vector3(-1.5f, 0f, 1.5f),
+            Rotation = new Vector3(90f, 45f, 0f)
+        };
+
+        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(meshRenderer2, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -107,10 +133,19 @@ public class Game : GameWindow
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
     }
 
+    protected override void OnFocusedChanged(FocusedChangedEventArgs e)
+    {
+        base.OnFocusedChanged(e);
+        
+        CursorState = IsFocused ? CursorState.Grabbed : CursorState.Normal;
+    }
+
     protected override void OnUnload()
     {
         base.OnUnload();
 
+        CursorState = CursorState.Normal;
+        
         _shader.Dispose();
     }
 
@@ -118,9 +153,6 @@ public class Game : GameWindow
     {
         _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
-
-        _scene[0].Transform.Rotation.Y += 60 * (float)_deltaTime;
-        _scene[0].Transform.Rotation.X += 60 * (float)_deltaTime;
         
         GL.Clear(ClearBufferMask.DepthBufferBit);
         GL.Clear(ClearBufferMask.ColorBufferBit);
@@ -132,6 +164,7 @@ public class Game : GameWindow
         
         foreach (GameObject gameObject in _scene)
         {
+            //gameObject.Transform.Rotation.Y += 60 * (float)_deltaTime;
             gameObject.MeshRenderer.Draw();
         }
         

@@ -19,6 +19,10 @@ public class Material
     public void Draw()
     {
         Shader.Use();
+
+        Texture.Bind();
+
+        Shader.SetInt("texture0", 0);
         Shader.SetVector4("uColor", Color);
     }
 }

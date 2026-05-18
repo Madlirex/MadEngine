@@ -16,7 +16,7 @@ public class MeshRenderer
     {
         Material.Draw();
         
-        Material.Shader.SetMatrix4("transform", GameObject.Transform.GetModuleMatrix());
+        Material.Shader.SetMatrix4("transform", GameObject!.Transform.GetModuleMatrix());
         
         Mesh.Draw();
     }

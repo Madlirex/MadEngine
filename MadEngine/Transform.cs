@@ -17,6 +17,6 @@ public class Transform
                            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(Rotation.Y)) *
                            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(Rotation.Z));
         Matrix4 scale = Matrix4.CreateScale(Scale);
-        return translation * rotation * scale;
+        return scale * rotation * translation;
     }
 }
