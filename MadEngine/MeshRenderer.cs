@@ -1,4 +1,6 @@
-﻿namespace MadEngine;
+﻿using OpenTK.Mathematics;
+
+namespace MadEngine;
 
 public class MeshRenderer
 {
@@ -12,11 +14,14 @@ public class MeshRenderer
         Material = mat;
     }
 
-    public void Draw()
+    public void Draw(Matrix4 view, Matrix4 projection)
     {
-        Material.Draw();
-        
+        Material.Shader.Use();
         Material.Shader.SetMatrix4("transform", GameObject!.Transform.GetModuleMatrix());
+        Material.Shader.SetMatrix4("view", view);
+        Material.Shader.SetMatrix4("projection", projection);
+        
+        Material.Draw();
         
         Mesh.Draw();
     }

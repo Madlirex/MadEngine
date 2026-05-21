@@ -12,10 +12,11 @@ public class Game : GameWindow
 {
     private GameObject[] _scene;
     private Shader _shader;
-    private double _deltaTime;
+    private Shader _lampShader;
     private Camera _camera = new();
 
     private Vector2 _lastPos;
+    private double _deltaTime;
     private bool _firstMove = true;
     
     public Game(int width, int height, string title) : base(new GameWindowSettings()
@@ -29,6 +30,7 @@ public class Game : GameWindow
     })
     {
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
+        _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
 
         CursorState = CursorState.Grabbed;
         _camera.Width = width;
@@ -87,13 +89,15 @@ public class Game : GameWindow
             30, 31, 32, 33, 34, 35
         };
         
-        Vector4 color =  new Vector4(1f, 1f, 1f, 1f);
+        Vector4 color = new Vector4(1f, 1f, 1f, 1f);
         Mesh mesh = new Mesh(vertices, indices);
         MeshRenderer meshRenderer1 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/simkovicova.jpg"), color));
         MeshRenderer meshRenderer2 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
         MeshRenderer meshRenderer3 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/house.jpg"), color));
         MeshRenderer meshRenderer4 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/matovic.jpg"), color));
         MeshRenderer meshRenderer5 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/romana.jpg"), color));
+
+        MeshRenderer lampRenderer = new MeshRenderer(mesh, new Material(_lampShader, null, color));
         
         Transform transform1 = new()
         {
@@ -125,7 +129,7 @@ public class Game : GameWindow
             Scale = new Vector3(90f, 90f, 50f)
         };
 
-        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(meshRenderer2, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4), new GameObject(meshRenderer5, transform5)];
+        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(lampRenderer, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4), new GameObject(meshRenderer5, transform5)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -162,18 +166,15 @@ public class Game : GameWindow
         _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
         
-        GL.Clear(ClearBufferMask.DepthBufferBit);
-        GL.Clear(ClearBufferMask.ColorBufferBit);
+        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         
         Matrix4 view = _camera.GetViewMatrix();
         Matrix4 projection = _camera.GetPerspectiveMatrix();
-        _shader.SetMatrix4("view", view);
-        _shader.SetMatrix4("projection", projection);
         
         foreach (GameObject gameObject in _scene)
         {
             //gameObject.Transform.Rotation.Y += 60 * (float)_deltaTime;
-            gameObject.MeshRenderer.Draw();
+            gameObject.MeshRenderer.Draw(view, projection);
         }
         
         SwapBuffers();
