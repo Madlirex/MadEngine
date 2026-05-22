@@ -80,6 +80,11 @@ public class Shader : IDisposable
         GL.UniformMatrix4(location, true, ref matrix);
     }
 
+    public void SetVector3(string name, Vector3 v)
+    {
+        GL.Uniform3(GL.GetUniformLocation(_handle, name), v);
+    }
+
     public void SetInt(string name, int value)
     {
         GL.Uniform1(GL.GetUniformLocation(_handle, name), value);

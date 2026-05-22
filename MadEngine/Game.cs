@@ -14,6 +14,10 @@ public class Game : GameWindow
     private Shader _shader;
     private Shader _lampShader;
     private Camera _camera = new();
+    private GameObject _light;
+
+    public static Vector4 LightColor;
+    public static Vector3 LightPos;
 
     private Vector2 _lastPos;
     private double _deltaTime;
@@ -37,67 +41,90 @@ public class Game : GameWindow
         _camera.Height = height;
         
         float[] vertices = {
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
 
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
 
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f
         };
         
-        uint[] indices = {
-            0,  1,  2,  3,  4,  5,
-            6,  7,  8,  9, 10, 11,
-            12, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23,
-            24, 25, 26, 27, 28, 29,
-            30, 31, 32, 33, 34, 35
+        uint[] indices =
+        {
+            // Front (-Z)
+            0, 2, 1,
+            3, 5, 4,
+
+            // Back (+Z)
+            6, 7, 8,
+            9, 10, 11,
+
+            // Left (-X)
+            12,13,14,
+            15,16,17,
+
+            // Right (+X)
+            18,20,19,
+            21,23,22,
+
+            // Bottom (-Y)
+            24,25,26,
+            27,28,29,
+
+            // Top (+Y)
+            30,32,31,
+            33,35,34
         };
         
         Vector4 color = new Vector4(1f, 1f, 1f, 1f);
         Mesh mesh = new Mesh(vertices, indices);
+        
         MeshRenderer meshRenderer1 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/simkovicova.jpg"), color));
         MeshRenderer meshRenderer2 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
         MeshRenderer meshRenderer3 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/house.jpg"), color));
         MeshRenderer meshRenderer4 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/matovic.jpg"), color));
         MeshRenderer meshRenderer5 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/romana.jpg"), color));
 
-        MeshRenderer lampRenderer = new MeshRenderer(mesh, new Material(_lampShader, null, color));
+        MeshRenderer meshRendererNormal = new MeshRenderer(mesh,
+            new Material(_shader, null, new Vector4(0f, 1f, 0f, 1f)));
+        
+        Vector4 lightColor = new Vector4(1f, 1f, 1f, 1f);
+        MeshRenderer lampRenderer = new MeshRenderer(mesh, new Material(_lampShader, null, lightColor));
         
         Transform transform1 = new()
         {
@@ -109,7 +136,7 @@ public class Game : GameWindow
         Transform transform2 = new()
         {
             Position = new Vector3(-1.5f, 0f, -1.5f),
-            Rotation = new Vector3(90f, 45f, 0f)
+            //Rotation = new Vector3(90f, 45f, 0f)
         };
         
         Transform transform3 = new()
@@ -129,7 +156,20 @@ public class Game : GameWindow
             Scale = new Vector3(90f, 90f, 50f)
         };
 
-        _scene = [new GameObject(meshRenderer1, transform1), new GameObject(lampRenderer, transform2), new GameObject(meshRenderer3, transform3), new GameObject(meshRenderer4, transform4), new GameObject(meshRenderer5, transform5)];
+        Transform transformNormal = new()
+        {
+            Position = new Vector3(-3.5f, -1f, -1.5f),
+            Rotation = new Vector3(0f, 0f, 0f),
+            Scale = new Vector3(1f, 1f, 1f)
+        };
+        
+        LightColor = lightColor;
+        LightPos = transform2.Position;
+
+        _light = new GameObject(lampRenderer, transform2);
+        _shader.SetVector3("lightPos", _light.Transform.Position);
+        
+        _scene = [_light, new GameObject(meshRendererNormal, transformNormal)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -167,6 +207,9 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        
+        _shader.SetVector3("viewPos", _camera.Transform.Position);
+        _shader.SetVector3("lightPos", LightPos);
         
         Matrix4 view = _camera.GetViewMatrix();
         Matrix4 projection = _camera.GetPerspectiveMatrix();

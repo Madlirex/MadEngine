@@ -18,7 +18,7 @@ public class Mesh : IDisposable
 
     public Mesh(float[] vertices, uint[] indices)
     {
-        const int stride = 5;
+        const int stride = 8;
 
         Vertices = new Vertex[vertices.Length / stride];
         
@@ -37,12 +37,15 @@ public class Mesh : IDisposable
                     vertices[i + 4]
                 ),
 
-                Normal = Vector3.Zero
+                Normal = new Vector3(
+                    vertices[i+5],
+                    vertices[i+6],
+                    vertices[i+7]
+                )
             };
         }
         
         Indices = indices;
-        
         CalculateNormals(this);
     }
 
@@ -92,7 +95,7 @@ public class Mesh : IDisposable
     public void Draw()
     {
         GL.BindVertexArray(_vertexArrayObject);
-        GL.DrawElements(PrimitiveType.Triangles, Indices.Length, DrawElementsType.UnsignedInt, 0);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, Vertices.Length);
     }
 
     public void Dispose()
@@ -139,6 +142,7 @@ public class Mesh : IDisposable
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i].Normal = Vector3.Normalize(vertices[i].Normal);
+            Console.WriteLine($"{vertices[i].Position}, {vertices[i].Normal}");
         }
     }
 }

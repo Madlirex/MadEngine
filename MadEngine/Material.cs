@@ -30,5 +30,6 @@ public class Material
         Shader.SetInt("useTexture", Texture != null ? 1 : 0);
         
         Shader.SetVector4("uColor", Color);
+        Shader.SetVector4("lightColor", Game.LightColor);
     }
 }
