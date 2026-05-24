@@ -3,7 +3,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Vector4 = System.Numerics.Vector4;
 
 
 namespace MadEngine;
@@ -14,13 +13,14 @@ public class Game : GameWindow
     private Shader _shader;
     private Shader _lampShader;
     private Camera _camera = new();
-    private GameObject _light;
+    private Light _light;
 
     public static Vector4 LightColor;
     public static Vector3 LightPos;
 
     private Vector2 _lastPos;
     private double _deltaTime;
+    private double _time;
     private bool _firstMove = true;
     
     public Game(int width, int height, string title) : base(new GameWindowSettings()
@@ -39,137 +39,24 @@ public class Game : GameWindow
         CursorState = CursorState.Grabbed;
         _camera.Width = width;
         _camera.Height = height;
-        
-        float[] vertices = {
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f
-        };
-        
-        uint[] indices =
+        MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices),
+            new Material(_shader, new Texture("Textures/container2.png"),
+                new Texture("Textures/container2_specular.png")));
+        Transform defaultTransform = new Transform()
         {
-            // Front (-Z)
-            0, 2, 1,
-            3, 5, 4,
-
-            // Back (+Z)
-            6, 7, 8,
-            9, 10, 11,
-
-            // Left (-X)
-            12,13,14,
-            15,16,17,
-
-            // Right (+X)
-            18,20,19,
-            21,23,22,
-
-            // Bottom (-Y)
-            24,25,26,
-            27,28,29,
-
-            // Top (+Y)
-            30,32,31,
-            33,35,34
+            Position = new Vector3(0f, 0f, 0f)
         };
-        
-        Vector4 color = new Vector4(1f, 1f, 1f, 1f);
-        Mesh mesh = new Mesh(vertices, indices);
-        
-        MeshRenderer meshRenderer1 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/simkovicova.jpg"), color));
-        MeshRenderer meshRenderer2 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/charlie.jpg"), color));
-        MeshRenderer meshRenderer3 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/house.jpg"), color));
-        MeshRenderer meshRenderer4 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/matovic.jpg"), color));
-        MeshRenderer meshRenderer5 = new MeshRenderer(mesh, new Material(_shader, new Texture("Textures/romana.jpg"), color));
 
-        MeshRenderer meshRendererNormal = new MeshRenderer(mesh,
-            new Material(_shader, null, new Vector4(0f, 1f, 0f, 1f)));
-        
-        Vector4 lightColor = new Vector4(1f, 1f, 1f, 1f);
-        MeshRenderer lampRenderer = new MeshRenderer(mesh, new Material(_lampShader, null, lightColor));
-        
-        Transform transform1 = new()
+        MeshRenderer lampRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices),
+            new Material(_lampShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
+        Transform lampTransform = new Transform()
         {
-            Position = new Vector3(1.5f, 0f, -1.5f),
-            Rotation = new Vector3(90f, 45f, 0f),
-            Scale = new Vector3(10f, 10f, 3f)
+            Position = new Vector3(2f, 0f, 0f)
         };
+        _light = new Light(lampRenderer, lampTransform); 
         
-        Transform transform2 = new()
-        {
-            Position = new Vector3(-1.5f, 0f, -1.5f),
-            //Rotation = new Vector3(90f, 45f, 0f)
-        };
-        
-        Transform transform3 = new()
-        {
-            Position = new Vector3(1.5f, 0f, 1.5f),
-            Rotation = new Vector3(90f, 45f, 0f)
-        };
-        Transform transform4 = new()
-        {
-            Position = new Vector3(-1.5f, 0f, 1.5f),
-            Rotation = new Vector3(90f, 45f, 0f)
-        };
-        Transform transform5 = new()
-        {
-            Position = new Vector3(1.5f, 0f, -1.5f),
-            Rotation = new Vector3(90f, 45f, 0f),
-            Scale = new Vector3(90f, 90f, 50f)
-        };
-
-        Transform transformNormal = new()
-        {
-            Position = new Vector3(-3.5f, -1f, -1.5f),
-            Rotation = new Vector3(0f, 0f, 0f),
-            Scale = new Vector3(1f, 1f, 1f)
-        };
-        
-        LightColor = lightColor;
-        LightPos = transform2.Position;
-
-        _light = new GameObject(lampRenderer, transform2);
-        _shader.SetVector3("lightPos", _light.Transform.Position);
-        
-        _scene = [_light, new GameObject(meshRendererNormal, transformNormal)];
+        _scene = [_light, new GameObject(defaultRenderer, defaultTransform)];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -207,14 +94,29 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+        float radius = 5f;
+        float speed = 1f;
+
+        _time += args.Time;
+        float angle = (float)_time; // or accumulate your own timer
+
+        _light.Transform.Position = new Vector3(
+            MathF.Cos(angle * speed) * radius,
+            3f,
+            MathF.Sin(angle * speed) * radius
+        );
         
         _shader.SetVector3("viewPos", _camera.Transform.Position);
-        _shader.SetVector3("lightPos", LightPos);
+        _shader.SetVector3("light.position", _light.Transform.Position);
+        _shader.SetVector4("light.ambient", _light.AmbientColor);
+        _shader.SetVector4("light.diffuse", _light.DiffuseColor);
+        _shader.SetVector4("light.specular", _light.SpecularColor);
         
         Matrix4 view = _camera.GetViewMatrix();
         Matrix4 projection = _camera.GetPerspectiveMatrix();
         
-        foreach (GameObject gameObject in _scene)
+        foreach (var gameObject in _scene)
         {
             //gameObject.Transform.Rotation.Y += 60 * (float)_deltaTime;
             gameObject.MeshRenderer.Draw(view, projection);

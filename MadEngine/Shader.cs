@@ -1,6 +1,5 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using Vector4 = System.Numerics.Vector4;
 
 namespace MadEngine;
 
@@ -86,6 +85,11 @@ public class Shader : IDisposable
     }
 
     public void SetInt(string name, int value)
+    {
+        GL.Uniform1(GL.GetUniformLocation(_handle, name), value);
+    }
+    
+    public void SetFloat(string name, float value)
     {
         GL.Uniform1(GL.GetUniformLocation(_handle, name), value);
     }

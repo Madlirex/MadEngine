@@ -1,42 +1,73 @@
 ﻿#version 330 core
+
+struct Material {
+    vec4 ambientColor;
+    vec4 diffuseColor;
+    vec4 specularColor;
+    
+    sampler2D diffuse;
+    int useDiffuse;
+    sampler2D specular;
+    int useSpecular;
+    
+    float shininess;
+};
+
+struct Light {
+    vec3 position;
+    
+    vec4 ambient;
+    vec4 diffuse;
+    vec4 specular;
+};
+
 out vec4 FragColor;
 
 in vec2 texCoord;
 in vec3 normal;
 in vec3 FragPos;
 
-uniform sampler2D texture0;
-uniform vec4 uColor;
-uniform vec4 lightColor;
-uniform vec3 lightPos;
-
 uniform vec3 viewPos;
 
-uniform int useTexture;
+uniform Material material;
+uniform Light light;
 
 void main()
 {
-    float ambientStrength = 0.1;
-    vec4 ambient = lightColor * ambientStrength;
-    
+    // diffuse 
     vec3 norm = normalize(normal);
-    vec3 lightDir = normalize(lightPos - FragPos);
+    vec3 lightDir = normalize(light.position - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec4 diffuse = diff * lightColor;
+    // diffuse and ambient
+    vec4 ambient;
+    vec4 diffuse;
+    
+    if (material.useDiffuse == 1)
+    {
+        vec4 textureColor = vec4(vec3(texture(material.diffuse, texCoord)), 1.0);
+        ambient = light.ambient * textureColor * material.ambientColor;
+        diffuse = light.diffuse * diff * textureColor * material.diffuseColor;
+    }
+    else
+    {
+        ambient = light.ambient * material.ambientColor;
+        diffuse = light.diffuse * diff * material.diffuseColor;
+    }
 
-    float specularStrength = 0.5;
+    // specular
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
-
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-    vec4 specular = specularStrength * spec * lightColor;
-
-    vec4 objectColor;
-    
-    if (useTexture == 1)
-        objectColor = texture(texture0, texCoord) * uColor;
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    vec4 specular;
+    if (material.useSpecular == 1)
+    {
+        specular = light.specular * spec * vec4(vec3(texture(material.specular, texCoord)), 1.0) * material.specularColor;
+    }
     else
-        objectColor = uColor;
+    {
+        specular = light.specular * spec * material.specularColor;
+    }
     
-    FragColor = (ambient + diffuse + specular) * objectColor;
+    vec4 result = ambient + diffuse + specular;
+    FragColor = result;
 }

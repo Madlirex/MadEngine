@@ -142,7 +142,6 @@ public class Mesh : IDisposable
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i].Normal = Vector3.Normalize(vertices[i].Normal);
-            Console.WriteLine($"{vertices[i].Position}, {vertices[i].Normal}");
         }
     }
 }
