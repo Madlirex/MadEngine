@@ -10,10 +10,11 @@ namespace MadEngine;
 public class Game : GameWindow
 {
     private GameObject[] _scene;
+    private Light[] _lights;
     private Shader _shader;
     private Shader _lampShader;
     private Camera _camera = new();
-    private Light _light;
+    private SpotLight _light;
 
     public static Vector4 LightColor;
     public static Vector3 LightPos;
@@ -52,11 +53,15 @@ public class Game : GameWindow
             new Material(_lampShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
         Transform lampTransform = new Transform()
         {
-            Position = new Vector3(2f, 0f, 0f)
+            Position = new Vector3(-3f, 3f, 0f),
         };
-        _light = new Light(lampRenderer, lampTransform); 
+        _light = new SpotLight(lampRenderer, lampTransform)
+        {
+            Direction = new Vector3(1f, -1f, 0f)
+        };
         
         _scene = [_light, new GameObject(defaultRenderer, defaultTransform)];
+        _lights = [_light];
         GL.Enable(EnableCap.DepthTest);
     }
 
@@ -94,24 +99,20 @@ public class Game : GameWindow
         base.OnRenderFrame(args);
         
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+        
         float radius = 5f;
         float speed = 1f;
 
         _time += args.Time;
         float angle = (float)_time; // or accumulate your own timer
-
+        
         _light.Transform.Position = new Vector3(
             MathF.Cos(angle * speed) * radius,
             3f,
             MathF.Sin(angle * speed) * radius
         );
         
-        _shader.SetVector3("viewPos", _camera.Transform.Position);
-        _shader.SetVector3("light.position", _light.Transform.Position);
-        _shader.SetVector4("light.ambient", _light.AmbientColor);
-        _shader.SetVector4("light.diffuse", _light.DiffuseColor);
-        _shader.SetVector4("light.specular", _light.SpecularColor);
+        Light.UseLights(_shader, _lights);
         
         Matrix4 view = _camera.GetViewMatrix();
         Matrix4 projection = _camera.GetPerspectiveMatrix();
