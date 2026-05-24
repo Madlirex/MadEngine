@@ -3,7 +3,7 @@ using OpenTK.Mathematics;
 
 namespace MadEngine;
 
-public class Light(MeshRenderer meshRenderer, Transform transform) : GameObject(meshRenderer, transform)
+public class Light : Component
 {
     public Vector4 AmbientColor = Vector4.One * 0.2f;
     public Vector4 DiffuseColor = Vector4.One;
@@ -50,7 +50,7 @@ public class Light(MeshRenderer meshRenderer, Transform transform) : GameObject(
     }
 }
 
-public class DirectionalLight(MeshRenderer meshRenderer, Transform transform, Vector3 direction) : Light(meshRenderer, transform)
+public class DirectionalLight(Vector3 direction) : Light
 {
     public Vector3 Direction = direction;
 
@@ -61,7 +61,7 @@ public class DirectionalLight(MeshRenderer meshRenderer, Transform transform, Ve
     }
 }
 
-public class PointLight(MeshRenderer meshRenderer, Transform transform) : Light(meshRenderer, transform)
+public class PointLight : Light
 {
     public float Constant = 1f;
     public float Linear = 0.07f;
@@ -73,11 +73,11 @@ public class PointLight(MeshRenderer meshRenderer, Transform transform) : Light(
         shader.SetFloat($"pointLights[{index}].constant", Constant);
         shader.SetFloat($"pointLights[{index}].linear", Linear);
         shader.SetFloat($"pointLights[{index}].quadratic", Quadratic);
-        shader.SetVector3($"pointLights[{index}].position", Transform.Position);
+        shader.SetVector3($"pointLights[{index}].position", GameObject.Transform.GetWorldPosition());
     }
 }
 
-public class SpotLight(MeshRenderer meshRenderer, Transform transform) : PointLight(meshRenderer, transform)
+public class SpotLight : PointLight
 {
     public Vector3 Direction;
     public float CutOff = 12.5f;
@@ -92,6 +92,6 @@ public class SpotLight(MeshRenderer meshRenderer, Transform transform) : PointLi
         shader.SetFloat($"spotLights[{index}].constant", Constant);
         shader.SetFloat($"spotLights[{index}].linear", Linear);
         shader.SetFloat($"spotLights[{index}].quadratic", Quadratic);
-        shader.SetVector3($"spotLights[{index}].position", Transform.Position);
+        shader.SetVector3($"spotLights[{index}].position", GameObject.Transform.GetWorldPosition());
     }
 }

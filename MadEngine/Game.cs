@@ -13,7 +13,7 @@ public class Game : GameWindow
     private Light[] _lights;
     private Shader _shader;
     private Shader _lampShader;
-    private Camera _camera = new();
+    private GameObject _camera;
     private SpotLight _light;
 
     public static Vector4 LightColor;
@@ -37,27 +37,33 @@ public class Game : GameWindow
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
 
+        _camera = new GameObject(new MeshRenderer(new Mesh([], []), new Material(_shader)), new Transform());
+        _camera.AddComponent(new Camera());
+        
         CursorState = CursorState.Grabbed;
-        _camera.Width = width;
-        _camera.Height = height;
+        _camera.GetComponent<Camera>()!.Width = width;
+        _camera.GetComponent<Camera>()!.Height = height;
 
-        MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices),
+        MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices), 
             new Material(_shader, new Texture("Textures/container2.png"),
                 new Texture("Textures/container2_specular.png")));
         Transform defaultTransform = new Transform()
         {
-            Position = new Vector3(0f, 0f, 0f)
+            Position = new Vector3(0f, 0f, 0f),
         };
 
-        MeshRenderer lampRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices),
+        MeshRenderer lampRenderer = new MeshRenderer(new Mesh([], []),
             new Material(_lampShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
         Transform lampTransform = new Transform()
         {
-            Position = new Vector3(-3f, 3f, 0f),
+            Position = new Vector3(-4f, 4f, 0f),
+            Rotation = new Vector3(-1, 1, 0f) * 180
         };
         _light = new SpotLight(lampRenderer, lampTransform)
         {
-            Direction = new Vector3(1f, -1f, 0f)
+            Direction = new Vector3(1f, -1f, 0f),
+            CutOff = 30f,
+            OuterCutOff = 35f
         };
         
         _scene = [_light, new GameObject(defaultRenderer, defaultTransform)];
@@ -71,7 +77,7 @@ public class Game : GameWindow
 
         foreach (GameObject gameObject in _scene)
         {
-            gameObject.MeshRenderer.Mesh.Initialize();
+            gameObject.GetComponent<MeshRenderer>().Mesh.Initialize();
         }
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
@@ -105,12 +111,9 @@ public class Game : GameWindow
 
         _time += args.Time;
         float angle = (float)_time; // or accumulate your own timer
-        
-        _light.Transform.Position = new Vector3(
-            MathF.Cos(angle * speed) * radius,
-            3f,
-            MathF.Sin(angle * speed) * radius
-        );
+
+        _light.Transform.Position = _camera.Transform.Position;
+        _light.Direction = _camera.Front;
         
         Light.UseLights(_shader, _lights);
         

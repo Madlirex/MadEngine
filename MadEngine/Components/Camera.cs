@@ -2,10 +2,8 @@
 
 namespace MadEngine;
 
-public class Camera
+public class Camera : Component
 {
-    public Transform Transform = new Transform();
-
     public float Width;
     public float Height;
 
@@ -50,7 +48,8 @@ public class Camera
 
     public Matrix4 GetViewMatrix()
     {
-        return Matrix4.LookAt(Transform.Position, Transform.Position + Front, Up);
+        Vector3 worldPos = GameObject.Transform.GetWorldPosition();
+        return Matrix4.LookAt(GameObject.Transform.Position, GameObject.Transform.Position + Front, Up);
     }
 
     public Matrix4 GetPerspectiveMatrix()

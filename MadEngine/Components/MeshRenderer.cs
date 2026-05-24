@@ -2,15 +2,14 @@
 
 namespace MadEngine;
 
-public class MeshRenderer
+public class MeshRenderer : Component
 {
-    public GameObject? GameObject;
     public Mesh Mesh;
     public Material Material;
 
     public MeshRenderer(Mesh mesh, Material mat)
     {
-        Mesh =  mesh;
+        Mesh = mesh;
         Material = mat;
     }
 
