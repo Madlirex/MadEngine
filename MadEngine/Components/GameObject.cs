@@ -6,7 +6,7 @@ public class GameObject
     
     public List<Component> Components = [];
 
-    public GameObject(MeshRenderer meshRenderer, Transform transform)
+    public GameObject(Transform transform)
     {
         Transform = transform;
         Transform.AssignGameObject(this);
@@ -15,6 +15,7 @@ public class GameObject
     public void AddComponent(Component component)
     {
         Components.Add(component);
+        component.AssignGameObject(this);
 
         if (component is Transform transform)
         {

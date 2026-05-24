@@ -1,16 +1,16 @@
 ﻿namespace MadEngine.SceneManagement;
 
-public class SceneManager
+public static class SceneManager
 {
-    public Scene ActiveScene;
-    public Scene[] Scenes;
+    public static Scene ActiveScene;
+    public static Scene[] Scenes;
 
-    public void LoadScene(Scene scene)
+    public static void LoadScene(Scene scene)
     {
         ActiveScene = scene;
     }
 
-    public void LoadScene(int index)
+    public static void LoadScene(int index)
     {
         ActiveScene = Scenes[index];
     }

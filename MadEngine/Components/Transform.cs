@@ -27,7 +27,7 @@ public class Transform : Component
         if (Parent == null)
             return local;
 
-        return local * Parent.GetWorldMatrix();
+        return Parent.GetWorldMatrix() * local;
     }
     
     public Vector3 GetWorldPosition()

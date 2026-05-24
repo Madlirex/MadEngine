@@ -9,6 +9,7 @@ public class Scene
     public void Add(GameObject gameObject)
     {
         GameObjects.Add(gameObject);
+        Register(gameObject);
     }
 
     public void Register(GameObject gameObject)
@@ -17,7 +18,13 @@ public class Scene
         {
             if (component is Light light)
             {
-                
+                Lights.Add(light);
+            }
+
+            if (component is MeshRenderer meshRenderer)
+            {
+                MeshRenderers.Add(meshRenderer);
+                meshRenderer.Mesh.Initialize();
             }
         }
     }

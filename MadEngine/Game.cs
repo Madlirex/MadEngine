@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using MadEngine.SceneManagement;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -9,15 +10,10 @@ namespace MadEngine;
 
 public class Game : GameWindow
 {
-    private GameObject[] _scene;
-    private Light[] _lights;
     private Shader _shader;
     private Shader _lampShader;
     private GameObject _camera;
-    private SpotLight _light;
-
-    public static Vector4 LightColor;
-    public static Vector3 LightPos;
+    private GameObject _light;
 
     private Vector2 _lastPos;
     private double _deltaTime;
@@ -37,7 +33,7 @@ public class Game : GameWindow
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
 
-        _camera = new GameObject(new MeshRenderer(new Mesh([], []), new Material(_shader)), new Transform());
+        _camera = new GameObject(new Transform());
         _camera.AddComponent(new Camera());
         
         CursorState = CursorState.Grabbed;
@@ -59,26 +55,28 @@ public class Game : GameWindow
             Position = new Vector3(-4f, 4f, 0f),
             Rotation = new Vector3(-1, 1, 0f) * 180
         };
-        _light = new SpotLight(lampRenderer, lampTransform)
+        _light = new GameObject(lampTransform);
+        Light light = new SpotLight
         {
             Direction = new Vector3(1f, -1f, 0f),
             CutOff = 30f,
             OuterCutOff = 35f
         };
+        _light.AddComponent(light);
+        GameObject cube = new GameObject(defaultTransform);
+        cube.AddComponent(defaultRenderer);
         
-        _scene = [_light, new GameObject(defaultRenderer, defaultTransform)];
-        _lights = [_light];
+        Scene scene = new Scene();
+        scene.Add(_camera);
+        scene.Add(_light);
+        scene.Add(cube);
+        SceneManager.ActiveScene = scene;
         GL.Enable(EnableCap.DepthTest);
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
-
-        foreach (GameObject gameObject in _scene)
-        {
-            gameObject.GetComponent<MeshRenderer>().Mesh.Initialize();
-        }
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
     }
@@ -112,18 +110,19 @@ public class Game : GameWindow
         _time += args.Time;
         float angle = (float)_time; // or accumulate your own timer
 
+        Camera camera = _camera.GetComponent<Camera>()!;
+        
         _light.Transform.Position = _camera.Transform.Position;
-        _light.Direction = _camera.Front;
+        _light.GetComponent<SpotLight>()!.Direction = camera.Front;
+
+        Light.UseLights(_shader, SceneManager.ActiveScene.Lights.ToArray());
         
-        Light.UseLights(_shader, _lights);
-        
-        Matrix4 view = _camera.GetViewMatrix();
-        Matrix4 projection = _camera.GetPerspectiveMatrix();
-        
-        foreach (var gameObject in _scene)
+        Matrix4 view = camera.GetViewMatrix();
+        Matrix4 projection = camera.GetPerspectiveMatrix();
+
+        foreach (MeshRenderer meshRenderer in SceneManager.ActiveScene.MeshRenderers)
         {
-            //gameObject.Transform.Rotation.Y += 60 * (float)_deltaTime;
-            gameObject.MeshRenderer.Draw(view, projection);
+            meshRenderer.Draw(view, projection);
         }
         
         SwapBuffers();
@@ -144,8 +143,9 @@ public class Game : GameWindow
             Close();
         }
 
+        Camera camera = _camera.GetComponent<Camera>()!;
         KeyboardState input = KeyboardState;
-        float speed = _camera.Speed * (float)args.Time;
+        float speed = camera.Speed * (float)args.Time;
 
         if (input.IsKeyDown(Keys.LeftControl))
         {
@@ -154,32 +154,32 @@ public class Game : GameWindow
         
         if (input.IsKeyDown(Keys.W))
         {
-            _camera.Transform.Position += _camera.Front * speed; //Forward 
+            _camera.Transform.Position += camera.Front * speed; //Forward 
         }
 
         if (input.IsKeyDown(Keys.S))
         {
-            _camera.Transform.Position -= _camera.Front * speed; //Backwards
+            _camera.Transform.Position -= camera.Front * speed; //Backwards
         }
 
         if (input.IsKeyDown(Keys.A))
         {
-            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * speed; //Left
+            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Left
         }
 
         if (input.IsKeyDown(Keys.D))
         {
-            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(_camera.Front, _camera.Up)) * speed; //Right
+            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Right
         }
 
         if (input.IsKeyDown(Keys.Space))
         {
-            _camera.Transform.Position += _camera.Up * speed; //Up 
+            _camera.Transform.Position += camera.Up * speed; //Up 
         }
 
         if (input.IsKeyDown(Keys.LeftShift))
         {
-            _camera.Transform.Position -= _camera.Up * speed; //Down
+            _camera.Transform.Position -= camera.Up * speed; //Down
         }
         
         const float sensitivity = 0.2f;
@@ -196,8 +196,8 @@ public class Game : GameWindow
             float deltaY = mouse.Y - _lastPos.Y;
             _lastPos = new Vector2(mouse.X, mouse.Y);
             
-            _camera.Yaw += deltaX * sensitivity;
-            _camera.Pitch -= deltaY * sensitivity;
+            camera.Yaw += deltaX * sensitivity;
+            camera.Pitch -= deltaY * sensitivity;
         }
     }
     
@@ -205,14 +205,14 @@ public class Game : GameWindow
     {
         base.OnMouseWheel(e);
 
-        _camera.Fov -= e.OffsetY;
+        _camera.GetComponent<Camera>()!.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
         base.OnFramebufferResize(e);
-        _camera.Width = e.Width;
-        _camera.Height = e.Height;
+        _camera.GetComponent<Camera>()!.Width = e.Width;
+        _camera.GetComponent<Camera>()!.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
     }
 }

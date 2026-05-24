@@ -49,7 +49,7 @@ public class Camera : Component
     public Matrix4 GetViewMatrix()
     {
         Vector3 worldPos = GameObject.Transform.GetWorldPosition();
-        return Matrix4.LookAt(GameObject.Transform.Position, GameObject.Transform.Position + Front, Up);
+        return Matrix4.LookAt(worldPos, worldPos + Front, Up);
     }
 
     public Matrix4 GetPerspectiveMatrix()

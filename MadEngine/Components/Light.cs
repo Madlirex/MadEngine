@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics.ES11;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 
 namespace MadEngine;
 
