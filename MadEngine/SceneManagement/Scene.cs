@@ -16,16 +16,21 @@ public class Scene
     {
         foreach (Component component in gameObject.Components)
         {
-            if (component is Light light)
-            {
-                Lights.Add(light);
-            }
+            RegisterComponent(component);
+        }
+    }
 
-            if (component is MeshRenderer meshRenderer)
-            {
-                MeshRenderers.Add(meshRenderer);
-                meshRenderer.Mesh.Initialize();
-            }
+    public void RegisterComponent(Component component)
+    {
+        if (component is Light light)
+        {
+            Lights.Add(light);
+        }
+
+        if (component is MeshRenderer meshRenderer)
+        {
+            MeshRenderers.Add(meshRenderer);
+            meshRenderer.Mesh.Initialize();
         }
     }
 }
