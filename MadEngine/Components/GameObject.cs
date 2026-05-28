@@ -2,6 +2,7 @@
 
 public class GameObject
 {
+    public string Name = "NewGameObject";
     public Transform Transform;
     
     public List<Component> Components = [];
