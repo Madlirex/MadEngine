@@ -9,6 +9,7 @@
     ".NETCoreApp,Version=v9.0/win-x64": {
       "MadEngine/1.0.0": {
         "dependencies": {
+          "ImGui.NET": "1.91.6.1",
           "Microsoft.NET.ILLink.Tasks": "9.0.10",
           "OpenTK": "4.9.4",
           "StbImageSharp": "2.30.15",
@@ -205,6 +206,24 @@
           }
         }
       },
+      "ImGui.NET/1.91.6.1": {
+        "dependencies": {
+          "System.Buffers": "4.5.1",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/ImGui.NET.dll": {
+            "assemblyVersion": "1.91.6.1",
+            "fileVersion": "1.91.6.1"
+          }
+        },
+        "native": {
+          "runtimes/win-x64/native/cimgui.dll": {
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "Microsoft.NET.ILLink.Tasks/9.0.10": {},
       "OpenTK/4.9.4": {
         "dependencies": {
@@ -331,6 +350,8 @@
           }
         }
       },
+      "System.Buffers/4.5.1": {},
+      "System.Numerics.Vectors/4.5.0": {},
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {}
     }
   },
@@ -344,6 +365,13 @@
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
+    },
+    "ImGui.NET/1.91.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ph3j8pO6UM28PPJWP+5LEJSPVPkd8ivpVS8tRyY9b0IHn1HDIrMZ2o/FdiXaYW6YhNxMHmbevw6Jcfs+IDKi0Q==",
+      "path": "imgui.net/1.91.6.1",
+      "hashPath": "imgui.net.1.91.6.1.nupkg.sha512"
     },
     "Microsoft.NET.ILLink.Tasks/9.0.10": {
       "type": "package",
@@ -435,6 +463,20 @@
       "sha512": "sha512-7QqbupVhz2kcFUPTgMw4iHR9rYDHGundzzee19Mwmd1typ2Lnv8EVJcLJxlkeBM2+4ex0NwsMtdbGSJctp1XCQ==",
       "path": "stbimagesharp/2.30.15",
       "hashPath": "stbimagesharp.2.30.15.nupkg.sha512"
+    },
+    "System.Buffers/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rw7ijyl1qqRS0YQD/WycNst8hUUMgrMH4FCn1nNm27M4VxchZ1js3fVjQaANHO5f3sN4isvP4a+Met9Y4YomAg==",
+      "path": "system.buffers/4.5.1",
+      "hashPath": "system.buffers.4.5.1.nupkg.sha512"
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "path": "system.numerics.vectors/4.5.0",
+      "hashPath": "system.numerics.vectors.4.5.0.nupkg.sha512"
     },
     "System.Runtime.CompilerServices.Unsafe/6.0.0": {
       "type": "package",
