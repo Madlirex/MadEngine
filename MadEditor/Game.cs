@@ -7,9 +7,9 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 
-namespace MadEngine.Runtime;
+namespace MadEditor;
 
-public class RuntimeWindow : GameWindow
+public class EditorWindow : GameWindow
 {
     private Engine _engine;
     
@@ -19,17 +19,13 @@ public class RuntimeWindow : GameWindow
     private GameObject _light;
 
     private Vector2 _lastPos;
-    private double _deltaTime;
-    private double _time;
     private bool _firstMove = true;
 
-    // ── Editor additions ──────────────────────────────────────────────────────
     private ImGuiController _imGui;
     private SceneFramebuffer _sceneFbo;
     private EditorUI _editorUI;
-    // ─────────────────────────────────────────────────────────────────────────
     
-    public RuntimeWindow(int width, int height, string title) : base(new GameWindowSettings()
+    public EditorWindow(int width, int height, string title) : base(new GameWindowSettings()
     {
         UpdateFrequency = 60
     },
@@ -39,6 +35,7 @@ public class RuntimeWindow : GameWindow
 
     })
     {
+        _engine = new Engine();
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
 
@@ -46,7 +43,7 @@ public class RuntimeWindow : GameWindow
         _camera.Name = "MainCamera";
         _camera.AddComponent(new Camera());
         
-        CursorState = CursorState.Normal; // changed: editor uses normal cursor by default
+        CursorState = CursorState.Normal;
         _camera.GetComponent<Camera>()!.Width = width;
         _camera.GetComponent<Camera>()!.Height = height;
 
@@ -83,23 +80,20 @@ public class RuntimeWindow : GameWindow
         scene.Add(_light);
         scene.Add(cube);
         SceneManager.ActiveScene = scene;
-        GL.Enable(EnableCap.DepthTest);
 
-        // ── Editor additions ──────────────────────────────────────────────────
         _imGui = new ImGuiController(width, height);
         _sceneFbo = new SceneFramebuffer(width, height);
         _editorUI = new EditorUI(_camera, _sceneFbo);
-        // ─────────────────────────────────────────────────────────────────────
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
         
-        GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
+        _engine.Initialize();
     }
 
-    protected override void OnTextInput(TextInputEventArgs e) // added for ImGui text input
+    protected override void OnTextInput(TextInputEventArgs e)
     {
         base.OnTextInput(e);
         _imGui.PressChar((char)e.Unicode);
@@ -109,7 +103,7 @@ public class RuntimeWindow : GameWindow
     {
         base.OnFocusedChanged(e);
         
-        CursorState = IsFocused ? CursorState.Normal : CursorState.Normal; // editor always normal
+        CursorState = IsFocused ? CursorState.Normal : CursorState.Normal;
     }
 
     protected override void OnUnload()
@@ -119,49 +113,29 @@ public class RuntimeWindow : GameWindow
         CursorState = CursorState.Normal;
         
         _shader.Dispose();
-        _sceneFbo.Dispose(); // added
-        _imGui.Dispose();    // added
+        _lampShader.Dispose();
+        _sceneFbo.Dispose(); 
+        _imGui.Dispose();    
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
     {
-        _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
-
-        // ── Render scene into FBO instead of directly to screen ───────────────
-        _sceneFbo.Bind();
-        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        GL.Enable(EnableCap.DepthTest);
-        // ─────────────────────────────────────────────────────────────────────
         
-        float radius = 5f;
-        float speed = 1f;
-
-        _time += args.Time;
-        float angle = (float)_time; // or accumulate your own timer
+        _sceneFbo.Bind();
 
         Camera camera = _camera.GetComponent<Camera>()!;
         
         _light.Transform.Position = _camera.Transform.Position;
         _light.GetComponent<SpotLight>()!.Direction = camera.Front;
 
-        Light.UseLights(_shader, SceneManager.ActiveScene.Lights.ToArray());
+        _engine.Render(SceneManager.ActiveScene, camera, _shader);
         
-        Matrix4 view = camera.GetViewMatrix();
-        Matrix4 projection = camera.GetPerspectiveMatrix();
-
-        foreach (MeshRenderer meshRenderer in SceneManager.ActiveScene.MeshRenderers)
-        {
-            meshRenderer.Draw(view, projection);
-        }
-
-        // ── Draw ImGui editor UI on top ───────────────────────────────────────
         SceneFramebuffer.Unbind();
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         GL.Clear(ClearBufferMask.ColorBufferBit);
         _editorUI.Draw(this);
         _imGui.Render();
-        // ─────────────────────────────────────────────────────────────────────
 
         SwapBuffers();
     }
@@ -170,15 +144,14 @@ public class RuntimeWindow : GameWindow
     {
         base.OnUpdateFrame(args);
 
-        _imGui.Update(this, (float)args.Time); // added
+        _imGui.Update(this, (float)args.Time);
 
         if (!IsFocused)
         {
             return;
         }
-
-        // Only move camera when viewport is grabbed (right-click held in viewport)
-        if (CursorState != CursorState.Grabbed) // added guard
+        
+        if (CursorState != CursorState.Grabbed)
         {
             _firstMove = true;
             return;
@@ -186,7 +159,7 @@ public class RuntimeWindow : GameWindow
 
         if (KeyboardState.IsKeyDown(Keys.Escape))
         {
-            CursorState = CursorState.Normal; // changed: release cursor instead of closing
+            CursorState = CursorState.Normal;
         }
 
         Camera camera = _camera.GetComponent<Camera>()!;
@@ -200,32 +173,32 @@ public class RuntimeWindow : GameWindow
         
         if (input.IsKeyDown(Keys.W))
         {
-            _camera.Transform.Position += camera.Front * speed; //Forward 
+            _camera.Transform.Position += camera.Front * speed;
         }
 
         if (input.IsKeyDown(Keys.S))
         {
-            _camera.Transform.Position -= camera.Front * speed; //Backwards
+            _camera.Transform.Position -= camera.Front * speed;
         }
 
         if (input.IsKeyDown(Keys.A))
         {
-            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Left
+            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; 
         }
 
         if (input.IsKeyDown(Keys.D))
         {
-            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Right
+            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed;
         }
 
         if (input.IsKeyDown(Keys.Space))
         {
-            _camera.Transform.Position += camera.Up * speed; //Up 
+            _camera.Transform.Position += camera.Up * speed;
         }
 
         if (input.IsKeyDown(Keys.LeftShift))
         {
-            _camera.Transform.Position -= camera.Up * speed; //Down
+            _camera.Transform.Position -= camera.Up * speed;
         }
         
         const float sensitivity = 0.2f;
@@ -245,13 +218,14 @@ public class RuntimeWindow : GameWindow
             camera.Yaw += deltaX * sensitivity;
             camera.Pitch -= deltaY * sensitivity;
         }
+        _engine.Update((float)args.Time, SceneManager.ActiveScene);
     }
     
     protected override void OnMouseWheel(MouseWheelEventArgs e)
     {
         base.OnMouseWheel(e);
 
-        if (CursorState == CursorState.Grabbed) // added guard
+        if (CursorState == CursorState.Grabbed)
             _camera.GetComponent<Camera>()!.Fov -= e.OffsetY;
     }
 
@@ -261,6 +235,6 @@ public class RuntimeWindow : GameWindow
         _camera.GetComponent<Camera>()!.Width = e.Width;
         _camera.GetComponent<Camera>()!.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
-        _imGui.Resize(e.Width, e.Height); // added
+        _imGui.Resize(e.Width, e.Height);
     }
 }

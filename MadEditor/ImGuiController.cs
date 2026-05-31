@@ -6,32 +6,24 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using Vector2 = System.Numerics.Vector2;
 using Vector4 = System.Numerics.Vector4;
 
-namespace MadEngine;
+namespace MadEditor;
 
-/// <summary>
-/// A self-contained ImGui controller for OpenTK 4.x.
-/// Handles font atlas upload, shader compilation, input routing, and rendering.
-/// </summary>
 public class ImGuiController : IDisposable
 {
-    // ── GL resources ──────────────────────────────────────────────────────────
     private int _vao;
     private int _vbo;
     private int _ebo;
     private int _fontTexture;
     private int _shader;
     private int _uniformProjection;
-
-    // ── State ─────────────────────────────────────────────────────────────────
+    
     private int _windowWidth;
     private int _windowHeight;
     private bool _frameBegun;
     private readonly List<char> _pressedChars = new();
-
-    // Matches ImDrawVert layout
-    private const int VertexSize = 20; // sizeof(ImDrawVert)
-
-    // ── Shader sources ────────────────────────────────────────────────────────
+    
+    private const int VertexSize = 20;
+    
     private const string VertSrc = @"
 #version 330 core
 layout (location = 0) in vec2 Position;
@@ -60,11 +52,9 @@ void main()
     Out_Color = Frag_Color * texture(Texture, Frag_UV.st);
 }";
 
-    // ─────────────────────────────────────────────────────────────────────────
-
     public ImGuiController(int width, int height)
     {
-        _windowWidth  = width;
+        _windowWidth = width;
         _windowHeight = height;
 
         ImGui.CreateContext();
@@ -78,10 +68,7 @@ void main()
         ImGui.NewFrame();
         _frameBegun = true;
     }
-
-    // ── Public API ────────────────────────────────────────────────────────────
-
-    /// <summary>Call at the start of each frame (before any ImGui calls).</summary>
+    
     public void Update(GameWindow wnd, float deltaSeconds)
     {
         if (_frameBegun)
@@ -94,7 +81,6 @@ void main()
         ImGui.NewFrame();
     }
 
-    /// <summary>Call at the end of your OnRenderFrame, before SwapBuffers.</summary>
     public void Render()
     {
         if (!_frameBegun) return;
@@ -102,22 +88,17 @@ void main()
         ImGui.Render();
         RenderImDrawData(ImGui.GetDrawData());
     }
-
-    /// <summary>Forward text input characters from OnTextInput.</summary>
+    
     public void PressChar(char c) => _pressedChars.Add(c);
-
-    /// <summary>Resize when the framebuffer changes.</summary>
+    
     public void Resize(int width, int height)
     {
         _windowWidth  = width;
         _windowHeight = height;
     }
-
-    // ── GL setup ──────────────────────────────────────────────────────────────
-
+    
     private void CreateDeviceObjects()
     {
-        // --- shader ---
         int vert = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(vert, VertSrc);
         GL.CompileShader(vert);
@@ -143,8 +124,7 @@ void main()
         int texSlot = GL.GetUniformLocation(_shader, "Texture");
         GL.UseProgram(_shader);
         GL.Uniform1(texSlot, 0);
-
-        // --- VAO / VBO / EBO ---
+        
         _vao = GL.GenVertexArray();
         _vbo = GL.GenBuffer();
         _ebo = GL.GenBuffer();
@@ -152,20 +132,18 @@ void main()
         GL.BindVertexArray(_vao);
         GL.BindBuffer(BufferTarget.ArrayBuffer, _vbo);
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, _ebo);
-
-        // Position (vec2)
+        
         GL.EnableVertexAttribArray(0);
         GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, VertexSize, 0);
-        // UV (vec2)
+
         GL.EnableVertexAttribArray(1);
         GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, VertexSize, 8);
-        // Color (4 bytes, unorm)
+
         GL.EnableVertexAttribArray(2);
         GL.VertexAttribPointer(2, 4, VertexAttribPointerType.UnsignedByte, true, VertexSize, 16);
 
         GL.BindVertexArray(0);
-
-        // --- font atlas texture ---
+        
         ImGuiIOPtr io = ImGui.GetIO();
         io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int fw, out int fh, out _);
 
@@ -180,41 +158,36 @@ void main()
         io.Fonts.ClearTexData();
         GL.BindTexture(TextureTarget.Texture2D, 0);
     }
-
-    // ── Rendering ─────────────────────────────────────────────────────────────
+    
 
     private void RenderImDrawData(ImDrawDataPtr drawData)
     {
         if (drawData.CmdListsCount == 0) return;
-
-        // Save state
-        GL.GetInteger(GetPName.ActiveTexture,      out int prevActiveTexture);
-        GL.GetInteger(GetPName.CurrentProgram,     out int prevProgram);
-        GL.GetInteger(GetPName.TextureBinding2D,   out int prevTexture);
+        
+        GL.GetInteger(GetPName.ActiveTexture, out int prevActiveTexture);
+        GL.GetInteger(GetPName.CurrentProgram, out int prevProgram);
+        GL.GetInteger(GetPName.TextureBinding2D, out int prevTexture);
         GL.GetInteger(GetPName.ArrayBufferBinding, out int prevVbo);
         GL.GetInteger(GetPName.VertexArrayBinding, out int prevVao);
-        GL.GetInteger(GetPName.BlendSrcRgb,        out int prevBlendSrcRgb);
-        GL.GetInteger(GetPName.BlendDstRgb,        out int prevBlendDstRgb);
-        GL.GetInteger(GetPName.BlendSrcAlpha,      out int prevBlendSrcAlpha);
-        GL.GetInteger(GetPName.BlendDstAlpha,      out int prevBlendDstAlpha);
-        GL.GetInteger(GetPName.BlendEquationRgb,   out int prevBlendEqRgb);
+        GL.GetInteger(GetPName.BlendSrcRgb, out int prevBlendSrcRgb);
+        GL.GetInteger(GetPName.BlendDstRgb, out int prevBlendDstRgb);
+        GL.GetInteger(GetPName.BlendSrcAlpha, out int prevBlendSrcAlpha);
+        GL.GetInteger(GetPName.BlendDstAlpha, out int prevBlendDstAlpha);
+        GL.GetInteger(GetPName.BlendEquationRgb, out int prevBlendEqRgb);
         GL.GetInteger(GetPName.BlendEquationAlpha, out int prevBlendEqAlpha);
-        bool prevBlend        = GL.IsEnabled(EnableCap.Blend);
-        bool prevCullFace     = GL.IsEnabled(EnableCap.CullFace);
-        bool prevDepthTest    = GL.IsEnabled(EnableCap.DepthTest);
-        bool prevScissorTest  = GL.IsEnabled(EnableCap.ScissorTest);
-
-        // Setup render state
+        bool prevBlend = GL.IsEnabled(EnableCap.Blend);
+        bool prevCullFace = GL.IsEnabled(EnableCap.CullFace);
+        bool prevDepthTest = GL.IsEnabled(EnableCap.DepthTest);
+        bool prevScissorTest = GL.IsEnabled(EnableCap.ScissorTest);
+        
         GL.Enable(EnableCap.Blend);
         GL.BlendEquation(BlendEquationMode.FuncAdd);
-        GL.BlendFuncSeparate(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha,
-                             BlendingFactorSrc.One,       BlendingFactorDest.OneMinusSrcAlpha);
+        GL.BlendFuncSeparate(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha, BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
         GL.Disable(EnableCap.CullFace);
         GL.Disable(EnableCap.DepthTest);
         GL.Enable(EnableCap.ScissorTest);
         GL.ActiveTexture(TextureUnit.Texture0);
-
-        // Orthographic projection
+        
         float l = drawData.DisplayPos.X;
         float r = drawData.DisplayPos.X + drawData.DisplaySize.X;
         float t = drawData.DisplayPos.Y;
@@ -230,7 +203,7 @@ void main()
         GL.UniformMatrix4(_uniformProjection, false, ref proj);
         GL.BindVertexArray(_vao);
 
-        Vector2 clipOff   = drawData.DisplayPos;
+        Vector2 clipOff = drawData.DisplayPos;
         Vector2 clipScale = drawData.FramebufferScale;
 
         for (int n = 0; n < drawData.CmdListsCount; n++)
@@ -251,7 +224,7 @@ void main()
                 ImDrawCmdPtr cmd = cmdList.CmdBuffer[cmdIdx];
 
                 if (cmd.UserCallback != IntPtr.Zero)
-                    continue; // user callbacks not handled here
+                    continue;
 
                 Vector4 cr = cmd.ClipRect;
                 float cx = (cr.X - clipOff.X) * clipScale.X;
@@ -270,8 +243,7 @@ void main()
                     (int)cmd.VtxOffset);
             }
         }
-
-        // Restore state
+        
         GL.UseProgram(prevProgram);
         GL.BindTexture(TextureTarget.Texture2D, prevTexture);
         GL.ActiveTexture((TextureUnit)prevActiveTexture);
@@ -280,13 +252,11 @@ void main()
         GL.BlendEquationSeparate((BlendEquationMode)prevBlendEqRgb, (BlendEquationMode)prevBlendEqAlpha);
         GL.BlendFuncSeparate((BlendingFactorSrc)prevBlendSrcRgb, (BlendingFactorDest)prevBlendDstRgb,
                              (BlendingFactorSrc)prevBlendSrcAlpha, (BlendingFactorDest)prevBlendDstAlpha);
-        if (prevBlend)       GL.Enable(EnableCap.Blend);       else GL.Disable(EnableCap.Blend);
-        if (prevCullFace)    GL.Enable(EnableCap.CullFace);    else GL.Disable(EnableCap.CullFace);
-        if (prevDepthTest)   GL.Enable(EnableCap.DepthTest);   else GL.Disable(EnableCap.DepthTest);
+        if (prevBlend) GL.Enable(EnableCap.Blend); else GL.Disable(EnableCap.Blend);
+        if (prevCullFace) GL.Enable(EnableCap.CullFace); else GL.Disable(EnableCap.CullFace);
+        if (prevDepthTest) GL.Enable(EnableCap.DepthTest); else GL.Disable(EnableCap.DepthTest);
         if (prevScissorTest) GL.Enable(EnableCap.ScissorTest); else GL.Disable(EnableCap.ScissorTest);
     }
-
-    // ── Input ─────────────────────────────────────────────────────────────────
 
     private void SetPerFrameImGuiData(float deltaSeconds)
     {
@@ -346,37 +316,30 @@ void main()
     {
         ImGuiIOPtr io = ImGui.GetIO();
 
-        MouseState    mouse = wnd.MouseState;
-        KeyboardState kb    = wnd.KeyboardState;
-
-        // ── Mouse ─────────────────────────────────────────────────────────────
+        MouseState mouse = wnd.MouseState;
+        KeyboardState kb = wnd.KeyboardState;
+        
         io.AddMouseButtonEvent(0, mouse.IsButtonDown(MouseButton.Left));
         io.AddMouseButtonEvent(1, mouse.IsButtonDown(MouseButton.Right));
         io.AddMouseButtonEvent(2, mouse.IsButtonDown(MouseButton.Middle));
         io.AddMousePosEvent(mouse.X, mouse.Y);
         io.AddMouseWheelEvent(mouse.ScrollDelta.X, mouse.ScrollDelta.Y);
 
-        // ── Modifier keys ─────────────────────────────────────────────────────
-        io.AddKeyEvent(ImGuiKey.ModCtrl,  kb.IsKeyDown(Keys.LeftControl) || kb.IsKeyDown(Keys.RightControl));
-        io.AddKeyEvent(ImGuiKey.ModShift, kb.IsKeyDown(Keys.LeftShift)   || kb.IsKeyDown(Keys.RightShift));
-        io.AddKeyEvent(ImGuiKey.ModAlt,   kb.IsKeyDown(Keys.LeftAlt)     || kb.IsKeyDown(Keys.RightAlt));
-        io.AddKeyEvent(ImGuiKey.ModSuper, kb.IsKeyDown(Keys.LeftSuper)   || kb.IsKeyDown(Keys.RightSuper));
-
-        // ── All mapped keys ───────────────────────────────────────────────────
+        io.AddKeyEvent(ImGuiKey.ModCtrl, kb.IsKeyDown(Keys.LeftControl) || kb.IsKeyDown(Keys.RightControl));
+        io.AddKeyEvent(ImGuiKey.ModShift, kb.IsKeyDown(Keys.LeftShift) || kb.IsKeyDown(Keys.RightShift));
+        io.AddKeyEvent(ImGuiKey.ModAlt, kb.IsKeyDown(Keys.LeftAlt) || kb.IsKeyDown(Keys.RightAlt));
+        io.AddKeyEvent(ImGuiKey.ModSuper, kb.IsKeyDown(Keys.LeftSuper) || kb.IsKeyDown(Keys.RightSuper));
+        
         foreach ((Keys glfw, ImGuiKey imgui) in KeyMap)
             io.AddKeyEvent(imgui, kb.IsKeyDown(glfw));
-
-        // ── Text input ────────────────────────────────────────────────────────
+        
         foreach (char c in _pressedChars)
             io.AddInputCharacter(c);
         _pressedChars.Clear();
     }
-
-    // ImGui.NET 1.90+ manages its own internal key table; no manual mapping needed.
+    
     private static void SetKeyMappings() { }
-
-    // ── Diagnostics ───────────────────────────────────────────────────────────
-
+    
     private static void CheckShader(int handle, string name)
     {
         GL.GetShader(handle, ShaderParameter.CompileStatus, out int ok);
@@ -390,8 +353,6 @@ void main()
         if (ok == 0)
             throw new Exception($"ImGui {name} program link error:\n{GL.GetProgramInfoLog(handle)}");
     }
-
-    // ── IDisposable ───────────────────────────────────────────────────────────
 
     public void Dispose()
     {

@@ -1,23 +1,14 @@
 ﻿using System.Numerics;
 using ImGuiNET;
-using MadEngine.SceneManagement;
+using MadEngine;
+using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace MadEngine;
+namespace MadEditor;
 
-/// <summary>
-/// Draws a fixed Unity-style editor layout without requiring the ImGui docking branch.
-/// Panels are positioned manually each frame using SetNextWindowPos/Size so they always
-/// stay locked to the edges — no dragging, no overlap, no docking API needed.
-///
-/// Layout:
-///   ┌────────────┬──────────────────────┬─────────────┐
-///   │ Hierarchy  │   Scene Viewport     │  Inspector  │
-///   │            ├──────────────────────┤             │
-///   │            │        Stats         │             │
-///   └────────────┴──────────────────────┴─────────────┘
-/// </summary>
+
 public class EditorUI
 {
     private readonly GameObject _cameraObject;
@@ -25,8 +16,7 @@ public class EditorUI
 
     private GameObject? _selected;
     private Vector2 _viewportSize;
-
-    // Panel width/height as fractions of the window
+    
     private const float LeftPanelWidth   = 0.18f;
     private const float RightPanelWidth  = 0.22f;
     private const float BottomPanelHeight = 0.20f;
@@ -40,36 +30,32 @@ public class EditorUI
     public EditorUI(GameObject cameraObject, SceneFramebuffer sceneFbo)
     {
         _cameraObject = cameraObject;
-        _sceneFbo     = sceneFbo;
+        _sceneFbo = sceneFbo;
     }
 
     public void Draw(GameWindow wnd)
     {
-        var io         = ImGui.GetIO();
-        var screenPos  = ImGui.GetMainViewport().WorkPos;
+        var screenPos = ImGui.GetMainViewport().WorkPos;
         var screenSize = ImGui.GetMainViewport().WorkSize;
 
-        float leftW   = MathF.Floor(screenSize.X * LeftPanelWidth);
-        float rightW  = MathF.Floor(screenSize.X * RightPanelWidth);
+        float leftW = MathF.Floor(screenSize.X * LeftPanelWidth);
+        float rightW = MathF.Floor(screenSize.X * RightPanelWidth);
         float bottomH = MathF.Floor(screenSize.Y * BottomPanelHeight);
         float centerW = screenSize.X - leftW - rightW;
-        float topH    = screenSize.Y - bottomH;
-
-        // ── Left: Hierarchy ───────────────────────────────────────────────────
+        float topH = screenSize.Y - bottomH;
+        
         ImGui.SetNextWindowPos(screenPos);
         ImGui.SetNextWindowSize(new Vector2(leftW, screenSize.Y));
         ImGui.Begin("Hierarchy", FixedPanel);
         DrawHierarchy();
         ImGui.End();
-
-        // ── Right: Inspector ──────────────────────────────────────────────────
+        
         ImGui.SetNextWindowPos(new Vector2(screenPos.X + leftW + centerW, screenPos.Y));
         ImGui.SetNextWindowSize(new Vector2(rightW, screenSize.Y));
         ImGui.Begin("Inspector", FixedPanel);
         DrawInspector();
         ImGui.End();
-
-        // ── Center top: Scene Viewport ────────────────────────────────────────
+        
         ImGui.SetNextWindowPos(new Vector2(screenPos.X + leftW, screenPos.Y));
         ImGui.SetNextWindowSize(new Vector2(centerW, topH));
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
@@ -78,7 +64,6 @@ public class EditorUI
         DrawViewport(wnd, centerW, topH);
         ImGui.End();
 
-        // ── Center bottom: Stats ──────────────────────────────────────────────
         ImGui.SetNextWindowPos(new Vector2(screenPos.X + leftW, screenPos.Y + topH));
         ImGui.SetNextWindowSize(new Vector2(centerW, bottomH));
         ImGui.Begin("Stats", FixedPanel);
@@ -86,26 +71,21 @@ public class EditorUI
         ImGui.End();
     }
 
-    // ── Hierarchy ─────────────────────────────────────────────────────────────
-
     private void DrawHierarchy()
     {
         var objects = SceneManager.ActiveScene.GameObjects;
         for (int i = 0; i < objects.Count; i++)
         {
-            GameObject go    = objects[i];
-            string     label = go.Name ?? $"GameObject {i}";
-            bool       sel   = go == _selected;
+            GameObject go = objects[i];
+            string label = go.Name;
+            bool sel = go == _selected;
             if (ImGui.Selectable(label, sel))
                 _selected = go;
         }
     }
 
-    // ── Scene Viewport ────────────────────────────────────────────────────────
-
     private void DrawViewport(GameWindow wnd, float panelW, float panelH)
     {
-        // Account for the window title bar height
         float titleBarH  = ImGui.GetFrameHeight();
         float availableW = panelW;
         float availableH = panelH - titleBarH;
@@ -119,18 +99,15 @@ public class EditorUI
                 _sceneFbo.Resize((int)availableW, (int)availableH);
 
                 Camera cam = _cameraObject.GetComponent<Camera>()!;
-                cam.Width  = (int)availableW;
+                cam.Width = (int)availableW;
                 cam.Height = (int)availableH;
             }
         }
-
-        // Right-click inside the image → grab cursor for fly-cam
+        
         if (ImGui.IsWindowHovered() && ImGui.IsMouseClicked(ImGuiMouseButton.Right))
             wnd.CursorState = CursorState.Grabbed;
-
-        // Display FBO; flip UVs vertically (GL origin = bottom-left, ImGui = top-left)
-        ImGui.Image((IntPtr)_sceneFbo.ColorTexture, _viewportSize,
-            new Vector2(0, 1), new Vector2(1, 0));
+        
+        ImGui.Image(_sceneFbo.ColorTexture, _viewportSize, new Vector2(0, 1), new Vector2(1, 0));
 
         if (wnd.CursorState == CursorState.Normal)
         {
@@ -138,8 +115,6 @@ public class EditorUI
             ImGui.TextDisabled("Right-click + WASD to fly  |  Esc to release");
         }
     }
-
-    // ── Inspector ─────────────────────────────────────────────────────────────
 
     private void DrawInspector()
     {
@@ -149,7 +124,7 @@ public class EditorUI
             return;
         }
 
-        string name = _selected.Name ?? string.Empty;
+        string name = _selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
             _selected.Name = name;
 
@@ -211,8 +186,6 @@ public class EditorUI
         }
     }
 
-    // ── Stats ─────────────────────────────────────────────────────────────────
-
     private void DrawStats(GameWindow wnd)
     {
         ImGui.Text($"FPS        : {1.0 / wnd.UpdateTime:F0}");
@@ -222,8 +195,6 @@ public class EditorUI
         ImGui.Text($"Camera     : {pos.X:F2}, {pos.Y:F2}, {pos.Z:F2}");
         ImGui.Text($"Viewport   : {_viewportSize.X:F0} x {_viewportSize.Y:F0}");
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────────────
 
     private static Vector3 ToNum(OpenTK.Mathematics.Vector3 v) => new(v.X, v.Y, v.Z);
     private static OpenTK.Mathematics.Vector3 ToOtk(Vector3 v) => new(v.X, v.Y, v.Z);
