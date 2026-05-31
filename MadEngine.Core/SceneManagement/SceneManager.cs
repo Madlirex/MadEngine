@@ -1,4 +1,4 @@
-﻿namespace MadEngine.SceneManagement;
+﻿namespace MadEngine.Core.SceneManagement;
 
 public static class SceneManager
 {

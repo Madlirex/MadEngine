@@ -1,4 +1,4 @@
-﻿namespace MadEngine;
+﻿namespace MadEngine.Core;
 
 public class Component
 {

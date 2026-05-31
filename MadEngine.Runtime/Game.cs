@@ -1,4 +1,4 @@
-﻿using MadEngine.SceneManagement;
+﻿using MadEngine.Core.SceneManagement;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -6,9 +6,9 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 
-namespace MadEngine;
+namespace MadEngine.Runtime;
 
-public class Game : GameWindow
+public class RuntimeWindow : GameWindow
 {
     private Shader _shader;
     private Shader _lampShader;

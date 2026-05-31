@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace MadEngine;
+namespace MadEngine.Core;
 
 public class Material
 {

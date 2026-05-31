@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
 
-namespace MadEngine;
+namespace MadEngine.Core;
 
 public class Texture
 {

@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace MadEngine;
+namespace MadEngine.Core;
 
 public class MeshRenderer : Component
 {

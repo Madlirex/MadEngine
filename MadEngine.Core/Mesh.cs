@@ -2,7 +2,7 @@
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
-namespace MadEngine;
+namespace MadEngine.Core;
 
 public class Mesh : IDisposable
 {
