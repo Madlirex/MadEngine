@@ -13,6 +13,24 @@ public class GameObject
         Transform.AssignGameObject(this);
     }
 
+    public void Awake()
+    {
+        foreach (Component component in Components)
+            component.Awake();
+    }
+
+    public void Start()
+    {
+        foreach (Component component in Components)
+            component.Start();
+    }
+
+    public void Update(float deltaTime)
+    {
+        foreach (Component component in Components)
+            component.Update(deltaTime);
+    }
+    
     public void AddComponent(Component component)
     {
         Components.Add(component);

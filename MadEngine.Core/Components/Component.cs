@@ -1,11 +1,16 @@
 ﻿namespace MadEngine.Core;
 
-public class Component
+public abstract class Component
 {
-    public GameObject GameObject;
+    public GameObject GameObject { get; private set; }
 
-    public void AssignGameObject(GameObject gameObject)
+    internal void AssignGameObject(GameObject gameObject)
     {
         GameObject = gameObject;
     }
+
+    public virtual void Awake() {}
+    public virtual void Start() {}
+    public virtual void Update(float deltaTime) {}
+
 }
