@@ -14,6 +14,9 @@ public class Engine
     
     public void Render(Scene scene, Camera camera, Shader shader)
     {
+        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        GL.Enable(EnableCap.DepthTest);
+        
         Light.UseLights(shader, scene.Lights.ToArray());
         
         Matrix4 view = camera.GetViewMatrix();
@@ -25,6 +28,22 @@ public class Engine
         }
     }
 
+    public void Awake(Scene scene)
+    {
+        foreach (GameObject gameObject in scene.GameObjects)
+        {
+            gameObject.Awake();
+        }
+    }
+    
+    public void Start(Scene scene)
+    {
+        foreach (GameObject gameObject in scene.GameObjects)
+        {
+            gameObject.Start();
+        }
+    }
+    
     public void Update(float deltaTime, Scene scene)
     {
         foreach (GameObject gameObject in scene.GameObjects)

@@ -19,7 +19,15 @@ public class RuntimeWindow : GameWindow
     private GameObject _light;
 
     private Vector2 _lastPos;
+    private double _deltaTime;
+    private double _time;
     private bool _firstMove = true;
+
+    // ── Editor additions ──────────────────────────────────────────────────────
+    private ImGuiController _imGui;
+    private SceneFramebuffer _sceneFbo;
+    private EditorUI _editorUI;
+    // ─────────────────────────────────────────────────────────────────────────
     
     public RuntimeWindow(int width, int height, string title) : base(new GameWindowSettings()
     {
@@ -31,8 +39,6 @@ public class RuntimeWindow : GameWindow
 
     })
     {
-        _engine = new Engine();
-        
         _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
         _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
 
@@ -77,23 +83,33 @@ public class RuntimeWindow : GameWindow
         scene.Add(_light);
         scene.Add(cube);
         SceneManager.ActiveScene = scene;
+        GL.Enable(EnableCap.DepthTest);
+
+        // ── Editor additions ──────────────────────────────────────────────────
+        _imGui = new ImGuiController(width, height);
+        _sceneFbo = new SceneFramebuffer(width, height);
+        _editorUI = new EditorUI(_camera, _sceneFbo);
+        // ─────────────────────────────────────────────────────────────────────
     }
 
     protected override void OnLoad()
     {
         base.OnLoad();
         
-        _engine.Initialize();
-        
-        _engine.Awake(SceneManager.ActiveScene);
-        _engine.Start(SceneManager.ActiveScene);
+        GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
+    }
+
+    protected override void OnTextInput(TextInputEventArgs e) // added for ImGui text input
+    {
+        base.OnTextInput(e);
+        _imGui.PressChar((char)e.Unicode);
     }
 
     protected override void OnFocusedChanged(FocusedChangedEventArgs e)
     {
         base.OnFocusedChanged(e);
         
-        CursorState = IsFocused ? CursorState.Grabbed : CursorState.Normal; // editor always normal
+        CursorState = IsFocused ? CursorState.Normal : CursorState.Normal; // editor always normal
     }
 
     protected override void OnUnload()
@@ -103,19 +119,49 @@ public class RuntimeWindow : GameWindow
         CursorState = CursorState.Normal;
         
         _shader.Dispose();
-        _lampShader.Dispose();
+        _sceneFbo.Dispose(); // added
+        _imGui.Dispose();    // added
     }
 
     protected override void OnRenderFrame(FrameEventArgs args)
     {
+        _deltaTime = UpdateTime;
         base.OnRenderFrame(args);
+
+        // ── Render scene into FBO instead of directly to screen ───────────────
+        _sceneFbo.Bind();
+        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        GL.Enable(EnableCap.DepthTest);
+        // ─────────────────────────────────────────────────────────────────────
+        
+        float radius = 5f;
+        float speed = 1f;
+
+        _time += args.Time;
+        float angle = (float)_time; // or accumulate your own timer
 
         Camera camera = _camera.GetComponent<Camera>()!;
         
         _light.Transform.Position = _camera.Transform.Position;
         _light.GetComponent<SpotLight>()!.Direction = camera.Front;
 
-        _engine.Render(SceneManager.ActiveScene, camera, _shader);
+        Light.UseLights(_shader, SceneManager.ActiveScene.Lights.ToArray());
+        
+        Matrix4 view = camera.GetViewMatrix();
+        Matrix4 projection = camera.GetPerspectiveMatrix();
+
+        foreach (MeshRenderer meshRenderer in SceneManager.ActiveScene.MeshRenderers)
+        {
+            meshRenderer.Draw(view, projection);
+        }
+
+        // ── Draw ImGui editor UI on top ───────────────────────────────────────
+        SceneFramebuffer.Unbind();
+        GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
+        GL.Clear(ClearBufferMask.ColorBufferBit);
+        _editorUI.Draw(this);
+        _imGui.Render();
+        // ─────────────────────────────────────────────────────────────────────
 
         SwapBuffers();
     }
@@ -124,14 +170,23 @@ public class RuntimeWindow : GameWindow
     {
         base.OnUpdateFrame(args);
 
+        _imGui.Update(this, (float)args.Time); // added
+
         if (!IsFocused)
         {
             return;
         }
 
+        // Only move camera when viewport is grabbed (right-click held in viewport)
+        if (CursorState != CursorState.Grabbed) // added guard
+        {
+            _firstMove = true;
+            return;
+        }
+
         if (KeyboardState.IsKeyDown(Keys.Escape))
         {
-            Close();
+            CursorState = CursorState.Normal; // changed: release cursor instead of closing
         }
 
         Camera camera = _camera.GetComponent<Camera>()!;
@@ -190,14 +245,13 @@ public class RuntimeWindow : GameWindow
             camera.Yaw += deltaX * sensitivity;
             camera.Pitch -= deltaY * sensitivity;
         }
-        _engine.Update((float)args.Time, SceneManager.ActiveScene);
     }
     
     protected override void OnMouseWheel(MouseWheelEventArgs e)
     {
         base.OnMouseWheel(e);
 
-        if (CursorState == CursorState.Grabbed)
+        if (CursorState == CursorState.Grabbed) // added guard
             _camera.GetComponent<Camera>()!.Fov -= e.OffsetY;
     }
 
@@ -207,5 +261,6 @@ public class RuntimeWindow : GameWindow
         _camera.GetComponent<Camera>()!.Width = e.Width;
         _camera.GetComponent<Camera>()!.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
+        _imGui.Resize(e.Width, e.Height); // added
     }
 }
