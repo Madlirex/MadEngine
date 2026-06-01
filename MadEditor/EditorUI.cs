@@ -68,9 +68,62 @@ public class EditorUI
         ImGui.SetNextWindowSize(new Vector2(centerW, bottomH));
         ImGui.Begin("Stats", FixedPanel);
         DrawStats(wnd);
+        
+        DrawMainMenuBar();
+        
         ImGui.End();
     }
 
+    public void DrawMainMenuBar()
+    {
+        if (ImGui.BeginMainMenuBar())
+        {
+            if (ImGui.BeginMenu("File"))
+            {
+                if (ImGui.MenuItem("New", "Ctrl+N"))
+                {
+                    Console.WriteLine("Newing");
+                }
+
+                if (ImGui.MenuItem("Open", "Ctrl+O"))
+                {
+                    Console.WriteLine("Opening");
+                }
+
+                ImGui.Separator();
+
+                if (ImGui.MenuItem("Exit"))
+                {
+                    Console.WriteLine("Exiting");
+                }
+
+                ImGui.EndMenu();
+            }
+
+            if (ImGui.BeginMenu("Edit"))
+            {
+                ImGui.MenuItem("Undo", "Ctrl+Z");
+                ImGui.MenuItem("Redo", "Ctrl+Y");
+                ImGui.EndMenu();
+            }
+
+            if (ImGui.BeginMenu("GameObject"))
+            {
+                if (ImGui.BeginMenu("Create"))
+                {
+                    if (ImGui.MenuItem("Cube"))
+                    {
+                        SceneManager.ActiveScene.Add(new GameObject(new Transform() {Position = SceneManager.ActiveScene.Lights[0].GameObject.Transform.Position}));
+                    }
+                    ImGui.EndMenu();
+                }
+                ImGui.MenuItem("Game");
+                ImGui.EndMenu();
+            }
+
+            ImGui.EndMainMenuBar();
+        }
+    }
     private void DrawHierarchy()
     {
         var objects = SceneManager.ActiveScene.GameObjects;
