@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.Serialization;
 using ImGuiNET;
 using MadEngine;
 using MadEngine.Core;
@@ -190,7 +191,8 @@ public class EditorUI
         string name = _selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
             _selected.Name = name;
-
+        ImGui.Text("ID: " + _selected.Id);
+        
         ImGui.Separator();
 
         if (ImGui.CollapsingHeader("Transform", ImGuiTreeNodeFlags.DefaultOpen))
@@ -246,6 +248,32 @@ public class EditorUI
 
                 ImGui.Text($"Pitch: {cam.Pitch:F1}°   Yaw: {cam.Yaw:F1}°");
             }
+        }
+        
+        if (ImGui.Button("Add Component"))
+        {
+            ImGui.OpenPopup("AddComponentPopup");
+        }
+
+        if (ImGui.BeginPopup("AddComponentPopup"))
+        {
+            Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type =>
+                    type.IsClass &&
+                    !type.IsAbstract &&
+                    typeof(Component).IsAssignableFrom(type)).ToArray();
+            foreach (Type type in availableComponents)
+            {
+                if (!typeof(Component).IsAssignableFrom(type))
+                    continue;
+                if (ImGui.MenuItem(type.Name))
+                {
+                    _selected.AddComponent((Component)FormatterServices.GetUninitializedObject(type));
+                }
+            }
+
+            ImGui.EndPopup();
         }
     }
 

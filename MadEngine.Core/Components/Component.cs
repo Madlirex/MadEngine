@@ -3,7 +3,7 @@
 public abstract class Component
 {
     public GameObject GameObject { get; private set; }
-
+    
     internal void AssignGameObject(GameObject gameObject)
     {
         GameObject = gameObject;
