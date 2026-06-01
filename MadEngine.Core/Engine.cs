@@ -17,7 +17,7 @@ public class Engine
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         GL.Enable(EnableCap.DepthTest);
         
-        Light.UseLights(shader, scene.Lights.ToArray());
+        Light.BindToShaders(SceneManager.ActiveScene.Lights.ToArray());
         
         Matrix4 view = camera.GetViewMatrix();
         Matrix4 projection = camera.GetPerspectiveMatrix();

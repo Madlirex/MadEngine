@@ -47,6 +47,14 @@ public class Light : Component
         shader.SetInt("pointLightCount", point);
         shader.SetInt("spotLightCount", spot);
     }
+
+    public static void BindToShaders(Light[] lights)
+    {
+        foreach (Shader shader in ShaderSystem.Shaders)
+        {
+            UseLights(shader, lights);
+        }
+    }
 }
 
 public class DirectionalLight(Vector3 direction) : Light
