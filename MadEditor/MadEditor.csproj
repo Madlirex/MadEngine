@@ -90,15 +90,25 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="Shaders\lamp.frag" />
-      <Content Include="Shaders\lamp.frag">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <None Remove="Shaders\shader.frag" />
-      <Content Include="Shaders\shader.frag">
+      <None Remove="Shaders\shader.vert" />
+      <Content Update="Shaders\unlit.vert">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <None Remove="Shaders\shader.vert" />
-      <Content Include="Shaders\shader.vert">
+      <None Remove="Shaders\lit.frag" />
+      <Content Include="Shaders\lit.frag">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Shaders\lit.vert" />
+      <Content Include="Shaders\lit.vert">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Shaders\unlit.frag" />
+      <Content Include="Shaders\unlit.frag">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Shaders\unlit.vert" />
+      <Content Include="Shaders\unlit.vert">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

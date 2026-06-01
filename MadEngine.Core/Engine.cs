@@ -51,4 +51,9 @@ public class Engine
             gameObject.Update(deltaTime);
         }
     }
+
+    public void Dispose()
+    {
+        ShaderSystem.Dispose();
+    }
 }

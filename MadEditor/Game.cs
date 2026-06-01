@@ -13,8 +13,6 @@ public class EditorWindow : GameWindow
 {
     private Engine _engine;
     
-    private Shader _shader;
-    private Shader _lampShader;
     private GameObject _camera;
     private GameObject _light;
 
@@ -36,8 +34,8 @@ public class EditorWindow : GameWindow
     })
     {
         _engine = new Engine();
-        _shader = new Shader("Shaders/shader.vert", "Shaders/shader.frag");
-        _lampShader = new Shader("Shaders/shader.vert", "Shaders/lamp.frag");
+        ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
+        ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");
 
         _camera = new GameObject(new Transform());
         _camera.Name = "MainCamera";
@@ -48,7 +46,7 @@ public class EditorWindow : GameWindow
         _camera.GetComponent<Camera>()!.Height = height;
 
         MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices), 
-            new Material(_shader, new Texture("Textures/container2.png"),
+            new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"),
                 new Texture("Textures/container2_specular.png")));
         Transform defaultTransform = new Transform()
         {
@@ -56,7 +54,7 @@ public class EditorWindow : GameWindow
         };
 
         MeshRenderer lampRenderer = new MeshRenderer(new Mesh([], []),
-            new Material(_lampShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
+            new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
         Transform lampTransform = new Transform()
         {
             Position = new Vector3(-4f, 4f, 0f),
@@ -112,8 +110,7 @@ public class EditorWindow : GameWindow
 
         CursorState = CursorState.Normal;
         
-        _shader.Dispose();
-        _lampShader.Dispose();
+        _engine.Dispose();
         _sceneFbo.Dispose(); 
         _imGui.Dispose();    
     }

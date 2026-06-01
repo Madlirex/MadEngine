@@ -5,7 +5,7 @@ public static class ShaderSystem
     public static Shader UnlitShader { get; private set; }
     public static Shader LitShader { get; private set; }
 
-    private static List<Shader> _shaders;
+    private static List<Shader> _shaders = [];
     public static IReadOnlyList<Shader> Shaders => _shaders;
 
     public static void RegisterShader(Shader shader)
