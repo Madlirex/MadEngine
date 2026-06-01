@@ -115,7 +115,7 @@ public class RuntimeWindow : GameWindow
         _light.Transform.Position = _camera.Transform.Position;
         _light.GetComponent<SpotLight>()!.Direction = camera.Front;
 
-        _engine.Render(SceneManager.ActiveScene, camera, _shader);
+        _engine.Render(SceneManager.ActiveScene, camera);
 
         SwapBuffers();
     }

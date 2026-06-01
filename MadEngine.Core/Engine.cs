@@ -12,7 +12,7 @@ public class Engine
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
     }
     
-    public void Render(Scene scene, Camera camera, Shader shader)
+    public void Render(Scene scene, Camera camera)
     {
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         GL.Enable(EnableCap.DepthTest);
