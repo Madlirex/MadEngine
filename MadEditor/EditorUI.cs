@@ -140,7 +140,7 @@ public class EditorUI
         for (int i = 0; i < objects.Count; i++)
         {
             GameObject go = objects[i];
-            string label = go.Name;
+            string label = go.Name + "##" + go.Id;
             bool sel = go == _selected;
             if (ImGui.Selectable(label, sel))
                 _selected = go;

@@ -5,6 +5,7 @@ namespace MadEngine.Core;
 public class GameObject
 {
     public string Name = "NewGameObject";
+    public Guid Id = Guid.NewGuid();
     public Transform Transform;
     
     public List<Component> Components = [];
