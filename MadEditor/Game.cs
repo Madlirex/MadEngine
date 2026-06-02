@@ -39,7 +39,7 @@ public class EditorWindow : GameWindow
         
         FieldDrawerRegistry.Initialize();
 
-        _camera = new GameObject(new Transform());
+        _camera = new GameObject();
         _camera.Name = "MainCamera";
         _camera.AddComponent(new Camera());
         
@@ -57,13 +57,10 @@ public class EditorWindow : GameWindow
 
         MeshRenderer lampRenderer = new MeshRenderer(new Mesh([], []),
             new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
-        Transform lampTransform = new Transform()
-        {
-            Position = new Vector3(-4f, 4f, 0f),
-            Rotation = new Vector3(-1, 1, 0f) * 180
-        };
-        _light = new GameObject(lampTransform);
+        _light = new GameObject();
         _light.Name = "Light";
+        _light.Transform.Position = new Vector3(-4f, 4f, 0f);
+        _light.Transform.Rotation = new Vector3(-1, 1, 0f) * 180;
         Light light = new SpotLight
         {
             Direction = new Vector3(1f, -1f, 0f),
@@ -71,7 +68,7 @@ public class EditorWindow : GameWindow
             OuterCutOff = 35f
         };
         _light.AddComponent(light);
-        GameObject cube = new GameObject(defaultTransform);
+        GameObject cube = new GameObject();
         cube.Name = "Cube";
         cube.AddComponent(defaultRenderer);
         

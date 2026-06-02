@@ -32,21 +32,53 @@ public class GameObject
             component.Update(deltaTime);
     }
     
-    public void AddComponent<T>() where T : Component
+    public bool AddComponent<T>() where T : Component
     {
+        if (!ComponentRules.CanBeAdded(typeof(T)))
+            return false;
+
         T component = (T)Activator.CreateInstance(typeof(T))!;
         
         _components.Add(component);
         component.AssignGameObject(this);
         
         ComponentAdded?.Invoke(component);
+        return true;
+    }
+
+    public bool AddComponent(Component component)
+    {
+        if (!ComponentRules.CanBeAdded(component.GetType()))
+            return false;
+        
+        _components.Add(component);
+        component.AssignGameObject(this);
+        
+        ComponentAdded?.Invoke(component);
+        return true;
     }
 
     public bool RemoveComponent(Component component)
     {
-        if (component is Transform)
+        if (!ComponentRules.CanBeRemoved(component.GetType()))
             return false;
 
+        if (!_components.Remove(component))
+            return false;
+
+        ComponentRemoved?.Invoke(component);
+        return true;
+    }
+    
+    public bool RemoveComponent<T>() where T : Component
+    {
+        if (!ComponentRules.CanBeRemoved(typeof(T)))
+            return false;
+
+        T component = GetComponent<T>();
+        if (component == null)
+            return false;
+        
         if (!_components.Remove(component))
             return false;
 

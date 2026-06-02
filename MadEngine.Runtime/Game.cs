@@ -34,7 +34,7 @@ public class RuntimeWindow : GameWindow
         ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
         ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");
 
-        _camera = new GameObject(new Transform());
+        _camera = new GameObject();
         _camera.Name = "MainCamera";
         _camera.AddComponent(new Camera());
         
@@ -52,12 +52,10 @@ public class RuntimeWindow : GameWindow
 
         MeshRenderer lampRenderer = new MeshRenderer(new Mesh([], []),
             new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
-        Transform lampTransform = new Transform()
-        {
-            Position = new Vector3(-4f, 4f, 0f),
-            Rotation = new Vector3(-1, 1, 0f) * 180
-        };
-        _light = new GameObject(lampTransform);
+        
+        _light = new GameObject();
+        _light.Transform.Position = new Vector3(-4f, 4f, 0f);
+        _light.Transform.Rotation = new Vector3(-1, 1, 0f) * 180;
         _light.Name = "Light";
         Light light = new SpotLight
         {
@@ -66,7 +64,7 @@ public class RuntimeWindow : GameWindow
             OuterCutOff = 35f
         };
         _light.AddComponent(light);
-        GameObject cube = new GameObject(defaultTransform);
+        GameObject cube = new GameObject();
         cube.Name = "Cube";
         cube.AddComponent(defaultRenderer);
         
