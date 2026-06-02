@@ -31,7 +31,7 @@ public static class InspectorDrawer
                     typeof(Component).IsAssignableFrom(type)).ToArray();
             foreach (Type type in availableComponents)
             {
-                if (!typeof(Component).IsAssignableFrom(type))
+                if (!typeof(Component).IsAssignableFrom(type) || !ComponentRules.CanBeAdded(type))
                     continue;
                 if (ImGui.MenuItem(type.Name))
                 {
@@ -85,7 +85,7 @@ public static class InspectorDrawer
 
             ImGui.PushStyleColor(ImGuiCol.Button, new System.Numerics.Vector4(0, 0, 0, 0));
 
-            bool removeClicked = ImGui.SmallButton("X");
+            bool removeClicked = ComponentRules.CanBeRemoved(component.GetType()) && ImGui.SmallButton("X");
 
             ImGui.PopStyleColor();
 
