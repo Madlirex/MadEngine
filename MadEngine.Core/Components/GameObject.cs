@@ -6,16 +6,13 @@ public class GameObject
 {
     public string Name = "NewGameObject";
     public Guid Id = Guid.NewGuid();
-    public Transform Transform;
-    
-    public List<Component> Components = [];
+    public Transform Transform = new();
 
-    public GameObject(Transform transform)
-    {
-        Transform = transform;
-        AddComponent(transform);
-        Transform.AssignGameObject(this);
-    }
+    public IReadOnlyList<Component> Components => _components;
+    private List<Component> _components = [];
+
+    public event Action<Component>? ComponentAdded;
+    public event Action<Component>? ComponentRemoved;
 
     public void Awake()
     {
@@ -35,15 +32,26 @@ public class GameObject
             component.Update(deltaTime);
     }
     
-    public void AddComponent(Component component)
+    public void AddComponent<T>() where T : Component
     {
-        Components.Add(component);
+        T component = (T)Activator.CreateInstance(typeof(T))!;
+        
+        _components.Add(component);
         component.AssignGameObject(this);
+        
+        ComponentAdded?.Invoke(component);
+    }
 
-        if (component is Transform transform)
-        {
-            Transform = transform;
-        }
+    public bool RemoveComponent(Component component)
+    {
+        if (component is Transform)
+            return false;
+
+        if (!_components.Remove(component))
+            return false;
+
+        ComponentRemoved?.Invoke(component);
+        return true;
     }
 
     public T? GetComponent<T>() where T : Component

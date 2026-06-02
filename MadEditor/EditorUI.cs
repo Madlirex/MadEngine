@@ -114,7 +114,7 @@ public class EditorUI
                 {
                     if (ImGui.MenuItem("Cube"))
                     {
-                        GameObject obj = new GameObject(new Transform());
+                        GameObject obj = new GameObject();
                         Camera camera = GameObject.FindFirstComponent<Camera>()!;
                         obj.Transform.Position = camera.GameObject.Transform.Position + camera.Front * 2;
 
