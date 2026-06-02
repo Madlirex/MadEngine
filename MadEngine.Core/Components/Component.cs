@@ -3,6 +3,7 @@
 public abstract class Component
 {
     public GameObject GameObject { get; private set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
     
     internal void AssignGameObject(GameObject gameObject)
     {
@@ -13,4 +14,8 @@ public abstract class Component
     public virtual void Start() {}
     public virtual void Update(float deltaTime) {}
 
+    public override string ToString()
+    {
+        return $"{GameObject.Id}/{Id}";
+    }
 }

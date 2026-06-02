@@ -70,7 +70,7 @@ public static class InspectorDrawer
             {
                 if (FieldDrawerRegistry.TryGetDrawer(field.FieldType, out FieldDrawer drawer))
                 {
-                    drawer.Draw(component, field);
+                    drawer.Draw(component, field, component);
                 }
             }
             ImGui.Separator();
