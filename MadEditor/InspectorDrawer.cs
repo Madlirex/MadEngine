@@ -55,7 +55,7 @@ public static class InspectorDrawer
 
     public static void DrawComponents(GameObject selected)
     {
-        foreach (Component component in selected.Components)
+        foreach (Component component in selected.Components.ToArray())
         {
             DrawComponent(component);
         }
@@ -63,17 +63,56 @@ public static class InspectorDrawer
 
     public static void DrawComponent(Component component)
     {
+        ImGui.PushID(component.Id.ToString());
+
         string name = component.GetType().Name;
-        if (ImGui.CollapsingHeader(name, ImGuiTreeNodeFlags.DefaultOpen))
+
+        if (ImGui.BeginTable("ComponentHeader", 2, ImGuiTableFlags.SizingStretchProp))
         {
-            foreach (FieldInfo field in component.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
+            ImGui.TableSetupColumn("Name");
+            ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, 30);
+
+            ImGui.TableNextRow();
+
+            ImGui.TableSetColumnIndex(0);
+
+            bool open = ImGui.CollapsingHeader(
+                name,
+                ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.SpanAvailWidth
+            );
+
+            ImGui.TableSetColumnIndex(1);
+
+            ImGui.PushStyleColor(ImGuiCol.Button, new System.Numerics.Vector4(0, 0, 0, 0));
+
+            bool removeClicked = ImGui.SmallButton("X");
+
+            ImGui.PopStyleColor();
+
+            ImGui.EndTable();
+
+            if (removeClicked)
             {
-                if (FieldDrawerRegistry.TryGetDrawer(field.FieldType, out FieldDrawer drawer))
-                {
-                    drawer.Draw(component, field, component);
-                }
+                component.GameObject.RemoveComponent(component);
+                ImGui.PopID();
+                return;
             }
-            ImGui.Separator();
+
+            if (open)
+            {
+                foreach (FieldInfo field in component.GetType()
+                             .GetFields(BindingFlags.Instance | BindingFlags.Public))
+                {
+                    if (FieldDrawerRegistry.TryGetDrawer(field.FieldType, out FieldDrawer drawer))
+                    {
+                        drawer.Draw(component, field, component);
+                    }
+                }
+
+                ImGui.Separator();
+            }
         }
+
+        ImGui.PopID();
     }
 }
