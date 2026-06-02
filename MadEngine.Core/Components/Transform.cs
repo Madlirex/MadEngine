@@ -2,6 +2,8 @@
 
 namespace MadEngine.Core;
 
+[CanBeAdded(false)]
+[CanBeRemoved(false)]
 public class Transform : Component
 {
     public Vector3 Position = Vector3.Zero;

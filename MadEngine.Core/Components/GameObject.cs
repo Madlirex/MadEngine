@@ -6,13 +6,20 @@ public class GameObject
 {
     public string Name = "NewGameObject";
     public Guid Id = Guid.NewGuid();
-    public Transform Transform = new();
+    public Transform Transform;
 
     public IReadOnlyList<Component> Components => _components;
     private List<Component> _components = [];
 
     public event Action<Component>? ComponentAdded;
     public event Action<Component>? ComponentRemoved;
+
+    public GameObject()
+    {
+        Transform = new();
+        _components.Add(Transform);
+        Transform.AssignGameObject(this);
+    }
 
     public void Awake()
     {
