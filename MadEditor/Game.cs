@@ -36,6 +36,8 @@ public class EditorWindow : GameWindow
         _engine = new Engine();
         ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
         ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");
+        
+        FieldDrawerRegistry.Initialize();
 
         _camera = new GameObject(new Transform());
         _camera.Name = "MainCamera";

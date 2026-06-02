@@ -54,7 +54,7 @@ public class EditorUI
         ImGui.SetNextWindowPos(new Vector2(screenPos.X + leftW + centerW, screenPos.Y));
         ImGui.SetNextWindowSize(new Vector2(rightW, screenSize.Y));
         ImGui.Begin("Inspector", FixedPanel);
-        DrawInspector();
+        InspectorDrawer.Draw(_selected);
         ImGui.End();
         
         ImGui.SetNextWindowPos(new Vector2(screenPos.X + leftW, screenPos.Y));
@@ -177,103 +177,6 @@ public class EditorUI
         {
             ImGui.SetCursorPos(new Vector2(8, ImGui.GetFrameHeight() + 4));
             ImGui.TextDisabled("Right-click + WASD to fly  |  Esc to release");
-        }
-    }
-
-    private void DrawInspector()
-    {
-        if (_selected == null)
-        {
-            ImGui.TextDisabled("Select an object in the Hierarchy.");
-            return;
-        }
-
-        string name = _selected.Name;
-        if (ImGui.InputText("Name", ref name, 128))
-            _selected.Name = name;
-        ImGui.Text("ID: " + _selected.Id);
-        
-        ImGui.Separator();
-
-        if (ImGui.CollapsingHeader("Transform", ImGuiTreeNodeFlags.DefaultOpen))
-        {
-            Transform t = _selected.Transform;
-
-            var pos = ToNum(t.Position);
-            if (ImGui.DragFloat3("Position", ref pos, 0.05f))
-                t.Position = ToOtk(pos);
-
-            var rot = ToNum(t.Rotation);
-            if (ImGui.DragFloat3("Rotation", ref rot, 0.5f))
-                t.Rotation = ToOtk(rot);
-
-            var scale = ToNum(t.Scale);
-            if (ImGui.DragFloat3("Scale", ref scale, 0.01f, 0.001f, 100f))
-                t.Scale = ToOtk(scale);
-        }
-
-        SpotLight? spot = _selected.GetComponent<SpotLight>();
-        if (spot != null)
-        {
-            ImGui.Separator();
-            if (ImGui.CollapsingHeader("SpotLight", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                var dir = ToNum(spot.Direction);
-                if (ImGui.DragFloat3("Direction", ref dir, 0.01f))
-                    spot.Direction = ToOtk(dir);
-
-                float cutoff = spot.CutOff;
-                if (ImGui.DragFloat("Cut-off°", ref cutoff, 0.5f, 0f, 90f))
-                    spot.CutOff = cutoff;
-
-                float outerCutoff = spot.OuterCutOff;
-                if (ImGui.DragFloat("Outer cut-off°", ref outerCutoff, 0.5f, 0f, 90f))
-                    spot.OuterCutOff = outerCutoff;
-            }
-        }
-
-        Camera? cam = _selected.GetComponent<Camera>();
-        if (cam != null)
-        {
-            ImGui.Separator();
-            if (ImGui.CollapsingHeader("Camera", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                float fov = cam.Fov;
-                if (ImGui.DragFloat("FOV", ref fov, 0.5f, 10f, 120f))
-                    cam.Fov = fov;
-
-                float speed = cam.Speed;
-                if (ImGui.DragFloat("Speed", ref speed, 0.1f, 0.1f, 50f))
-                    cam.Speed = speed;
-
-                ImGui.Text($"Pitch: {cam.Pitch:F1}°   Yaw: {cam.Yaw:F1}°");
-            }
-        }
-        
-        if (ImGui.Button("Add Component"))
-        {
-            ImGui.OpenPopup("AddComponentPopup");
-        }
-
-        if (ImGui.BeginPopup("AddComponentPopup"))
-        {
-            Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type =>
-                    type.IsClass &&
-                    !type.IsAbstract &&
-                    typeof(Component).IsAssignableFrom(type)).ToArray();
-            foreach (Type type in availableComponents)
-            {
-                if (!typeof(Component).IsAssignableFrom(type))
-                    continue;
-                if (ImGui.MenuItem(type.Name))
-                {
-                    _selected.AddComponent((Component)FormatterServices.GetUninitializedObject(type));
-                }
-            }
-
-            ImGui.EndPopup();
         }
     }
 

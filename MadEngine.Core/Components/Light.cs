@@ -57,9 +57,9 @@ public class Light : Component
     }
 }
 
-public class DirectionalLight(Vector3 direction) : Light
+public class DirectionalLight : Light
 {
-    public Vector3 Direction = direction;
+    public Vector3 Direction = Vector3.Zero;
 
     public override void Use(Shader shader, int index)
     {

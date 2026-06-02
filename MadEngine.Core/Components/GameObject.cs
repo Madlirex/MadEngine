@@ -13,6 +13,7 @@ public class GameObject
     public GameObject(Transform transform)
     {
         Transform = transform;
+        AddComponent(transform);
         Transform.AssignGameObject(this);
     }
 
