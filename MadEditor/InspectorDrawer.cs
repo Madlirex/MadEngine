@@ -16,32 +16,7 @@ public static class InspectorDrawer
 
         DrawHeader(selected);
         DrawComponents(selected);
-        if (ImGui.Button("Add Component"))
-        {
-            ImGui.OpenPopup("AddComponentPopup");
-        }
-
-        if (ImGui.BeginPopup("AddComponentPopup"))
-        {
-            Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type =>
-                    type.IsClass &&
-                    !type.IsAbstract &&
-                    typeof(Component).IsAssignableFrom(type)).ToArray();
-            foreach (Type type in availableComponents)
-            {
-                if (!typeof(Component).IsAssignableFrom(type) || !ComponentRules.CanBeAdded(type))
-                    continue;
-                if (ImGui.MenuItem(type.Name))
-                {
-                    Console.WriteLine(type.FullName);
-                    selected.AddComponent((Component)Activator.CreateInstance((type))!);
-                }
-            }
-
-            ImGui.EndPopup();
-        }
+        DrawFooter(selected);
     }
 
     public static void DrawHeader(GameObject selected)
@@ -114,5 +89,33 @@ public static class InspectorDrawer
         }
 
         ImGui.PopID();
+    }
+
+    public static void DrawFooter(GameObject selected)
+    {
+        if (ImGui.Button("Add Component"))
+        {
+            ImGui.OpenPopup("AddComponentPopup");
+        }
+
+        if (ImGui.BeginPopup("AddComponentPopup"))
+        {
+            Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type =>
+                    type is { IsClass: true, IsAbstract: false } &&
+                    typeof(Component).IsAssignableFrom(type)).ToArray();
+            foreach (Type type in availableComponents)
+            {
+                if (!ComponentRules.CanBeAdded(type))
+                    continue;
+                if (ImGui.MenuItem(type.Name))
+                {
+                    selected.AddComponent(type);
+                }
+            }
+
+            ImGui.EndPopup();
+        }
     }
 }

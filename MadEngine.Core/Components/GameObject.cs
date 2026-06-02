@@ -52,6 +52,20 @@ public class GameObject
         ComponentAdded?.Invoke(component);
         return true;
     }
+    
+    public bool AddComponent(Type type)
+    {
+        if (!ComponentRules.CanBeAdded(type))
+            return false;
+
+        Component component = (Component)Activator.CreateInstance(type)!;
+        
+        _components.Add(component);
+        component.AssignGameObject(this);
+        
+        ComponentAdded?.Invoke(component);
+        return true;
+    }
 
     public bool AddComponent(Component component)
     {
