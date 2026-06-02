@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using System.Runtime.Serialization;
 using ImGuiNET;
-using MadEngine;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 using OpenTK.Windowing.Common;
@@ -138,9 +136,8 @@ public class EditorUI
     private void DrawHierarchy()
     {
         var objects = SceneManager.ActiveScene.GameObjects;
-        for (int i = 0; i < objects.Count; i++)
+        foreach (var go in objects)
         {
-            GameObject go = objects[i];
             string label = go.Name + "##" + go.Id;
             bool sel = go == _selected;
             if (ImGui.Selectable(label, sel))
@@ -189,7 +186,4 @@ public class EditorUI
         ImGui.Text($"Camera     : {pos.X:F2}, {pos.Y:F2}, {pos.Z:F2}");
         ImGui.Text($"Viewport   : {_viewportSize.X:F0} x {_viewportSize.Y:F0}");
     }
-
-    private static Vector3 ToNum(OpenTK.Mathematics.Vector3 v) => new(v.X, v.Y, v.Z);
-    private static OpenTK.Mathematics.Vector3 ToOtk(Vector3 v) => new(v.X, v.Y, v.Z);
 }
