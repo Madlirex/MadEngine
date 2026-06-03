@@ -4,22 +4,25 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
-public static class InspectorDrawer
+public class InspectorDrawer : IPanelDrawer
 {
-    public static void Draw(GameObject? selected)
+    public string Name => "Inspector";
+    public PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
+
+    public void Draw(EditorUIContext context)
     {
-        if (selected == null)
+        if (context.Selected == null)
         {
             ImGui.TextDisabled("Select an object in the Hierarchy.");
             return;
         }
 
-        DrawHeader(selected);
-        DrawComponents(selected);
-        DrawFooter(selected);
+        DrawHeader(context.Selected);
+        DrawComponents(context.Selected);
+        DrawFooter(context.Selected);
     }
 
-    public static void DrawHeader(GameObject selected)
+    public void DrawHeader(GameObject selected)
     {
         string name = selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
@@ -28,7 +31,7 @@ public static class InspectorDrawer
         ImGui.Separator();
     }
 
-    public static void DrawComponents(GameObject selected)
+    public void DrawComponents(GameObject selected)
     {
         foreach (Component component in selected.Components.ToArray())
         {
@@ -36,7 +39,7 @@ public static class InspectorDrawer
         }
     }
 
-    public static void DrawComponent(Component component)
+    public void DrawComponent(Component component)
     {
         ImGui.PushID(component.Id.ToString());
 
@@ -91,7 +94,7 @@ public static class InspectorDrawer
         ImGui.PopID();
     }
 
-    public static void DrawFooter(GameObject selected)
+    public void DrawFooter(GameObject selected)
     {
         if (ImGui.Button("Add Component"))
         {
