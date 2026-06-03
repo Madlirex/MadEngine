@@ -23,8 +23,8 @@ uniform int useTexture;
 
 void main()
 {
-    if (useTexture == 1)
-        FragColor = texture(texture0, texCoord) * material.ambientColor;
+    if (material.useDiffuse == 1)
+        FragColor = texture(material.diffuse, texCoord) * material.ambientColor;
     else
         FragColor = material.ambientColor;
 }
