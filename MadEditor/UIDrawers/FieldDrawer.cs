@@ -49,7 +49,21 @@ public static class FieldDrawerRegistry
 
     public static bool TryGetDrawer(Type type, out FieldDrawer drawer)
     {
-        return Drawers.TryGetValue(type, out drawer!);
+        Type? current = type;
+
+        while (current != null)
+        {
+            if (Drawers.TryGetValue(current, out var found))
+            {
+                drawer = found;
+                return true;
+            }
+
+            current = current.BaseType;
+        }
+
+        drawer = null!;
+        return false;
     }
 }
 
@@ -99,6 +113,19 @@ public class Vector4Drawer : FieldDrawer
         {
             field.SetValue(target, MathFunctions.ToOtk4(value));
         }
+        ImGui.PopID();
+    }
+}
+
+[CustomFieldDrawer(typeof(Component))]
+public class ComponentDrawer : FieldDrawer
+{
+    public override void Draw(object target, FieldInfo field, Component component)
+    {
+        ImGui.PushID(component + field.Name);
+        
+        ImGui.Text(field.Name + field.FieldType.Name);
+        
         ImGui.PopID();
     }
 }
