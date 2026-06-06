@@ -8,6 +8,7 @@ public class InspectorDrawer : IPanelDrawer
 {
     public string Name => "Inspector";
     public PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
+    public AddComponentPopup AddComponentPopup = new();
 
     public void Draw(EditorUIContext context)
     {
@@ -19,7 +20,7 @@ public class InspectorDrawer : IPanelDrawer
 
         DrawHeader(context.Selected);
         DrawComponents(context.Selected);
-        DrawFooter(context.Selected);
+        DrawFooter(context);
     }
 
     public void DrawHeader(GameObject selected)
@@ -94,31 +95,13 @@ public class InspectorDrawer : IPanelDrawer
         ImGui.PopID();
     }
 
-    public void DrawFooter(GameObject selected)
+    public void DrawFooter(EditorUIContext context)
     {
         if (ImGui.Button("Add Component"))
         {
-            ImGui.OpenPopup("AddComponentPopup");
+            AddComponentPopup.Open();
         }
 
-        if (ImGui.BeginPopup("AddComponentPopup"))
-        {
-            Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type =>
-                    type is { IsClass: true, IsAbstract: false } &&
-                    typeof(Component).IsAssignableFrom(type)).ToArray();
-            foreach (Type type in availableComponents)
-            {
-                if (!ComponentRules.CanBeAdded(type))
-                    continue;
-                if (ImGui.MenuItem(type.Name))
-                {
-                    selected.AddComponent(type);
-                }
-            }
-
-            ImGui.EndPopup();
-        }
+        AddComponentPopup.Draw(context);
     }
 }
