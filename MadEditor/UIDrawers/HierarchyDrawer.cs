@@ -24,6 +24,8 @@ public class HierarchyDrawer : IPanelDrawer
         ImGui.PushStyleVar(ImGuiStyleVar.IndentSpacing, 4f);
         bool sceneOpen = ImGui.TreeNodeEx(scene.Name, sceneFlags);
         ImGui.PopStyleColor();
+        
+        CheckDragDrop(null);
 
         if (sceneOpen)
         {
@@ -56,61 +58,54 @@ public class HierarchyDrawer : IPanelDrawer
         string label = $"{root.Name}##{root.Id}";
 
         bool open = ImGui.TreeNodeEx(label, flags);
-
-        // selection
+        
         if (ImGui.IsItemClicked())
             context.Selected = root;
-
-        // drag source
+        
         if (ImGui.BeginDragDropSource())
         {
-            unsafe
-            {
-                Guid id = root.Id;
-                ImGui.SetDragDropPayload("GAMEOBJECT", (nint)(&id), (uint)sizeof(Guid));
-            }
-
+            ImGuiPayload.Set(root.Id);
             ImGui.Text(root.Name);
             ImGui.EndDragDropSource();
         }
-
-        // drop target
-        if (ImGui.BeginDragDropTarget())
-        {
-            unsafe
-            {
-                var payload = ImGui.AcceptDragDropPayload("GAMEOBJECT");
-
-                if (payload.NativePtr != null)
-                {
-                    Guid draggedId = *(Guid*)payload.Data;
-
-                    var scene = SceneManager.ActiveScene;
-
-                    var dragged = scene.GameObjects.FirstOrDefault(x => x.Id == draggedId);
-
-                    if (dragged != null &&
-                        dragged != root &&
-                        !dragged.Transform.IsDescendantOf(root.Transform))
-                    {
-                        dragged.Transform.Parent = root.Transform;
-                    }
-                }
-
-                ImGui.EndDragDropTarget();
-            }
-        }
-
-        // IMPORTANT: TreePop ONLY if not leaf
+        
+        CheckDragDrop(root);
+        
         if (open)
         {
             if (hasChildren)
             {
                 foreach (var child in root.Transform.Children)
+                {
                     DrawNode(child.GameObject, context);
+                }
             }
 
-            ImGui.TreePop(); // ALWAYS paired with open == true
+            ImGui.TreePop();
+        }
+    }
+    
+    
+
+    public void CheckDragDrop(GameObject? root)
+    {
+        if (ImGui.BeginDragDropTarget())
+        {
+            if (ImGuiPayload.TryGetData(out nint? data))
+            {
+                Guid draggedId = ImGuiPayload.DataToGuid((IntPtr)data!);
+                Scene scene = SceneManager.ActiveScene;
+                GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Id == draggedId);
+                
+                if (dragged != null && dragged != root)
+                {
+                    if(root != null && !dragged.Transform.IsDescendantOf(root.Transform))
+                        dragged.Transform.Parent = root.Transform;
+                    else if(root == null)
+                        dragged.Transform.Parent = null;
+                }
+            }
+            ImGui.EndDragDropTarget();
         }
     }
 }
