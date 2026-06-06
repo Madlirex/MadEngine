@@ -96,7 +96,7 @@ public class GameObject
         if (!ComponentRules.CanBeRemoved(typeof(T)))
             return false;
 
-        T component = GetComponent<T>();
+        T? component = GetComponent<T>();
         if (component == null)
             return false;
         

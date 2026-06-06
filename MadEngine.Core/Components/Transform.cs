@@ -74,7 +74,7 @@ public class Transform : Component
             throw new InvalidOperationException("Child not found");
     }
     
-    private bool IsDescendantOf(Transform transform)
+    public bool IsDescendantOf(Transform transform)
     {
         Transform? current = Parent;
 
