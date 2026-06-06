@@ -2,6 +2,8 @@
 
 public class Scene
 {
+    public string Name = "NewScene";
+    
     private readonly List<GameObject> _gameObjects = [];
     public IReadOnlyList<GameObject> GameObjects => _gameObjects;
 
