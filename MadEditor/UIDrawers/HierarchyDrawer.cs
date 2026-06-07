@@ -26,6 +26,13 @@ public class HierarchyDrawer : IPanelDrawer
         bool sceneOpen = ImGui.TreeNodeEx(scene.Name, sceneFlags);
         ImGui.PopStyleColor();
         
+        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+        {
+            context.RightClicked = null;
+            HierarchyPopup.Open();
+        }
+        HierarchyPopup.Draw(context);
+        
         CheckDragDrop(null);
 
         if (sceneOpen)
