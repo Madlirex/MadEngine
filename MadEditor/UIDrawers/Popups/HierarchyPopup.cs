@@ -1,6 +1,4 @@
 ﻿using ImGuiNET;
-using MadEngine.Core;
-using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
@@ -11,9 +9,14 @@ public class HierarchyPopup : Popup
     {
         if (ImGui.MenuItem("Add Empty"))
         {
-            GameObject newObj = new GameObject();
-            SceneManager.ActiveScene.Add(newObj);
-            if (context.RightClicked != null) newObj.Transform.Parent = context.RightClicked.Transform.Parent;
+            context.EnqueueCommand(new CreateGameObjectCommand(context.RightClicked?.Transform));
+        }
+
+        if (context.RightClicked == null) return;
+
+        if (ImGui.MenuItem("Delete"))
+        {
+            context.EnqueueCommand(new DeleteGameObjectCommand(context.RightClicked));
         }
     }
 }

@@ -65,7 +65,7 @@ public class HierarchyDrawer : IPanelDrawer
 
         if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
         {
-            context.Selected = root;
+            context.RightClicked = root;
             HierarchyPopup.Open();
         }
         HierarchyPopup.Draw(context);

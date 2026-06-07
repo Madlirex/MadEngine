@@ -19,6 +19,13 @@ public class Scene
         Register(gameObject);
     }
 
+    public void Destroy(GameObject gameObject)
+    {
+        _gameObjects.Remove(gameObject);
+        gameObject.Transform.Parent = null;
+        Unregister(gameObject);
+    }
+
     public void Register(GameObject gameObject)
     {
         foreach (Component component in gameObject.Components)
@@ -28,6 +35,17 @@ public class Scene
 
         gameObject.ComponentAdded += RegisterComponent;
         gameObject.ComponentRemoved += UnregisterComponent;
+    }
+
+    public void Unregister(GameObject gameObject)
+    {
+        foreach (Component component in gameObject.Components)
+        {
+            UnregisterComponent(component);
+        }
+
+        gameObject.ComponentAdded -= RegisterComponent;
+        gameObject.ComponentRemoved -= UnregisterComponent;
     }
 
     public void RegisterComponent(Component component)

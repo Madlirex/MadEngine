@@ -42,6 +42,8 @@ public class EditorUI
         PanelSystem.Draw(_uiContext);
         
         DrawMainMenuBar();
+        _uiContext.ExecuteCommands();
+        _uiContext.ClearCommands();
     }
 
     public void DrawMainMenuBar()
