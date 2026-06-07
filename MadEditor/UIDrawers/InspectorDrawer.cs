@@ -112,6 +112,17 @@ public class InspectorDrawer : IPanelDrawer
             AddComponentPopup.Open();
         }
 
+        if (ImGui.Button("Recompile Scripts"))
+        {
+            if (Directory.Exists("Assets"))
+            {
+                var scriptFiles = Directory
+                    .GetFiles("Assets", "*.cs", SearchOption.AllDirectories);
+
+                ScriptDomain.ReloadFromFiles(scriptFiles);
+            }
+        }
+
         AddComponentPopup.Draw(context);
     }
 }
