@@ -145,3 +145,62 @@ public class ComponentDrawer : FieldDrawer
         ImGui.PopID();
     }
 }
+
+[CustomFieldDrawer(typeof(bool))]
+public class BoolDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member, Component component)
+    {
+        ImGui.PushID(component + member.Name);
+
+        bool value = (bool)member.GetValue(target)!;
+
+        if (ImGui.Checkbox(member.Name, ref value))
+        {
+            member.SetValue(target, value);
+        }
+
+        ImGui.PopID();
+    }
+}
+
+[CustomFieldDrawer(typeof(int))]
+public class IntDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member, Component component)
+    {
+        ImGui.PushID(component + member.Name);
+
+        int value = (int)member.GetValue(target)!;
+
+        if (ImGui.DragInt(member.Name, ref value))
+        {
+            member.SetValue(target, value);
+        }
+
+        ImGui.PopID();
+    }
+}
+
+[CustomFieldDrawer(typeof(string))]
+public class StringDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member, Component component)
+    {
+        ImGui.PushID(component + member.Name);
+
+        string value = (string?)member.GetValue(target) ?? "";
+
+        byte[] buffer = new byte[256];
+        System.Text.Encoding.UTF8.GetBytes(value, 0, value.Length, buffer, 0);
+
+        if (ImGui.InputText(member.Name, buffer, (uint)buffer.Length))
+        {
+            string newValue = System.Text.Encoding.UTF8.GetString(buffer).TrimEnd('\0');
+
+            member.SetValue(target, newValue);
+        }
+
+        ImGui.PopID();
+    }
+}
