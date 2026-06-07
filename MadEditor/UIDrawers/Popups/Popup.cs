@@ -23,5 +23,5 @@ public abstract class Popup
         }
     }
 
-    public abstract void Body(EditorUIContext context);
+    protected abstract void Body(EditorUIContext context);
 }

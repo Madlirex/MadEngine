@@ -9,6 +9,7 @@ public class HierarchyDrawer : IPanelDrawer
 {
     public string Name => "Hierarchy";
     public PanelRegion PanelRegion { get; set; } = PanelRegion.Left;
+    public HierarchyPopup HierarchyPopup = new();
     public void Draw(EditorUIContext context)
     {
         Scene scene = SceneManager.ActiveScene;
@@ -59,8 +60,15 @@ public class HierarchyDrawer : IPanelDrawer
 
         bool open = ImGui.TreeNodeEx(label, flags);
         
-        if (ImGui.IsItemClicked())
+        if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
             context.Selected = root;
+
+        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+        {
+            context.Selected = root;
+            HierarchyPopup.Open();
+        }
+        HierarchyPopup.Draw(context);
         
         if (ImGui.BeginDragDropSource())
         {

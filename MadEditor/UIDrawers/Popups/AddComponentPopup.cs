@@ -7,7 +7,7 @@ public class AddComponentPopup : Popup
 {
     public override string Name => "AddComponentPopup";
 
-    public override void Body(EditorUIContext context)
+    protected override void Body(EditorUIContext context)
     {
         Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
