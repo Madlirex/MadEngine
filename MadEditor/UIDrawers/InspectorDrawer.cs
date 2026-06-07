@@ -79,12 +79,22 @@ public class InspectorDrawer : IPanelDrawer
 
             if (open)
             {
-                foreach (FieldInfo field in component.GetType()
-                             .GetFields(BindingFlags.Instance | BindingFlags.Public))
+                IOrderedEnumerable<InspectorMember> members = component.GetType()
+                    .GetFields(BindingFlags.Instance | BindingFlags.Public)
+                    .Where(f => f.GetCustomAttribute<HideInInspectorAttribute>() == null)
+                    .Select(f => (InspectorMember)new FieldMember(f))
+                    .Concat(
+                        component.GetType()
+                            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                            .Where(p => p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
+                            .Select(p => (InspectorMember)new PropertyMember(p))
+                    )
+                    .OrderBy(m => m.Order);
+                foreach (InspectorMember  member in members)
                 {
-                    if (FieldDrawerRegistry.TryGetDrawer(field.FieldType, out FieldDrawer drawer))
+                    if (FieldDrawerRegistry.TryGetDrawer(member.Type, out FieldDrawer drawer))
                     {
-                        drawer.Draw(component, field, component);
+                        drawer.Draw(component, member, component);
                     }
                 }
 

@@ -11,9 +11,19 @@ public static class MathFunctions
         return new Vector3(vector3.X, vector3.Y, vector3.Z);
     }
 
+    public static Quaternion ToQuaternion(NVector3 vector3)
+    {
+        return new Quaternion(vector3.X, vector3.Y, vector3.Z);
+    }
+
     public static NVector3 ToNumerics3(Vector3 vector3)
     {
         return new NVector3(vector3.X, vector3.Y, vector3.Z);
+    }
+
+    public static NVector3 ToNumerics3(Quaternion quaternion)
+    {
+        return new NVector3(quaternion.X, quaternion.Y, quaternion.Z);
     }
     
     public static Vector4 ToOtk4(NVector4 vector4)

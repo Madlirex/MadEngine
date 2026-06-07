@@ -114,4 +114,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="EditorAttributes\" />
+    </ItemGroup>
+
 </Project>

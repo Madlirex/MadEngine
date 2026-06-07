@@ -49,7 +49,7 @@ public class RuntimeWindow : GameWindow
 
         _light = new GameObject();
         _light.Transform.Position = new Vector3(-4f, 4f, 0f);
-        _light.Transform.Rotation = new Vector3(-1, 1, 0f) * 180;
+        _light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
         _light.Name = "Light";
         Light light = new SpotLight
         {

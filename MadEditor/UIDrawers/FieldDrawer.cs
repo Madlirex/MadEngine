@@ -7,7 +7,7 @@ namespace MadEditor;
 
 public abstract class FieldDrawer
 {
-    public abstract void Draw(object target, FieldInfo field, Component component);
+    public abstract void Draw(object target, InspectorMember member, Component component);
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -70,15 +70,15 @@ public static class FieldDrawerRegistry
 [CustomFieldDrawer(typeof(float))]
 public class FloatDrawer : FieldDrawer
 {
-    public override void Draw(object target, FieldInfo field, Component component)
+    public override void Draw(object target, InspectorMember member, Component component)
     {
-        ImGui.PushID(component + field.Name);
+        ImGui.PushID(component + member.Name);
         
-        float value = (float)field.GetValue(target)!;
+        float value = (float)member.GetValue(target)!;
 
-        if (ImGui.DragFloat(field.Name, ref value))
+        if (ImGui.DragFloat(member.Name, ref value))
         {
-            field.SetValue(target, value);
+            member.SetValue(target, value);
         }
         
         ImGui.PopID();
@@ -88,14 +88,14 @@ public class FloatDrawer : FieldDrawer
 [CustomFieldDrawer(typeof(OpenTK.Mathematics.Vector3))]
 public class Vector3Drawer : FieldDrawer
 {
-    public override void Draw(object target, FieldInfo field, Component component)
+    public override void Draw(object target, InspectorMember member, Component component)
     {
-        ImGui.PushID(component + field.Name);
-        Vector3 value = MathFunctions.ToNumerics3((OpenTK.Mathematics.Vector3)field.GetValue(target)!);
+        ImGui.PushID(component + member.Name);
+        Vector3 value = MathFunctions.ToNumerics3((OpenTK.Mathematics.Vector3)member.GetValue(target)!);
 
-        if (ImGui.DragFloat3(field.Name, ref value))
+        if (ImGui.DragFloat3(member.Name, ref value))
         {
-            field.SetValue(target, MathFunctions.ToOtk3(value));
+            member.SetValue(target, MathFunctions.ToOtk3(value));
         }
         ImGui.PopID();
     }
@@ -104,14 +104,30 @@ public class Vector3Drawer : FieldDrawer
 [CustomFieldDrawer(typeof(OpenTK.Mathematics.Vector4))]
 public class Vector4Drawer : FieldDrawer
 {
-    public override void Draw(object target, FieldInfo field, Component component)
+    public override void Draw(object target, InspectorMember member, Component component)
     {
-        ImGui.PushID(component + field.Name);
-        Vector4 value = MathFunctions.ToNumerics4((OpenTK.Mathematics.Vector4)field.GetValue(target)!);
+        ImGui.PushID(component + member.Name);
+        Vector4 value = MathFunctions.ToNumerics4((OpenTK.Mathematics.Vector4)member.GetValue(target)!);
 
-        if (ImGui.DragFloat4(field.Name, ref value))
+        if (ImGui.DragFloat4(member.Name, ref value))
         {
-            field.SetValue(target, MathFunctions.ToOtk4(value));
+            member.SetValue(target, MathFunctions.ToOtk4(value));
+        }
+        ImGui.PopID();
+    }
+}
+
+[CustomFieldDrawer(typeof(OpenTK.Mathematics.Quaternion))]
+public class QuaternionDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member, Component component)
+    {
+        ImGui.PushID(component + member.Name);
+        Vector3 value = MathFunctions.ToNumerics3((OpenTK.Mathematics.Quaternion)member.GetValue(target)!);
+
+        if (ImGui.DragFloat3(member.Name, ref value))
+        {
+            member.SetValue(target, MathFunctions.ToQuaternion(value));
         }
         ImGui.PopID();
     }
@@ -120,11 +136,11 @@ public class Vector4Drawer : FieldDrawer
 [CustomFieldDrawer(typeof(Component))]
 public class ComponentDrawer : FieldDrawer
 {
-    public override void Draw(object target, FieldInfo field, Component component)
+    public override void Draw(object target, InspectorMember member, Component component)
     {
-        ImGui.PushID(component + field.Name);
+        ImGui.PushID(component + member.Name);
         
-        ImGui.Text(field.Name + field.FieldType.Name);
+        ImGui.Text(member.Name + member.Type.Name);
         
         ImGui.PopID();
     }
