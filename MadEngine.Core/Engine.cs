@@ -25,35 +25,39 @@ public class Engine
         Matrix4 projection = camera.GetPerspectiveMatrix();
 
         foreach (MeshRenderer meshRenderer in scene.MeshRenderers)
-        {
             meshRenderer.Draw(view, projection);
-        }
     }
 
     public void Awake(Scene scene)
     {
         foreach (GameObject gameObject in scene.GameObjects)
-        {
             gameObject.Awake();
-        }
     }
     
     public void Start(Scene scene)
     {
         foreach (GameObject gameObject in scene.GameObjects)
-        {
             gameObject.Start();
-        }
     }
     
     public void Update(float deltaTime, Scene scene)
     {
         foreach (GameObject gameObject in scene.GameObjects)
-        {
             gameObject.Update(deltaTime);
-        }
     }
 
+    public void EditorStart(Scene scene)
+    {
+        foreach(GameObject gameObject in scene.GameObjects)
+            gameObject.EditorStart();
+    }
+
+    public void EditorUpdate(float deltaTime, Scene scene)
+    {
+        foreach(GameObject gameObject in scene.GameObjects)
+            gameObject.EditorUpdate(deltaTime);
+    }
+    
     public void Dispose()
     {
         ShaderSystem.Dispose();

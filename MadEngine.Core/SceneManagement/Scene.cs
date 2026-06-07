@@ -21,6 +21,7 @@ public class Scene
 
     public void Destroy(GameObject gameObject)
     {
+        gameObject.Destroy();
         _gameObjects.Remove(gameObject);
         gameObject.Transform.Parent = null;
         Unregister(gameObject);

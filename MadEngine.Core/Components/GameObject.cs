@@ -38,6 +38,24 @@ public class GameObject
         foreach (Component component in Components)
             component.Update(deltaTime);
     }
+
+    public void Destroy()
+    {
+        foreach (Component component in Components)
+            component.OnDestroy();
+    }
+
+    public void EditorStart()
+    {
+        foreach (Component component in Components)
+            component.EditorStart();
+    }
+
+    public void EditorUpdate(float deltaTime)
+    {
+        foreach (Component component in Components)
+            component.EditorUpdate(deltaTime);
+    }
     
     public bool AddComponent<T>() where T : Component
     {

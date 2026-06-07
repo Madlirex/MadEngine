@@ -94,6 +94,8 @@ public class EditorWindow : GameWindow
         base.OnLoad();
         
         _engine.Initialize();
+        
+        _engine.EditorStart(SceneManager.ActiveScene);
     }
 
     protected override void OnTextInput(TextInputEventArgs e)
@@ -220,7 +222,7 @@ public class EditorWindow : GameWindow
             camera.Yaw += deltaX * sensitivity;
             camera.Pitch -= deltaY * sensitivity;
         }
-        _engine.Update((float)args.Time, SceneManager.ActiveScene);
+        _engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
     }
     
     protected override void OnMouseWheel(MouseWheelEventArgs e)
