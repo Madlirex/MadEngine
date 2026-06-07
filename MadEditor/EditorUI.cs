@@ -92,8 +92,8 @@ public class EditorUI
                         Texture diffuse = new Texture("Textures/container2.png");
                         Texture specular = new Texture("Textures/container2_specular.png");
 
-                        MeshRenderer meshRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices),
-                            new Material(ShaderSystem.LitShader, diffuse, specular));
+                        MeshRenderer meshRenderer = new MeshRenderer();
+                        meshRenderer.Material = new Material(ShaderSystem.LitShader, diffuse, specular);
                         obj.AddComponent(meshRenderer);
                         SceneManager.ActiveScene.Add(obj);
                     }

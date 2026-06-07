@@ -41,11 +41,12 @@ public class RuntimeWindow : GameWindow
         CursorState = CursorState.Grabbed; // changed: editor uses normal cursor by default
         _camera.GetComponent<Camera>()!.Width = width;
         _camera.GetComponent<Camera>()!.Height = height;
-
-        MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices), 
-            new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"),
-                new Texture("Textures/container2_specular.png")));
         
+        MeshRenderer defaultRenderer = new MeshRenderer
+        {
+            Material = new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"), new Texture("Textures/container2_specular.png"))
+        };
+
         _light = new GameObject();
         _light.Transform.Position = new Vector3(-4f, 4f, 0f);
         _light.Transform.Rotation = new Vector3(-1, 1, 0f) * 180;

@@ -46,17 +46,23 @@ public class EditorWindow : GameWindow
         CursorState = CursorState.Normal;
         _camera.GetComponent<Camera>()!.Width = width;
         _camera.GetComponent<Camera>()!.Height = height;
+        
+        MeshRenderer defaultRenderer = new MeshRenderer
+        {
+            Material = new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"), new Texture("Textures/container2_specular.png"))
+        };
 
-        MeshRenderer defaultRenderer = new MeshRenderer(new Mesh(Tests.Vertices, Tests.Indices), 
-            new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"),
-                new Texture("Textures/container2_specular.png")));
         Transform defaultTransform = new Transform()
         {
             Position = new Vector3(0f, 0f, 0f),
         };
 
-        MeshRenderer lampRenderer = new MeshRenderer(new Mesh([], []),
-            new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f));
+        MeshRenderer lampRenderer = new MeshRenderer()
+        {
+            Mesh = new Mesh([], []),
+            Material = new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f)
+        };
+        
         _light = new GameObject();
         _light.Name = "Light";
         _light.Transform.Position = new Vector3(-4f, 4f, 0f);

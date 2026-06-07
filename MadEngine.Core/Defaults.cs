@@ -1,6 +1,8 @@
-﻿namespace MadEngine.Core;
+﻿using OpenTK.Mathematics;
 
-public static class Tests
+namespace MadEngine.Core;
+
+public static class Defaults
 {
     public static float[] Vertices = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
@@ -72,4 +74,6 @@ public static class Tests
         30,32,31,
         33,35,34
     };
+
+    public static Material LitMaterial = new(ShaderSystem.LitShader);
 }

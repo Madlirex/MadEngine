@@ -4,14 +4,8 @@ namespace MadEngine.Core;
 
 public class MeshRenderer : Component
 {
-    public Mesh Mesh;
-    public Material Material;
-
-    public MeshRenderer(Mesh mesh, Material mat)
-    {
-        Mesh = mesh;
-        Material = mat;
-    }
+    public Mesh Mesh = new(Defaults.Vertices, Defaults.Indices);
+    public Material Material = Defaults.LitMaterial;
 
     public void Draw(Matrix4 view, Matrix4 projection)
     {
