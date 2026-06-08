@@ -112,6 +112,12 @@ public class RuntimeWindow : GameWindow
     {
         base.OnUpdateFrame(args);
 
+        UpdateCamera(args);
+        _engine.Update((float)args.Time, SceneManager.ActiveScene);
+    }
+
+    public void UpdateCamera(FrameEventArgs args)
+    {
         if (!IsFocused)
         {
             return;
@@ -178,7 +184,6 @@ public class RuntimeWindow : GameWindow
             camera.Yaw += deltaX * sensitivity;
             camera.Pitch -= deltaY * sensitivity;
         }
-        _engine.Update((float)args.Time, SceneManager.ActiveScene);
     }
     
     protected override void OnMouseWheel(MouseWheelEventArgs e)

@@ -149,7 +149,13 @@ public class EditorWindow : GameWindow
         base.OnUpdateFrame(args);
 
         _imGui.Update(this, (float)args.Time);
-
+        
+        UpdateCamera(args);
+        _engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+    }
+    
+    public void UpdateCamera(FrameEventArgs args)
+    {
         if (!IsFocused)
         {
             return;
@@ -158,6 +164,7 @@ public class EditorWindow : GameWindow
         if (CursorState != CursorState.Grabbed)
         {
             _firstMove = true;
+            Console.WriteLine("hoa");
             return;
         }
 
@@ -222,7 +229,6 @@ public class EditorWindow : GameWindow
             camera.Yaw += deltaX * sensitivity;
             camera.Pitch -= deltaY * sensitivity;
         }
-        _engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
     }
     
     protected override void OnMouseWheel(MouseWheelEventArgs e)
