@@ -164,7 +164,6 @@ public class EditorWindow : GameWindow
         if (CursorState != CursorState.Grabbed)
         {
             _firstMove = true;
-            Console.WriteLine("hoa");
             return;
         }
 
