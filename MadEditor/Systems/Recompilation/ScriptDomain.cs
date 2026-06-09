@@ -4,7 +4,7 @@ namespace MadEditor;
 
 public static class ScriptDomain
 {
-    private static readonly List<Assembly> _assemblies = new();
+    private static readonly List<Assembly> Assemblies = new();
 
     public static Assembly? CurrentAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
@@ -35,13 +35,13 @@ public static class ScriptDomain
         CurrentContext = context;
         CurrentAssembly = assembly;
 
-        _assemblies.Clear();
-        _assemblies.Add(assembly);
+        Assemblies.Clear();
+        Assemblies.Add(assembly);
     }
 
     public static void Unload()
     {
-        _assemblies.Clear();
+        Assemblies.Clear();
 
         var context = CurrentContext;
 
@@ -60,14 +60,14 @@ public static class ScriptDomain
     
     public static Type[] GetAllTypes()
     {
-        return _assemblies
+        return Assemblies
             .SelectMany(a => a.GetTypes())
             .ToArray();
     }
 
     public static Type[] GetComponentTypes(Type componentBaseType)
     {
-        return _assemblies
+        return Assemblies
             .SelectMany(a => a.GetTypes())
             .Where(t =>
                 t is { IsClass: true, IsAbstract: false } &&
@@ -77,7 +77,7 @@ public static class ScriptDomain
 
     public static Type[] GetTypesWithName(string name)
     {
-        return _assemblies
+        return Assemblies
             .SelectMany(a => a.GetTypes())
             .Where(t => t.Name == name)
             .ToArray();

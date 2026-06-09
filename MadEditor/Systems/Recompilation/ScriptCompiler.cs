@@ -6,6 +6,8 @@ namespace MadEditor;
 
 public static class ScriptCompiler
 {
+    public static string AssemblyName = "GameScripts";
+    
     public static byte[]? CompileToBytes(string[] sourceFiles)
     {
         var syntaxTrees = sourceFiles
@@ -16,12 +18,12 @@ public static class ScriptCompiler
             .Where(a =>
                 !a.IsDynamic &&
                 !string.IsNullOrEmpty(a.Location) &&
-                !a.FullName!.Contains("GameScripts"))
+                !a.FullName!.Contains(AssemblyName))
             .Select(a => MetadataReference.CreateFromFile(a.Location))
             .ToList();
 
         var compilation = CSharpCompilation.Create(
-            "GameScripts",
+            AssemblyName,
             syntaxTrees,
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)

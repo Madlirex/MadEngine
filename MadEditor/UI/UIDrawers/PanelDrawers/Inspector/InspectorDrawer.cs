@@ -114,10 +114,9 @@ public class InspectorDrawer : IPanelDrawer
 
         if (ImGui.Button("Recompile Scripts"))
         {
-            if (Directory.Exists("Assets"))
+            if (Directory.Exists(AssetManager.ProjectPath))
             {
-                var scriptFiles = Directory
-                    .GetFiles("Assets", "*.cs", SearchOption.AllDirectories);
+                var scriptFiles = Directory.GetFiles(AssetManager.ProjectPath, "*.cs", SearchOption.AllDirectories);
 
                 ScriptDomain.ReloadFromFiles(scriptFiles);
             }
