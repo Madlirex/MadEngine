@@ -9,4 +9,14 @@ public static class AssetManager
     {
         _projectPath = path;
     }
+
+    public static void RecompileScripts()
+    {
+        if (Directory.Exists(ProjectPath))
+        {
+            var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
+
+            ScriptDomain.ReloadFromFiles(scriptFiles);
+        }
+    }
 }

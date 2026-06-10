@@ -12,7 +12,7 @@ class Program
 
             if (result.IsCancelled) return;
             if (!result.IsOk) continue;
-            AssetManager.LoadProject(result.Path);
+            AssetManager.LoadProject(result.Path); 
             break;
         }
         
@@ -22,3 +22,4 @@ class Program
         }
     }
 }
+

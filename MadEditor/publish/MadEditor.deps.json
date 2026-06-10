@@ -12,6 +12,7 @@
           "ImGui.NET": "1.91.6.1",
           "MadEngine.Core": "1.0.0",
           "Microsoft.CodeAnalysis.CSharp": "5.3.0",
+          "NativeFileDialogSharp": "0.5.0",
           "OpenTK": "4.9.4",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "9.0.10"
         },
@@ -870,6 +871,28 @@
           }
         }
       },
+      "NativeFileDialogSharp/0.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/NativeFileDialogSharp.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "native": {
+          "runtimes/win-x64/native/nfd.dll": {
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/nfd.exp": {
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/nfd.lib": {
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/nfd.pdb": {
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "OpenTK/4.9.4": {
         "dependencies": {
           "OpenTK.Audio.OpenAL": "4.9.4",
@@ -1050,6 +1073,13 @@
       "sha512": "sha512-SQFNGQF4f7UfDXKxMzzGNMr3fjrPDIjLfmRvvVgDCw+dyvEHDaRfHuKA5q0Pr0/JW0Gcw89TxrxrS/MjwBvluQ==",
       "path": "microsoft.codeanalysis.csharp/5.3.0",
       "hashPath": "microsoft.codeanalysis.csharp.5.3.0.nupkg.sha512"
+    },
+    "NativeFileDialogSharp/0.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OvASDrHJhY1OzD3Cr9Pw7sgaj+WliK0CAD+0HL14jPJMxnkirC5vr3XhxbY24MKwkxANNgmN+ao7iiNOopOSqQ==",
+      "path": "nativefiledialogsharp/0.5.0",
+      "hashPath": "nativefiledialogsharp.0.5.0.nupkg.sha512"
     },
     "OpenTK/4.9.4": {
       "type": "package",
