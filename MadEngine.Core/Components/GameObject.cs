@@ -57,10 +57,10 @@ public class GameObject
             component.EditorUpdate(deltaTime);
     }
     
-    public bool AddComponent<T>() where T : Component
+    public T? AddComponent<T>() where T : Component
     {
         if (!ComponentRules.CanBeAdded(typeof(T)))
-            return false;
+            return null;
 
         T component = (T)Activator.CreateInstance(typeof(T))!;
         
@@ -68,13 +68,13 @@ public class GameObject
         component.AssignGameObject(this);
         
         ComponentAdded?.Invoke(component);
-        return true;
+        return component;
     }
     
-    public bool AddComponent(Type type)
+    public Component? AddComponent(Type type)
     {
         if (!ComponentRules.CanBeAdded(type))
-            return false;
+            return null;
 
         Component component = (Component)Activator.CreateInstance(type)!;
         
@@ -82,19 +82,19 @@ public class GameObject
         component.AssignGameObject(this);
         
         ComponentAdded?.Invoke(component);
-        return true;
+        return component;
     }
 
-    public bool AddComponent(Component component)
+    public Component? AddComponent(Component component)
     {
         if (!ComponentRules.CanBeAdded(component.GetType()))
-            return false;
+            return null;
         
         _components.Add(component);
         component.AssignGameObject(this);
         
         ComponentAdded?.Invoke(component);
-        return true;
+        return component;
     }
 
     public bool RemoveComponent(Component component)

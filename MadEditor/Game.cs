@@ -50,7 +50,7 @@ public class EditorWindow : GameWindow
         
         MeshRenderer defaultRenderer = new MeshRenderer
         {
-            Material = new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"), new Texture("Textures/container2_specular.png"))
+            Material = new Material(ShaderSystem.LitShader, diffuseColor: new Vector4(1f, 1f, 1f, 1f), specularColor: new Vector4(0.5f, 0.5f, 0.5f, 1f))
         };
 
         Transform defaultTransform = new Transform()
@@ -68,11 +68,9 @@ public class EditorWindow : GameWindow
         _light.Name = "Light";
         _light.Transform.Position = new Vector3(-4f, 4f, 0f);
         _light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
-        Light light = new SpotLight
+        Light light = new DirectionalLight()
         {
-            Direction = new Vector3(1f, -1f, 0f),
-            CutOff = 30f,
-            OuterCutOff = 35f
+            Direction = new Vector3(1f, -1.5f, 1f),
         };
         _light.AddComponent(light);
         GameObject cube = new GameObject();
@@ -132,9 +130,6 @@ public class EditorWindow : GameWindow
         _sceneFbo.Bind();
 
         Camera camera = _camera.GetComponent<Camera>()!;
-        
-        _light.Transform.Position = _camera.Transform.Position;
-        _light.GetComponent<SpotLight>()!.Direction = camera.Front;
 
         _engine.Render(SceneManager.ActiveScene, camera);
         

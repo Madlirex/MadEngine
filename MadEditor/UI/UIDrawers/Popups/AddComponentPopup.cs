@@ -20,7 +20,8 @@ public class AddComponentPopup : Popup
                 continue;
             if (ImGui.MenuItem(type.Name))
             {
-                context.Selected!.AddComponent(type);
+                Component? comp = context.Selected!.AddComponent(type);
+                comp?.EditorStart();
             }
         }
     }

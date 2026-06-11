@@ -18,6 +18,8 @@ public class CreateGameObjectCommand : IEditorCommand
         
         SceneManager.ActiveScene.Add(newObj);
         if(_parent != null) newObj.Transform.Parent = _parent;
+        
+        newObj.EditorStart();
     }
 }
 
