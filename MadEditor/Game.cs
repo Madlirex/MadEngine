@@ -15,7 +15,6 @@ public class EditorWindow : GameWindow
     private Engine _engine;
     
     private GameObject _camera;
-    private GameObject _light;
 
     private Vector2 _lastPos;
     private bool _firstMove = true;
@@ -64,22 +63,21 @@ public class EditorWindow : GameWindow
             Material = new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f)
         };
         
-        _light = new GameObject();
-        _light.Name = "Light";
-        _light.Transform.Position = new Vector3(-4f, 4f, 0f);
-        _light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
-        Light light = new DirectionalLight()
+        GameObject light = new GameObject();
+        light.Name = "Light";
+        light.Transform.Position = new Vector3(-4f, 4f, 0f);
+        light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
+        Light lightComp = new DirectionalLight()
         {
             Direction = new Vector3(1f, -1.5f, 1f),
         };
-        _light.AddComponent(light);
+        light.AddComponent(lightComp);
         GameObject cube = new GameObject();
         cube.Name = "Cube";
         cube.AddComponent(defaultRenderer);
         
         Scene scene = new Scene();
-        scene.Add(_camera);
-        scene.Add(_light);
+        scene.Add(light);
         scene.Add(cube);
         SceneManager.ActiveScene = scene;
 
