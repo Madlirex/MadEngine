@@ -23,6 +23,8 @@ public class Material
         DiffuseColor = diffuseColor ?? DiffuseColor;
         SpecularColor = specularColor ?? SpecularColor;
         Shininess = shininess;
+        
+        MaterialSystem.RegisterMaterial(this);
     }
 
     public void Draw()
@@ -48,5 +50,10 @@ public class Material
         Shader.SetVector4("material.diffuseColor", DiffuseColor);
         Shader.SetVector4("material.specularColor", SpecularColor);
         Shader.SetFloat("material.shininess", Shininess);
+    }
+
+    public void Delete()
+    {
+        MaterialSystem.UnregisterMaterial(this);
     }
 }
