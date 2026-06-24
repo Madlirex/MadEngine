@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using MadEditor.PackageManagement;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 using OpenTK.Graphics.OpenGL4;
@@ -93,6 +94,7 @@ public class EditorWindow : GameWindow
         _engine.Initialize();
 
         AssetManager.RecompileScripts();
+        PackageManager.RegisterPackages();
         
         _engine.EditorStart(SceneManager.ActiveScene);
     }
