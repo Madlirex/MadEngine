@@ -3,7 +3,7 @@
 public static class SceneManager
 {
     public static Scene ActiveScene;
-    public static Scene[] Scenes;
+    public static List<Scene> Scenes;
 
     public static void LoadScene(Scene scene)
     {

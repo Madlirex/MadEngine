@@ -52,9 +52,9 @@ public class EditorUI
         {
             if (ImGui.BeginMenu("File"))
             {
-                if (ImGui.MenuItem("New", "Ctrl+N"))
+                if (ImGui.MenuItem("Save", "Ctrl+N"))
                 {
-                    Console.WriteLine("Newing");
+                    AssetManager.SaveProject();
                 }
 
                 if (ImGui.MenuItem("Open", "Ctrl+O"))
