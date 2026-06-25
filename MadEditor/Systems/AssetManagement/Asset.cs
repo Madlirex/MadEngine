@@ -12,6 +12,7 @@ public abstract class Asset
 
 public class AssetMeta
 {
+    public int Version { get; set; } = 1;
     public string Name { get; set; } = "NewAsset";
     public Guid Guid { get; set; }
 
