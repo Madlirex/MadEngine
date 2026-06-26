@@ -6,11 +6,6 @@ public static class AssetManager
     public static string AssetsPath => _projectPath + @"\Assets\";
     public static string PackagesPath => _projectPath + @"\Packages\";
     private static string _projectPath = "";
-    
-    private static Dictionary<string, Guid> _guidByPath = new();
-    private static Dictionary<Guid, string> _pathByGuid = new();
-    private static Dictionary<Guid, Asset> _assets = new();
-    private static Dictionary<Type, List<Asset>> _assetRegistries = new();
 
     private static Dictionary<string, IAssetImporter> _importers = new();
     private static Dictionary<string, IAssetImporter> _importersByExtension = new();
@@ -38,21 +33,6 @@ public static class AssetManager
 
             ScriptDomain.ReloadFromFiles(scriptFiles);
         }
-    }
-
-    public static Asset GetAsset(Guid guid)
-    {
-        return _assets[guid];
-    }
-    
-    public static Guid GetGuid(string path)
-    {
-        return _guidByPath[path];
-    }
-
-    public static string GetPath(Guid guid)
-    {
-        return _pathByGuid[guid];
     }
 
     public static void LoadAssets(string path)
@@ -92,17 +72,14 @@ public static class AssetManager
             asset = importer.Load(meta);
         }
         
-        _guidByPath.Add(path, asset.Guid);
-        _pathByGuid.Add(asset.Guid, path);
-        _assets.Add(asset.Guid, asset);
-        RegisterAsset(asset);
+        AssetRegistry.RegisterAsset(asset, path);
     }
 
     public static void SaveAssets()
     {
-        foreach (var asset in _assets)
+        foreach (var asset in AssetRegistry.Assets)
         {
-            SaveAsset(asset.Value, _pathByGuid[asset.Key]);
+            SaveAsset(asset, AssetRegistry.GetPath(asset.Guid));
         }
     }
 
@@ -116,31 +93,6 @@ public static class AssetManager
             Path = path
         };
         MetaUtility.Save(path + ".meta", meta);
-    }
-
-    public static void UnloadAsset(Asset asset)
-    {
-        string path = GetPath(asset.Guid);
-        _guidByPath.Remove(path);
-        _pathByGuid.Remove(asset.Guid);
-        _assets.Remove(asset.Guid);
-        UnregisterAsset(asset);
-    }
-
-    public static void RegisterAsset(Asset asset)
-    {
-        if (!_assetRegistries.TryGetValue(asset.AssetType, out List<Asset>? value))
-        {
-            value = [];
-            _assetRegistries[asset.AssetType] = value;
-        }
-
-        value.Add(asset);
-    }
-
-    public static void UnregisterAsset(Asset asset)
-    {
-        _assetRegistries[asset.AssetType].Remove(asset);
     }
 
     public static void DiscoverImporters()
