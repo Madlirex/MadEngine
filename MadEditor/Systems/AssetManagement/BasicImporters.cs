@@ -8,12 +8,12 @@ public class TextureAsset(Texture texture) : Asset
     public override Type AssetType => typeof(Texture);
 }
 
-public class TextureImporter : IAssetImporter
+public class TextureImporter : AssetImporter<TextureAsset>
 {
-    public string Name => "TextureImporter";
-    public IReadOnlyList<string> Extensions => [".jpg", ".png", ".jpeg"];
-    
-    public Asset Load(string path)
+    public override string Name => "TextureImporter";
+    public override IReadOnlyList<string> Extensions => [".jpg", ".png", ".jpeg"];
+
+    public override TextureAsset Load(string path)
     {
         TextureAsset texture = new TextureAsset(new Texture(path));
         texture.Name = Path.GetFileNameWithoutExtension(path);
@@ -21,7 +21,7 @@ public class TextureImporter : IAssetImporter
         return texture;
     }
 
-    public Asset Load(AssetMeta meta)
+    public override TextureAsset Load(AssetMeta meta)
     {
         TextureAsset texture = new TextureAsset(new Texture(meta.Path))
         {
@@ -30,5 +30,10 @@ public class TextureImporter : IAssetImporter
         };
         
         return texture;
+    }
+
+    public override void Save(TextureAsset asset, string path)
+    {
+        
     }
 }

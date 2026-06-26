@@ -85,6 +85,8 @@ public static class AssetManager
 
     public static void SaveAsset(Asset asset, string path)
     {
+        _importersByExtension[Path.GetExtension(path)].Save(asset, path);
+        
         AssetMeta meta = new AssetMeta()
         {
             Guid = asset.Guid,
