@@ -1,4 +1,5 @@
 ﻿using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
@@ -82,6 +83,16 @@ public static class AssetManager
         foreach (var asset in AssetRegistry.Assets)
         {
             SaveAsset(asset, AssetRegistry.GetPath(asset.Guid));
+        }
+
+        Console.WriteLine(ReflectionSerializer.Serialize(SceneManager.ActiveScene));
+        foreach (GameObject obj in SceneManager.ActiveScene.GameObjects)
+        {
+            Console.WriteLine(ReflectionSerializer.Serialize(obj));
+            foreach (Component comp in obj.Components)
+            {
+                Console.WriteLine(ReflectionSerializer.Serialize(comp));
+            }
         }
     }
 
