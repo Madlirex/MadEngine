@@ -8,6 +8,9 @@ public class Shader : Asset, IDisposable
     private int _handle;
     private bool _disposedValue;
 
+    public override string Name { get; set; } = "NewShader";
+    public override string Extension => ".shader";
+
     public Shader(string vertexPath, string fragmentPath)
     {
         string vertexShaderSource = File.ReadAllText(vertexPath);

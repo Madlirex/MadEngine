@@ -6,7 +6,10 @@ namespace MadEngine.Core;
 public class Texture : Asset
 {
     public int Handle;
-    
+
+    public override string Name { get; set; } = "NewTexture";
+    public override string Extension => ".tex";
+
     public Texture(string path)
     {
         Handle = GL.GenTexture();

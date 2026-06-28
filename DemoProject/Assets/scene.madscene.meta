@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Name": "NewAsset",
+  "Name": "scene",
   "Guid": "f6dfa667-a5ec-42af-a6fb-c5248a3e4c4e",
   "Path": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Assets\\scene.madscene",
   "Importer": "SceneImporter",

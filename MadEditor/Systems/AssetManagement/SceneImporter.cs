@@ -11,7 +11,12 @@ public class SceneImporter : AssetImporter<Scene>
     public override IReadOnlyList<string> Extensions => [".madscene"];
     public override Scene Instantiate(string path)
     {
-        string text = File.ReadAllText(path);
+        return Instantiate(new AssetMeta() {Path = path});
+    }
+
+    public override Scene Instantiate(AssetMeta meta)
+    {
+        string text = File.ReadAllText(meta.Path);
         JsonObject obj = JsonSerializer.Deserialize<JsonObject>(text)!;
         
         JsonObject sceneJson = obj["Scene"]!.AsObject();
@@ -20,7 +25,9 @@ public class SceneImporter : AssetImporter<Scene>
 
         Scene scene = new Scene
         {
-            Guid = sceneGuid
+            Guid = sceneGuid,
+            Directory = Path.GetDirectoryName(meta.Path) ?? "",
+            Name = meta.Name ?? Name
         };
         
         JsonObject gameObjectsJson = obj["GameObjects"]!.AsObject();
@@ -33,8 +40,6 @@ public class SceneImporter : AssetImporter<Scene>
             {
                 Guid = guid
             };
-
-            AssetRegistry.RegisterObject(go);
         }
         
         JsonObject componentsJson = obj["Components"]!.AsObject();
@@ -50,16 +55,9 @@ public class SceneImporter : AssetImporter<Scene>
             Component component = (Component)Activator.CreateInstance(type)!;
 
             component.Guid = guid;
-            
-            AssetRegistry.RegisterObject(component);
         }
 
         return scene;
-    }
-
-    public override Scene Instantiate(AssetMeta meta)
-    {
-        return Instantiate(meta.Path);
     }
 
     public override void Load(Scene asset)

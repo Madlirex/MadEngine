@@ -10,6 +10,9 @@ public class Scene : Asset
 
     private readonly List<MeshRenderer> _meshRenderers = [];
     public IReadOnlyList<MeshRenderer> MeshRenderers => _meshRenderers;
+    
+    public override string Name { get; set; } = "NewScene";
+    public override string Extension => ".madscene";
 
     public void Add(GameObject gameObject)
     {

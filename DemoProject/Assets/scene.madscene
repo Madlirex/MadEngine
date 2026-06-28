@@ -1,15 +1,73 @@
 {
   "Scene": {
-    "_gameObjects": [],
+    "_gameObjects": [
+      "37efd433-b178-4d6c-addb-7f7b9a41a075"
+    ],
     "_lights": [],
     "_meshRenderers": [],
-    "Path": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Assets\\scene.madscene",
+    "\u003CName\u003Ek__BackingField": "scene",
     "Guid": "f6dfa667-a5ec-42af-a6fb-c5248a3e4c4e",
-    "GameObjects": [],
+    "GameObjects": [
+      "37efd433-b178-4d6c-addb-7f7b9a41a075"
+    ],
     "Lights": [],
     "MeshRenderers": [],
-    "Name": "NewAsset"
+    "Name": "scene",
+    "Extension": ".madscene",
+    "Path": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Assets\\scene.madscene",
+    "Directory": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Assets"
   },
-  "GameObjects": {},
-  "Components": {}
+  "GameObjects": {
+    "37efd433-b178-4d6c-addb-7f7b9a41a075": {
+      "Transform": "dacc0cfb-a1a8-4c53-8748-3d2e7c9e3735",
+      "_components": [
+        "dacc0cfb-a1a8-4c53-8748-3d2e7c9e3735"
+      ],
+      "ComponentAdded": null,
+      "ComponentRemoved": null,
+      "Guid": "37efd433-b178-4d6c-addb-7f7b9a41a075",
+      "Components": [
+        "dacc0cfb-a1a8-4c53-8748-3d2e7c9e3735"
+      ],
+      "Name": "NewGameObject"
+    }
+  },
+  "Components": {
+    "dacc0cfb-a1a8-4c53-8748-3d2e7c9e3735": {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0,
+        "W": 1
+      },
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "_parent": null,
+      "_children": [],
+      "_eulerRotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Guid": "dacc0cfb-a1a8-4c53-8748-3d2e7c9e3735",
+      "EulerRotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Parent": null,
+      "Children": [],
+      "ComponentType": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "GameObject": "37efd433-b178-4d6c-addb-7f7b9a41a075",
+      "Name": "NewComponent"
+    }
+  }
 }

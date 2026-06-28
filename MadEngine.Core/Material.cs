@@ -14,6 +14,9 @@ public class Material : Asset
     public Vector4 SpecularColor = Vector4.One;
     public float Shininess = 32f;
 
+    public override string Name { get; set; } = "NewMaterial";
+    public override string Extension => ".mat";
+
     public Material(Shader shader, Texture? diffuseTexture = null, Texture? specularTexture = null, Vector4? ambientColor = null, Vector4? diffuseColor = null, Vector4? specularColor = null, float shininess = 32f)
     {
         Shader = shader;

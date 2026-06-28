@@ -3,17 +3,12 @@
 public abstract class Asset : MadObject
 {
     public override string Name { get; set; } = "NewAsset";
-    public string Path = "";
-    public string Extension = ".asset";
-    
-    public Asset()
-    {
-        Register();
-    }
+    public string Path => Directory + @"\" + Name + Extension;
+    public virtual string Extension => ".asset";
+    public string Directory { get; set; } = "";
 
-    public void Register()
+    ~Asset()
     {
-        Console.WriteLine("registered");
-        AssetRegistry.RegisterAsset(this);
+        AssetRegistry.UnregisterAsset(this);
     }
 }

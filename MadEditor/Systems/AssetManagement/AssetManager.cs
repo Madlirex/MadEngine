@@ -61,27 +61,26 @@ public static class AssetManager
         {
             AssetMeta meta = MetaUtility.Load(path + ".meta");
             asset = _importers[meta.Importer].Instantiate(meta);
-            asset.Path = path;
+            asset.Directory = Path.GetDirectoryName(path) ?? "";
         }
         else
         {
             if (_importersByExtension.TryGetValue(Path.GetExtension(path), out var importer))
             {
                 asset = importer.Instantiate(path);
-                asset.Path = path;
+                asset.Directory = Path.GetDirectoryName(path) ?? "";
             }
             else
             {
                 return;
             }
         }
-        
-        AssetRegistry.RegisterAsset(asset, path);
+        AssetRegistry.RegisterAsset(asset);
+        AssetRegistry.RegisterObject(asset);
     }
 
     public static void LoadAssets(Asset[] assets)
     {
-        Console.WriteLine(assets.Length);
         foreach (Asset asset in assets)
         {
             LoadAsset(asset);
@@ -90,7 +89,6 @@ public static class AssetManager
     
     public static void LoadAsset(Asset asset)
     {
-        Console.WriteLine(asset.Path);
         if (_importersByExtension.TryGetValue(Path.GetExtension(asset.Path), out var importer))
         {
             importer.Load(asset);
@@ -101,7 +99,7 @@ public static class AssetManager
     {
         foreach (var asset in AssetRegistry.Assets)
         {
-            SaveAsset(asset, AssetRegistry.GetPath(asset.Guid));
+            SaveAsset(asset, asset.Path);
         }
     }
 
