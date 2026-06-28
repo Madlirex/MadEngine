@@ -1,6 +1,6 @@
 ﻿namespace MadEngine.Core;
 
-public abstract class Component : Object
+public abstract class Component : MadObject
 {
     public Component()
     {

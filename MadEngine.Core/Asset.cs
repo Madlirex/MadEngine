@@ -1,6 +1,6 @@
 ﻿namespace MadEngine.Core;
 
-public abstract class Asset : Object
+public abstract class Asset : MadObject
 {
     public Asset()
     {

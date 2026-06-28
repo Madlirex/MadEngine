@@ -2,7 +2,7 @@
 
 namespace MadEngine.Core;
 
-public class GameObject : Object
+public class GameObject : MadObject
 {
     public Transform Transform;
 

@@ -1,6 +1,6 @@
 ﻿namespace MadEngine.Core;
 
-public abstract class Object
+public abstract class MadObject
 {
     public string Name { get; set; } = "NewObject";
 
