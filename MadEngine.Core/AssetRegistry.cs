@@ -9,6 +9,7 @@ public static class AssetRegistry
     private static Dictionary<Guid, Asset> _assets = new();
     private static Dictionary<Type, List<Asset>> _assetRegistries = new();
 
+    public static Dictionary<Guid, MadObject> ObjectMap = new();
     
     public static void RegisterAsset(Asset asset, string path)
     {

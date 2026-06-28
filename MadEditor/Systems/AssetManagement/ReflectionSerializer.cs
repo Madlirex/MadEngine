@@ -15,17 +15,13 @@ public static class ReflectionSerializer
         return SerializeObject(obj);
     }
 
-    public static void DeserializeInto(object obj, JsonObject json,
-        Dictionary<Guid, GameObject> goMap,
-        Dictionary<Guid, Component> compMap,
-        Dictionary<Guid, Asset> assetMap)
+    public static void DeserializeInto(object obj, JsonObject json, Dictionary<Guid, MadObject> objectMap)
     {
-        DeserializeObject(obj, json, goMap, compMap, assetMap);
+        DeserializeObject(obj, json, objectMap);
     }
 
     private static JsonObject SerializeObject(object obj)
     {
-        
         if (obj is MadObject mo)
         {
             Console.WriteLine(mo.Guid);
@@ -84,6 +80,11 @@ public static class ReflectionSerializer
         if (value is MadObject obj)
             return obj.Guid.ToString();
         
+        if (SerializerRegistry.HasSerializer(type))
+        {
+            return SerializerRegistry.GetSerializer(type).Serialize(value);
+        }
+        
         if (type.IsPrimitive || value is string || value is decimal)
             return JsonValue.Create(value);
 
@@ -115,12 +116,7 @@ public static class ReflectionSerializer
         return SerializeObject(value);
     }
     
-    private static void DeserializeObject(
-        object obj,
-        JsonObject json,
-        Dictionary<Guid, GameObject> goMap,
-        Dictionary<Guid, Component> compMap,
-        Dictionary<Guid, Asset> assetMap)
+    private static void DeserializeObject(object obj, JsonObject json, Dictionary<Guid, MadObject> objectMap)
     {
         Type type = obj.GetType();
 
@@ -129,7 +125,7 @@ public static class ReflectionSerializer
             if (!json.TryGetPropertyValue(field.Name, out JsonNode? node))
                 continue;
 
-            object? value = DeserializeValue(field.FieldType, node, goMap, compMap, assetMap);
+            object? value = DeserializeValue(field.FieldType, node, objectMap);
             field.SetValue(obj, value);
         }
 
@@ -141,37 +137,20 @@ public static class ReflectionSerializer
             if (!json.TryGetPropertyValue(prop.Name, out JsonNode? node))
                 continue;
 
-            object? value = DeserializeValue(prop.PropertyType, node, goMap, compMap, assetMap);
+            object? value = DeserializeValue(prop.PropertyType, node, objectMap);
             prop.SetValue(obj, value);
         }
     }
 
-    private static object? DeserializeValue(
-        Type type,
-        JsonNode? node,
-        Dictionary<Guid, GameObject> goMap,
-        Dictionary<Guid, Component> compMap,
-        Dictionary<Guid, Asset> assetMap)
+    private static object? DeserializeValue(Type type, JsonNode? node, Dictionary<Guid, MadObject> objectMap)
     {
         if (node == null)
             return null;
 
-        if (type == typeof(GameObject))
+        if (typeof(MadObject).IsAssignableFrom(type))
         {
             Guid id = Guid.Parse(node.GetValue<string>());
-            return goMap[id];
-        }
-
-        if (typeof(Component).IsAssignableFrom(type))
-        {
-            Guid id = Guid.Parse(node.GetValue<string>());
-            return compMap[id];
-        }
-
-        if (typeof(Asset).IsAssignableFrom(type))
-        {
-            Guid id = Guid.Parse(node.GetValue<string>());
-            return assetMap[id];
+            return objectMap[id];
         }
         
         if (type == typeof(string))
@@ -204,7 +183,7 @@ public static class ReflectionSerializer
 
             for (int i = 0; i < arr.Count; i++)
             {
-                result.SetValue(DeserializeValue(elementType, arr[i], goMap, compMap, assetMap), i);
+                result.SetValue(DeserializeValue(elementType, arr[i], objectMap), i);
             }
 
             return result;
@@ -219,14 +198,14 @@ public static class ReflectionSerializer
 
             foreach (var item in arr)
             {
-                list.Add(DeserializeValue(elementType, item, goMap, compMap, assetMap));
+                list.Add(DeserializeValue(elementType, item, objectMap));
             }
 
             return list;
         }
 
         object obj = Activator.CreateInstance(type)!;
-        DeserializeObject(obj, (JsonObject)node, goMap, compMap, assetMap);
+        DeserializeObject(obj, (JsonObject)node, objectMap);
 
         return obj;
     }
