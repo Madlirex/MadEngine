@@ -1,0 +1,95 @@
+{
+  "Scene": {
+    "_gameObjects": [
+      "c82e0eed-02b1-45bb-bd71-4505d6ded7cc",
+      "1d74f4b4-dc5c-405e-8dfb-d0c912a39642"
+    ],
+    "_lights": [
+      "646c550d-4e3d-400a-81ce-45bc748f0953"
+    ],
+    "_meshRenderers": [
+      "04ec2f12-cf2c-4256-969b-29fec0788bfa"
+    ],
+    "Guid": "54fd69e2-96b1-47c8-a303-a8ac873456a0",
+    "GameObjects": [
+      "c82e0eed-02b1-45bb-bd71-4505d6ded7cc",
+      "1d74f4b4-dc5c-405e-8dfb-d0c912a39642"
+    ],
+    "Lights": [
+      "646c550d-4e3d-400a-81ce-45bc748f0953"
+    ],
+    "MeshRenderers": [
+      "04ec2f12-cf2c-4256-969b-29fec0788bfa"
+    ],
+    "Name": "NewAsset"
+  },
+  "GameObjects": {
+    "c82e0eed-02b1-45bb-bd71-4505d6ded7cc": {
+      "Transform": "29ffe417-5d7b-4958-bf4f-bf5bf0145389",
+      "_components": [
+        "29ffe417-5d7b-4958-bf4f-bf5bf0145389",
+        "646c550d-4e3d-400a-81ce-45bc748f0953"
+      ],
+      "ComponentAdded": null,
+      "ComponentRemoved": null,
+      "Guid": "c82e0eed-02b1-45bb-bd71-4505d6ded7cc",
+      "Components": [
+        "29ffe417-5d7b-4958-bf4f-bf5bf0145389",
+        "646c550d-4e3d-400a-81ce-45bc748f0953"
+      ],
+      "Name": "Light"
+    },
+    "1d74f4b4-dc5c-405e-8dfb-d0c912a39642": {
+      "Transform": "17dca7f5-5d00-470b-861d-9b6bcbd85cd8",
+      "_components": [
+        "17dca7f5-5d00-470b-861d-9b6bcbd85cd8",
+        "04ec2f12-cf2c-4256-969b-29fec0788bfa"
+      ],
+      "ComponentAdded": null,
+      "ComponentRemoved": null,
+      "Guid": "1d74f4b4-dc5c-405e-8dfb-d0c912a39642",
+      "Components": [
+        "17dca7f5-5d00-470b-861d-9b6bcbd85cd8",
+        "04ec2f12-cf2c-4256-969b-29fec0788bfa"
+      ],
+      "Name": "Cube"
+    }
+  },
+  "Components": {
+    "c82e0eed-02b1-45bb-bd71-4505d6ded7cc": {
+      "Direction": {
+        "X": 1,
+        "Y": -1.5,
+        "Z": 1
+      },
+      "AmbientColor": {
+        "X": 0.2,
+        "Y": 0.2,
+        "Z": 0.2,
+        "W": 0.2
+      },
+      "DiffuseColor": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1,
+        "W": 1
+      },
+      "SpecularColor": {
+        "X": 0.5,
+        "Y": 0.5,
+        "Z": 0.5,
+        "W": 0.5
+      },
+      "Guid": "646c550d-4e3d-400a-81ce-45bc748f0953",
+      "GameObject": "c82e0eed-02b1-45bb-bd71-4505d6ded7cc",
+      "Name": "NewComponent"
+    },
+    "1d74f4b4-dc5c-405e-8dfb-d0c912a39642": {
+      "Mesh": "cefa8273-35f1-4292-a1f4-36c9f59f3afc",
+      "Material": "5bf63d7c-a980-4ac4-862f-6488bc0058dd",
+      "Guid": "04ec2f12-cf2c-4256-969b-29fec0788bfa",
+      "GameObject": "1d74f4b4-dc5c-405e-8dfb-d0c912a39642",
+      "Name": "NewComponent"
+    }
+  }
+}

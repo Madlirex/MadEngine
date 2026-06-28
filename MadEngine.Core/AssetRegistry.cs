@@ -1,4 +1,6 @@
-﻿namespace MadEngine.Core;
+﻿using System.Collections.ObjectModel;
+
+namespace MadEngine.Core;
 
 public static class AssetRegistry
 {
@@ -9,7 +11,8 @@ public static class AssetRegistry
     private static Dictionary<Guid, Asset> _assets = new();
     private static Dictionary<Type, List<Asset>> _assetRegistries = new();
 
-    public static Dictionary<Guid, MadObject> ObjectMap = new();
+    public static Dictionary<Guid, MadObject> ObjectMap => _objectMap;
+    private static Dictionary<Guid, MadObject> _objectMap = new();
     
     public static void RegisterAsset(Asset asset, string path)
     {
@@ -17,6 +20,7 @@ public static class AssetRegistry
         _pathByGuid.Add(asset.Guid, path);
         _assets.Add(asset.Guid, asset);
         
+        RegisterObject(asset);
         if (!_assetRegistries.TryGetValue(asset.GetType(), out List<Asset>? value))
         {
             value = [];
@@ -34,6 +38,17 @@ public static class AssetRegistry
         _assets.Remove(asset.Guid);
         
         _assetRegistries[asset.GetType()].Remove(asset);
+        UnregisterObject(asset);
+    }
+
+    public static void RegisterObject(MadObject obj)
+    {
+        _objectMap.Add(obj.Guid, obj);
+    }
+
+    public static void UnregisterObject(MadObject obj)
+    {
+        _objectMap.Remove(obj.Guid);
     }
     
     public static Asset GetAsset(Guid guid)

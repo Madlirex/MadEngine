@@ -81,6 +81,7 @@ public class EditorWindow : GameWindow
         scene.Add(light);
         scene.Add(cube);
         SceneManager.ActiveScene = scene;
+        AssetRegistry.RegisterAsset(scene, AssetManager.AssetsPath + "scene.madscene");
 
         _imGui = new ImGuiController(width, height);
         _sceneFbo = new SceneFramebuffer(width, height);
@@ -90,13 +91,13 @@ public class EditorWindow : GameWindow
     protected override void OnLoad()
     {
         base.OnLoad();
-        
-        _engine.Initialize();
 
-        AssetManager.LoadProject(AssetManager.ProjectPath);
+        _engine.Initialize();
         
         AssetManager.RecompileScripts();
         PackageManager.RegisterPackages();
+        
+        AssetManager.LoadProject(AssetManager.ProjectPath);
         
         _engine.EditorStart(SceneManager.ActiveScene);
     }

@@ -20,6 +20,8 @@ public static class AssetManager
     
     public static void LoadProject(string path)
     {
+        DiscoverImporters();
+        SerializerRegistry.DiscoverSerializers();
         LoadAssets(path);
     }
 
@@ -40,8 +42,6 @@ public static class AssetManager
 
     public static void LoadAssets(string path)
     {
-        DiscoverImporters();
-        
         if (Directory.Exists(path))
         {
             var files = Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories);
@@ -83,16 +83,6 @@ public static class AssetManager
         foreach (var asset in AssetRegistry.Assets)
         {
             SaveAsset(asset, AssetRegistry.GetPath(asset.Guid));
-        }
-
-        Console.WriteLine(ReflectionSerializer.Serialize(SceneManager.ActiveScene));
-        foreach (GameObject obj in SceneManager.ActiveScene.GameObjects)
-        {
-            Console.WriteLine(ReflectionSerializer.Serialize(obj));
-            foreach (Component comp in obj.Components)
-            {
-                Console.WriteLine(ReflectionSerializer.Serialize(comp));
-            }
         }
     }
 

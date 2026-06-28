@@ -4,22 +4,17 @@ namespace MadEditor;
 
 public static class MetaUtility
 {
-    private static readonly JsonSerializerOptions Options = new()
-    {
-        WriteIndented = true
-    };
-
     public static AssetMeta Load(string metaPath)
     {
         string json = File.ReadAllText(metaPath);
 
-        return JsonSerializer.Deserialize<AssetMeta>(json, Options)
+        return JsonSerializer.Deserialize<AssetMeta>(json, ISerializer.Options)
                ?? throw new InvalidOperationException($"Failed to load meta file '{metaPath}'.");
     }
 
     public static void Save(string metaPath, AssetMeta meta)
     {
-        string json = JsonSerializer.Serialize(meta, Options);
+        string json = JsonSerializer.Serialize(meta, ISerializer.Options);
 
         File.WriteAllText(metaPath, json);
     }

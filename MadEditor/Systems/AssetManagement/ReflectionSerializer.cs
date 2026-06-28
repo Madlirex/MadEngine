@@ -22,6 +22,7 @@ public static class ReflectionSerializer
 
     private static JsonObject SerializeObject(object obj)
     {
+        Console.WriteLine("hola");
         if (obj is MadObject mo)
         {
             Console.WriteLine(mo.Guid);
@@ -82,7 +83,8 @@ public static class ReflectionSerializer
         
         if (SerializerRegistry.HasSerializer(type))
         {
-            return SerializerRegistry.GetSerializer(type).Serialize(value);
+            Console.WriteLine("holaa");
+            return SerializerRegistry.GetSerializer(type).SerializeObject(value);
         }
         
         if (type.IsPrimitive || value is string || value is decimal)
