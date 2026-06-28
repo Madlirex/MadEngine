@@ -19,7 +19,7 @@ public class SceneSerializer : Serializer<Scene>
             objJson[go.Guid.ToString()] = ReflectionSerializer.Serialize(go);
             foreach (Component comp in go.Components)
             {
-                compJson[go.Guid.ToString()] = ReflectionSerializer.Serialize(comp);
+                compJson[comp.Guid.ToString()] = ReflectionSerializer.Serialize(comp);
             }
         }
 
@@ -35,10 +35,14 @@ public class SceneSerializer : Serializer<Scene>
 
     public override Scene Deserialize(JsonObject obj)
     {
-        Scene scene = new();
-
+        Scene scene = new Scene();
         ReflectionSerializer.DeserializeInto(scene, obj, AssetRegistry.ObjectMap);
         return scene;
+    }
+
+    public override void DeserializeInto(JsonObject obj, Scene scene)
+    {
+        ReflectionSerializer.DeserializeInto(scene, obj, AssetRegistry.ObjectMap);
     }
 }
 

@@ -6,8 +6,7 @@ public class TextureImporter : AssetImporter<Texture>
 {
     public override string Name => "TextureImporter";
     public override IReadOnlyList<string> Extensions => [".jpg", ".png", ".jpeg"];
-
-    public override Texture Load(string path)
+    public override Texture Instantiate(string path)
     {
         Texture texture = new Texture(path);
         texture.Name = Path.GetFileNameWithoutExtension(path);
@@ -15,7 +14,7 @@ public class TextureImporter : AssetImporter<Texture>
         return texture;
     }
 
-    public override Texture Load(AssetMeta meta)
+    public override Texture Instantiate(AssetMeta meta)
     {
         Texture texture = new Texture(meta.Path)
         {
@@ -24,6 +23,11 @@ public class TextureImporter : AssetImporter<Texture>
         };
         
         return texture;
+    }
+
+    public override void Load(Texture asset)
+    {
+        
     }
 
     public override void Save(Texture asset, string path)

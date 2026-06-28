@@ -22,10 +22,8 @@ public static class ReflectionSerializer
 
     private static JsonObject SerializeObject(object obj)
     {
-        Console.WriteLine("hola");
         if (obj is MadObject mo)
         {
-            Console.WriteLine(mo.Guid);
             if (!_visited.Add(mo.Guid))
             {
                 return new JsonObject
@@ -76,14 +74,12 @@ public static class ReflectionSerializer
             return null;
 
         Type type = value.GetType();
-        Console.WriteLine(type);
 
         if (value is MadObject obj)
             return obj.Guid.ToString();
         
         if (SerializerRegistry.HasSerializer(type))
         {
-            Console.WriteLine("holaa");
             return SerializerRegistry.GetSerializer(type).SerializeObject(value);
         }
         

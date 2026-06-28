@@ -2,7 +2,7 @@
 
 public abstract class MadObject
 {
-    public string Name { get; set; } = "NewObject";
+    public virtual string Name { get; set; } = "NewObject";
 
     public Guid Guid = Guid.NewGuid();
 }

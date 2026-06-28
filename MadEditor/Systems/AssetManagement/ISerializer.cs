@@ -10,6 +10,7 @@ public interface ISerializer
     
     JsonObject SerializeObject(object obj);
     object DeserializeObject(JsonObject obj);
+    void DeserializeIntoObject(JsonObject obj, object target);
     
     public static readonly JsonSerializerOptions Options = new()
     {
@@ -24,9 +25,14 @@ public abstract class Serializer<TObject> : ISerializer where TObject : MadObjec
     public abstract JsonObject Serialize(TObject obj);
 
     public abstract TObject Deserialize(JsonObject obj);
+    public virtual void DeserializeInto(JsonObject obj, TObject target)
+    {
+        throw new NotSupportedException($"{GetType().Name} doesn't support DeserializeInto.");
+    }
 
     JsonObject ISerializer.SerializeObject(object obj) => Serialize((TObject)obj);
     object ISerializer.DeserializeObject(JsonObject obj) => Deserialize(obj);
+    void ISerializer.DeserializeIntoObject(JsonObject obj, object target) => DeserializeInto(obj, (TObject)target);
 }
 
 public abstract class ValueSerializer<T> : ISerializer
@@ -34,7 +40,13 @@ public abstract class ValueSerializer<T> : ISerializer
     public Type ObjectType => typeof(T);
     public abstract JsonObject Serialize(T obj);
     public abstract T Deserialize(JsonObject obj);
+
+    public virtual void DeserializeInto(JsonObject obj, T target)
+    {
+        throw new NotSupportedException($"{GetType().Name} doesn't support DeserializeInto.");
+    }
     
     JsonObject ISerializer.SerializeObject(object obj) => Serialize((T)obj);
     object ISerializer.DeserializeObject(JsonObject obj) => Deserialize(obj)!;
+    void ISerializer.DeserializeIntoObject(JsonObject obj, object target) => DeserializeInto(obj, (T)target);
 }

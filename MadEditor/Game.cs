@@ -47,41 +47,6 @@ public class EditorWindow : GameWindow
         CursorState = CursorState.Normal;
         _camera.GetComponent<Camera>()!.Width = width;
         _camera.GetComponent<Camera>()!.Height = height;
-        
-        MeshRenderer defaultRenderer = new MeshRenderer
-        {
-            Material = new Material(ShaderSystem.LitShader, diffuseColor: new Vector4(1f, 1f, 1f, 1f), specularColor: new Vector4(0.5f, 0.5f, 0.5f, 1f))
-        };
-
-        Transform defaultTransform = new Transform()
-        {
-            Position = new Vector3(0f, 0f, 0f),
-        };
-
-        MeshRenderer lampRenderer = new MeshRenderer()
-        {
-            Mesh = new Mesh([], []),
-            Material = new Material(ShaderSystem.UnlitShader, null, null, Vector4.One, Vector4.One, Vector4.One, 0f)
-        };
-        
-        GameObject light = new GameObject();
-        light.Name = "Light";
-        light.Transform.Position = new Vector3(-4f, 4f, 0f);
-        light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
-        Light lightComp = new DirectionalLight()
-        {
-            Direction = new Vector3(1f, -1.5f, 1f),
-        };
-        light.AddComponent(lightComp);
-        GameObject cube = new GameObject();
-        cube.Name = "Cube";
-        cube.AddComponent(defaultRenderer);
-        
-        Scene scene = new Scene();
-        scene.Add(light);
-        scene.Add(cube);
-        SceneManager.ActiveScene = scene;
-        AssetRegistry.RegisterAsset(scene, AssetManager.AssetsPath + "scene.madscene");
 
         _imGui = new ImGuiController(width, height);
         _sceneFbo = new SceneFramebuffer(width, height);

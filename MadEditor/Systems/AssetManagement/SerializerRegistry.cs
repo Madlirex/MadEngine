@@ -19,10 +19,6 @@ public static class SerializerRegistry
             var instance = (ISerializer)Activator.CreateInstance(type)!;
             _serializers.Add(instance.ObjectType, instance);
         }
-        foreach (var kv in _serializers)
-        {
-            Console.WriteLine($"{kv.Key} -> {kv.Value.GetType().Name}");
-        }
     }
 
     public static ISerializer GetSerializer(Type type)

@@ -2,6 +2,7 @@
 
 public abstract class Component : MadObject
 {
+    public string ComponentType => GetType().AssemblyQualifiedName!;
     public Component()
     {
         Name = "NewComponent";

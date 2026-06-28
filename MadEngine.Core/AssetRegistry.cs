@@ -16,6 +16,8 @@ public static class AssetRegistry
     
     public static void RegisterAsset(Asset asset, string path)
     {
+        asset.Path = path;
+        
         _guidByPath.Add(path, asset.Guid);
         _pathByGuid.Add(asset.Guid, path);
         _assets.Add(asset.Guid, asset);
@@ -28,6 +30,11 @@ public static class AssetRegistry
         }
     
         value.Add(asset);
+    }
+
+    public static void RegisterAsset(Asset asset)
+    {
+        RegisterAsset(asset, asset.Path);
     }
 
     public static void UnregisterAsset(Asset asset)

@@ -6,9 +6,11 @@ public interface IAssetImporter
 {
     public string Name { get; }
     public IReadOnlyList<string> Extensions { get; }
+
+    public Asset Instantiate(string path);
+    public Asset Instantiate(AssetMeta meta);
     
-    public Asset Load(string path);
-    public Asset Load(AssetMeta meta);
+    public void Load(Asset asset);
     public void Save(Asset asset, string path);
 }
 
@@ -18,15 +20,19 @@ public abstract class AssetImporter<TAsset> : IAssetImporter where TAsset : Asse
 
     public abstract IReadOnlyList<string> Extensions { get; }
 
-    public abstract TAsset Load(string path);
-
-    public abstract TAsset Load(AssetMeta meta);
+    public abstract TAsset Instantiate(string path);
+    public abstract TAsset Instantiate(AssetMeta meta);
+    
+    public abstract void Load(TAsset asset);
+    
 
     public abstract void Save(TAsset asset, string path);
 
-    Asset IAssetImporter.Load(string path) => Load(path);
+    Asset IAssetImporter.Instantiate(string path) => Instantiate(path);
+    Asset IAssetImporter.Instantiate(AssetMeta meta) => Instantiate(meta);
 
-    Asset IAssetImporter.Load(AssetMeta meta) => Load(meta);
+    void IAssetImporter.Load(Asset asset) => Load((TAsset)asset);
+    
 
     void IAssetImporter.Save(Asset asset, string path) => Save((TAsset)asset, path);
 }

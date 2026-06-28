@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -17,5 +18,21 @@ public static class MetaUtility
         string json = JsonSerializer.Serialize(meta, ISerializer.Options);
 
         File.WriteAllText(metaPath, json);
+    }
+
+    public static AssetMeta GenerateMeta(Asset asset)
+    {
+        Console.WriteLine(asset.Name + " " + asset.Path);
+
+        bool hasImporter = AssetManager.TryGetImporter(Path.GetExtension(asset.Path), out var importer);
+        
+        AssetMeta meta = new AssetMeta()
+        {
+            Guid = asset.Guid,
+            Importer = hasImporter ? importer!.Name : "",
+            Name = asset.Name,
+            Path = asset.Path
+        };
+        return meta;
     }
 }
