@@ -3,7 +3,7 @@ using StbImageSharp;
 
 namespace MadEngine.Core;
 
-public class Texture
+public class Texture : Asset
 {
     public int Handle;
     

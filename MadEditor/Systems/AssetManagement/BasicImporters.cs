@@ -2,28 +2,22 @@
 
 namespace MadEditor;
 
-public class TextureAsset(Texture texture) : Asset
-{
-    public Texture Texture = texture;
-    public override Type AssetType => typeof(Texture);
-}
-
-public class TextureImporter : AssetImporter<TextureAsset>
+public class TextureImporter : AssetImporter<Texture>
 {
     public override string Name => "TextureImporter";
     public override IReadOnlyList<string> Extensions => [".jpg", ".png", ".jpeg"];
 
-    public override TextureAsset Load(string path)
+    public override Texture Load(string path)
     {
-        TextureAsset texture = new TextureAsset(new Texture(path));
+        Texture texture = new Texture(path);
         texture.Name = Path.GetFileNameWithoutExtension(path);
         
         return texture;
     }
 
-    public override TextureAsset Load(AssetMeta meta)
+    public override Texture Load(AssetMeta meta)
     {
-        TextureAsset texture = new TextureAsset(new Texture(meta.Path))
+        Texture texture = new Texture(meta.Path)
         {
             Guid = meta.Guid,
             Name = meta.Name
@@ -32,7 +26,7 @@ public class TextureImporter : AssetImporter<TextureAsset>
         return texture;
     }
 
-    public override void Save(TextureAsset asset, string path)
+    public override void Save(Texture asset, string path)
     {
         
     }

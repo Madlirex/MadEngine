@@ -1,4 +1,4 @@
-﻿namespace MadEditor;
+﻿namespace MadEngine.Core;
 
 public static class AssetRegistry
 {
@@ -16,10 +16,10 @@ public static class AssetRegistry
         _pathByGuid.Add(asset.Guid, path);
         _assets.Add(asset.Guid, asset);
         
-        if (!_assetRegistries.TryGetValue(asset.AssetType, out List<Asset>? value))
+        if (!_assetRegistries.TryGetValue(asset.GetType(), out List<Asset>? value))
         {
             value = [];
-            _assetRegistries[asset.AssetType] = value;
+            _assetRegistries[asset.GetType()] = value;
         }
     
         value.Add(asset);
@@ -32,7 +32,7 @@ public static class AssetRegistry
         _pathByGuid.Remove(asset.Guid);
         _assets.Remove(asset.Guid);
         
-        _assetRegistries[asset.AssetType].Remove(asset);
+        _assetRegistries[asset.GetType()].Remove(asset);
     }
     
     public static Asset GetAsset(Guid guid)

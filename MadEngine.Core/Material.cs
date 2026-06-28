@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace MadEngine.Core;
 
-public class Material
+public class Material : Asset
 {
     public Shader Shader;
     public Texture? DiffuseTexture;

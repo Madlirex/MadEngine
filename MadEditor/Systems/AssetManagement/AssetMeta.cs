@@ -2,14 +2,6 @@
 
 namespace MadEditor;
 
-public abstract class Asset
-{
-    public abstract Type AssetType { get; }
-    public Guid Guid { get; init; } = Guid.NewGuid();
-    public string Name { get; set; } = "NewAsset";
-   
-}
-
 public class AssetMeta
 {
     public int Version { get; set; } = 1;

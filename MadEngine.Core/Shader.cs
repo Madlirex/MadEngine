@@ -3,7 +3,7 @@ using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
-public class Shader : IDisposable
+public class Shader : Asset, IDisposable
 {
     private int _handle;
     private bool _disposedValue;

@@ -1,9 +1,13 @@
 ﻿namespace MadEngine.Core;
 
-public abstract class Component
+public abstract class Component : Object
 {
-    public GameObject GameObject { get; private set; }
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Component()
+    {
+        Name = "NewComponent";
+    }
+    
+    public GameObject? GameObject { get; private set; }
     
     internal void AssignGameObject(GameObject gameObject)
     {
@@ -21,6 +25,6 @@ public abstract class Component
 
     public override string ToString()
     {
-        return $"{GameObject.Id}/{Id}";
+        return $"{GameObject!.Guid}/{Guid}";
     }
 }

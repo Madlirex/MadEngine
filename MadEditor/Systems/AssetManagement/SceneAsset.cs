@@ -1,28 +1,26 @@
-﻿using MadEngine.Core.SceneManagement;
+﻿using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
-public class SceneAsset(Scene scene) : Asset
-{
-    public override Type AssetType => typeof(Scene);
-    public Scene Scene = scene;
-}
-
-public class SceneImporter : AssetImporter<SceneAsset>
+public class SceneImporter : AssetImporter<Scene>
 {
     public override string Name => "SceneImporter";
     public override IReadOnlyList<string> Extensions => [".madscene"];
-    public override SceneAsset Load(string path)
+    public override Scene Load(string path)
     {
         throw new NotImplementedException();
     }
 
-    public override SceneAsset Load(AssetMeta meta)
+    public override Scene Load(AssetMeta meta)
     {
         throw new NotImplementedException();
     }
 
-    public override void Save(SceneAsset asset, string path)
+    public override void Save(Scene asset, string path)
     {
         
     }

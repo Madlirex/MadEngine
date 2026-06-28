@@ -63,7 +63,7 @@ public class HierarchyDrawer : IPanelDrawer
         if (!hasChildren)
             flags |= ImGuiTreeNodeFlags.Leaf;
 
-        string label = $"{root.Name}##{root.Id}";
+        string label = $"{root.Name}##{root.Guid}";
 
         bool open = ImGui.TreeNodeEx(label, flags);
         
@@ -79,7 +79,7 @@ public class HierarchyDrawer : IPanelDrawer
         
         if (ImGui.BeginDragDropSource())
         {
-            ImGuiPayload.Set(root.Id);
+            ImGuiPayload.Set(root.Guid);
             ImGui.Text(root.Name);
             ImGui.EndDragDropSource();
         }
@@ -110,7 +110,7 @@ public class HierarchyDrawer : IPanelDrawer
             {
                 Guid draggedId = ImGuiPayload.DataToGuid((IntPtr)data!);
                 Scene scene = SceneManager.ActiveScene;
-                GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Id == draggedId);
+                GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Guid == draggedId);
                 
                 if (dragged != null && dragged != root)
                 {

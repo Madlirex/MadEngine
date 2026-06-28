@@ -1,4 +1,6 @@
-﻿namespace MadEditor;
+﻿using MadEngine.Core;
+
+namespace MadEditor;
 
 public static class AssetManager
 {

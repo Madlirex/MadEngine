@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
-public class Mesh : IDisposable
+public class Mesh : Asset, IDisposable
 {
     public Vertex[] Vertices { get; }
     public uint[] Indices { get; }

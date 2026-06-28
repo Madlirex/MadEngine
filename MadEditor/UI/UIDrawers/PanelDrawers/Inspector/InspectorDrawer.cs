@@ -28,7 +28,7 @@ public class InspectorDrawer : IPanelDrawer
         string name = selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
             selected.Name = name;
-        ImGui.Text("ID: " + selected.Id);
+        ImGui.Text("ID: " + selected.Guid);
         ImGui.Separator();
     }
 
@@ -42,7 +42,7 @@ public class InspectorDrawer : IPanelDrawer
 
     public void DrawComponent(Component component)
     {
-        ImGui.PushID(component.Id.ToString());
+        ImGui.PushID(component.Guid.ToString());
 
         string name = component.GetType().Name;
 

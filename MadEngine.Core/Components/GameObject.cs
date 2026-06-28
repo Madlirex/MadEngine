@@ -2,10 +2,8 @@
 
 namespace MadEngine.Core;
 
-public class GameObject
+public class GameObject : Object
 {
-    public string Name = "NewGameObject";
-    public Guid Id = Guid.NewGuid();
     public Transform Transform;
 
     public IReadOnlyList<Component> Components => _components;
@@ -16,6 +14,7 @@ public class GameObject
 
     public GameObject()
     {
+        Name = "NewGameObject";
         Transform = new();
         _components.Add(Transform);
         Transform.AssignGameObject(this);
