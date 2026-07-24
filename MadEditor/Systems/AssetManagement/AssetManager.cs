@@ -60,23 +60,18 @@ public static class AssetManager
         if (File.Exists(path + ".meta"))
         {
             AssetMeta meta = MetaUtility.Load(path + ".meta");
+            meta.Path = Application.Directory + meta.Path; 
             asset = _importers[meta.Importer].Instantiate(meta);
-            asset.Directory = Path.GetDirectoryName(path) ?? "";
+            asset.FullDir = Path.GetDirectoryName(path) ?? "";
         }
         else
         {
             if (_importersByExtension.TryGetValue(Path.GetExtension(path), out var importer))
             {
                 asset = importer.Instantiate(path);
-                asset.Directory = Path.GetDirectoryName(path) ?? "";
-            }
-            else
-            {
-                return;
+                asset.FullDir = Path.GetDirectoryName(path) ?? "";
             }
         }
-        AssetRegistry.RegisterAsset(asset);
-        AssetRegistry.RegisterObject(asset);
     }
 
     public static void LoadAssets(Asset[] assets)
@@ -89,7 +84,7 @@ public static class AssetManager
     
     public static void LoadAsset(Asset asset)
     {
-        if (_importersByExtension.TryGetValue(Path.GetExtension(asset.Path), out var importer))
+        if (_importersByExtension.TryGetValue(Path.GetExtension(asset.AbsolutePath), out var importer))
         {
             importer.Load(asset);
         }
@@ -99,13 +94,15 @@ public static class AssetManager
     {
         foreach (var asset in AssetRegistry.Assets)
         {
-            SaveAsset(asset, asset.Path);
+            SaveAsset(asset, asset.AbsolutePath);
         }
     }
 
     public static void SaveAsset(Asset asset, string path)
     {
-        _importersByExtension[Path.GetExtension(path)].Save(asset, path);
+        Console.WriteLine(path);
+        if (!_importersByExtension.TryGetValue(Path.GetExtension(path), out var importer)) return;
+        importer.Save(asset, path);
 
         AssetMeta meta = MetaUtility.GenerateMeta(asset);
         

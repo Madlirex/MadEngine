@@ -34,6 +34,8 @@ public class EditorWindow : GameWindow
 
     })
     {
+        Application.Directory = AssetManager.ProjectPath;
+        
         _engine = new Engine();
         ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
         ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");

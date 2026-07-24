@@ -1,0 +1,75 @@
+{
+  "Scene": {
+    "_gameObjects": [
+      "44dd725d-0d2d-47be-a9b5-37c1375c11d6"
+    ],
+    "_lights": [],
+    "_meshRenderers": [],
+    "\u003CName\u003Ek__BackingField": "NewScene",
+    "Guid": "0e5a51f2-5741-4165-9252-6a2f484bf3ff",
+    "GameObjects": [
+      "44dd725d-0d2d-47be-a9b5-37c1375c11d6"
+    ],
+    "Lights": [],
+    "MeshRenderers": [],
+    "Name": "NewScene",
+    "Extension": ".madscene",
+    "AbsolutePath": "C:\\Users\\Slavkov_Doma\\RiderProjects\\MadEngine\\DemoProject\\NewScene.madscene",
+    "RelativePath": "\\NewScene.madscene",
+    "FullDir": "C:\\Users\\Slavkov_Doma\\RiderProjects\\MadEngine\\DemoProject",
+    "RelativeDir": ""
+  },
+  "GameObjects": {
+    "44dd725d-0d2d-47be-a9b5-37c1375c11d6": {
+      "Transform": "36b33aec-9a8b-4d75-a0e7-f2769a6b389e",
+      "_components": [
+        "36b33aec-9a8b-4d75-a0e7-f2769a6b389e"
+      ],
+      "ComponentAdded": null,
+      "ComponentRemoved": null,
+      "Guid": "44dd725d-0d2d-47be-a9b5-37c1375c11d6",
+      "Components": [
+        "36b33aec-9a8b-4d75-a0e7-f2769a6b389e"
+      ],
+      "Name": "hoho"
+    }
+  },
+  "Components": {
+    "36b33aec-9a8b-4d75-a0e7-f2769a6b389e": {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0,
+        "W": 1
+      },
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "_parent": null,
+      "_children": [],
+      "_eulerRotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Guid": "36b33aec-9a8b-4d75-a0e7-f2769a6b389e",
+      "EulerRotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Parent": null,
+      "Children": [],
+      "ComponentType": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "GameObject": "44dd725d-0d2d-47be-a9b5-37c1375c11d6",
+      "Name": "NewComponent"
+    }
+  }
+}

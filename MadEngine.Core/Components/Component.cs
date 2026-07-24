@@ -8,7 +8,7 @@ public abstract class Component : MadObject
         Name = "NewComponent";
     }
     
-    public GameObject? GameObject { get; private set; }
+    public GameObject GameObject { get; private set; }
     
     internal void AssignGameObject(GameObject gameObject)
     {

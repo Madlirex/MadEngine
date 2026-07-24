@@ -2,16 +2,17 @@
 
 public static class SceneManager
 {
-    public static Scene ActiveScene;
+    public static Scene ActiveScene => _activeScene ??= new Scene();
+    private static Scene? _activeScene;
     public static List<Scene> Scenes = [];
 
     public static void LoadScene(Scene scene)
     {
-        ActiveScene = scene;
+        _activeScene = scene;
     }
 
     public static void LoadScene(int index)
     {
-        ActiveScene = Scenes[index];
+        _activeScene = Scenes[index];
     }
 }

@@ -26,7 +26,7 @@ public class SceneImporter : AssetImporter<Scene>
         Scene scene = new Scene
         {
             Guid = sceneGuid,
-            Directory = Path.GetDirectoryName(meta.Path) ?? "",
+            FullDir = Path.GetDirectoryName(meta.Path) ?? "",
             Name = meta.Name ?? Name
         };
         
@@ -63,7 +63,7 @@ public class SceneImporter : AssetImporter<Scene>
     public override void Load(Scene asset)
     {
         Console.WriteLine("holaa");
-        string json = File.ReadAllText(asset.Path);
+        string json = File.ReadAllText(asset.AbsolutePath);
         JsonObject obj = JsonSerializer.Deserialize<JsonObject>(json)!;
         
         SerializerRegistry.GetSerializer<Scene>().DeserializeIntoObject(obj, asset);

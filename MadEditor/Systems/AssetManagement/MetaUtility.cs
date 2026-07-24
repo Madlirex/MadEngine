@@ -22,16 +22,16 @@ public static class MetaUtility
 
     public static AssetMeta GenerateMeta(Asset asset)
     {
-        Console.WriteLine(asset.Name + " " + asset.Path);
+        Console.WriteLine(asset.Name + " " + asset.AbsolutePath);
 
-        bool hasImporter = AssetManager.TryGetImporter(Path.GetExtension(asset.Path), out var importer);
+        bool hasImporter = AssetManager.TryGetImporter(Path.GetExtension(asset.AbsolutePath), out var importer);
         
         AssetMeta meta = new AssetMeta()
         {
             Guid = asset.Guid,
             Importer = hasImporter ? importer!.Name : "",
             Name = asset.Name,
-            Path = asset.Path
+            Path = asset.RelativePath
         };
         return meta;
     }

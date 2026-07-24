@@ -8,7 +8,7 @@ public class Texture : Asset
     public int Handle;
 
     public override string Name { get; set; } = "NewTexture";
-    public override string Extension => ".tex";
+    public override string Extension => ".jpg";
 
     public Texture(string path)
     {

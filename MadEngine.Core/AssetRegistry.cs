@@ -15,9 +15,24 @@ public static class AssetRegistry
     public static void RegisterAsset(Asset asset)
     {
         GetUniquePath(asset);
-        
-        _guidByPath.Add(asset.Path, asset.Guid);
-        _pathByGuid.Add(asset.Guid, asset.Path);
+        Console.WriteLine($"Registering asset: {asset}");
+    
+        // Safety check for duplicate GUIDs from cloned files
+        if (_assets.ContainsKey(asset.Guid))
+        {
+            Console.WriteLine($"[Warning] Duplicate GUID {asset.Guid} found for asset '{asset.AbsolutePath}'. Regenerating a fresh runtime GUID.");
+            asset.Guid = Guid.NewGuid(); 
+        }
+
+        // Safety check for duplicate paths
+        if (_guidByPath.ContainsKey(asset.AbsolutePath))
+        {
+            Console.WriteLine($"[Error] Path collision skipped: {asset.AbsolutePath}");
+            return;
+        }
+    
+        _guidByPath.Add(asset.AbsolutePath, asset.Guid);
+        _pathByGuid.Add(asset.Guid, asset.AbsolutePath);
         _assets.Add(asset.Guid, asset);
 
         if (!_assetRegistries.TryGetValue(asset.GetType(), out List<Asset>? value))
@@ -25,13 +40,13 @@ public static class AssetRegistry
             value = [];
             _assetRegistries[asset.GetType()] = value;
         }
-    
+
         value.Add(asset);
     }
 
     public static void UnregisterAsset(Asset asset)
     {
-        string path = asset.Path;
+        string path = asset.AbsolutePath;
         _guidByPath.Remove(path);
         _pathByGuid.Remove(asset.Guid);
         _assets.Remove(asset.Guid);
@@ -41,17 +56,17 @@ public static class AssetRegistry
 
     public static void GetUniquePath(Asset asset)
     {
-        Console.WriteLine($"Finding for: {asset.Path}");
-        if (!_guidByPath.ContainsKey(asset.Path))
+        Console.WriteLine($"Finding for: {asset.AbsolutePath}");
+        if (!_guidByPath.ContainsKey(asset.AbsolutePath))
             return;
 
         int i = 1;
-        string newPath = Path.Combine(asset.Directory, $"{asset.Name}_{i}{asset.Extension}");
+        string newPath = Path.Combine(asset.FullDir, $"{asset.Name}_{i}{asset.Extension}");
         
         while (_guidByPath.ContainsKey(newPath))
         {
             i++;
-            newPath = Path.Combine(asset.Directory, $"{asset.Name}_{i}{asset.Extension}");
+            newPath = Path.Combine(asset.FullDir, $"{asset.Name}_{i}{asset.Extension}");
         }
 
         asset.Name = asset.Name + "_" + i;
@@ -59,6 +74,11 @@ public static class AssetRegistry
 
     public static void RegisterObject(MadObject obj)
     {
+        if (_assets.ContainsKey(obj.Guid))
+        {
+            Console.WriteLine($"[Warning] Duplicate GUID {obj.Guid} found for object {obj.Name}'. Regenerating a fresh runtime GUID.");
+            obj.Guid = Guid.NewGuid(); 
+        }   
         _objectMap.Add(obj.Guid, obj);
     }
 
