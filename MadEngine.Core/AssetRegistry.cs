@@ -15,16 +15,13 @@ public static class AssetRegistry
     public static void RegisterAsset(Asset asset)
     {
         GetUniquePath(asset);
-        Console.WriteLine($"Registering asset: {asset}");
-    
-        // Safety check for duplicate GUIDs from cloned files
+        
         if (_assets.ContainsKey(asset.Guid))
         {
             Console.WriteLine($"[Warning] Duplicate GUID {asset.Guid} found for asset '{asset.AbsolutePath}'. Regenerating a fresh runtime GUID.");
             asset.Guid = Guid.NewGuid(); 
         }
-
-        // Safety check for duplicate paths
+        
         if (_guidByPath.ContainsKey(asset.AbsolutePath))
         {
             Console.WriteLine($"[Error] Path collision skipped: {asset.AbsolutePath}");
@@ -56,7 +53,6 @@ public static class AssetRegistry
 
     public static void GetUniquePath(Asset asset)
     {
-        Console.WriteLine($"Finding for: {asset.AbsolutePath}");
         if (!_guidByPath.ContainsKey(asset.AbsolutePath))
             return;
 

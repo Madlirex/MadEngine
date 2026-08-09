@@ -24,7 +24,6 @@ public class Scene : Asset
     {
         gameObject.Destroy();
         _gameObjects.Remove(gameObject);
-        gameObject.Transform.Parent = null;
         Unregister(gameObject);
     }
 

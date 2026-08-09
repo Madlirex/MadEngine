@@ -14,11 +14,6 @@ public abstract class Asset : MadObject
         AssetRegistry.RegisterAsset(this);
     }
 
-    public override string ToString()
-    {
-        return RelativePath + Name + Guid;
-    }
-
     ~Asset()
     {
         AssetRegistry.UnregisterAsset(this);
