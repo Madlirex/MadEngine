@@ -1,41 +1,41 @@
 {
   "Scene": {
     "_gameObjects": [
-      "44dd725d-0d2d-47be-a9b5-37c1375c11d6"
+      "0ea25253-8d46-4535-9ab9-4a9b3e20b13b"
     ],
     "_lights": [],
     "_meshRenderers": [],
-    "\u003CName\u003Ek__BackingField": "NewScene",
+    "\u003CName\u003Ek__BackingField": "Scea",
     "Guid": "0e5a51f2-5741-4165-9252-6a2f484bf3ff",
     "GameObjects": [
-      "44dd725d-0d2d-47be-a9b5-37c1375c11d6"
+      "0ea25253-8d46-4535-9ab9-4a9b3e20b13b"
     ],
     "Lights": [],
     "MeshRenderers": [],
-    "Name": "NewScene",
+    "Name": "Scea",
     "Extension": ".madscene",
-    "AbsolutePath": "C:\\Users\\Slavkov_Doma\\RiderProjects\\MadEngine\\DemoProject\\NewScene.madscene",
-    "RelativePath": "\\NewScene.madscene",
+    "AbsolutePath": "C:\\Users\\Slavkov_Doma\\RiderProjects\\MadEngine\\DemoProject\\Scea.madscene",
+    "RelativePath": "\\Scea.madscene",
     "FullDir": "C:\\Users\\Slavkov_Doma\\RiderProjects\\MadEngine\\DemoProject",
     "RelativeDir": ""
   },
   "GameObjects": {
-    "44dd725d-0d2d-47be-a9b5-37c1375c11d6": {
-      "Transform": "36b33aec-9a8b-4d75-a0e7-f2769a6b389e",
+    "0ea25253-8d46-4535-9ab9-4a9b3e20b13b": {
+      "Transform": "40261d23-252a-4383-b7e1-07c5128011f4",
       "_components": [
-        "36b33aec-9a8b-4d75-a0e7-f2769a6b389e"
+        "40261d23-252a-4383-b7e1-07c5128011f4"
       ],
       "ComponentAdded": null,
       "ComponentRemoved": null,
-      "Guid": "44dd725d-0d2d-47be-a9b5-37c1375c11d6",
+      "Guid": "0ea25253-8d46-4535-9ab9-4a9b3e20b13b",
       "Components": [
-        "36b33aec-9a8b-4d75-a0e7-f2769a6b389e"
+        "40261d23-252a-4383-b7e1-07c5128011f4"
       ],
-      "Name": "hoho"
+      "Name": "NewGameObject"
     }
   },
   "Components": {
-    "36b33aec-9a8b-4d75-a0e7-f2769a6b389e": {
+    "40261d23-252a-4383-b7e1-07c5128011f4": {
       "Position": {
         "X": 0,
         "Y": 0,
@@ -59,7 +59,7 @@
         "Y": 0,
         "Z": 0
       },
-      "Guid": "36b33aec-9a8b-4d75-a0e7-f2769a6b389e",
+      "Guid": "40261d23-252a-4383-b7e1-07c5128011f4",
       "EulerRotation": {
         "X": 0,
         "Y": 0,
@@ -68,7 +68,7 @@
       "Parent": null,
       "Children": [],
       "ComponentType": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "GameObject": "44dd725d-0d2d-47be-a9b5-37c1375c11d6",
+      "GameObject": "0ea25253-8d46-4535-9ab9-4a9b3e20b13b",
       "Name": "NewComponent"
     }
   }
