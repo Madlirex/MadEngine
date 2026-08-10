@@ -10,9 +10,9 @@ public static class ImporterRegistry
         Type? currentType = type;
         while (currentType != null)
         {
-            if (_importers.TryGetValue(type, out IAssetImporter? importer))
+            if (_importers.TryGetValue(currentType, out IAssetImporter? importer))
                 return importer;
-            currentType = type.BaseType;
+            currentType = currentType.BaseType;
         }
 
         foreach (Type interfaceType in type.GetInterfaces())

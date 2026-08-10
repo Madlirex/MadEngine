@@ -10,9 +10,9 @@ public static class SerializerRegistry
         Type? currentType = type;
         while (currentType != null)
         {
-            if (_serializers.TryGetValue(type, out ISerializer? serializer))
+            if (_serializers.TryGetValue(currentType, out ISerializer? serializer))
                 return serializer;
-            currentType = type.BaseType;
+            currentType = currentType.BaseType;
         }
 
         foreach (Type interfaceType in type.GetInterfaces())
