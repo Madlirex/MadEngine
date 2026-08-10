@@ -19,7 +19,7 @@ public class AssetMeta
             Guid = asset.Guid,
             Name = asset.Name,
             RelativePath = asset.RelativePath,
-            //Importer = ImporterRegistry.GetImporter(asset.GetType())
+            Importer = ImporterRegistry.GetImporter(asset.GetType())?.Name ?? "MissingImporter"
         };
     }
 }
