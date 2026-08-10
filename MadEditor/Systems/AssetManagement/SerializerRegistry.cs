@@ -17,7 +17,7 @@ public static class SerializerRegistry
 
         foreach (Type interfaceType in type.GetInterfaces())
         {
-            if (_serializers.TryGetValue(type, out ISerializer? serializer))
+            if (_serializers.TryGetValue(interfaceType, out ISerializer? serializer))
                 return serializer;
         }
         return null;

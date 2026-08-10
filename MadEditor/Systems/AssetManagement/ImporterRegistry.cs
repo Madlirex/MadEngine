@@ -17,7 +17,7 @@ public static class ImporterRegistry
 
         foreach (Type interfaceType in type.GetInterfaces())
         {
-            if (_importers.TryGetValue(type, out IAssetImporter? importer))
+            if (_importers.TryGetValue(interfaceType, out IAssetImporter? importer))
                 return importer;
         }
         return null;
