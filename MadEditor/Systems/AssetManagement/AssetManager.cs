@@ -5,7 +5,7 @@ namespace MadEditor;
 public static class AssetManager
 {
     public static string ProjectPath => _projectPath;
-    public static string AssetsPath => _projectPath + "/Assets";
+    public static string AssetsPath => _projectPath + "/Assets/";
     private static string _projectPath = "";
 
     public static void RecompileScripts()

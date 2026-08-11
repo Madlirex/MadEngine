@@ -1,11 +1,12 @@
 {
     "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "f91e7fd0-8952-42fc-8514-c7f058951981",
+    "$guid": "69fa2a4b-c32c-4aff-b2e3-ce93d4fa1ef8",
     "$data": {
         "Name": "NewScene",
-        "Guid": "f91e7fd0-8952-42fc-8514-c7f058951981",
+        "Guid": "69fa2a4b-c32c-4aff-b2e3-ce93d4fa1ef8",
         "_gameObjects": [
-            "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
+            "c0f8f0c5-c7b5-4ac1-b594-222fa56b4261",
+            "e31202d1-23ec-4a8b-80ea-1eccdeb7b291"
         ],
         "_lights": [],
         "_meshRenderers": []
@@ -13,14 +14,25 @@
     "GameObjects": [
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "522409ec-c46d-4eac-af6f-ae5b5f8f8688",
+            "$guid": "c0f8f0c5-c7b5-4ac1-b594-222fa56b4261",
             "$data": {
                 "Name": "NewGameObject",
-                "Guid": "522409ec-c46d-4eac-af6f-ae5b5f8f8688",
-                "Transform": "4f856d75-48ec-4099-a910-bfc998cd8210",
+                "Guid": "c0f8f0c5-c7b5-4ac1-b594-222fa56b4261",
+                "Transform": "cf2ed7fc-37b7-4f9a-ba7a-74dbac36db07",
                 "_components": [
-                    "4f856d75-48ec-4099-a910-bfc998cd8210",
-                    "c439477d-b3f3-4601-9ccc-778f94accaf6"
+                    "cf2ed7fc-37b7-4f9a-ba7a-74dbac36db07"
+                ]
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e31202d1-23ec-4a8b-80ea-1eccdeb7b291",
+            "$data": {
+                "Name": "NewGameObject",
+                "Guid": "e31202d1-23ec-4a8b-80ea-1eccdeb7b291",
+                "Transform": "36c37c5f-0622-4dbf-ae0b-113f0d85bf6c",
+                "_components": [
+                    "36c37c5f-0622-4dbf-ae0b-113f0d85bf6c"
                 ]
             }
         }
@@ -28,7 +40,7 @@
     "Components": [
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "4f856d75-48ec-4099-a910-bfc998cd8210",
+            "$guid": "cf2ed7fc-37b7-4f9a-ba7a-74dbac36db07",
             "$data": {
                 "EulerRotation": [
                     0,
@@ -37,7 +49,7 @@
                 ],
                 "Parent": null,
                 "Name": "NewComponent",
-                "Guid": "4f856d75-48ec-4099-a910-bfc998cd8210",
+                "Guid": "cf2ed7fc-37b7-4f9a-ba7a-74dbac36db07",
                 "Position": [
                     0,
                     0,
@@ -61,34 +73,45 @@
                     0,
                     0
                 ],
-                "_gameObject": "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
+                "_gameObject": "c0f8f0c5-c7b5-4ac1-b594-222fa56b4261"
             }
         },
         {
-            "$type": "MadEngine.Core.Light, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "c439477d-b3f3-4601-9ccc-778f94accaf6",
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "36c37c5f-0622-4dbf-ae0b-113f0d85bf6c",
             "$data": {
-                "Name": "NewComponent",
-                "Guid": "c439477d-b3f3-4601-9ccc-778f94accaf6",
-                "AmbientColor": [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
                 ],
-                "DiffuseColor": [
-                    1,
+                "Parent": null,
+                "Name": "NewComponent",
+                "Guid": "36c37c5f-0622-4dbf-ae0b-113f0d85bf6c",
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
                     1,
                     1,
                     1
                 ],
-                "SpecularColor": [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
                 ],
-                "_gameObject": "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
+                "_gameObject": "e31202d1-23ec-4a8b-80ea-1eccdeb7b291"
             }
         }
     ]

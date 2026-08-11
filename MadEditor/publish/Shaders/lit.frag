@@ -58,7 +58,7 @@ uniform vec3 viewPos;
 
 uniform Material material;
 
-#define MAX_LIGHT_COUNT 128
+#define MAX_LIGHT_COUNT 32
 uniform DirLight dirLights[MAX_LIGHT_COUNT];
 uniform PointLight pointLights[MAX_LIGHT_COUNT];
 uniform SpotLight spotLights[MAX_LIGHT_COUNT];

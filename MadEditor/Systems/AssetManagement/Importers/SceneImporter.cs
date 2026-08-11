@@ -83,7 +83,7 @@ public class SceneImporter : Importer<Scene>
         return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
 
-    public static void ImportObjects(JsonNode json)
+    public static void ImportObjects(JsonNode json, Scene scene)
     {
         if (json["GameObjects"] is JsonArray gameObjectsArray)
         {
@@ -94,6 +94,7 @@ public class SceneImporter : Importer<Scene>
                 Guid guid = goJson["$guid"]!.GetValue<Guid>();
                 GameObject obj = (GameObject)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(typeof(GameObject))!.DeserializeInto(obj, goJson["$data"]!);
+                scene.Register(obj);
             }
         }
         if (json["Components"] is not JsonArray componentsArray)
@@ -127,7 +128,7 @@ public class SceneImporter : Importer<Scene>
 
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;
         SerializerRegistry.GetClassSerializer(typeof(Scene))!.DeserializeInto(obj, json["$data"]!);
-        ImportObjects(json);
+        ImportObjects(json, obj);
         
         return obj;
     }

@@ -105,6 +105,7 @@ public class EditorWindow : GameWindow
         Camera camera = _camera.GetComponent<Camera>()!;
 
         _engine.Render(SceneManager.ActiveScene, camera);
+        //Console.WriteLine(SceneManager.ActiveScene.MeshRenderers.Count);
         
         SceneFramebuffer.Unbind();
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
