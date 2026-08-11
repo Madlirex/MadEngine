@@ -4,6 +4,12 @@ public static class ImporterRegistry
 {
     public static IReadOnlyDictionary<Type, IAssetImporter> Importers => _importers;
     private static Dictionary<Type, IAssetImporter> _importers = [];
+
+    public static IReadOnlyDictionary<string, IAssetImporter> ImporterNames => _importerNames;
+    private static Dictionary<string, IAssetImporter> _importerNames = [];
+    
+    public static IReadOnlyDictionary<string, IAssetImporter> ImporterExtensions => _importerExtensions;
+    private static Dictionary<string, IAssetImporter> _importerExtensions = [];
     
     public static IAssetImporter? GetImporter(Type type)
     {
@@ -21,6 +27,16 @@ public static class ImporterRegistry
                 return importer;
         }
         return null;
+    }
+
+    public static IAssetImporter? GetImporter(string name)
+    {
+        return _importerNames.GetValueOrDefault(name);
+    }
+
+    public static IAssetImporter? GetImporterByExtension(string extension)
+    {
+        return _importerExtensions.GetValueOrDefault(extension);
     }
 
     public static void DiscoverImporters()
@@ -42,6 +58,8 @@ public static class ImporterRegistry
         if (Activator.CreateInstance(type) is IAssetImporter importer)
         {
             _importers.TryAdd(type, importer);
+            _importerNames.TryAdd(importer.Name, importer);
+            _importerExtensions.TryAdd(importer.Extension, importer);
         }
     }
 }

@@ -94,6 +94,6 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
 
     public override MadObject DeserializeReference(JsonNode obj)
     {
-        return AssetManager.Objects[Guid.Parse(obj.GetValue<string>())];
+        return AssetRegistry.GetObject(Guid.Parse(obj.GetValue<string>()))!;
     }
 }

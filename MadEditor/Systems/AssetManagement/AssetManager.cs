@@ -1,37 +1,47 @@
 ﻿using MadEngine.Core;
+using OpenTK.Graphics.ES11;
 
 namespace MadEditor;
 
 public static class AssetManager
 {
-    public static IReadOnlyDictionary<Guid, MadObject> Objects => _objects;
-    private static Dictionary<Guid, MadObject> _objects = new();
-
-    public static MadObject? GetObject(Guid guid)
+    public static void LoadProject(string path)
     {
-        return _objects.GetValueOrDefault(guid);
+        InitializeAssets(path);
+        LoadAssets(path);
     }
     
-    public static void AddObject(MadObject obj)
+    public static void InitializeAssets(string path)
     {
-        if (!_objects.ContainsKey(obj.Guid))
-            _objects.Add(obj.Guid, obj);
-        else
-            Console.WriteLine("WARNING: Duplicate object: " + obj.Guid);
-    }
-
-    public static void RemoveObject(Guid guid)
-    {
-        if (!_objects.ContainsKey(guid))
+        foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
-            Console.WriteLine("ERROR: Object not found: " + guid);
-            return;
+            InitializeAsset(file);
         }
-        _objects.Remove(guid);
     }
 
-    public static void RemoveObject(MadObject obj)
+    public static void InitializeAsset(string file)
     {
-        RemoveObject(obj.Guid);
+        if (File.Exists(file + ".meta"))
+        {
+            AssetMeta meta = AssetMeta.Load(file + ".meta");
+            ImporterRegistry.GetImporter(meta.Importer)!.Initialize(meta);
+        }
+        else
+        {
+            ImporterRegistry.GetImporterByExtension(Path.GetExtension(file))!.Initialize(file);
+        }
+    }
+
+    public static void LoadAssets(string path)
+    {
+        foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
+        {
+            LoadAsset(file);
+        }
+    }
+
+    public static void LoadAsset(string file)
+    {
+        ImporterRegistry.GetImporterByExtension(Path.GetExtension(file))!.Import(file);
     }
 }

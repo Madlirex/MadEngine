@@ -6,6 +6,9 @@ namespace MadEditor;
 
 public class SceneImporter : Importer<Scene>
 {
+    public override string Name => "SceneImporter";
+    public override string Extension => ".scene";
+    
     public override void Save(Scene asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Scene))!.Serialize(asset);

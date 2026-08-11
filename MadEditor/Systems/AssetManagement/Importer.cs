@@ -5,8 +5,8 @@ namespace MadEditor;
 public interface IAssetImporter
 {
     public Type Type { get; }
-    public string Name => "Importer";
-    public string Extension => ".asset";
+    public string Name { get; }
+    public string Extension { get; }
 
     public Asset Initialize(string path);
     public Asset Initialize(AssetMeta meta);
@@ -18,6 +18,8 @@ public interface IAssetImporter
 public abstract class Importer<T> : IAssetImporter where T : Asset
 {
     public Type Type => typeof(T);
+    public abstract string Name { get; }
+    public abstract string Extension { get; }
     public abstract T Initialize(string path);
     public abstract T Initialize(AssetMeta meta);
     public abstract T Import(string path);

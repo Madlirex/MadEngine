@@ -22,4 +22,9 @@ public class AssetMeta
             Importer = ImporterRegistry.GetImporter(asset.GetType())?.Name ?? "MissingImporter"
         };
     }
+
+    public static AssetMeta Load(string file)
+    {
+        return JsonSerializer.Deserialize<AssetMeta>(File.ReadAllText(file))!;
+    }
 }
