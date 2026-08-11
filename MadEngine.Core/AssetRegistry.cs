@@ -11,6 +11,18 @@ public static class AssetRegistry
 
     public static Dictionary<Guid, MadObject> ObjectMap => _objectMap;
     private static Dictionary<Guid, MadObject> _objectMap = new();
+
+    public static void Register(MadObject obj)
+    {
+        RegisterObject(obj);
+        if(obj is Asset asset) RegisterAsset(asset);
+    }
+
+    public static void Unregister(MadObject obj)
+    {
+        UnregisterObject(obj);
+        if(obj is Asset asset) UnregisterAsset(asset);
+    }
     
     public static void RegisterAsset(Asset asset)
     {

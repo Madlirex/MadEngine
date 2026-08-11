@@ -4,7 +4,8 @@ public abstract class MadObject
 {
     public virtual string Name { get; set; } = "NewObject";
 
-    public Guid Guid = Guid.NewGuid();
+    private Guid _guid = Guid.NewGuid();
+    public Guid Guid { get => _guid; set => SetGuid(value); }
 
     public MadObject()
     {
@@ -14,5 +15,12 @@ public abstract class MadObject
     ~MadObject()
     {
         AssetRegistry.UnregisterObject(this);
+    }
+    
+    public void SetGuid(Guid guid)
+    {
+        AssetRegistry.Unregister(this);
+        _guid = guid;
+        AssetRegistry.Register(this);
     }
 }
