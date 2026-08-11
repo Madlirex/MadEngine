@@ -68,6 +68,7 @@ public class EditorWindow : GameWindow
         
         AssetManager.LoadProject(AssetManager.ProjectPath);
         
+        SceneManager.LoadScene(0);
         _engine.EditorStart(SceneManager.ActiveScene);
     }
 
@@ -110,7 +111,7 @@ public class EditorWindow : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit);
         _editorUI.Draw(this);
         _imGui.Render();
-
+        
         SwapBuffers();
     }
 
@@ -154,6 +155,11 @@ public class EditorWindow : GameWindow
         if (input.IsKeyDown(Keys.W))
         {
             _camera.Transform.Position += camera.Front * speed;
+            foreach (var pair in AssetRegistry.ObjectMap)
+            {
+                Console.WriteLine($"{pair.Key}: {pair.Value.Name}");
+            }
+            Console.WriteLine("\n\n\n");
         }
 
         if (input.IsKeyDown(Keys.S))

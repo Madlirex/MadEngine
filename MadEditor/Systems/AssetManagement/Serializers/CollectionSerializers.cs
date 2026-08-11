@@ -4,14 +4,10 @@ namespace MadEditor;
 
 public class ListSerializer<T> : Serializer<List<T>>
 {
-    private readonly ISerializer? _itemSerializer = SerializerRegistry.GetSerializer(typeof(T));
 
     public override JsonNode Serialize(List<T> obj)
     {
         var jsonArray = new JsonArray();
-
-        if (_itemSerializer == null)
-            throw new InvalidOperationException($"No serializer found for list item type {typeof(T).Name}");
 
         foreach (var item in obj)
         {
@@ -21,7 +17,7 @@ public class ListSerializer<T> : Serializer<List<T>>
             }
             else
             {
-                jsonArray.Add(_itemSerializer.Serialize(item));
+                jsonArray.Add(SerializerRegistry.Serialize(item));
             }
         }
         return jsonArray;
@@ -32,9 +28,6 @@ public class ListSerializer<T> : Serializer<List<T>>
         var list = new List<T>();
         if (obj is not JsonArray jsonArray) return list;
 
-        if (_itemSerializer == null)
-            throw new InvalidOperationException($"No serializer found for list item type {typeof(T).Name}");
-
         foreach (var node in jsonArray)
         {
             if (node == null)
@@ -43,7 +36,7 @@ public class ListSerializer<T> : Serializer<List<T>>
             }
             else
             {
-                list.Add((T)_itemSerializer.Deserialize(node)!);
+                list.Add((T)SerializerRegistry.Deserialize(typeof(T), node)!);
             }
         }
         return list;
@@ -52,14 +45,9 @@ public class ListSerializer<T> : Serializer<List<T>>
 
 public class ArraySerializer<T> : Serializer<T[]>
 {
-    private readonly ISerializer? _itemSerializer = SerializerRegistry.GetSerializer(typeof(T));
-
     public override JsonNode Serialize(T[] obj)
     {
         var jsonArray = new JsonArray();
-
-        if (_itemSerializer == null)
-            throw new InvalidOperationException($"No serializer found for array element type {typeof(T).Name}");
 
         foreach (var item in obj)
         {
@@ -69,7 +57,7 @@ public class ArraySerializer<T> : Serializer<T[]>
             }
             else
             {
-                jsonArray.Add(_itemSerializer.Serialize(item));
+                jsonArray.Add(SerializerRegistry.Serialize(item));
             }
         }
         return jsonArray;
@@ -78,9 +66,6 @@ public class ArraySerializer<T> : Serializer<T[]>
     public override T[] Deserialize(JsonNode obj)
     {
         if (obj is not JsonArray jsonArray) return Array.Empty<T>();
-
-        if (_itemSerializer == null)
-            throw new InvalidOperationException($"No serializer found for array element type {typeof(T).Name}");
 
         var array = new T[jsonArray.Count];
         for (int i = 0; i < jsonArray.Count; i++)
@@ -92,7 +77,7 @@ public class ArraySerializer<T> : Serializer<T[]>
             }
             else
             {
-                array[i] = (T)_itemSerializer.Deserialize(node)!;
+                array[i] = (T)SerializerRegistry.Deserialize(typeof(T), node)!;
             }
         }
         return array;
@@ -101,14 +86,10 @@ public class ArraySerializer<T> : Serializer<T[]>
 
 public class DictionarySerializer<TValue> : Serializer<Dictionary<string, TValue>>
 {
-    private readonly ISerializer? _valueSerializer = SerializerRegistry.GetSerializer(typeof(TValue));
 
     public override JsonNode Serialize(Dictionary<string, TValue> obj)
     {
         var jsonObject = new JsonObject();
-
-        if (_valueSerializer == null)
-            throw new InvalidOperationException($"No serializer found for dictionary value type {typeof(TValue).Name}");
 
         foreach (var pair in obj)
         {
@@ -118,7 +99,7 @@ public class DictionarySerializer<TValue> : Serializer<Dictionary<string, TValue
             }
             else
             {
-                jsonObject[pair.Key] = _valueSerializer.Serialize(pair.Value);
+                jsonObject[pair.Key] = SerializerRegistry.Serialize(pair.Value);
             }
         }
         return jsonObject;
@@ -129,9 +110,6 @@ public class DictionarySerializer<TValue> : Serializer<Dictionary<string, TValue
         var dictionary = new Dictionary<string, TValue>();
         if (obj is not JsonObject jsonObject) return dictionary;
 
-        if (_valueSerializer == null)
-            throw new InvalidOperationException($"No serializer found for dictionary value type {typeof(TValue).Name}");
-
         foreach (var pair in jsonObject)
         {
             if (pair.Value == null)
@@ -140,7 +118,7 @@ public class DictionarySerializer<TValue> : Serializer<Dictionary<string, TValue
             }
             else
             {
-                dictionary[pair.Key] = (TValue)_valueSerializer.Deserialize(pair.Value)!;
+                dictionary[pair.Key] = (TValue)SerializerRegistry.Deserialize(typeof(TValue), pair.Value)!;
             }
         }
         return dictionary;

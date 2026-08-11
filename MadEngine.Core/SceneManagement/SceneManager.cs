@@ -13,6 +13,7 @@ public static class SceneManager
 
     public static void LoadScene(int index)
     {
+        if (Scenes.Count == 0) Scenes.Add(new Scene());
         _activeScene = Scenes[index];
     }
 }

@@ -3,38 +3,63 @@
     "$guid": "7bf468ea-66e7-4963-9906-9732ec54fb87",
     "$data": {
         "Name": "NewScene",
-        "_gameObjects": null,
-        "_lights": null,
-        "_meshRenderers": null,
-        "Guid": null
+        "_gameObjects": [
+            "ebc46b9e-9e92-4717-8475-22c619d51974"
+        ],
+        "_lights": [],
+        "_meshRenderers": [],
+        "Guid": "7bf468ea-66e7-4963-9906-9732ec54fb87"
     },
     "GameObjects": [
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "7963bc9e-f64a-46b8-80e3-604a04645498",
+            "$guid": "ebc46b9e-9e92-4717-8475-22c619d51974",
             "$data": {
                 "Name": "NewGameObject",
-                "Transform": "9be703fa-a08d-4b74-9fef-5f5602e20708",
-                "_components": null,
-                "Guid": null
+                "Transform": "f37aa3c6-f9fe-40f9-a9f3-f0be9c944739",
+                "_components": [
+                    "f37aa3c6-f9fe-40f9-a9f3-f0be9c944739"
+                ],
+                "Guid": "ebc46b9e-9e92-4717-8475-22c619d51974"
             }
         }
     ],
     "Components": [
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "9be703fa-a08d-4b74-9fef-5f5602e20708",
+            "$guid": "f37aa3c6-f9fe-40f9-a9f3-f0be9c944739",
             "$data": {
-                "EulerRotation": null,
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
                 "Parent": null,
                 "Name": "NewComponent",
-                "Position": null,
-                "Rotation": null,
-                "Scale": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
                 "_parent": null,
-                "_children": null,
-                "_eulerRotation": null,
-                "Guid": null
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Guid": "f37aa3c6-f9fe-40f9-a9f3-f0be9c944739"
             }
         }
     ]

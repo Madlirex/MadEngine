@@ -73,6 +73,8 @@ public static class SerializerRegistry
 
     public static ISerializer? TryGenerateDynamicSerializer(Type type)
     {
+        Console.WriteLine(type);
+        Console.WriteLine("hola");
         if (type.IsArray)
         {
             Type elementType = type.GetElementType()!;
@@ -82,10 +84,12 @@ public static class SerializerRegistry
         
         if (type.IsGenericType)
         {
+            Console.WriteLine(1);
             Type genericDefinition = type.GetGenericTypeDefinition();
 
             if (genericDefinition == typeof(List<>))
             {
+                Console.WriteLine(2);
                 Type itemType = type.GetGenericArguments()[0];
                 Type listSerializerType = typeof(ListSerializer<>).MakeGenericType(itemType);
                 return CreateSerializer(listSerializerType);
@@ -93,6 +97,7 @@ public static class SerializerRegistry
             
             if (genericDefinition == typeof(Dictionary<,>))
             {
+                Console.WriteLine(3);
                 Type[] genericArgs = type.GetGenericArguments();
                 if (genericArgs[0] == typeof(string))
                 {
@@ -102,7 +107,7 @@ public static class SerializerRegistry
                 }
             }
         }
-
+        Console.WriteLine("aw");
         return null;
     }
     
@@ -122,8 +127,7 @@ public static class SerializerRegistry
 
     public static ISerializer? CreateSerializer(Type type)
     {
-        if (type.IsGenericType) return null;
-        
+        Console.WriteLine(4);
         if (Activator.CreateInstance(type) is ISerializer serializer)
         {
             _serializers.TryAdd(serializer.Type, serializer);
