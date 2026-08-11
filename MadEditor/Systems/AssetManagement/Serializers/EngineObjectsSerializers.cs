@@ -28,13 +28,14 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
                 dataJson[prop.Name] = SerializerRegistry.Serialize(value);
             }
         }
-        
+
         foreach (var field in type.GetFields(EngineFlags))
         {
             if (field.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false))
                 continue;
-
+            
             if (Attribute.IsDefined(field, typeof(DoNotSaveAttribute))) continue;
+            
             object? value = field.GetValue(obj);
             dataJson[field.Name] = SerializerRegistry.Serialize(value);
         }

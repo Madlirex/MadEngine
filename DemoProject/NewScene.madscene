@@ -1,11 +1,11 @@
 {
     "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "7bf468ea-66e7-4963-9906-9732ec54fb87",
+    "$guid": "f91e7fd0-8952-42fc-8514-c7f058951981",
     "$data": {
-        "Name": "NeefewScene",
-        "Guid": "7bf468ea-66e7-4963-9906-9732ec54fb87",
+        "Name": "NewScene",
+        "Guid": "f91e7fd0-8952-42fc-8514-c7f058951981",
         "_gameObjects": [
-            "ebc46b9e-9e92-4717-8475-22c619d51974"
+            "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
         ],
         "_lights": [],
         "_meshRenderers": []
@@ -13,14 +13,14 @@
     "GameObjects": [
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "ebc46b9e-9e92-4717-8475-22c619d51974",
+            "$guid": "522409ec-c46d-4eac-af6f-ae5b5f8f8688",
             "$data": {
-                "Name": "NewGameghngObject",
-                "Guid": "ebc46b9e-9e92-4717-8475-22c619d51974",
-                "Transform": "4605b4b9-5c87-42b7-b669-7760f4bbef85",
+                "Name": "NewGameObject",
+                "Guid": "522409ec-c46d-4eac-af6f-ae5b5f8f8688",
+                "Transform": "4f856d75-48ec-4099-a910-bfc998cd8210",
                 "_components": [
-                    "4605b4b9-5c87-42b7-b669-7760f4bbef85",
-                    "b8e096ec-18b2-4031-a580-167c5e8aad56"
+                    "4f856d75-48ec-4099-a910-bfc998cd8210",
+                    "c439477d-b3f3-4601-9ccc-778f94accaf6"
                 ]
             }
         }
@@ -28,7 +28,7 @@
     "Components": [
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "4605b4b9-5c87-42b7-b669-7760f4bbef85",
+            "$guid": "4f856d75-48ec-4099-a910-bfc998cd8210",
             "$data": {
                 "EulerRotation": [
                     0,
@@ -37,7 +37,7 @@
                 ],
                 "Parent": null,
                 "Name": "NewComponent",
-                "Guid": "4605b4b9-5c87-42b7-b669-7760f4bbef85",
+                "Guid": "4f856d75-48ec-4099-a910-bfc998cd8210",
                 "Position": [
                     0,
                     0,
@@ -60,25 +60,16 @@
                     0,
                     0,
                     0
-                ]
+                ],
+                "_gameObject": "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
             }
         },
         {
-            "$type": "MadEngine.Core.SpotLight, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "b8e096ec-18b2-4031-a580-167c5e8aad56",
+            "$type": "MadEngine.Core.Light, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c439477d-b3f3-4601-9ccc-778f94accaf6",
             "$data": {
                 "Name": "NewComponent",
-                "Guid": "b8e096ec-18b2-4031-a580-167c5e8aad56",
-                "Direction": [
-                    0,
-                    0,
-                    0
-                ],
-                "CutOff": 12.5,
-                "OuterCutOff": 17.5,
-                "Constant": 1,
-                "Linear": 0.07,
-                "Quadratic": 0.017,
+                "Guid": "c439477d-b3f3-4601-9ccc-778f94accaf6",
                 "AmbientColor": [
                     0.2,
                     0.2,
@@ -96,7 +87,8 @@
                     0.5,
                     0.5,
                     0.5
-                ]
+                ],
+                "_gameObject": "522409ec-c46d-4eac-af6f-ae5b5f8f8688"
             }
         }
     ]

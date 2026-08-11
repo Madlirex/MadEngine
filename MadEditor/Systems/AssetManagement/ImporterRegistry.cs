@@ -39,7 +39,7 @@ public static class ImporterRegistry
 
     public static IAssetImporter? GetImporterByExtension(string extension)
     {
-        //if(!_importerExtensions.ContainsKey(extension)) Console.WriteLine($"Couldn't find importer for extension {extension}");
+        if(!_importerExtensions.ContainsKey(extension)) Console.WriteLine($"Couldn't find importer for extension {extension}");
         return _importerExtensions.GetValueOrDefault(extension);
     }
 

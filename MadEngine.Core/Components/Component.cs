@@ -8,11 +8,12 @@ public abstract class Component : MadObject
         Name = "NewComponent";
     }
     
-    public GameObject GameObject { get; private set; }
+    public GameObject GameObject => _gameObject;
+    protected GameObject _gameObject;
     
     internal void AssignGameObject(GameObject gameObject)
     {
-        GameObject = gameObject;
+        _gameObject = gameObject;
     }
 
     public virtual void Awake() {}
@@ -26,6 +27,6 @@ public abstract class Component : MadObject
 
     public override string ToString()
     {
-        return $"{GameObject!.Guid}/{Guid}";
+        return $"{GameObject.Guid}/{Guid}";
     }
 }

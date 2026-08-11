@@ -155,11 +155,6 @@ public class EditorWindow : GameWindow
         if (input.IsKeyDown(Keys.W))
         {
             _camera.Transform.Position += camera.Front * speed;
-            foreach (var pair in AssetRegistry.ObjectMap)
-            {
-                Console.WriteLine($"{pair.Key}: {pair.Value.Name}");
-            }
-            Console.WriteLine("\n\n\n");
         }
 
         if (input.IsKeyDown(Keys.S))
