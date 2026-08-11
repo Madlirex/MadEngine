@@ -24,6 +24,8 @@ public static class AssetManager
     public static void LoadProject(string path)
     {
         InitializeAssets(path);
+        foreach(var pair in AssetRegistry.ObjectMap)
+            Console.WriteLine($"{pair.Key}: {pair.Value.Name}");
         LoadAssets(path);
     }
 

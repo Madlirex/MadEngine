@@ -36,11 +36,50 @@ public class SceneImporter : Importer<Scene>
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
 
+        InstantiateObjects(json);
+        
         return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
+    }
+
+    public static void InstantiateObjects(JsonNode json)
+    {
+        if (json["GameObjects"] is JsonArray gameObjectsArray)
+        {
+            foreach (JsonNode? node in gameObjectsArray)
+            {
+                if (node is not JsonObject goJson) continue;
+
+                Guid guid = goJson["$guid"]!.GetValue<Guid>();
+                GameObject obj = new GameObject() {Guid = guid};
+            }
+        }
+        if (json["Components"] is not JsonArray componentsArray)
+            return;
+    
+        foreach (JsonNode? node in componentsArray)
+        {
+            if (node is not JsonObject compJson) continue;
+
+            string typeStr = compJson["$type"]!.GetValue<string>();
+            Guid guid = compJson["$guid"]!.GetValue<Guid>();
+
+            if (string.IsNullOrEmpty(typeStr)) continue;
+            Type compType = Type.GetType(typeStr)!;
+            
+            if (compType is { IsAbstract: false })
+            {
+                Component comp = (Component)Activator.CreateInstance(compType)!;
+                comp.Guid = guid;
+            }
+        }
     }
 
     public override Scene Initialize(AssetMeta meta)
     {
+        string data = File.ReadAllText(AssetManager.ProjectPath + meta.RelativePath);
+        JsonNode json = JsonNode.Parse(data)!;
+        InstantiateObjects(json);
+
         return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
 
