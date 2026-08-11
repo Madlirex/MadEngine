@@ -54,7 +54,7 @@ public class EditorUI
             {
                 if (ImGui.MenuItem("Save", "Ctrl+N"))
                 {
-                    AssetManager.SaveProject();
+                    AssetManager.SaveProject(AssetRegistry.Assets);
                 }
 
                 if (ImGui.MenuItem("Open", "Ctrl+O"))

@@ -7,7 +7,7 @@ namespace MadEditor;
 public class SceneImporter : Importer<Scene>
 {
     public override string Name => "SceneImporter";
-    public override string Extension => ".scene";
+    public override string Extension => ".madscene";
     
     public override void Save(Scene asset)
     {
@@ -28,7 +28,7 @@ public class SceneImporter : Importer<Scene>
         jsonObject.Add("GameObjects", objArray);
         jsonObject.Add("Components", compArray);
 
-        File.WriteAllText(asset.FullDir, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
     }
 
     public override Scene Initialize(string path)

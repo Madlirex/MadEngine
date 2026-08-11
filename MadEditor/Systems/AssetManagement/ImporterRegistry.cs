@@ -26,16 +26,20 @@ public static class ImporterRegistry
             if (_importers.TryGetValue(interfaceType, out IAssetImporter? importer))
                 return importer;
         }
+        Console.WriteLine($"Could not find importer for {type}");
         return null;
     }
 
     public static IAssetImporter? GetImporter(string name)
     {
+        Console.WriteLine($"Getting importer for {name}");
+        if(!_importerNames.ContainsKey(name)) Console.WriteLine($"Couldn't find importer with name {name}");
         return _importerNames.GetValueOrDefault(name);
     }
 
     public static IAssetImporter? GetImporterByExtension(string extension)
     {
+        if(!_importerExtensions.ContainsKey(extension)) Console.WriteLine($"Couldn't find importer for extension {extension}");
         return _importerExtensions.GetValueOrDefault(extension);
     }
 
@@ -57,7 +61,7 @@ public static class ImporterRegistry
     {
         if (Activator.CreateInstance(type) is IAssetImporter importer)
         {
-            _importers.TryAdd(type, importer);
+            _importers.TryAdd(importer.Type, importer);
             _importerNames.TryAdd(importer.Name, importer);
             _importerExtensions.TryAdd(importer.Extension, importer);
         }

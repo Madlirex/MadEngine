@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Nodes;
 using MadEngine.Core;
 
 namespace MadEditor;
@@ -23,8 +24,14 @@ public class AssetMeta
         };
     }
 
+    public static void Save(Asset asset)
+    {
+        AssetMeta meta = Generate(asset);
+        File.WriteAllText(asset.AbsolutePath + ".meta", JsonSerializer.Serialize(meta, SerializerSettings.SerializerOptions));
+    }
+
     public static AssetMeta Load(string file)
     {
-        return JsonSerializer.Deserialize<AssetMeta>(File.ReadAllText(file))!;
+        return JsonSerializer.Deserialize<AssetMeta>(File.ReadAllText(file), SerializerSettings.SerializerOptions)!;
     }
 }

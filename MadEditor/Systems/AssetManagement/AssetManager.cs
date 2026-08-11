@@ -1,10 +1,26 @@
 ﻿using MadEngine.Core;
-using OpenTK.Graphics.ES11;
 
 namespace MadEditor;
 
 public static class AssetManager
 {
+    public static string ProjectPath => _projectPath;
+    public static string AssetsPath => _projectPath + "/Assets";
+    private static string _projectPath = "";
+
+    public static void RecompileScripts()
+    {
+        if (!Directory.Exists(ProjectPath)) return;
+        var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
+
+        ScriptDomain.ReloadFromFiles(scriptFiles);
+    }
+    
+    public static void SetProjectPath(string path)
+    {
+        _projectPath = path;
+    }
+    
     public static void LoadProject(string path)
     {
         InitializeAssets(path);
@@ -29,11 +45,13 @@ public static class AssetManager
         if (File.Exists(file + ".meta"))
         {
             AssetMeta meta = AssetMeta.Load(file + ".meta");
-            ImporterRegistry.GetImporter(meta.Importer)!.Initialize(meta);
+            var importer = ImporterRegistry.GetImporter(meta.Importer);
+            importer?.Initialize(meta);
         }
         else
         {
-            ImporterRegistry.GetImporterByExtension(Path.GetExtension(file))!.Initialize(file);
+            var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
+            importer?.Initialize(file);
         }
     }
 
@@ -47,7 +65,8 @@ public static class AssetManager
 
     public static void LoadAsset(string file)
     {
-        ImporterRegistry.GetImporterByExtension(Path.GetExtension(file))!.Import(file);
+        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
+        importer?.Import(file);
     }
 
     public static void SaveAssets(Asset[] assets)
@@ -60,6 +79,8 @@ public static class AssetManager
 
     public static void SaveAsset(Asset asset)
     {
-        ImporterRegistry.GetImporter(asset.GetType())!.Save(asset);
+        var importer = ImporterRegistry.GetImporter(asset.GetType());
+        importer?.Save(asset);
+        AssetMeta.Save(asset);
     }
 }

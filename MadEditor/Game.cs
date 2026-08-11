@@ -62,6 +62,8 @@ public class EditorWindow : GameWindow
         _engine.Initialize();
         
         AssetManager.RecompileScripts();
+        ImporterRegistry.DiscoverImporters();
+        SerializerRegistry.DiscoverSerializers();
         PackageManager.RegisterPackages();
         
         AssetManager.LoadProject(AssetManager.ProjectPath);

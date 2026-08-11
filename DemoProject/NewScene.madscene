@@ -1,0 +1,41 @@
+{
+    "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "7bf468ea-66e7-4963-9906-9732ec54fb87",
+    "$data": {
+        "Name": "NewScene",
+        "_gameObjects": null,
+        "_lights": null,
+        "_meshRenderers": null,
+        "Guid": null
+    },
+    "GameObjects": [
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "7963bc9e-f64a-46b8-80e3-604a04645498",
+            "$data": {
+                "Name": "NewGameObject",
+                "Transform": "9be703fa-a08d-4b74-9fef-5f5602e20708",
+                "_components": null,
+                "Guid": null
+            }
+        }
+    ],
+    "Components": [
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9be703fa-a08d-4b74-9fef-5f5602e20708",
+            "$data": {
+                "EulerRotation": null,
+                "Parent": null,
+                "Name": "NewComponent",
+                "Position": null,
+                "Rotation": null,
+                "Scale": null,
+                "_parent": null,
+                "_children": null,
+                "_eulerRotation": null,
+                "Guid": null
+            }
+        }
+    ]
+}

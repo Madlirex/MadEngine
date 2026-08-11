@@ -14,6 +14,16 @@ public class Scene : Asset
     public override string Name { get; set; } = "NewScene";
     public override string Extension => ".madscene";
 
+    public Scene()
+    {
+        SceneManager.Scenes.Add(this);
+    }
+
+    ~Scene()
+    {
+        SceneManager.Scenes.Remove(this);
+    }
+    
     public void Add(GameObject gameObject)
     {
         _gameObjects.Add(gameObject);
