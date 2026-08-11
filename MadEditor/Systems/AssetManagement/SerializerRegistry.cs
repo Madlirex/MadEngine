@@ -1,9 +1,41 @@
-﻿namespace MadEditor;
+﻿using System.Text.Json.Nodes;
+
+namespace MadEditor;
 
 public static class SerializerRegistry
 {
     public static IReadOnlyDictionary<Type, ISerializer> Serializers => _serializers;
     private static Dictionary<Type, ISerializer> _serializers = [];
+
+    public static JsonNode? Serialize(object? obj)
+    {
+        if (obj == null)
+            return null;
+        
+        ISerializer? serializer = GetSerializer(obj.GetType());
+
+        return serializer switch
+        {
+            null => JsonValue.Create<object>(null)!,
+            IClassSerializer classSerializer => classSerializer.SerializeReference(obj),
+            _ => serializer.Serialize(obj)
+        };
+    }
+
+    public static object? Deserialize(Type targetType, JsonNode? obj)
+    {
+        if (obj == null || obj is JsonValue value && !value.TryGetValue<object>(out _)) 
+            return null;
+
+        ISerializer? serializer = GetSerializer(targetType);
+        
+        if (serializer == null) return null;
+        
+        if (serializer is IClassSerializer classSerializer)
+            return classSerializer.DeserializeReference(obj);
+        
+        return serializer.Deserialize(obj);
+    }
     
     public static ISerializer? GetSerializer(Type type)
     {

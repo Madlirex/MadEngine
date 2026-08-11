@@ -25,8 +25,18 @@ public abstract class Serializer<T> : ISerializer
     object? ISerializer.Deserialize(JsonNode obj) => Deserialize(obj);
 }
 
-public abstract class ClassSerializer<T> : Serializer<T>, IDeserializableInto where T : class
+public interface IClassSerializer
 {
+    public JsonNode SerializeReference(object obj);
+    public object? DeserializeReference(JsonNode obj);
+}
+
+public abstract class ClassSerializer<T> : Serializer<T>, IDeserializableInto, IClassSerializer where T : class
+{
+    public abstract JsonNode SerializeReference(T obj);
     public abstract void DeserializeInto(T target, JsonNode source);
+    public abstract T DeserializeReference(JsonNode obj);
+    JsonNode IClassSerializer.SerializeReference(object obj) => SerializeReference((T)obj);
     void IDeserializableInto.DeserializeInto(object target, JsonNode source) => DeserializeInto((T)target, source);
+    object? IClassSerializer.DeserializeReference(JsonNode obj) => DeserializeReference(obj);
 }
