@@ -10,6 +10,11 @@ public static class AssetManager
         InitializeAssets(path);
         LoadAssets(path);
     }
+
+    public static void SaveProject(Asset[] assets)
+    {
+        SaveAssets(assets);
+    }
     
     public static void InitializeAssets(string path)
     {
@@ -43,5 +48,18 @@ public static class AssetManager
     public static void LoadAsset(string file)
     {
         ImporterRegistry.GetImporterByExtension(Path.GetExtension(file))!.Import(file);
+    }
+
+    public static void SaveAssets(Asset[] assets)
+    {
+        foreach (Asset asset in assets)
+        {
+            SaveAsset(asset);
+        }
+    }
+
+    public static void SaveAsset(Asset asset)
+    {
+        ImporterRegistry.GetImporter(asset.GetType())!.Save(asset);
     }
 }
