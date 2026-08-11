@@ -7,6 +7,11 @@ public static class AssetManager
     public static IReadOnlyDictionary<Guid, MadObject> Objects => _objects;
     private static Dictionary<Guid, MadObject> _objects = new();
 
+    public static MadObject? GetObject(Guid guid)
+    {
+        return _objects.GetValueOrDefault(guid);
+    }
+    
     public static void AddObject(MadObject obj)
     {
         if (!_objects.ContainsKey(obj.Guid))

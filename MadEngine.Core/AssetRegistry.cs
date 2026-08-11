@@ -82,6 +82,11 @@ public static class AssetRegistry
     {
         _objectMap.Remove(obj.Guid);
     }
+
+    public static MadObject? GetObject(Guid guid)
+    {
+        return _objectMap.GetValueOrDefault(guid);
+    }
     
     public static Asset GetAsset(Guid guid)
     {

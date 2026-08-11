@@ -56,6 +56,21 @@ public static class SerializerRegistry
         return TryGenerateDynamicSerializer(type);
     }
 
+    public static T? GetSerializer<T>() where T : ISerializer
+    {
+        return (T?)GetSerializer(typeof(T));
+    }
+
+    public static IClassSerializer? GetClassSerializer(Type type)
+    {
+        ISerializer? serializer = GetSerializer(type);
+        
+        if (serializer is IClassSerializer classSerializer)
+            return classSerializer;
+        
+        return null;
+    }
+
     public static ISerializer? TryGenerateDynamicSerializer(Type type)
     {
         if (type.IsArray)
