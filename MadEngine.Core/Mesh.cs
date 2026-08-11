@@ -19,6 +19,12 @@ public class Mesh : Asset, IDisposable
     public override string Name { get; set; } = "NewMesh";
     public override string Extension => ".mesh";
 
+    public Mesh()
+    {
+        Vertices = [];
+        Indices = [];
+    }
+    
     public Mesh(float[] vertices, uint[] indices)
     {
         const int stride = 8;
