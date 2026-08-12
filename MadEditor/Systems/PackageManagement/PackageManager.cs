@@ -51,6 +51,7 @@ public static class PackageManager
 
     public static void LoadPackages()
     {
+        if(!Directory.Exists(Application.PackagesPath)) Directory.CreateDirectory(Application.PackagesPath);
         AssetManager.InitializeAssets(Application.PackagesPath);
         AssetManager.LoadAssets(Application.PackagesPath);
     }

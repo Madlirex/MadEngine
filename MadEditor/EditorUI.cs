@@ -99,6 +99,15 @@ public class EditorUI
                 ImGui.EndMenu();
             }
 
+            if (ImGui.BeginMenu("Windows"))
+            {
+                if (ImGui.MenuItem("Package Manager"))
+                {
+                    PanelSystem.AddPanel(new PackageManagerDrawer() {PanelRegion = PanelRegion.Floating});
+                }
+                ImGui.EndMenu();
+            }
+            
             ImGui.EndMainMenuBar();
         }
     }

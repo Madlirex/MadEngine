@@ -39,7 +39,8 @@ public enum PanelRegion
     Left,
     Center,
     Right,
-    Bottom
+    Bottom,
+    Floating
 }
 
 public static class PanelLayoutManager

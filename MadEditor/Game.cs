@@ -98,7 +98,7 @@ public class EditorWindow : GameWindow
         _imGui.Dispose();    
     }
 
-    protected override void OnRenderFrame(FrameEventArgs args)
+    protected override unsafe void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
         

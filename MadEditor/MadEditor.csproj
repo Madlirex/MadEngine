@@ -44,11 +44,11 @@
       </Content>
       <None Remove="package.pck" />
       <Content Include="package.pck">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="packages.json" />
       <Content Include="packages.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 

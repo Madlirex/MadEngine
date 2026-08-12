@@ -63,6 +63,11 @@ public static class PanelSystem
         _panels.Add(new T());
     }
 
+    public static void AddPanel(IPanelDrawer panelDrawer)
+    {
+        _panels.Add(panelDrawer);
+    }
+
     public static void DeletePanel(IPanelDrawer panelDrawer)
     {
         if(!_panels.Remove(panelDrawer))
@@ -73,16 +78,32 @@ public static class PanelSystem
     {
         foreach (IPanelDrawer panelDrawer in _panels)
         {
-            if(panelDrawer is ViewportDrawer)
-                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
+            if (panelDrawer.PanelRegion != PanelRegion.Floating)
+            {
+                if(panelDrawer is ViewportDrawer)
+                    ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
             
-            PanelArea panelArea = PanelLayoutManager.Get(panelDrawer.PanelRegion);
-            ImGui.SetNextWindowPos(panelArea.Position);
-            ImGui.SetNextWindowSize(panelArea.Size);
-            
-            ImGui.Begin(panelDrawer.Name, FixedPanel);
-            if(panelDrawer is ViewportDrawer)
-                ImGui.PopStyleVar();
+                PanelArea panelArea = PanelLayoutManager.Get(panelDrawer.PanelRegion);
+                ImGui.SetNextWindowPos(panelArea.Position);
+                ImGui.SetNextWindowSize(panelArea.Size);
+                
+                ImGui.Begin(panelDrawer.Name, FixedPanel);
+                if(panelDrawer is ViewportDrawer)
+                    ImGui.PopStyleVar();
+            }
+            else
+            {
+                bool openStateCheck = true; 
+                
+                ImGui.Begin(panelDrawer.Name, ref openStateCheck, ImGuiWindowFlags.None);
+                
+                if (!openStateCheck)
+                {
+                    context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
+                    ImGui.End();        
+                    continue;              
+                }
+            }
             panelDrawer.Draw(context);
             ImGui.End();
         }

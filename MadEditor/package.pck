@@ -1,5 +1,5 @@
 {
-    "Path": "\\Content\\"
+    "Path": "/Content/",
     "Name": "NewPackage",
     "Author": "Madlirex",
     "Company": "Madlirex Studios",
