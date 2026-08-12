@@ -1,0 +1,30 @@
+{
+    "$type": "MadEngine.Core.Material, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "9dd05422-d1e8-4b17-be77-1e44e92abb1a",
+    "$data": {
+        "Name": "grg",
+        "Guid": "9dd05422-d1e8-4b17-be77-1e44e92abb1a",
+        "Shader": "c2baa3e7-d631-4766-a099-44246ccc0920",
+        "DiffuseTexture": null,
+        "SpecularTexture": null,
+        "AmbientColor": [
+            0.8,
+            0.8,
+            0.8,
+            0.8
+        ],
+        "DiffuseColor": [
+            0.8,
+            0.8,
+            0.8,
+            0.8
+        ],
+        "SpecularColor": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "Shininess": 32
+    }
+}

@@ -34,7 +34,7 @@ public class MaterialImporter : Importer<Material>
         Guid guid = json["$guid"]!.GetValue<Guid>();
         Material material = (Material)AssetRegistry.GetAsset(guid);
 
-        SerializerRegistry.GetClassSerializer(typeof(Material))!.DeserializeInto(material, json);
+        SerializerRegistry.GetClassSerializer(typeof(Material))!.DeserializeInto(material, json["$data"]!);
         return material;
     }
 }

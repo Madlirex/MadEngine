@@ -6,14 +6,20 @@ namespace MadEngine.Core;
 
 public class Mesh : Asset, IDisposable
 {
-    public Vertex[] Vertices { get; }
-    public uint[] Indices { get; }
+    [DoNotSave]
+    public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
+    private Vertex[] _vertices = [];
+    [DoNotSave]
+    public uint[] Indices { get => _indices; set => _indices = value; }
+    private uint[] _indices = [];
     
-    private int _vertexBufferObject;
-    private int _vertexArrayObject;
-    private int _elementBufferObject;
+    [DoNotSave] private int _vertexBufferObject;
+    [DoNotSave] private int _vertexArrayObject;
+    [DoNotSave] private int _elementBufferObject;
 
+    [DoNotSave]
     private bool _initialized;
+    [DoNotSave]
     private bool _disposedValue;
 
     public override string Name { get; set; } = "NewMesh";
@@ -21,8 +27,7 @@ public class Mesh : Asset, IDisposable
 
     public Mesh()
     {
-        Vertices = [];
-        Indices = [];
+        
     }
     
     public Mesh(float[] vertices, uint[] indices)
@@ -56,6 +61,7 @@ public class Mesh : Asset, IDisposable
         
         Indices = indices;
         CalculateNormals(this);
+        Initialize();
     }
 
     public void Initialize()

@@ -23,9 +23,11 @@ public class Engine
         
         Matrix4 view = camera.GetViewMatrix();
         Matrix4 projection = camera.GetPerspectiveMatrix();
-
+        
         foreach (MeshRenderer meshRenderer in scene.MeshRenderers)
+        {
             meshRenderer.Draw(view, projection);
+        }
     }
 
     public void Awake(Scene scene)

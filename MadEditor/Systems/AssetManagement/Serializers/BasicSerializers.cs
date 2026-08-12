@@ -1,5 +1,10 @@
-﻿using System.Text.Json.Nodes;
-using OpenTK.Mathematics;
+﻿using System.Numerics;
+using System.Text.Json.Nodes;
+using MadEngine.Core;
+using Quaternion = OpenTK.Mathematics.Quaternion;
+using Vector2 = OpenTK.Mathematics.Vector2;
+using Vector3 = OpenTK.Mathematics.Vector3;
+using Vector4 = OpenTK.Mathematics.Vector4;
 
 namespace MadEditor;
 
@@ -7,30 +12,6 @@ public class BoolSerializer : Serializer<bool>
 {
     public override JsonNode Serialize(bool obj) => JsonValue.Create(obj);
     public override bool Deserialize(JsonNode obj) => obj.GetValue<bool>();
-}
-
-public class IntSerializer : Serializer<int>
-{
-    public override JsonNode Serialize(int obj) => JsonValue.Create(obj);
-    public override int Deserialize(JsonNode obj) => obj.GetValue<int>();
-}
-
-public class FloatSerializer : Serializer<float>
-{
-    public override JsonNode Serialize(float obj) => JsonValue.Create(obj);
-    public override float Deserialize(JsonNode obj) => obj.GetValue<float>();
-}
-
-public class DoubleSerializer : Serializer<double>
-{
-    public override JsonNode Serialize(double obj) => JsonValue.Create(obj);
-    public override double Deserialize(JsonNode obj) => obj.GetValue<double>();
-}
-
-public class LongSerializer : Serializer<long>
-{
-    public override JsonNode Serialize(long obj) => JsonValue.Create(obj);
-    public override long Deserialize(JsonNode obj) => obj.GetValue<long>();
 }
 
 public class StringSerializer : Serializer<string>
@@ -119,3 +100,49 @@ public class GuidSerializer : Serializer<Guid>
 
     public override Guid Deserialize(JsonNode obj) => obj.GetValue<Guid>();
 }
+
+public class VertexSerializer : Serializer<Vertex>
+{
+    public override JsonNode Serialize(Vertex obj)
+    {
+        JsonObject objJson = new JsonObject
+        {
+            ["Normal"] = SerializerRegistry.Serialize(obj.Normal),
+            ["Position"] = SerializerRegistry.Serialize(obj.Position),
+            ["TexCoord"] = SerializerRegistry.Serialize(obj.TexCoord)
+        };
+        return objJson;
+    }
+
+    public override Vertex Deserialize(JsonNode obj)
+    {
+        if(obj is not JsonObject objJson) return default;
+        
+        Vertex vertex = new Vertex
+        {
+            Normal = (Vector3)SerializerRegistry.Deserialize(typeof(Vector3), objJson["Normal"])!,
+            Position = (Vector3)SerializerRegistry.Deserialize(typeof(Vector3), objJson["Position"])!,
+            TexCoord = (Vector2)SerializerRegistry.Deserialize(typeof(Vector2), objJson["TexCoord"])!
+        };
+        return vertex;
+    }
+}
+
+public class NumberSerializer<T> : Serializer<T> where T : INumber<T>
+{
+    public override JsonNode Serialize(T obj) => JsonValue.Create(obj)!;
+
+    public override T Deserialize(JsonNode obj) => obj.GetValue<T>();
+}
+
+public class IntSerializer : NumberSerializer<int>;
+public class UIntSerializer : NumberSerializer<uint>;
+public class LongSerializer : NumberSerializer<long>;
+public class ULongSerializer : NumberSerializer<ulong>;
+public class ShortSerializer : NumberSerializer<short>;
+public class UShortSerializer : NumberSerializer<ushort>;
+public class ByteSerializer : NumberSerializer<byte>;
+public class SByteSerializer : NumberSerializer<sbyte>;
+public class FloatSerializer : NumberSerializer<float>;
+public class DoubleSerializer : NumberSerializer<double>;
+public class DecimalSerializer : NumberSerializer<decimal>;

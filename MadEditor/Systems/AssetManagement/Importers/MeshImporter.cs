@@ -34,7 +34,8 @@ public class MeshImporter : Importer<Mesh>
         Guid guid = json["$guid"]!.GetValue<Guid>();
         Mesh mesh = (Mesh)AssetRegistry.GetAsset(guid);
 
-        SerializerRegistry.GetClassSerializer(typeof(Mesh))!.DeserializeInto(mesh, json);
+        SerializerRegistry.GetClassSerializer(typeof(Mesh))!.DeserializeInto(mesh, json["$data"]!);
+        mesh.Initialize();
         return mesh;
     }
 }

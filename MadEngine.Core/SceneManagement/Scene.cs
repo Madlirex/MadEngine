@@ -69,7 +69,6 @@ public class Scene : Asset
         if (component is MeshRenderer meshRenderer)
         {
             _meshRenderers.Add(meshRenderer);
-            meshRenderer.Mesh.Initialize();
         }
     }
 
