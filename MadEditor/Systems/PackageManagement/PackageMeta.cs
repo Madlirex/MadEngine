@@ -2,6 +2,7 @@
 
 public record PackageMeta
 {
+    public string Path { get; init; } = @"\Content\";
     public required string Name { get; init; }
     public required string Author { get; init; }
     public required string Company { get; init; }

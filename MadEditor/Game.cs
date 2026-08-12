@@ -65,8 +65,9 @@ public class EditorWindow : GameWindow
         ImporterRegistry.DiscoverImporters();
         SerializerRegistry.DiscoverSerializers();
         PackageManager.LoadPackageMetas();
-        
-        AssetManager.LoadProject(AssetManager.ProjectPath);
+
+        PackageManager.LoadPackages();
+        AssetManager.LoadProject();
         
         SceneManager.LoadScene(0);
         _engine.EditorStart(SceneManager.ActiveScene);

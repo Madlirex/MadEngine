@@ -1,11 +1,15 @@
 ﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using MadEngine.Core;
 
 namespace MadEditor.PackageManagement;
 
 public static class PackageManager
 {
+    public static IReadOnlyList<Package> Packages => _packages;
+    private static List<Package> _packages = [];
+    
     public static IReadOnlyList<PackageMeta> PackageMetas => _packageMetas;
     private static List<PackageMeta> _packageMetas = [];
 
@@ -43,5 +47,11 @@ public static class PackageManager
     {
         string data = JsonSerializer.Serialize(_packagePaths, SerializerSettings.SerializerOptions);
         File.WriteAllText(_packagesListFile, data);
+    }
+
+    public static void LoadPackages()
+    {
+        AssetManager.InitializeAssets(Application.PackagesPath);
+        AssetManager.LoadAssets(Application.PackagesPath);
     }
 }

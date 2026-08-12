@@ -5,7 +5,6 @@ namespace MadEditor;
 public static class AssetManager
 {
     public static string ProjectPath => _projectPath;
-    public static string AssetsPath => _projectPath + @"\Assets\";
     private static string _projectPath = "";
 
     public static void RecompileScripts()
@@ -21,10 +20,10 @@ public static class AssetManager
         _projectPath = path;
     }
     
-    public static void LoadProject(string path)
+    public static void LoadProject()
     {
-        InitializeAssets(path);
-        LoadAssets(path);
+        InitializeAssets(Application.AssetsPath);
+        LoadAssets(Application.AssetsPath);
     }
 
     public static void SaveProject(Asset[] assets)
