@@ -1,37 +1,38 @@
 ﻿using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MadEditor.PackageManagement;
 
 public static class PackageManager
 {
-    public static IReadOnlyList<IPackage> Packages => _packages;
-    private static List<IPackage> _packages = [];
+    public static IReadOnlyList<PackageMeta> PackageMetas => _packageMetas;
+    private static List<PackageMeta> _packageMetas = [];
 
-    public static void RegisterPackages()
+    private static string _packagesListFile = "packages.json";
+    
+    public static void LoadPackageMetas()
     {
-        var packages = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(p => typeof(IPackage).IsAssignableFrom(p)
-                        && p is { IsClass: true, IsAbstract: false });
+        if (!File.Exists(_packagesListFile)) return;
+        
+        string data = File.ReadAllText(_packagesListFile);
+        JsonNode? json = JsonNode.Parse(data);
+        if (json is not JsonArray jsonArray) return;
 
-        foreach (var package in packages)
+        foreach (JsonNode? jsonNode in jsonArray)
         {
-            RegisterPackage(package);
+            if(jsonNode == null) continue;
+            LoadPackageMeta(jsonNode.GetValue<string>());
         }
     }
 
-    public static void RegisterPackage(IPackage package)
+    public static void LoadPackageMeta(string packagePath)
     {
-        _packages.Add(package);
-    }
+        if (!File.Exists(packagePath)) return;
+        
+        JsonNode? json = JsonNode.Parse(File.ReadAllText(packagePath));
 
-    public static void RegisterPackage(Type package)
-    {
-        IPackage? packageInstance = (IPackage?)Activator.CreateInstance(package);
-        
-        if(packageInstance == null)
-            throw new InvalidOperationException($"Couldn't create an instance of {package.Name}");
-        
-        RegisterPackage(packageInstance);
+        PackageMeta? meta = json.Deserialize<PackageMeta>(SerializerSettings.SerializerOptions);
+        if (meta != null) _packageMetas.Add(meta);
     }
 }
