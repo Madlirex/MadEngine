@@ -5,16 +5,33 @@ namespace MadEngine.Core;
 
 public class Shader : Asset, IDisposable
 {
-    private int _handle;
-    private bool _disposedValue;
+    [DoNotSave] private bool _initialized;
+    [DoNotSave] private int _handle;
+    [DoNotSave] private bool _disposedValue;
+
+    public string VertexPath = "";
+    public string FragmentPath = "";
 
     public override string Name { get; set; } = "NewShader";
     public override string Extension => ".shader";
 
     public Shader(string vertexPath, string fragmentPath)
     {
-        string vertexShaderSource = File.ReadAllText(vertexPath);
-        string fragmentShaderSource = File.ReadAllText(fragmentPath);
+        VertexPath = vertexPath;
+        FragmentPath = fragmentPath;
+        Initialize();
+    }
+
+    public Shader()
+    {
+        
+    }
+
+    public void Initialize()
+    {
+        if(_initialized) return;
+        string vertexShaderSource = File.ReadAllText(VertexPath);
+        string fragmentShaderSource = File.ReadAllText(FragmentPath);
         
         int vertexShader = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(vertexShader, vertexShaderSource);
@@ -58,6 +75,7 @@ public class Shader : Asset, IDisposable
         GL.DetachShader(_handle, fragmentShader);
         GL.DeleteShader(fragmentShader);
         GL.DeleteShader(vertexShader);
+        _initialized = true;
     }
 
     public void Use()

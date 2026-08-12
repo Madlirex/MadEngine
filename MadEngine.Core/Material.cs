@@ -5,7 +5,7 @@ namespace MadEngine.Core;
 
 public class Material : Asset
 {
-    public Shader Shader;
+    public Shader Shader = ShaderSystem.UnlitShader;
     public Texture? DiffuseTexture;
     public Texture? SpecularTexture;
     
@@ -19,7 +19,12 @@ public class Material : Asset
 
     public Material()
     {
-        Shader = ShaderSystem.UnlitShader;
+        
+    }
+
+    public Material(Shader shader)
+    {
+        Shader = shader;
     }
     
     public Material(Shader shader, Texture? diffuseTexture = null, Texture? specularTexture = null, Vector4? ambientColor = null, Vector4? diffuseColor = null, Vector4? specularColor = null, float shininess = 32f)
