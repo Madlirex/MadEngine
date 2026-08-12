@@ -9,7 +9,7 @@ public class Texture : Asset
     public string FilePath = "";
 
     public override string Name { get; set; } = "NewTexture";
-    public override string Extension => ".jpg";
+    public override string Extension => ".tex";
 
     public Texture()
     {

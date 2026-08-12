@@ -1,7 +1,7 @@
 {
-    "Guid": "c2baa3e7-d631-4766-a099-44246ccc0920",
+    "Guid": "85227446-c522-4714-ab09-74c88bbec253",
     "Name": "NewShader",
     "RelativePath": "\\NewShader.shader",
-    "Importer": "MissingImporter",
+    "Importer": "ShaderImporter",
     "ImportSettings": {}
 }

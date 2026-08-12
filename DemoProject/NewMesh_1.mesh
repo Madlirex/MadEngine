@@ -1,9 +1,9 @@
 {
     "$type": "MadEngine.Core.Mesh, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "99420a8b-50e9-4105-b194-f9d28c61588f",
+    "$guid": "1322f827-3a2e-42ae-8681-6222131d7b3f",
     "$data": {
-        "Name": "NewMesh",
-        "Guid": "99420a8b-50e9-4105-b194-f9d28c61588f",
+        "Name": "NewMesh_1",
+        "Guid": "1322f827-3a2e-42ae-8681-6222131d7b3f",
         "_vertices": [
             {
                 "Normal": [

@@ -35,6 +35,7 @@ public class ShaderImporter : Importer<Shader>
         Shader shader = (Shader)AssetRegistry.GetAsset(guid);
 
         SerializerRegistry.GetClassSerializer(typeof(Shader))!.DeserializeInto(shader, json["$data"]!);
+        shader.Initialize();
         return shader;
     }
 }

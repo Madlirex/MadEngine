@@ -64,12 +64,13 @@ public class SceneImporter : Importer<Scene>
             Guid guid = compJson["$guid"]!.GetValue<Guid>();
 
             if (string.IsNullOrEmpty(typeStr)) continue;
-            Type compType = Type.GetType(typeStr)!;
+            Type compType = ScriptDomain.GetType(typeStr)!;
             
             if (compType is { IsAbstract: false })
             {
                 Component comp = (Component)Activator.CreateInstance(compType)!;
                 comp.Guid = guid;
+                Console.WriteLine(comp.Guid.ToString());
             }
         }
     }

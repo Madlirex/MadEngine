@@ -9,6 +9,12 @@ public static class ScriptDomain
     public static Assembly? CurrentAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
 
+    public static Type? GetType(string typeName)
+    {
+        return AppDomain.CurrentDomain.GetAssemblies()
+            .Select(assembly => assembly.GetType(typeName.Split(',')[0].Trim()))
+            .FirstOrDefault(type => type != null);
+    }
 
     public static void ReloadFromFiles(string[] sourceFiles)
     {

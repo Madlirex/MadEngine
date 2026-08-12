@@ -47,7 +47,9 @@ public class GameObject : MadObject
     public void EditorStart()
     {
         foreach (Component component in Components)
+        {
             component.EditorStart();
+        }
     }
 
     public void EditorUpdate(float deltaTime)

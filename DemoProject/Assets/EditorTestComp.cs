@@ -5,9 +5,10 @@ namespace DemoProject;
 
 public class EditorTestComp : Component
 {
+    /*
     public override void EditorStart()
     {
         MeshRenderer mesh = GameObject.AddComponent<MeshRenderer>()!;
         mesh.Material.DiffuseTexture = new Texture(AssetManager.AssetsPath + "Textures/house.jpg"){Name =  "house.jpg"};
-    }
+    }*/
 }
