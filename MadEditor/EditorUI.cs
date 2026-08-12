@@ -38,7 +38,6 @@ public class EditorUI
         _uiContext.Window = wnd;
         _uiContext.CameraObject = _cameraObject;
         _uiContext.SceneFbo = _sceneFbo;
-        PanelLayoutManager.Update();
         PanelSystem.Draw(_uiContext);
         
         DrawMainMenuBar();

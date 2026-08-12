@@ -76,34 +76,36 @@ public static class PanelSystem
 
     public static void Draw(EditorUIContext context)
     {
+        uint mainDockSpaceId = PanelLayoutManager.DrawMainDockSpace();
+
         foreach (IPanelDrawer panelDrawer in _panels)
         {
             if (panelDrawer.PanelRegion != PanelRegion.Floating)
             {
-                if(panelDrawer is ViewportDrawer)
+                if (panelDrawer is ViewportDrawer)
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
-            
-                PanelArea panelArea = PanelLayoutManager.Get(panelDrawer.PanelRegion);
-                ImGui.SetNextWindowPos(panelArea.Position);
-                ImGui.SetNextWindowSize(panelArea.Size);
+
+                uint regionDockId = PanelLayoutManager.GetDockId(panelDrawer.PanelRegion, mainDockSpaceId);
                 
-                ImGui.Begin(panelDrawer.Name, FixedPanel);
-                if(panelDrawer is ViewportDrawer)
+                ImGui.SetNextWindowDockID(regionDockId, ImGuiCond.FirstUseEver);
+                
+                ImGui.Begin(panelDrawer.Name);
+
+                if (panelDrawer is ViewportDrawer)
                     ImGui.PopStyleVar();
             }
             else
             {
-                bool openStateCheck = true; 
-                
+                bool openStateCheck = true;
                 ImGui.Begin(panelDrawer.Name, ref openStateCheck, ImGuiWindowFlags.None);
-                
                 if (!openStateCheck)
                 {
                     context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
-                    ImGui.End();        
-                    continue;              
+                    ImGui.End();
+                    continue;
                 }
             }
+
             panelDrawer.Draw(context);
             ImGui.End();
         }

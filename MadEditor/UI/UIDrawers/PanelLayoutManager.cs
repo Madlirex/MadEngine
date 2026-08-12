@@ -3,37 +3,6 @@ using ImGuiNET;
 
 namespace MadEditor;
 
-public class PanelArea
-{
-    public Vector2 Position;
-    public Vector2 Size;
-    public Vector2 SizePercentage;
-
-    public float Width
-    {
-        get => Size.X;
-        set => Size.X = value;
-    }
-
-    public float Height
-    {
-        get => Size.Y;
-        set => Size.Y = value;
-    }
-
-    public float WidthPercentage
-    {
-        get => SizePercentage.X;
-        set => SizePercentage.X = value;
-    }
-
-    public float HeightPercentage
-    {
-        get => SizePercentage.Y;
-        set => SizePercentage.Y = value;
-    }
-}
-
 public enum PanelRegion
 {
     Left,
@@ -45,40 +14,70 @@ public enum PanelRegion
 
 public static class PanelLayoutManager
 {
-    public static IReadOnlyDictionary<PanelRegion, PanelArea> PanelRegionsProperties => _areas;
-    
-    private static Dictionary<PanelRegion, PanelArea> _areas = new()
-    {
-        [PanelRegion.Left] = new PanelArea { SizePercentage = new Vector2(0.18f, 1f) },
-        [PanelRegion.Right] = new PanelArea { SizePercentage = new Vector2(0.22f, 1f) },
-        [PanelRegion.Center] = new PanelArea { SizePercentage = new Vector2(0.6f, 0.8f) },
-        [PanelRegion.Bottom] = new PanelArea { SizePercentage = new Vector2(0.6f, 0.2f) },
-    };
+    private static readonly Dictionary<PanelRegion, uint> DockIDs = new();
+    private static bool _isInitialized;
 
-    public static PanelArea Get(PanelRegion region) => _areas[region];
-    
-    public static void Update()
+    public static uint GetDockId(PanelRegion region, uint mainDockSpaceId)
     {
-        Vector2 screenPos = ImGui.GetMainViewport().WorkPos;
-        Vector2 screenSize = ImGui.GetMainViewport().WorkSize;
+        return DockIDs.TryGetValue(region, out uint id) ? id : mainDockSpaceId;
+    }
 
-        foreach (PanelArea panelArea in _areas.Values)
+    public static uint DrawMainDockSpace()
+    {
+        var viewport = ImGui.GetMainViewport();
+        
+        ImGui.SetNextWindowPos(viewport.WorkPos);
+        ImGui.SetNextWindowSize(viewport.WorkSize);
+        ImGui.SetNextWindowViewport(viewport.ID);
+
+        ImGuiWindowFlags hostWindowFlags = ImGuiWindowFlags.NoTitleBar | 
+                                          ImGuiWindowFlags.NoCollapse | 
+                                          ImGuiWindowFlags.NoResize | 
+                                          ImGuiWindowFlags.NoMove | 
+                                          ImGuiWindowFlags.NoBringToFrontOnFocus | 
+                                          ImGuiWindowFlags.NoNavFocus |
+                                          ImGuiWindowFlags.NoBackground;
+
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
+        
+        ImGui.Begin("MainDockSpaceHost", hostWindowFlags);
+        ImGui.PopStyleVar(3);
+        
+        uint dockspaceId = ImGui.GetID("EditorCentralDockSpace");
+        ImGui.DockSpace(dockspaceId, Vector2.Zero, ImGuiDockNodeFlags.None);
+        
+        if (!_isInitialized)
         {
-            RecalculateSize(panelArea, screenSize);
+            BuildDefaultLayout(dockspaceId);
+            _isInitialized = true;
         }
 
-        _areas[PanelRegion.Left].Position = screenPos;
-
-        _areas[PanelRegion.Center].Position = _areas[PanelRegion.Left].Position + new Vector2(_areas[PanelRegion.Left].Width, 0f);
-
-        _areas[PanelRegion.Right].Position = _areas[PanelRegion.Center].Position + new Vector2(_areas[PanelRegion.Center].Width, 0f);
-
-        _areas[PanelRegion.Bottom].Position = _areas[PanelRegion.Left].Position + new Vector2(_areas[PanelRegion.Left].Width, _areas[PanelRegion.Center].Height);
+        ImGui.End();
+        return dockspaceId;
     }
-    
-    private static void RecalculateSize(PanelArea panelArea, Vector2 screenSize)
+
+    private static void BuildDefaultLayout(uint mainDockSpaceId)
     {
-        panelArea.Width = MathF.Floor(screenSize.X * panelArea.WidthPercentage);
-        panelArea.Height = MathF.Floor(screenSize.Y * panelArea.HeightPercentage);
+        ImGuiInternal.DockBuilderRemoveNode(mainDockSpaceId);
+        ImGuiInternal.DockBuilderAddNode(mainDockSpaceId, ImGuiDockNodeFlags.None);
+        ImGuiInternal.DockBuilderSetNodeSize(mainDockSpaceId, ImGui.GetMainViewport().WorkSize);
+
+        uint centralNodeId = mainDockSpaceId;
+        
+        uint leftDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Left, 0.18f, out _, out centralNodeId);
+        
+        uint rightDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Right, 0.22f, out _, out centralNodeId);
+        
+        uint bottomDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Down, 0.20f, out _, out uint centerDockId);
+
+        
+        DockIDs[PanelRegion.Left] = leftDockId;
+        DockIDs[PanelRegion.Right] = rightDockId;
+        DockIDs[PanelRegion.Bottom] = bottomDockId;
+        DockIDs[PanelRegion.Center] = centerDockId;
+
+        ImGuiInternal.DockBuilderFinish(mainDockSpaceId);
     }
 }
