@@ -1,13 +1,15 @@
 ﻿namespace MadEditor.PackageManagement;
 
-public record PackageMeta (
-    string Name,
-    string Description,
-    string Author,
-    string Company,
-    Version Version,
-    bool IsDevelopment = false,
-    bool IsEnabled = true,
-    bool IsModifiable = true,
-    bool IsRemovable = true
-);
+public record PackageMeta
+{
+    public required string Name { get; init; }
+    public required string Author { get; init; }
+    public required string Company { get; init; }
+    public required string Description { get; init; }
+    public required Version Version { get; init; }
+    
+    public bool IsDevelopment { get; init; }
+    public bool IsEnabled { get; init; } = true;
+    public bool IsModifiable { get; init; } = true;
+    public bool IsRemovable { get; init; } = true;
+}

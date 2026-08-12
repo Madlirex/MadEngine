@@ -64,7 +64,7 @@ public class EditorWindow : GameWindow
         AssetManager.RecompileScripts();
         ImporterRegistry.DiscoverImporters();
         SerializerRegistry.DiscoverSerializers();
-        PackageManager.RegisterPackages();
+        PackageManager.LoadPackageMetas();
         
         AssetManager.LoadProject(AssetManager.ProjectPath);
         
@@ -88,6 +88,7 @@ public class EditorWindow : GameWindow
     protected override void OnUnload()
     {
         base.OnUnload();
+        PackageManager.SavePackageMetas();
 
         CursorState = CursorState.Normal;
         

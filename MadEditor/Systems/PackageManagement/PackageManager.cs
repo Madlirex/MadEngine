@@ -9,6 +9,9 @@ public static class PackageManager
     public static IReadOnlyList<PackageMeta> PackageMetas => _packageMetas;
     private static List<PackageMeta> _packageMetas = [];
 
+    public static IReadOnlyList<string> PackagePaths => _packagePaths;
+    private static List<string> _packagePaths = [];
+    
     private static string _packagesListFile = "packages.json";
     
     public static void LoadPackageMetas()
@@ -34,5 +37,11 @@ public static class PackageManager
 
         PackageMeta? meta = json.Deserialize<PackageMeta>(SerializerSettings.SerializerOptions);
         if (meta != null) _packageMetas.Add(meta);
+    }
+
+    public static void SavePackageMetas()
+    {
+        string data = JsonSerializer.Serialize(_packagePaths, SerializerSettings.SerializerOptions);
+        File.WriteAllText(_packagesListFile, data);
     }
 }
