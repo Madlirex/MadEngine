@@ -143,7 +143,6 @@ void main()
 
         GL.EnableVertexAttribArray(2);
         GL.VertexAttribPointer(2, 4, VertexAttribPointerType.UnsignedByte, true, VertexSize, 16);
-
         GL.BindVertexArray(0);
         
         ImGuiIOPtr io = ImGui.GetIO();
