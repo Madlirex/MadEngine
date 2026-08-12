@@ -3,7 +3,6 @@ using System.Numerics;
 
 namespace ImGuiNET;
 
-// Simple direct mappings to the internal C++ Dear ImGui functions
 public static unsafe class ImGuiInternal
 {
     [DllImport("cimgui", EntryPoint = "igStringToHash", CallingConvention = CallingConvention.Cdecl)]
@@ -23,4 +22,7 @@ public static unsafe class ImGuiInternal
 
     [DllImport("cimgui", EntryPoint = "igDockBuilderFinish", CallingConvention = CallingConvention.Cdecl)]
     public static extern void DockBuilderFinish(uint node_id);
+    
+    [DllImport("cimgui", EntryPoint = "igDockBuilderDockWindow", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void DockBuilderDockWindow(string window_name, uint node_id);
 }

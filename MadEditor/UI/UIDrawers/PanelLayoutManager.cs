@@ -57,27 +57,29 @@ public static class PanelLayoutManager
         ImGui.End();
         return dockspaceId;
     }
-
+    
     private static void BuildDefaultLayout(uint mainDockSpaceId)
     {
         ImGuiInternal.DockBuilderRemoveNode(mainDockSpaceId);
-        ImGuiInternal.DockBuilderAddNode(mainDockSpaceId, ImGuiDockNodeFlags.None);
+        ImGuiInternal.DockBuilderAddNode(mainDockSpaceId, ImGuiDockNodeFlags.None); 
         ImGuiInternal.DockBuilderSetNodeSize(mainDockSpaceId, ImGui.GetMainViewport().WorkSize);
 
         uint centralNodeId = mainDockSpaceId;
         
         uint leftDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Left, 0.18f, out _, out centralNodeId);
-        
         uint rightDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Right, 0.22f, out _, out centralNodeId);
-        
         uint bottomDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Down, 0.20f, out _, out uint centerDockId);
-
         
         DockIDs[PanelRegion.Left] = leftDockId;
         DockIDs[PanelRegion.Right] = rightDockId;
         DockIDs[PanelRegion.Bottom] = bottomDockId;
         DockIDs[PanelRegion.Center] = centerDockId;
-
+        
+        ImGuiInternal.DockBuilderDockWindow("Hierarchy", leftDockId);
+        ImGuiInternal.DockBuilderDockWindow("Viewport", centerDockId);
+        ImGuiInternal.DockBuilderDockWindow("Inspector", rightDockId);
+        ImGuiInternal.DockBuilderDockWindow("Stats", bottomDockId);
+        
         ImGuiInternal.DockBuilderFinish(mainDockSpaceId);
     }
 }

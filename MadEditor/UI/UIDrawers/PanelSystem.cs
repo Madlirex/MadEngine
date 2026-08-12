@@ -84,12 +84,8 @@ public static class PanelSystem
             {
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
-
-                uint regionDockId = PanelLayoutManager.GetDockId(panelDrawer.PanelRegion, mainDockSpaceId);
                 
-                ImGui.SetNextWindowDockID(regionDockId, ImGuiCond.FirstUseEver);
-                
-                ImGui.Begin(panelDrawer.Name);
+                ImGui.Begin(panelDrawer.Name, ImGuiWindowFlags.NoCollapse);
 
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PopStyleVar();
