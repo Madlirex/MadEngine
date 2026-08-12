@@ -109,7 +109,6 @@ public class EditorWindow : GameWindow
         SceneFramebuffer.Unbind();
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
         GL.Clear(ClearBufferMask.ColorBufferBit);
-        Console.WriteLine("h");
         _editorUI.Draw(this);
         _imGui.Render();
         
