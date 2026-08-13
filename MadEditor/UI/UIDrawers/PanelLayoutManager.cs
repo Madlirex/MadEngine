@@ -15,7 +15,7 @@ public enum PanelRegion
 public static class PanelLayoutManager
 {
     private static readonly Dictionary<PanelRegion, List<PanelDrawer>> Panels = [];
-    private static readonly Dictionary<PanelRegion, uint> DockIDs = [];
+    public static readonly Dictionary<PanelRegion, uint> DockIDs = [];
     private static bool _isInitialized;
 
     public static void AddPanel(PanelDrawer panel)

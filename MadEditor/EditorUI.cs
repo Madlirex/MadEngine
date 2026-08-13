@@ -100,9 +100,14 @@ public class EditorUI
 
             if (ImGui.BeginMenu("Windows"))
             {
-                if (ImGui.MenuItem("Package Manager"))
+                foreach (Type type in PanelSystem.PanelDrawers)
                 {
-                    PanelSystem.AddPanel(new PackageManagerDrawer() {PanelRegion = PanelRegion.Floating});
+                    if (ImGui.MenuItem(type.Name))
+                    {
+                        if(Activator.CreateInstance(type) is not PanelDrawer panelDrawer) continue;
+                        panelDrawer.PanelRegion = PanelRegion.Floating;
+                        PanelSystem.AddPanel(panelDrawer);
+                    }
                 }
                 ImGui.EndMenu();
             }
