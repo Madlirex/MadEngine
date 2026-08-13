@@ -9,6 +9,8 @@ public class AddComponentPopup : Popup
 
     protected override void Body(EditorUIContext context)
     {
+        if(context.Selected is not GameObject go) return;
+        
         Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type =>
@@ -20,7 +22,7 @@ public class AddComponentPopup : Popup
                 continue;
             if (ImGui.MenuItem(type.Name))
             {
-                Component? comp = context.Selected!.AddComponent(type);
+                Component? comp = go.AddComponent(type);
                 comp?.EditorStart();
             }
         }

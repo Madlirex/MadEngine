@@ -3,11 +3,11 @@ using MadEditor.PackageManagement;
 
 namespace MadEditor;
 
-public class PackageManagerDrawer : IPanelDrawer
+public class PackageManagerDrawer : PanelDrawer
 {
-    public string Name => "Package Manager";
-    public PanelRegion PanelRegion { get; set; }
-    public void Draw(EditorUIContext context)
+    public override string Name => "Package Manager";
+    public override PanelRegion PanelRegion { get; set; }
+    public override void Draw(EditorUIContext context)
     {
         foreach (PackageMeta meta in PackageManager.PackageMetas)
         {

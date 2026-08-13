@@ -1,8 +1,8 @@
 ﻿namespace MadEditor;
 
-public class ClosePanelCommand(IPanelDrawer drawer) : IEditorCommand
+public class ClosePanelCommand(PanelDrawer drawer) : IEditorCommand
 {
-    private IPanelDrawer _drawer = drawer;
+    private PanelDrawer _drawer = drawer;
 
     public void Execute()
     {

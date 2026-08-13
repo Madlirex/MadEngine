@@ -18,8 +18,8 @@ public static class PanelSystem
     public static IReadOnlyList<Type> PanelDrawers => _panelDrawers;
     private static List<Type> _panelDrawers = [];
 
-    public static IReadOnlyList<IPanelDrawer> Panels => _panels;
-    private static List<IPanelDrawer> _panels = [];
+    public static IReadOnlyList<PanelDrawer> Panels => _panels;
+    private static List<PanelDrawer> _panels = [];
 
     public static void Initialize()
     {
@@ -28,7 +28,7 @@ public static class PanelSystem
         
         Type[] panels = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(s => s.GetTypes())
-            .Where(p => typeof(IPanelDrawer).IsAssignableFrom(p)).ToArray();
+            .Where(p => typeof(PanelDrawer).IsAssignableFrom(p)).ToArray();
 
         foreach (Type panelDrawer in panels)
         {
@@ -40,7 +40,7 @@ public static class PanelSystem
     
     public static void Register(Type panelDrawer)
     {
-        if (!typeof(IPanelDrawer).IsAssignableFrom(panelDrawer))
+        if (!typeof(PanelDrawer).IsAssignableFrom(panelDrawer))
             throw new InvalidOperationException("Not a valid panel");
 
         if (_panelDrawers.Contains(panelDrawer))
@@ -51,24 +51,24 @@ public static class PanelSystem
 
     public static void Unregister(Type panelDrawer)
     {
-        if (!typeof(IPanelDrawer).IsAssignableFrom(panelDrawer))
+        if (!typeof(PanelDrawer).IsAssignableFrom(panelDrawer))
             throw new InvalidOperationException("Not a valid panel");
 
         if (!_panelDrawers.Remove(panelDrawer))
             throw new InvalidOperationException("PanelDrawer not registered");
     }
 
-    public static void CreatePanel<T>() where T : IPanelDrawer, new()
+    public static void CreatePanel<T>() where T : PanelDrawer, new()
     {
         _panels.Add(new T());
     }
 
-    public static void AddPanel(IPanelDrawer panelDrawer)
+    public static void AddPanel(PanelDrawer panelDrawer)
     {
         _panels.Add(panelDrawer);
     }
 
-    public static void DeletePanel(IPanelDrawer panelDrawer)
+    public static void DeletePanel(PanelDrawer panelDrawer)
     {
         if(!_panels.Remove(panelDrawer))
             throw new InvalidOperationException("PanelDrawer not instantiated");
@@ -78,7 +78,7 @@ public static class PanelSystem
     {
         uint mainDockSpaceId = PanelLayoutManager.DrawMainDockSpace();
 
-        foreach (IPanelDrawer panelDrawer in _panels)
+        foreach (PanelDrawer panelDrawer in _panels)
         {
             if (panelDrawer.PanelRegion != PanelRegion.Floating)
             {

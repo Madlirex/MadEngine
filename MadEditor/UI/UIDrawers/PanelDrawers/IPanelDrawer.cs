@@ -2,9 +2,10 @@
 
 namespace MadEditor;
 
-public interface IPanelDrawer
+public abstract class PanelDrawer
 {
-    public string Name { get; }
-    public PanelRegion PanelRegion { get; set; }
-    public void Draw(EditorUIContext context);
+    public Guid Guid { get; } = Guid.NewGuid();
+    public abstract string Name { get; }
+    public abstract PanelRegion PanelRegion { get; set; }
+    public abstract void Draw(EditorUIContext context);
 }

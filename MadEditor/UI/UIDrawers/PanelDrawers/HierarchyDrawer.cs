@@ -5,12 +5,12 @@ using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
-public class HierarchyDrawer : IPanelDrawer
+public class HierarchyDrawer : PanelDrawer
 {
-    public string Name => "Hierarchy";
-    public PanelRegion PanelRegion { get; set; } = PanelRegion.Left;
+    public override string Name => "Hierarchy";
+    public override PanelRegion PanelRegion { get; set; } = PanelRegion.Left;
     public HierarchyPopup HierarchyPopup = new();
-    public void Draw(EditorUIContext context)
+    public override void Draw(EditorUIContext context)
     {
         Scene scene = SceneManager.ActiveScene;
 

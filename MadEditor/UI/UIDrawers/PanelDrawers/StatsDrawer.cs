@@ -2,11 +2,11 @@
 
 namespace MadEditor;
 
-public class StatsDrawer : IPanelDrawer
+public class StatsDrawer : PanelDrawer
 {
-    public string Name => "Stats";
-    public PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
-    public void Draw(EditorUIContext context)
+    public override string Name => "Stats";
+    public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
+    public override void Draw(EditorUIContext context)
     {
         ImGui.Text($"FPS        : {1.0 / context.Window.UpdateTime:F0}");
         ImGui.Text($"Frame time : {context.Window.UpdateTime * 1000.0:F2} ms");

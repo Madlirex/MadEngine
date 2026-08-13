@@ -4,13 +4,13 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
-public class InspectorDrawer : IPanelDrawer
+public class InspectorDrawer : PanelDrawer
 {
-    public string Name => "Inspector";
-    public PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
+    public override string Name => "Inspector";
+    public override PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
     public AddComponentPopup AddComponentPopup = new();
 
-    public void Draw(EditorUIContext context)
+    public override void Draw(EditorUIContext context)
     {
         if (context.Selected == null)
         {

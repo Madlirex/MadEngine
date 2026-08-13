@@ -5,11 +5,11 @@
  
  namespace MadEditor;
  
- public class ViewportDrawer : IPanelDrawer
+ public class ViewportDrawer : PanelDrawer
  {
-     public string Name => "Viewport";
-     public PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
-     public void Draw(EditorUIContext context)
+     public override string Name => "Viewport";
+     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
+     public override void Draw(EditorUIContext context)
      {
          Vector2 availableSpace = ImGui.GetContentRegionAvail();
         
