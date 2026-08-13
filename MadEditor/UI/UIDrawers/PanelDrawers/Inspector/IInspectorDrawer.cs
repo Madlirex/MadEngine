@@ -5,13 +5,11 @@ namespace MadEditor;
 public interface IInspectorDrawer
 {
     Type Type { get; }
-    void Draw(object selected);
+    void Draw(EditorUIContext context);
 }
 
-public abstract class InspectorDrawer<T> : PanelDrawer, IInspectorDrawer where T : MadObject
+public abstract class InspectorDrawer<T> : IInspectorDrawer where T : MadObject
 {
-    public abstract Type Type { get; }
-
-    public abstract void Draw(T selected);
-    void IInspectorDrawer.Draw(object selected) => Draw((T)selected);
+    public Type Type => typeof(T);
+    public abstract void Draw(EditorUIContext context);
 }
