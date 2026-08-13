@@ -29,7 +29,7 @@ public static class RegistryBootstrapper
         
         var registryTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(s => s.GetTypes())
-            .Where(p => typeof(Registry).IsSubclassOf(p) && p is { IsAbstract: false, IsClass: true });
+            .Where(p => p.IsSubclassOf(typeof(Registry)) && p is { IsAbstract: false, IsClass: true });
 
         foreach (var registryType in registryTypes)
         {

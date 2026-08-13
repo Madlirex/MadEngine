@@ -2,16 +2,25 @@
 
 public static class ImporterRegistry
 {
-    public static IReadOnlyDictionary<Type, IAssetImporter> Importers => _importers;
-    private static Dictionary<Type, IAssetImporter> _importers = [];
+    private static readonly ImporterEngine Instance = RegistryBootstrapper.Get<ImporterEngine>();
+    
+    public static IAssetImporter? GetImporter(Type type) => Instance.GetImporter(type);
+    public static IAssetImporter? GetImporter(string name) => Instance.GetImporter(name);
+    public static IAssetImporter? GetImporterByExtension(string extension) => Instance.GetImporterByExtension(extension);
+}
 
-    public static IReadOnlyDictionary<string, IAssetImporter> ImporterNames => _importerNames;
-    private static Dictionary<string, IAssetImporter> _importerNames = [];
+internal class ImporterEngine : Registry
+{
+    public override void Initialize()
+    {
+        DiscoverImporters();
+    }
     
-    public static IReadOnlyDictionary<string, IAssetImporter> ImporterExtensions => _importerExtensions;
-    private static Dictionary<string, IAssetImporter> _importerExtensions = [];
+    private readonly Dictionary<Type, IAssetImporter> _importers = [];
+    private readonly Dictionary<string, IAssetImporter> _importerNames = [];
+    private readonly Dictionary<string, IAssetImporter> _importerExtensions = [];
     
-    public static IAssetImporter? GetImporter(Type type)
+    internal IAssetImporter? GetImporter(Type type)
     {
         Type? currentType = type;
         while (currentType != null)
@@ -30,20 +39,20 @@ public static class ImporterRegistry
         return null;
     }
 
-    public static IAssetImporter? GetImporter(string name)
+    internal IAssetImporter? GetImporter(string name)
     {
         Console.WriteLine($"Getting importer for {name}");
         if(!_importerNames.ContainsKey(name)) Console.WriteLine($"Couldn't find importer with name {name}");
         return _importerNames.GetValueOrDefault(name);
     }
 
-    public static IAssetImporter? GetImporterByExtension(string extension)
+    internal IAssetImporter? GetImporterByExtension(string extension)
     {
         if(!_importerExtensions.ContainsKey(extension)) Console.WriteLine($"Couldn't find importer for extension {extension}");
         return _importerExtensions.GetValueOrDefault(extension);
     }
 
-    public static void DiscoverImporters()
+    private void DiscoverImporters()
     {
         _importers.Clear();
         var importerTypes = AppDomain.CurrentDomain.GetAssemblies()
@@ -57,7 +66,7 @@ public static class ImporterRegistry
         }
     }
     
-    public static void RegisterImporter(Type type)
+    private void RegisterImporter(Type type)
     {
         if (Activator.CreateInstance(type) is IAssetImporter importer)
         {

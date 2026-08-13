@@ -23,9 +23,16 @@ public class CustomFieldDrawerAttribute : Attribute
 
 public static class FieldDrawerRegistry
 {
-    private static readonly Dictionary<Type, FieldDrawer> Drawers = new();
+    private static readonly FieldDrawerEngine Instance = RegistryBootstrapper.Get<FieldDrawerEngine>();
+    
+    public static bool TryGetDrawer(Type type, out FieldDrawer drawer) => Instance.TryGetDrawer(type, out drawer);
+}
 
-    public static void Initialize()
+internal class FieldDrawerEngine : Registry
+{
+    private readonly Dictionary<Type, FieldDrawer> _drawers = [];
+
+    public override void Initialize()
     {
         foreach (Type type in AppDomain.CurrentDomain.GetAssemblies()
                      .SelectMany(a => a.GetTypes()))
@@ -43,17 +50,17 @@ public static class FieldDrawerRegistry
 
             FieldDrawer drawer = (FieldDrawer)Activator.CreateInstance(type)!;
 
-            Drawers[attribute.TargetType] = drawer;
+            _drawers[attribute.TargetType] = drawer;
         }
     }
 
-    public static bool TryGetDrawer(Type type, out FieldDrawer drawer)
+    internal bool TryGetDrawer(Type type, out FieldDrawer drawer)
     {
         Type? current = type;
 
         while (current != null)
         {
-            if (Drawers.TryGetValue(current, out var found))
+            if (_drawers.TryGetValue(current, out var found))
             {
                 drawer = found;
                 return true;

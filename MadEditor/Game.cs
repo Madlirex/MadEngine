@@ -39,8 +39,6 @@ public class EditorWindow : GameWindow
         _engine = new Engine();
         ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
         ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");
-        
-        FieldDrawerRegistry.Initialize();
 
         _camera = new GameObject();
         _camera.Name = "MainCamera";
@@ -62,8 +60,9 @@ public class EditorWindow : GameWindow
         _engine.Initialize();
         
         AssetManager.RecompileScripts();
-        ImporterRegistry.DiscoverImporters();
-        SerializerRegistry.DiscoverSerializers();
+        
+        RegistryBootstrapper.InitializeAll();
+        
         PackageManager.LoadPackageMetas();
 
         PackageManager.LoadPackages();

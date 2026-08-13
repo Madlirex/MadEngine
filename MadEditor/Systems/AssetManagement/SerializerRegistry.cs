@@ -4,10 +4,46 @@ namespace MadEditor;
 
 public static class SerializerRegistry
 {
-    public static IReadOnlyDictionary<Type, ISerializer> Serializers => _serializers;
-    private static Dictionary<Type, ISerializer> _serializers = [];
+    private static readonly SerializerEngine Instance = new();
 
-    public static JsonNode? Serialize(object? obj)
+    public static JsonNode? Serialize(object? obj) => Instance.Serialize(obj);
+    public static object? Deserialize(Type type, JsonNode? obj) => Instance.Deserialize(type, obj);
+    public static ISerializer? GetSerializer(Type type) => Instance.GetSerializer(type);
+    public static T? GetSerializer<T>() where T : ISerializer => Instance.GetSerializer<T>();
+    public static IClassSerializer? GetClassSerializer(Type type) => Instance.GetClassSerializer(type);
+}
+
+internal class SerializerEngine : Registry
+{
+    private readonly Dictionary<Type, ISerializer> _serializers = [];
+    
+    public override void Initialize()
+    {
+        DiscoverSerializers();
+    }
+    
+    private void DiscoverSerializers()
+    {
+        _serializers.Clear();
+        var serializerTypes = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => typeof(ISerializer)
+                .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false, IsGenericTypeDefinition: false });
+
+        foreach (Type serializerType in serializerTypes)
+        {
+            CreateSerializer(serializerType);
+        }
+    }
+
+    internal ISerializer? CreateSerializer(Type type)
+    {
+        if (Activator.CreateInstance(type) is not ISerializer serializer) return null;
+        _serializers.TryAdd(serializer.Type, serializer);
+        return serializer;
+    }
+    
+    internal JsonNode? Serialize(object? obj)
     {
         if (obj == null)
             return null;
@@ -22,22 +58,22 @@ public static class SerializerRegistry
         };
     }
 
-    public static object? Deserialize(Type targetType, JsonNode? obj)
+    internal object? Deserialize(Type targetType, JsonNode? obj)
     {
         if (obj == null || obj is JsonValue value && !value.TryGetValue<object>(out _)) 
             return null;
 
         ISerializer? serializer = GetSerializer(targetType);
-        
-        if (serializer == null) return null;
-        
-        if (serializer is IClassSerializer classSerializer)
-            return classSerializer.DeserializeReference(obj);
-        
-        return serializer.Deserialize(obj);
+
+        return serializer switch
+        {
+            null => null,
+            IClassSerializer classSerializer => classSerializer.DeserializeReference(obj),
+            _ => serializer.Deserialize(obj)
+        };
     }
     
-    public static ISerializer? GetSerializer(Type type)
+    internal ISerializer? GetSerializer(Type type)
     {
         Type? currentType = type;
         while (currentType != null)
@@ -56,12 +92,12 @@ public static class SerializerRegistry
         return TryGenerateDynamicSerializer(type);
     }
 
-    public static T? GetSerializer<T>() where T : ISerializer
+    internal T? GetSerializer<T>() where T : ISerializer
     {
         return (T?)GetSerializer(typeof(T));
     }
 
-    public static IClassSerializer? GetClassSerializer(Type type)
+    internal IClassSerializer? GetClassSerializer(Type type)
     {
         ISerializer? serializer = GetSerializer(type);
         
@@ -71,7 +107,7 @@ public static class SerializerRegistry
         return null;
     }
 
-    public static ISerializer? TryGenerateDynamicSerializer(Type type)
+    private ISerializer? TryGenerateDynamicSerializer(Type type)
     {
         if (type.IsArray)
         {
@@ -79,54 +115,24 @@ public static class SerializerRegistry
             Type arraySerializerType = typeof(ArraySerializer<>).MakeGenericType(elementType);
             return CreateSerializer(arraySerializerType);
         }
-        
-        if (type.IsGenericType)
-        {
-            Type genericDefinition = type.GetGenericTypeDefinition();
 
-            if (genericDefinition == typeof(List<>))
-            {
-                Type itemType = type.GetGenericArguments()[0];
-                Type listSerializerType = typeof(ListSerializer<>).MakeGenericType(itemType);
-                return CreateSerializer(listSerializerType);
-            }
+        if (!type.IsGenericType) return null;
+        Type genericDefinition = type.GetGenericTypeDefinition();
+
+        if (genericDefinition == typeof(List<>))
+        {
+            Type itemType = type.GetGenericArguments()[0];
+            Type listSerializerType = typeof(ListSerializer<>).MakeGenericType(itemType);
+            return CreateSerializer(listSerializerType);
+        }
+
+        if (genericDefinition != typeof(Dictionary<,>)) return null;
             
-            if (genericDefinition == typeof(Dictionary<,>))
-            {
-                Type[] genericArgs = type.GetGenericArguments();
-                if (genericArgs[0] == typeof(string))
-                {
-                    Type valueType = genericArgs[1];
-                    Type dictSerializerType = typeof(DictionarySerializer<>).MakeGenericType(valueType);
-                    return CreateSerializer(dictSerializerType);
-                }
-            }
-        }
-        return null;
-    }
-    
-    public static void DiscoverSerializers()
-    {
-        _serializers.Clear();
-        var serializerTypes = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type => typeof(ISerializer)
-                .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false, IsGenericTypeDefinition: false });
-
-        foreach (Type serializerType in serializerTypes)
-        {
-            CreateSerializer(serializerType);
-        }
-    }
-
-    public static ISerializer? CreateSerializer(Type type)
-    {
-        if (Activator.CreateInstance(type) is ISerializer serializer)
-        {
-            _serializers.TryAdd(serializer.Type, serializer);
-            return serializer;
-        }
-
-        return null;
+        Type[] genericArgs = type.GetGenericArguments();
+        if (genericArgs[0] != typeof(string)) return null;
+                
+        Type valueType = genericArgs[1];
+        Type dictSerializerType = typeof(DictionarySerializer<>).MakeGenericType(valueType);
+        return CreateSerializer(dictSerializerType);
     }
 }
