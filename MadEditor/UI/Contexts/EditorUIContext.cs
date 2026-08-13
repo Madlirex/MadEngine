@@ -6,8 +6,8 @@ namespace MadEditor;
 
 public class EditorUIContext
 {
-    public GameObject? Selected;
-    public GameObject? RightClicked;
+    public MadObject? Selected;
+    public MadObject? RightClicked;
     
     public required GameObject CameraObject;
     public required SceneFramebuffer SceneFbo;

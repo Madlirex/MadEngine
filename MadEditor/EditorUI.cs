@@ -25,7 +25,7 @@ public class EditorUI
             CameraObject = _cameraObject,
             SceneFbo = _sceneFbo
         };
-
+        
         PanelSystem.Initialize();
         PanelSystem.CreatePanel<HierarchyDrawer>();
         PanelSystem.CreatePanel<InspectorDrawer>();

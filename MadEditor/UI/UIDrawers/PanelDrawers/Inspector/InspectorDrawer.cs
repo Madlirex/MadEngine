@@ -19,17 +19,22 @@ public class InspectorDrawer : IPanelDrawer
         }
 
         DrawHeader(context.Selected);
-        DrawComponents(context.Selected);
+        DrawBody(context.Selected);
         DrawFooter(context);
     }
 
-    public void DrawHeader(GameObject selected)
+    public void DrawHeader(MadObject selected)
     {
         string name = selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
             selected.Name = name;
         ImGui.Text("ID: " + selected.Guid);
         ImGui.Separator();
+    }
+
+    public void DrawBody(MadObject selected)
+    {
+        InspectorDrawersRegistry.GetDrawer(selected.GetType()).Draw(selected);
     }
 
     public void DrawComponents(GameObject selected)
