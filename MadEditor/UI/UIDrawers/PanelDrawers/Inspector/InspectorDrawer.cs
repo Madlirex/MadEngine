@@ -4,17 +4,16 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
-public class InspectorDrawer : PanelDrawer
+public class InspectorPanelDrawer : PanelDrawer
 {
     public override string Name => "Inspector";
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
-    public AddComponentPopup AddComponentPopup = new();
 
     public override void Draw(EditorUIContext context)
     {
         if (context.Selected == null)
         {
-            ImGui.TextDisabled("Select an object in the Hierarchy.");
+            ImGui.TextDisabled("Select something.");
             return;
         }
 

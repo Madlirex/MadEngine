@@ -85,7 +85,7 @@ public static class PanelSystem
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
                 
-                ImGui.Begin(panelDrawer.Name, ImGuiWindowFlags.NoCollapse);
+                ImGui.Begin($"{panelDrawer}", ImGuiWindowFlags.NoCollapse);
 
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PopStyleVar();

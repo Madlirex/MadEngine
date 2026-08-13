@@ -28,7 +28,7 @@ public class EditorUI
         
         PanelSystem.Initialize();
         PanelSystem.CreatePanel<HierarchyDrawer>();
-        PanelSystem.CreatePanel<InspectorDrawer>();
+        PanelSystem.CreatePanel<InspectorPanelDrawer>();
         PanelSystem.CreatePanel<ViewportDrawer>();
         PanelSystem.CreatePanel<StatsDrawer>();
     }
