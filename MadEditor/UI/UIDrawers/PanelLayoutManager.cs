@@ -14,9 +14,22 @@ public enum PanelRegion
 
 public static class PanelLayoutManager
 {
-    private static readonly Dictionary<PanelRegion, uint> DockIDs = new();
+    private static readonly Dictionary<PanelRegion, List<PanelDrawer>> Panels = [];
+    private static readonly Dictionary<PanelRegion, uint> DockIDs = [];
     private static bool _isInitialized;
 
+    public static void AddPanel(PanelDrawer panel)
+    {
+        if(!Panels.ContainsKey(panel.PanelRegion)) Panels.Add(panel.PanelRegion, []);
+        Panels[panel.PanelRegion].Add(panel);
+    }
+
+    public static void DeletePanel(PanelDrawer panel)
+    {
+        if (!Panels.ContainsKey(panel.PanelRegion)) return;
+        Panels[panel.PanelRegion].Remove(panel);
+    }
+    
     public static uint GetDockId(PanelRegion region, uint mainDockSpaceId)
     {
         return DockIDs.TryGetValue(region, out uint id) ? id : mainDockSpaceId;
@@ -75,11 +88,20 @@ public static class PanelLayoutManager
         DockIDs[PanelRegion.Bottom] = bottomDockId;
         DockIDs[PanelRegion.Center] = centerDockId;
         
-        ImGuiInternal.DockBuilderDockWindow("Hierarchy", leftDockId);
-        ImGuiInternal.DockBuilderDockWindow("Viewport", centerDockId);
-        ImGuiInternal.DockBuilderDockWindow("Inspector", rightDockId);
-        ImGuiInternal.DockBuilderDockWindow("Stats", bottomDockId);
+        DockPanels();
         
         ImGuiInternal.DockBuilderFinish(mainDockSpaceId);
+    }
+
+    private static void DockPanels()
+    {
+        foreach (var pair in Panels)
+        {
+            if (pair.Key == PanelRegion.Floating) continue;
+            foreach (var panel in pair.Value)
+            { 
+                ImGuiInternal.DockBuilderDockWindow(panel.ToString(), DockIDs[panel.PanelRegion]);
+            }
+        }
     }
 }

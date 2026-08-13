@@ -60,18 +60,20 @@ public static class PanelSystem
 
     public static void CreatePanel<T>() where T : PanelDrawer, new()
     {
-        _panels.Add(new T());
+        AddPanel(new T());
     }
 
     public static void AddPanel(PanelDrawer panelDrawer)
     {
         _panels.Add(panelDrawer);
+        PanelLayoutManager.AddPanel(panelDrawer);
     }
 
     public static void DeletePanel(PanelDrawer panelDrawer)
     {
         if(!_panels.Remove(panelDrawer))
             throw new InvalidOperationException("PanelDrawer not instantiated");
+        PanelLayoutManager.DeletePanel(panelDrawer);
     }
 
     public static void Draw(EditorUIContext context)
@@ -85,7 +87,7 @@ public static class PanelSystem
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
                 
-                ImGui.Begin($"{panelDrawer.Name}##{panelDrawer.Guid}", ImGuiWindowFlags.NoCollapse);
+                ImGui.Begin(panelDrawer.ToString(), ImGuiWindowFlags.NoCollapse);
 
                 if (panelDrawer is ViewportDrawer)
                     ImGui.PopStyleVar();
@@ -93,7 +95,7 @@ public static class PanelSystem
             else
             {
                 bool openStateCheck = true;
-                ImGui.Begin(panelDrawer.Name, ref openStateCheck, ImGuiWindowFlags.None);
+                ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
                 if (!openStateCheck)
                 {
                     context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
