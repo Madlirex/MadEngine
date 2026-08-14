@@ -1,7 +1,7 @@
 ﻿using MadEditor;
 using MadEngine.Core;
 
-namespace DemoProject;
+
 
 public class EditorTestComp : Component
 {

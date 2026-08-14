@@ -4,6 +4,10 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace></RootNamespace>
+
+        <!-- 2. Suppress .NET compiler warnings about missing namespaces if the user uses global styling tools -->
+        <NoWarn>$(NoWarn);CA1050;IDE0130</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -51,9 +55,5 @@
       <Content Update="Assets\Shaders\unlit.vert">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Packages\" />
     </ItemGroup>
 </Project>
