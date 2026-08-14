@@ -6,7 +6,8 @@ public static class ScriptDomain
 {
     private static readonly List<Assembly> Assemblies = new();
 
-    public static Assembly? CurrentAssembly { get; private set; }
+    public static Assembly? RuntimeAssembly { get; private set; }
+    public static Assembly? EditorAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
 
     public static Type? GetType(string typeName)
@@ -18,31 +19,37 @@ public static class ScriptDomain
 
     public static void ReloadFromFiles(string[] sourceFiles)
     {
-        var dll = ScriptCompiler.CompileToBytes(sourceFiles);
+        var (runtimeDll, editorDll) = ScriptCompiler.CompileProject(sourceFiles);
 
-        if (dll == null)
+        if (runtimeDll == null)
         {
             Console.WriteLine("Script compilation failed.");
             return;
         }
 
-        Load(dll);
+        Load(runtimeDll, editorDll);
     }
     
-    public static void Load(byte[] dllBytes)
+    public static void Load(byte[] runtimeDll, byte[]? editorDll)
     {
         Unload();
 
         var context = new ScriptLoadContext();
-
-        using var ms = new MemoryStream(dllBytes);
-        var assembly = context.LoadFromStream(ms);
-
         CurrentContext = context;
-        CurrentAssembly = assembly;
-
         Assemblies.Clear();
-        Assemblies.Add(assembly);
+        
+        using (var ms = new MemoryStream(runtimeDll))
+        {
+            RuntimeAssembly = context.LoadFromStream(ms);
+            Assemblies.Add(RuntimeAssembly);
+        }
+
+        if (editorDll is not { Length: > 0 }) return;
+        {
+            using var ms = new MemoryStream(editorDll);
+            EditorAssembly = context.LoadFromStream(ms);
+            Assemblies.Add(EditorAssembly);
+        }
     }
 
     public static void Unload()
@@ -51,7 +58,8 @@ public static class ScriptDomain
 
         var context = CurrentContext;
 
-        CurrentAssembly = null;
+        RuntimeAssembly = null;
+        EditorAssembly = null;
         CurrentContext = null;
 
         if (context != null)

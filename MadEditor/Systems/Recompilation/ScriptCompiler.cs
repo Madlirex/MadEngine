@@ -6,24 +6,48 @@ namespace MadEditor;
 
 public static class ScriptCompiler
 {
-    public static string AssemblyName = "GameScripts";
+    public static string RuntimeAssemblyName = "GameScripts.Runtime";
+    public static string EditorAssemblyName = "GameScripts.Editor";
     
-    public static byte[]? CompileToBytes(string[] sourceFiles)
+    public static (byte[]? runtimeDll, byte[]? editorDll) CompileProject(string[] allSourceFiles)
     {
+        var editorFiles = allSourceFiles
+            .Where(f => f.Split(Path.DirectorySeparatorChar).Contains("Editor"))
+            .ToArray();
+        var runtimeFiles = allSourceFiles.Except(editorFiles).ToArray();
+        
+        var runtimeBytes = CompileToBytes(runtimeFiles, RuntimeAssemblyName, null);
+        if (runtimeBytes == null) return (null, null);
+        
+        var editorBytes = CompileToBytes(editorFiles, EditorAssemblyName, runtimeBytes);
+
+        return (runtimeBytes, editorBytes);
+    }
+    
+    private static byte[]? CompileToBytes(string[] sourceFiles, string assemblyName, byte[]? runtimeDependency)
+    {
+        if (sourceFiles.Length == 0) return [];
+
         var syntaxTrees = sourceFiles
             .Select(f => CSharpSyntaxTree.ParseText(File.ReadAllText(f)))
             .ToArray();
-
+        
         var references = AppDomain.CurrentDomain.GetAssemblies()
             .Where(a =>
                 !a.IsDynamic &&
                 !string.IsNullOrEmpty(a.Location) &&
-                !a.FullName!.Contains(AssemblyName))
+                !a.FullName!.Contains(RuntimeAssemblyName) &&
+                !a.FullName!.Contains(EditorAssemblyName))  
             .Select(a => MetadataReference.CreateFromFile(a.Location))
             .ToList();
+        
+        if (runtimeDependency != null)
+        {
+            references.Add(MetadataReference.CreateFromImage(runtimeDependency));
+        }
 
         var compilation = CSharpCompilation.Create(
-            AssemblyName,
+            assemblyName,
             syntaxTrees,
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
@@ -32,15 +56,11 @@ public static class ScriptCompiler
         using var ms = new MemoryStream();
         var result = compilation.Emit(ms);
 
-        if (!result.Success)
-        {
-            foreach (var d in result.Diagnostics)
-                Console.WriteLine(d);
+        if (result.Success) return ms.ToArray();
+        foreach (var d in result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error))
+            Console.WriteLine(d);
 
-            return null;
-        }
-
-        return ms.ToArray();
+        return null;
     }
 
     public static Assembly LoadAssembly(byte[] dllBytes, out ScriptLoadContext context)
