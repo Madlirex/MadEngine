@@ -8,8 +8,8 @@ public class Scene : Asset
     private readonly List<Light> _lights = [];
     public IReadOnlyList<Light> Lights => _lights;
 
-    private readonly List<MeshRenderer> _meshRenderers = [];
-    public IReadOnlyList<MeshRenderer> MeshRenderers => _meshRenderers;
+    private readonly List<Renderer> _renderers = [];
+    public IReadOnlyList<Renderer> Renderers => _renderers;
     
     public override string Name { get; set; } = "NewScene";
     public override string Extension => ".madscene";
@@ -66,9 +66,9 @@ public class Scene : Asset
             _lights.Add(light);
         }
 
-        if (component is MeshRenderer meshRenderer)
+        if (component is Renderer renderer)
         {
-            _meshRenderers.Add(meshRenderer);
+            _renderers.Add(renderer);
         }
     }
 
@@ -79,9 +79,9 @@ public class Scene : Asset
             _lights.Remove(light);
         }
 
-        if (component is MeshRenderer meshRenderer)
+        if (component is Renderer renderer)
         {
-            _meshRenderers.Remove(meshRenderer);
+            _renderers.Remove(renderer);
         }
     }
 }
