@@ -17,7 +17,13 @@ public static class ScriptDomain
             .FirstOrDefault(type => type != null);
     }
 
-    public static void ReloadFromFiles(string[] sourceFiles)
+    public static void Compile(string[] sourceFiles)
+    {
+        ReloadFromFiles(sourceFiles);
+        RegistryBootstrapper.ReinitializeAll();
+    }
+
+    private static void ReloadFromFiles(string[] sourceFiles)
     {
         var (runtimeDll, editorDll) = ScriptCompiler.CompileProject(sourceFiles);
 
@@ -30,7 +36,7 @@ public static class ScriptDomain
         Load(runtimeDll, editorDll);
     }
     
-    public static void Load(byte[] runtimeDll, byte[]? editorDll)
+    private static void Load(byte[] runtimeDll, byte[]? editorDll)
     {
         Unload();
 
@@ -43,7 +49,7 @@ public static class ScriptDomain
             RuntimeAssembly = context.LoadFromStream(ms);
             Assemblies.Add(RuntimeAssembly);
         }
-
+        
         if (editorDll is not { Length: > 0 }) return;
         {
             using var ms = new MemoryStream(editorDll);
@@ -52,7 +58,7 @@ public static class ScriptDomain
         }
     }
 
-    public static void Unload()
+    private static void Unload()
     {
         Assemblies.Clear();
 
@@ -74,24 +80,24 @@ public static class ScriptDomain
     
     public static Type[] GetAllTypes()
     {
-        return Assemblies
+        return AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
             .ToArray();
     }
 
-    public static Type[] GetComponentTypes(Type componentBaseType)
+    public static Type[] GetTypesImplementing(Type baseType)
     {
-        return Assemblies
+        return AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
             .Where(t =>
                 t is { IsClass: true, IsAbstract: false } &&
-                componentBaseType.IsAssignableFrom(t))
+                baseType.IsAssignableFrom(t))
             .ToArray();
     }
 
     public static Type[] GetTypesWithName(string name)
     {
-        return Assemblies
+        return AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
             .Where(t => t.Name == name)
             .ToArray();

@@ -7,38 +7,54 @@ namespace MadEditor;
 
 public static class PanelSystem
 {
-    private static readonly ImGuiWindowFlags FixedPanel =
+    private static readonly PanelSystemEngine Instance = RegistryBootstrapper.Get<PanelSystemEngine>();
+    
+    public static IReadOnlyList<Type> PanelDrawers => Instance.PanelDrawers;
+    public static IReadOnlyList<PanelDrawer> Panels => Instance.Panels;
+    
+    public static void Initialize()
+    {
+        Instance.CreatePanel<HierarchyDrawer>();
+        Instance.CreatePanel<InspectorPanelDrawer>();
+        Instance.CreatePanel<ViewportDrawer>();
+        Instance.CreatePanel<StatsDrawer>();
+    }
+    
+    public static void Register(Type panelDrawer) => Instance.Register(panelDrawer);
+    public static void Unregister(Type panelDrawer) => Instance.Unregister(panelDrawer);
+    public static void CreatePanel<T>() where T : PanelDrawer, new() => Instance.CreatePanel<T>();
+    public static void AddPanel(PanelDrawer panelDrawer) => Instance.AddPanel(panelDrawer);
+    public static void DeletePanel(PanelDrawer panelDrawer) => Instance.DeletePanel(panelDrawer);
+    public static void Draw(EditorUIContext context) => Instance.Draw(context);
+}
+
+internal class PanelSystemEngine : Registry
+{
+    private readonly ImGuiWindowFlags FixedPanel =
         ImGuiWindowFlags.NoMove        |
         ImGuiWindowFlags.NoResize      |
         ImGuiWindowFlags.NoCollapse    |
         ImGuiWindowFlags.NoBringToFrontOnFocus;
     
-    private static bool _initialized;
-    
-    public static IReadOnlyList<Type> PanelDrawers => _panelDrawers;
-    private static List<Type> _panelDrawers = [];
+    public IReadOnlyList<Type> PanelDrawers => _panelDrawers;
+    private List<Type> _panelDrawers = [];
 
-    public static IReadOnlyList<PanelDrawer> Panels => _panels;
-    private static List<PanelDrawer> _panels = [];
+    public IReadOnlyList<PanelDrawer> Panels => _panels;
+    private List<PanelDrawer> _panels = [];
 
-    public static void Initialize()
+    public override void Initialize()
     {
-        if (_initialized)
-            return;
+        _panelDrawers.Clear();
         
-        Type[] panels = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(s => s.GetTypes())
-            .Where(p => typeof(PanelDrawer).IsAssignableFrom(p)).ToArray();
-
+        Type[] panels = ScriptDomain.GetTypesImplementing(typeof(PanelDrawer));
+        
         foreach (Type panelDrawer in panels)
         {
             Register(panelDrawer);
         }
-
-        _initialized = true;
     }
     
-    public static void Register(Type panelDrawer)
+    public void Register(Type panelDrawer)
     {
         if (!typeof(PanelDrawer).IsAssignableFrom(panelDrawer))
             throw new InvalidOperationException("Not a valid panel");
@@ -49,7 +65,7 @@ public static class PanelSystem
         _panelDrawers.Add(panelDrawer);
     }
 
-    public static void Unregister(Type panelDrawer)
+    public void Unregister(Type panelDrawer)
     {
         if (!typeof(PanelDrawer).IsAssignableFrom(panelDrawer))
             throw new InvalidOperationException("Not a valid panel");
@@ -58,25 +74,25 @@ public static class PanelSystem
             throw new InvalidOperationException("PanelDrawer not registered");
     }
 
-    public static void CreatePanel<T>() where T : PanelDrawer, new()
+    public void CreatePanel<T>() where T : PanelDrawer, new()
     {
         AddPanel(new T());
     }
 
-    public static void AddPanel(PanelDrawer panelDrawer)
+    public void AddPanel(PanelDrawer panelDrawer)
     {
         _panels.Add(panelDrawer);
         PanelLayoutManager.AddPanel(panelDrawer);
     }
 
-    public static void DeletePanel(PanelDrawer panelDrawer)
+    public void DeletePanel(PanelDrawer panelDrawer)
     {
         if(!_panels.Remove(panelDrawer))
             throw new InvalidOperationException("PanelDrawer not instantiated");
         PanelLayoutManager.DeletePanel(panelDrawer);
     }
 
-    public static void Draw(EditorUIContext context)
+    public void Draw(EditorUIContext context)
     {
         uint mainDockSpaceId = PanelLayoutManager.DrawMainDockSpace();
 

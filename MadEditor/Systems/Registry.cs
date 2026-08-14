@@ -22,19 +22,25 @@ public abstract class Registry
 public static class RegistryBootstrapper
 {
     private static readonly Dictionary<Type, Registry> Instances = [];
+    private static bool _initialized;
     
     public static void InitializeAll()
     {
         Instances.Clear();
         
-        var registryTypes = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(s => s.GetTypes())
-            .Where(p => p.IsSubclassOf(typeof(Registry)) && p is { IsAbstract: false, IsClass: true });
+        var registryTypes = ScriptDomain.GetTypesImplementing(typeof(Registry));
 
         foreach (var registryType in registryTypes)
         {
             Initialize(registryType);
         }
+        _initialized = true;
+    }
+
+    public static void ReinitializeAll()
+    {
+        if(!_initialized) return;
+        InitializeAll();
     }
 
     internal static T Get<T>() where T : Registry

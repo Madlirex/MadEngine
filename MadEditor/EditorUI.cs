@@ -1,8 +1,6 @@
-﻿using System.Numerics;
-using ImGuiNET;
+﻿using ImGuiNET;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
-using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
 namespace MadEditor;
@@ -25,12 +23,11 @@ public class EditorUI
             CameraObject = _cameraObject,
             SceneFbo = _sceneFbo
         };
-        
+    }
+
+    public void Initialize()
+    {
         PanelSystem.Initialize();
-        PanelSystem.CreatePanel<HierarchyDrawer>();
-        PanelSystem.CreatePanel<InspectorPanelDrawer>();
-        PanelSystem.CreatePanel<ViewportDrawer>();
-        PanelSystem.CreatePanel<StatsDrawer>();
     }
 
     public void Draw(GameWindow wnd)
@@ -58,7 +55,7 @@ public class EditorUI
 
                 if (ImGui.MenuItem("Open", "Ctrl+O"))
                 {
-                    Console.WriteLine("Opening");
+                    ScriptDomain.Compile(Directory.GetFiles(AssetManager.ProjectPath, "*.cs", SearchOption.AllDirectories));
                 }
 
                 ImGui.Separator();

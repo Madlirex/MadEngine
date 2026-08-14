@@ -11,11 +11,7 @@ public class AddComponentPopup : Popup
     {
         if(context.Selected is not GameObject go) return;
         
-        Type[] availableComponents = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(type =>
-                type is { IsClass: true, IsAbstract: false } &&
-                typeof(Component).IsAssignableFrom(type)).ToArray();
+        Type[] availableComponents = ScriptDomain.GetTypesImplementing(typeof(Component));
         foreach (Type type in availableComponents)
         {
             if (!ComponentRules.CanBeAdded(type))

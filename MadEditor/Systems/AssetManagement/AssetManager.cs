@@ -12,7 +12,7 @@ public static class AssetManager
         if (!Directory.Exists(ProjectPath)) return;
         var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
 
-        ScriptDomain.ReloadFromFiles(scriptFiles);
+        ScriptDomain.Compile(scriptFiles);
     }
     
     public static void SetProjectPath(string path)
