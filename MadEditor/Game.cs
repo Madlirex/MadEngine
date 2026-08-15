@@ -157,6 +157,7 @@ public class EditorWindow : GameWindow
         if (input.IsKeyDown(Keys.W))
         {
             _camera.Transform.Position += camera.Front * speed;
+            SceneManager.ActiveScene.Add(new GameObject());
         }
 
         if (input.IsKeyDown(Keys.S))

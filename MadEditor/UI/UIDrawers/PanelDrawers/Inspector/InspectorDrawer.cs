@@ -11,13 +11,8 @@ public class InspectorPanelDrawer : PanelDrawer
 
     public override void Draw(EditorUIContext context)
     {
-        if (context.Selected == null)
-        {
-            ImGui.TextDisabled("Select something.");
-            return;
-        }
-        
-        IInspectorDrawer drawer = InspectorDrawersRegistry.GetDrawer(context.Selected.GetType());
+        Console.WriteLine(context.Selected?.GetCustomName());
+        IInspectorDrawer drawer = InspectorDrawersRegistry.GetDrawer(context.Selected?.GetType());
         drawer.Draw(context);
     }
 }

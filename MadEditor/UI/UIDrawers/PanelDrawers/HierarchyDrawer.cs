@@ -5,6 +5,7 @@ using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
+[CustomName("Hierarchy")]
 public class HierarchyDrawer : PanelDrawer
 {
     public override string Name => "Hierarchy";

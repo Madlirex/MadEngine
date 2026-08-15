@@ -11,6 +11,6 @@ public abstract class PanelDrawer
 
     public override string ToString()
     {
-        return $"{Name}##{Guid}";
+        return $"{this.GetCustomName()}##{Guid}";
     }
 }

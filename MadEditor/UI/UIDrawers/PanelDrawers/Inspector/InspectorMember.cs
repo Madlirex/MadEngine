@@ -5,15 +5,22 @@ namespace MadEditor;
 
 public abstract class InspectorMember
 {
+    public abstract Guid Guid { get; }
     public abstract string Name { get; }
     public abstract Type Type { get; }
     public abstract object? GetValue(object obj);
     public abstract void SetValue(object obj, object? value);
     public abstract int Order { get; }
+
+    public override string ToString()
+    {
+        return $"{Name}##{Guid}";
+    }
 }
 
 public class FieldMember : InspectorMember
 {
+    public override Guid Guid => Guid.NewGuid();
     private readonly FieldInfo _field;
     public override string Name => _field.Name;
 
@@ -30,6 +37,7 @@ public class FieldMember : InspectorMember
 
 public class PropertyMember : InspectorMember
 {
+    public override Guid Guid => Guid.NewGuid();
     private readonly PropertyInfo _property;
     public override string Name => _property.Name;
 

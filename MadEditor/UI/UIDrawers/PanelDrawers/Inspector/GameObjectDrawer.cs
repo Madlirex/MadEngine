@@ -43,7 +43,7 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
     {
         ImGui.PushID(component.Guid.ToString());
 
-        string name = component.GetType().Name;
+        string name = component.GetCustomName();
 
         if (ImGui.BeginTable("ComponentHeader", 2, ImGuiTableFlags.SizingStretchProp))
         {
@@ -89,11 +89,11 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
                             .Select(p => (InspectorMember)new PropertyMember(p))
                     )
                     .OrderBy(m => m.Order);
-                foreach (InspectorMember  member in members)
+                foreach (InspectorMember member in members)
                 {
                     if (FieldDrawerRegistry.TryGetDrawer(member.Type, out FieldDrawer drawer))
                     {
-                        drawer.Draw(component, member, component);
+                        FieldDrawerManager.Draw(component, drawer, member);
                     }
                 }
 

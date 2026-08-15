@@ -99,7 +99,7 @@ public class EditorUI
             {
                 foreach (Type type in PanelSystem.PanelDrawers)
                 {
-                    if (ImGui.MenuItem(type.Name))
+                    if (ImGui.MenuItem(type.GetCustomName()))
                     {
                         if(Activator.CreateInstance(type) is not PanelDrawer panelDrawer) continue;
                         panelDrawer.PanelRegion = PanelRegion.Floating;

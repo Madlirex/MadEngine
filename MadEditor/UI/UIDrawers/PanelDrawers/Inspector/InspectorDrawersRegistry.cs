@@ -1,15 +1,19 @@
-﻿namespace MadEditor;
+﻿using ImGuiNET;
+using MadEngine.Core;
+
+namespace MadEditor;
 
 public static class InspectorDrawersRegistry
 {
     private static readonly InspectorDrawersEngine Instance = RegistryBootstrapper.Get<InspectorDrawersEngine>();
     
-    public static IInspectorDrawer GetDrawer(Type type) => Instance.GetDrawerInternal(type) ?? throw new ArgumentException($"Inspector for type {type} does not exist");
+    public static IInspectorDrawer GetDrawer(Type? type) => Instance.GetDrawerInternal(type) ?? Instance.DefaultDrawer;
 }
 
 internal class InspectorDrawersEngine : Registry
 {
     private readonly Dictionary<Type, IInspectorDrawer> _inspectorDrawers = [];
+    public DefaultDrawer DefaultDrawer = new();
     
     public override void Initialize()
     {
@@ -22,5 +26,14 @@ internal class InspectorDrawersEngine : Registry
         }
     }
 
-    internal IInspectorDrawer? GetDrawerInternal(Type type) => _inspectorDrawers.GetValueOrDefault(type);
+    internal IInspectorDrawer? GetDrawerInternal(Type? type) => type == null ? null : _inspectorDrawers.GetValueOrDefault(type);
+}
+
+public class DefaultDrawer : IInspectorDrawer
+{
+    public Type Type => typeof(object);
+    public void Draw(EditorUIContext context)
+    {
+        ImGui.TextDisabled("Select something");
+    }
 }
