@@ -26,17 +26,13 @@ public static class PackageManager
         JsonNode? json = JsonNode.Parse(data);
         if (json is not JsonArray jsonArray) return;
 
-        foreach (string path in Directory.GetFiles(Application.PackagesPath, "*", SearchOption.TopDirectoryOnly))
-            LoadPackageMeta(path + @"\packages.pck");
+        foreach (string path in Directory.GetDirectories(Application.PackagesPath, "*", SearchOption.TopDirectoryOnly))
+            LoadPackageMeta(path + @"\package.pck");
         
         foreach (JsonNode? jsonNode in jsonArray)
         {
             if(jsonNode == null) continue;
             LoadPackageMeta(jsonNode.GetValue<string>());
-        }
-        foreach(PackageMeta meta in PackageMetas.Values)
-        {
-            Console.WriteLine(meta.Guid);
         }
     }
 

@@ -55,5 +55,8 @@
       <Content Update="Assets\Shaders\unlit.vert">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Update="Packages\BuiltIn\package.pck">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 </Project>
