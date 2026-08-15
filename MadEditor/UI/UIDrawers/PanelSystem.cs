@@ -111,6 +111,9 @@ internal class PanelSystemEngine : Registry
             else
             {
                 bool openStateCheck = true;
+                
+                ImGui.SetNextWindowSize(panelDrawer.MinSize, ImGuiCond.FirstUseEver);
+                
                 ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
                 if (!openStateCheck)
                 {
