@@ -20,11 +20,11 @@ public class PackageManagerDrawer : PanelDrawer
             ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthStretch, 0.3f);
             ImGui.TableSetupColumn("Right", ImGuiTableColumnFlags.WidthStretch, 0.7f);
 
-            ImGui.TableNextColumn();
-            DrawLeftPanel();
+            if(ImGui.TableNextColumn())
+                DrawLeftPanel();
             
-            ImGui.TableNextColumn();
-            DrawRightPanel();
+            if(ImGui.TableNextColumn())
+                DrawRightPanel();
             
             ImGui.EndTable();
         }
@@ -35,59 +35,65 @@ public class PackageManagerDrawer : PanelDrawer
         ImGui.TextDisabled("Packages");
         ImGui.Separator();
 
-        if (ImGui.BeginChild("PackageListRegion", new Vector2(0, 0), ImGuiChildFlags.None))
+        bool openChild = ImGui.BeginChild("PackageListRegion", new Vector2(0, 0), ImGuiChildFlags.None);
+        
+        if (!openChild || !ImGui.BeginTable("PackageListTable", 2, ImGuiTableFlags.NoBordersInBody))
         {
-            if (ImGui.BeginTable("PackageListTable", 2, ImGuiTableFlags.NoBordersInBody))
+            ImGui.EndChild();
+            return;
+        }
+
+        float squareSize = ImGui.GetFrameHeight();
+        
+        ImGui.TableSetupColumn("NameColumn", ImGuiTableColumnFlags.WidthStretch);
+        ImGui.TableSetupColumn("ActionColumn", ImGuiTableColumnFlags.WidthFixed, squareSize + 3f);
+        
+        foreach (var pair in PackageManager.PackagesMetas)
+        {
+            PackageMeta meta = pair.Value;
+            bool isSelected = _selectedPackageGuid == meta.Guid;
+
+            ImGui.PushID(meta.Guid.ToString());
+            
+            ImGui.TableNextRow(ImGuiTableRowFlags.None, squareSize);
+
+            ImGui.TableNextColumn();
+            
+            if (ImGui.Selectable($"##Selectable_{meta.Guid}", isSelected,
+                    ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowOverlap,
+                    new Vector2(0, squareSize)))
             {
-                ImGui.TableSetupColumn("NameColumn", ImGuiTableColumnFlags.WidthStretch);
-                ImGui.TableSetupColumn("ActionColumn", ImGuiTableColumnFlags.WidthFixed, 60.0f);
-
-                foreach (var pair in PackageManager.PackagesMetas)
-                {
-                    PackageMeta meta = pair.Value;
-                    bool isSelected = _selectedPackageGuid == meta.Guid;
-
-                    ImGui.PushID(meta.Guid.ToString());
-                    
-                    float itemHeight = ImGui.GetFrameHeight();
-                    ImGui.TableNextRow(ImGuiTableRowFlags.None, itemHeight);
-                    
-                    ImGui.TableNextColumn();
-                    
-                    if (ImGui.Selectable($"##Selectable_{meta.Guid}", isSelected,
-                            ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowOverlap,
-                            new Vector2(0, itemHeight)))
-                    {
-                        _selectedPackageGuid = meta.Guid;
-                    }
-                    
-                    float textHeight = ImGui.GetTextLineHeight();
-                    float verticalCenteringOffset = (itemHeight - textHeight) * 0.5f;
-                    
-                    ImGui.SameLine();
-                    ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 6.0f);
-                    ImGui.SetCursorPosY(ImGui.GetCursorPosY() + verticalCenteringOffset);
-                    
-                    ImGui.Text(meta.Name);
-                    
-                    ImGui.TableNextColumn();
-
-                    if (PackageManager.IsUpdate(meta.Guid))
-                    {
-                        if (ImGui.Button("Update"))
-                        {
-                            Console.WriteLine($"Updating {meta.Name}");
-                        }
-                    }
-
-                    ImGui.PopID();
-                }
-
-                ImGui.EndTable();
+                _selectedPackageGuid = meta.Guid;
             }
 
-            ImGui.EndChild();
+            float textHeight = ImGui.GetTextLineHeight();
+            float verticalCenteringOffset = (squareSize - textHeight) * 0.5f;
+
+            ImGui.SameLine();
+            ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 6.0f);
+            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + verticalCenteringOffset);
+
+            ImGui.Text(meta.Name);
+                
+            ImGui.TableNextColumn();
+            
+            if (meta.IsRemovable)
+            {
+                ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(3f, 0f));
+                
+                if (ImGui.Button("^", new Vector2(squareSize, squareSize)))
+                {
+                    Console.WriteLine($"Updating {meta.Name}");
+                }
+
+                ImGui.PopStyleVar();
+            }
+
+            ImGui.PopID();
         }
+
+        ImGui.EndTable();
+        ImGui.EndChild();
     }
 
     private void DrawRightPanel()
