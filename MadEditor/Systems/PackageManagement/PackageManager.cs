@@ -18,6 +18,11 @@ public static class PackageManager
 
     private const string PackagesListFile = "packages.json";
 
+    public static bool IsUpdate(Guid guid)
+    {
+        return NewerPackagesMetas.ContainsKey(guid);
+    }
+    
     public static void LoadPackageMetas()
     {
         if (!File.Exists(PackagesListFile)) return;

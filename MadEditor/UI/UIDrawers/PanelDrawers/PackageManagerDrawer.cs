@@ -14,7 +14,6 @@ public class PackageManagerDrawer : PanelDrawer
     
     public override void Draw(EditorUIContext context)
     {
-        // Unique string formatting logic for clean layout table isolation
         if (ImGui.BeginTable($"PackageManagerLayout##{Guid}", 2,
                 ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerV))
         {
@@ -38,38 +37,46 @@ public class PackageManagerDrawer : PanelDrawer
 
         if (ImGui.BeginChild("PackageListRegion", new Vector2(0, 0), ImGuiChildFlags.None))
         {
-            foreach (var pair in PackageManager.PackagesMetas)
+            if (ImGui.BeginTable("PackageListTable", 2, ImGuiTableFlags.NoBordersInBody))
             {
-                PackageMeta meta = pair.Value;
-                
-                bool isSelected = _selectedPackageGuid == meta.Guid;
-                ImGui.PushID(meta.Guid.ToString());
+                ImGui.TableSetupColumn("NameColumn", ImGuiTableColumnFlags.WidthStretch);
+                ImGui.TableSetupColumn("ActionColumn", ImGuiTableColumnFlags.WidthFixed, 60.0f);
 
-                // FIX 2: Calculate the exact available width explicitly 
-                // Instead of passing a broken negative number, we measure the region and subtract space for the button.
-                float availableWidth = ImGui.GetContentRegionAvail().X;
-                float selectableWidth = meta.IsRemovable ? availableWidth - 60f : availableWidth;
-
-                if (ImGui.Selectable(meta.Name, isSelected, ImGuiSelectableFlags.AllowOverlap,
-                        new Vector2(selectableWidth, 0)))
+                foreach (var pair in PackageManager.PackagesMetas)
                 {
-                    _selectedPackageGuid = meta.Guid;
-                }
+                    PackageMeta meta = pair.Value;
+                    bool isSelected = _selectedPackageGuid == meta.Guid;
 
-                if (meta.IsRemovable)
-                {
-                    ImGui.SameLine();
-                    // FIX 3: Cleaned alignment calculations relative to the current cell boundaries
-                    ImGui.SetCursorPosX(ImGui.GetCursorPosX() + ImGui.GetContentRegionAvail().X - 55);
+                    ImGui.PushID(meta.Guid.ToString());
+                    ImGui.TableNextRow(ImGuiTableRowFlags.None, ImGui.GetFrameHeight());
+                    
+                    ImGui.TableNextColumn();
+                    
+                    float itemHeight = ImGui.GetFrameHeight();
 
-                    if (ImGui.Button("Remove", new Vector2(50, 0)))
+                    if (ImGui.Selectable(meta.Name, isSelected,
+                            ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowOverlap,
+                            new Vector2(0, itemHeight)))
                     {
-                        Console.WriteLine($"Removing {meta.Name}");
+                        _selectedPackageGuid = meta.Guid;
                     }
+                    
+                    ImGui.TableNextColumn();
+
+                    if (PackageManager.IsUpdate(meta.Guid))
+                    {
+                        if (ImGui.Button("Update"))
+                        {
+                            Console.WriteLine($"Updating {meta.Name}");
+                        }
+                    }
+
+                    ImGui.PopID();
                 }
-                
-                ImGui.PopID();
+
+                ImGui.EndTable();
             }
+
             ImGui.EndChild();
         }
     }
