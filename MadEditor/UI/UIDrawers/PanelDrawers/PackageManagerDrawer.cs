@@ -112,7 +112,7 @@ public class PackageManagerDrawer : PanelDrawer
         ImGui.TextDisabled($"Author  : {meta.Author}");
         ImGui.TextDisabled($"Company : {meta.Company}");
         ImGui.TextDisabled($"Version : {meta.Version}");
-        ImGui.TextDisabled($"( {meta.Guid} )");
+        ImGuiEx.SelectableTextDisabled($"( {meta.Guid} )");
         ImGui.Separator();
         
         ImGui.Spacing();
