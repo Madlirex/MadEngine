@@ -4,6 +4,7 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
+[CustomName("Inspector")]
 public class InspectorPanelDrawer : PanelDrawer
 {
     public override string Name => "Inspector";

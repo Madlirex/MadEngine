@@ -6,7 +6,6 @@ namespace MadEngine.Core;
 [CanBeRemoved(false)]
 public class Transform : Component
 {
-    [CustomName("uefeufufeuf")]
     public Vector3 Position = Vector3.Zero;
     [HideInInspector]
     public Quaternion Rotation = Quaternion.Identity;
@@ -17,6 +16,7 @@ public class Transform : Component
     private Vector3 _eulerRotation = Vector3.Zero;
 
     [ShowInInspector]
+    [CustomName("Rotation")]
     public Vector3 EulerRotation
     {
         get => _eulerRotation;

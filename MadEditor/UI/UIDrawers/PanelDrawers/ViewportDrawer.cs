@@ -5,6 +5,7 @@
  
  namespace MadEditor;
  
+ [CustomName("Scene")]
  public class ViewportDrawer : PanelDrawer
  {
      public override string Name => "Viewport";

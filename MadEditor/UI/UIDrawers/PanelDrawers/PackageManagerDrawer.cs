@@ -1,8 +1,10 @@
 ﻿using ImGuiNET;
 using MadEditor.PackageManagement;
+using MadEngine.Core;
 
 namespace MadEditor;
 
+[CustomName("Package Manager")]
 public class PackageManagerDrawer : PanelDrawer
 {
     public override string Name => "Package Manager";

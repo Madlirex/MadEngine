@@ -1,7 +1,9 @@
 ﻿using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
+[CustomName("Statistics")]
 public class StatsDrawer : PanelDrawer
 {
     public override string Name => "Stats";
