@@ -48,18 +48,27 @@ public class PackageManagerDrawer : PanelDrawer
                     bool isSelected = _selectedPackageGuid == meta.Guid;
 
                     ImGui.PushID(meta.Guid.ToString());
-                    ImGui.TableNextRow(ImGuiTableRowFlags.None, ImGui.GetFrameHeight());
+                    
+                    float itemHeight = ImGui.GetFrameHeight();
+                    ImGui.TableNextRow(ImGuiTableRowFlags.None, itemHeight);
                     
                     ImGui.TableNextColumn();
                     
-                    float itemHeight = ImGui.GetFrameHeight();
-
-                    if (ImGui.Selectable(meta.Name, isSelected,
+                    if (ImGui.Selectable($"##Selectable_{meta.Guid}", isSelected,
                             ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowOverlap,
                             new Vector2(0, itemHeight)))
                     {
                         _selectedPackageGuid = meta.Guid;
                     }
+                    
+                    float textHeight = ImGui.GetTextLineHeight();
+                    float verticalCenteringOffset = (itemHeight - textHeight) * 0.5f;
+                    
+                    ImGui.SameLine();
+                    ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 6.0f);
+                    ImGui.SetCursorPosY(ImGui.GetCursorPosY() + verticalCenteringOffset);
+                    
+                    ImGui.Text(meta.Name);
                     
                     ImGui.TableNextColumn();
 
@@ -96,12 +105,14 @@ public class PackageManagerDrawer : PanelDrawer
             return;
         }
         
-        ImGui.SetWindowFontScale(1.3f);
+        ImGui.SetWindowFontScale(2f);
         ImGui.Text(meta.Name);
         ImGui.SetWindowFontScale(1.0f);
         
-        ImGui.TextDisabled($"Author: {meta.Author} from {meta.Company}");
-        ImGui.TextDisabled($"Version: {meta.Version}");
+        ImGui.TextDisabled($"Author  : {meta.Author}");
+        ImGui.TextDisabled($"Company : {meta.Company}");
+        ImGui.TextDisabled($"Version : {meta.Version}");
+        ImGui.TextDisabled($"( {meta.Guid} )");
         ImGui.Separator();
         
         ImGui.Spacing();
