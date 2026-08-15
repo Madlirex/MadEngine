@@ -8,7 +8,6 @@ namespace MadEditor;
 [CustomName("Hierarchy")]
 public class HierarchyDrawer : PanelDrawer
 {
-    public override string Name => "Hierarchy";
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Left;
     public HierarchyPopup HierarchyPopup = new();
     public override void Draw(EditorUIContext context)

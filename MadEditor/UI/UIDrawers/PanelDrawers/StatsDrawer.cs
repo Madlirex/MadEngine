@@ -6,7 +6,6 @@ namespace MadEditor;
 [CustomName("Statistics")]
 public class StatsDrawer : PanelDrawer
 {
-    public override string Name => "Stats";
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
     public override void Draw(EditorUIContext context)
     {

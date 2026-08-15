@@ -8,7 +8,6 @@
  [CustomName("Scene")]
  public class ViewportDrawer : PanelDrawer
  {
-     public override string Name => "Viewport";
      public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
      public override void Draw(EditorUIContext context)
      {

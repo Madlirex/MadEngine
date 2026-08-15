@@ -7,7 +7,6 @@ namespace MadEditor;
 [CustomName("Inspector")]
 public class InspectorPanelDrawer : PanelDrawer
 {
-    public override string Name => "Inspector";
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Right;
 
     public override void Draw(EditorUIContext context)
