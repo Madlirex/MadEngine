@@ -36,6 +36,11 @@ public static class StringExtensions
         return attribute != null ? attribute.Name : member.Name.Prettify();
     }
 
+    public static string GetCustomName(this InspectorMember member)
+    {
+        return member.Name;
+    }
+
     public static string GetCustomName(this Type type)
     {
         var attribute = type.GetCustomAttribute<CustomNameAttribute>();

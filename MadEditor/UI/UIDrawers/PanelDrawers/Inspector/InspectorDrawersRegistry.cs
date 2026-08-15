@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -22,7 +21,8 @@ internal class InspectorDrawersEngine : Registry
         var types = FindTypesImplementing<IInspectorDrawer>();
         foreach (var type in types)
         {
-            InitializeType(type, _inspectorDrawers);
+            if (Activator.CreateInstance(type) is not IInspectorDrawer drawer) continue;
+            _inspectorDrawers.TryAdd(drawer.Type, drawer);
         }
     }
 

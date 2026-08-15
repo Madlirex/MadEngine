@@ -22,7 +22,7 @@ public class FieldMember : InspectorMember
 {
     public override Guid Guid => Guid.NewGuid();
     private readonly FieldInfo _field;
-    public override string Name => _field.Name;
+    public override string Name => _field.GetCustomName();
 
     public FieldMember(FieldInfo field)
     {
@@ -39,7 +39,7 @@ public class PropertyMember : InspectorMember
 {
     public override Guid Guid => Guid.NewGuid();
     private readonly PropertyInfo _property;
-    public override string Name => _property.Name;
+    public override string Name => _property.GetCustomName();
 
     public PropertyMember(PropertyInfo property)
     {
