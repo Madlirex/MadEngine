@@ -9,7 +9,7 @@ public class PackageManagerDrawer : PanelDrawer
     public override PanelRegion PanelRegion { get; set; }
     public override void Draw(EditorUIContext context)
     {
-        foreach (PackageMeta meta in PackageManager.PackageMetas)
+        foreach (PackageMeta meta in PackageManager.PackagesMetas.Values)
         {
             ImGui.Text(meta.Name);
             ImGui.Text(meta.Description);
