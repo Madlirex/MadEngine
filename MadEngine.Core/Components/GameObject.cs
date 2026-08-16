@@ -1,4 +1,5 @@
-﻿using MadEngine.Core.SceneManagement;
+﻿using System.Reflection.Metadata;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEngine.Core;
 
@@ -124,6 +125,11 @@ public class GameObject : MadObject
 
         ComponentRemoved?.Invoke(component);
         return true;
+    }
+
+    public Component? GetComponent(Type type)
+    {
+        return Components.FirstOrDefault(type.IsInstanceOfType);
     }
 
     public T? GetComponent<T>() where T : Component
