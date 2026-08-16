@@ -33,10 +33,9 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(string path)
     {
+        Console.WriteLine("hola");
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
-
-        InstantiateObjects(json);
         
         return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
     }
@@ -77,9 +76,9 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(AssetMeta meta)
     {
+        Console.WriteLine("hola");
         string data = File.ReadAllText(AssetManager.ProjectPath + meta.RelativePath);
         JsonNode json = JsonNode.Parse(data)!;
-        InstantiateObjects(json);
 
         return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
@@ -124,6 +123,7 @@ public class SceneImporter : Importer<Scene>
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
+        InstantiateObjects(json);
         
         Guid guid = json["$guid"]!.GetValue<Guid>();
 
