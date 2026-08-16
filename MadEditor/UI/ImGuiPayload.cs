@@ -2,31 +2,40 @@
 
 namespace MadEditor;
 
-public static class ImGuiPayload
+public static class DragPayload
 {
-    public const string Name = "GAMEOBJECT";
-
-    public static unsafe void Set(Guid id)
+    public const string GameObjectType = "GAMEOBJECT";
+    
+    public static unsafe void DragSource(string type, Guid id, string tooltipText)
     {
-        ImGui.SetDragDropPayload(Name, (nint)(&id), (uint)sizeof(Guid));
-    }
-
-    public static unsafe Guid DataToGuid(nint data)
-    {
-        return *(Guid*)data;
-    }
-
-    public static unsafe bool TryGetData(out nint? data)
-    {
-        ImGuiPayloadPtr payload = ImGui.AcceptDragDropPayload(Name);
-
-        if (payload.NativePtr != null)
+        if (ImGui.BeginDragDropSource())
         {
-            data = payload.Data;
-            return true;
+            ImGui.SetDragDropPayload(type, (nint)(&id), (uint)sizeof(Guid));
+            
+            ImGui.Text(tooltipText);
+            
+            ImGui.EndDragDropSource();
         }
+    }
+    
+    public static unsafe bool DropTarget(string type, Action<Guid> onDropAccepted)
+    {
+        if (ImGui.BeginDragDropTarget())
+        {
+            ImGuiPayloadPtr payload = ImGui.AcceptDragDropPayload(type);
 
-        data = null;
+            if (payload.NativePtr != null)
+            {
+                Guid droppedGuid = *(Guid*)payload.Data;
+                
+                onDropAccepted?.Invoke(droppedGuid);
+                
+                ImGui.EndDragDropTarget();
+                return true;
+            }
+
+            ImGui.EndDragDropTarget();
+        }
         return false;
     }
 }

@@ -77,13 +77,8 @@ public class HierarchyDrawer : PanelDrawer
         }
         HierarchyPopup.Draw(context);
         
-        if (ImGui.BeginDragDropSource())
-        {
-            ImGuiPayload.Set(root.Guid);
-            ImGui.Text(root.Name);
-            ImGui.EndDragDropSource();
-        }
-        
+        DragPayload.DragSource(DragPayload.GameObjectType, root.Guid, root.Name);
+
         CheckDragDrop(root);
         
         if (open)
@@ -99,28 +94,25 @@ public class HierarchyDrawer : PanelDrawer
             ImGui.TreePop();
         }
     }
-    
-    
 
-    public void CheckDragDrop(GameObject? root)
+    private static void CheckDragDrop(GameObject? root)
     {
-        if (ImGui.BeginDragDropTarget())
+        DragPayload.DropTarget(DragPayload.GameObjectType, draggedId => 
         {
-            if (ImGuiPayload.TryGetData(out nint? data))
+            Scene scene = SceneManager.ActiveScene;
+            GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Guid == draggedId);
+    
+            if (dragged != null && dragged != root)
             {
-                Guid draggedId = ImGuiPayload.DataToGuid((IntPtr)data!);
-                Scene scene = SceneManager.ActiveScene;
-                GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Guid == draggedId);
-                
-                if (dragged != null && dragged != root)
+                if (root != null && !dragged.Transform.IsDescendantOf(root.Transform))
                 {
-                    if(root != null && !dragged.Transform.IsDescendantOf(root.Transform))
-                        dragged.Transform.Parent = root.Transform;
-                    else if(root == null)
-                        dragged.Transform.Parent = null;
+                    dragged.Transform.Parent = root.Transform;
+                }
+                else if (root == null)
+                {
+                    dragged.Transform.Parent = null;
                 }
             }
-            ImGui.EndDragDropTarget();
-        }
+        });
     }
 }
