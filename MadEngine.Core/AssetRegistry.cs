@@ -99,6 +99,11 @@ public static class AssetRegistry
     {
         return _objectMap.GetValueOrDefault(guid);
     }
+
+    public static MadObject[] GetObjectsImplementing(Type type)
+    {
+        return _objectMap.Values.Where(type.IsInstanceOfType).ToArray();
+    }
     
     public static Asset GetAsset(Guid guid)
     {
