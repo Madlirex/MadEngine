@@ -4,7 +4,7 @@ namespace MadEditor;
 
 public static class SerializerRegistry
 {
-    private static readonly SerializerEngine Instance = new();
+    private static SerializerEngine Instance => RegistryBootstrapper.Get<SerializerEngine>();
 
     public static JsonNode? Serialize(object? obj) => Instance.Serialize(obj);
     public static object? Deserialize(Type type, JsonNode? obj) => Instance.Deserialize(type, obj);

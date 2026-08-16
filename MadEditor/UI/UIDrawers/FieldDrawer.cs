@@ -35,7 +35,7 @@ public static class FieldDrawerManager
 
 public static class FieldDrawerRegistry
 {
-    private static readonly FieldDrawerEngine Instance = RegistryBootstrapper.Get<FieldDrawerEngine>();
+    private static FieldDrawerEngine Instance => RegistryBootstrapper.Get<FieldDrawerEngine>();
     
     public static bool TryGetDrawer(Type type, out FieldDrawer drawer) => Instance.TryGetDrawer(type, out drawer);
 }

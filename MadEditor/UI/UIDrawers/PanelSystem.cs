@@ -7,7 +7,7 @@ namespace MadEditor;
 
 public static class PanelSystem
 {
-    private static readonly PanelSystemEngine Instance = RegistryBootstrapper.Get<PanelSystemEngine>();
+    private static PanelSystemEngine Instance => RegistryBootstrapper.Get<PanelSystemEngine>();
     
     public static IReadOnlyList<Type> PanelDrawers => Instance.PanelDrawers;
     public static IReadOnlyList<PanelDrawer> Panels => Instance.Panels;
