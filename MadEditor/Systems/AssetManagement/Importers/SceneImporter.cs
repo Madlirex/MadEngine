@@ -42,7 +42,7 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(AssetMeta meta)
     {
-        Console.WriteLine("hola");
+        Console.WriteLine("hola2");
         return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
     
