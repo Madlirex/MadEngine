@@ -2,7 +2,7 @@
 
 public static class ImporterRegistry
 {
-    private static readonly ImporterEngine Instance = RegistryBootstrapper.Get<ImporterEngine>();
+    private static ImporterEngine Instance => RegistryBootstrapper.Get<ImporterEngine>();
     
     public static IAssetImporter? GetImporter(Type type) => Instance.GetImporter(type);
     public static IAssetImporter? GetImporter(string name) => Instance.GetImporter(name);
