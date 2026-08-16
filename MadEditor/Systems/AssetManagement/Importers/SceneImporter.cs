@@ -40,6 +40,12 @@ public class SceneImporter : Importer<Scene>
         return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
     }
 
+    public override Scene Initialize(AssetMeta meta)
+    {
+        Console.WriteLine("hola");
+        return new Scene {Guid = meta.Guid, Name = meta.Name};
+    }
+    
     public static void InstantiateObjects(JsonNode json)
     {
         if (json["GameObjects"] is JsonArray gameObjectsArray)
@@ -72,15 +78,6 @@ public class SceneImporter : Importer<Scene>
                 Console.WriteLine(comp.Guid.ToString());
             }
         }
-    }
-
-    public override Scene Initialize(AssetMeta meta)
-    {
-        Console.WriteLine("hola");
-        string data = File.ReadAllText(AssetManager.ProjectPath + meta.RelativePath);
-        JsonNode json = JsonNode.Parse(data)!;
-
-        return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
 
     public static void ImportObjects(JsonNode json, Scene scene)
