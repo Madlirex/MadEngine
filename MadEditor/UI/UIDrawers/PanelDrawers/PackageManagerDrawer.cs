@@ -77,7 +77,7 @@ public class PackageManagerDrawer : PanelDrawer
                 
             ImGui.TableNextColumn();
             
-            if (meta.IsRemovable)
+            if (PackageManager.IsUpdate(meta.Guid))
             {
                 ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(3f, 0f));
                 
