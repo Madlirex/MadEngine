@@ -17,7 +17,6 @@ public class Scene : Asset
     public Scene()
     {
         SceneManager.Scenes.Add(this);
-        Console.WriteLine(SceneManager.Scenes.Count);
     }
 
     ~Scene()

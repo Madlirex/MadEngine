@@ -33,7 +33,6 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(string path)
     {
-        Console.WriteLine("hola");
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
         
@@ -42,7 +41,6 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(AssetMeta meta)
     {
-        Console.WriteLine("hola2");
         return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
     
