@@ -58,6 +58,9 @@ void main()
         _windowHeight = height;
 
         ImGui.CreateContext();
+        
+        ApplyTheme();
+        
         ImGuiIOPtr io = ImGui.GetIO();
         io.Fonts.AddFontDefault();
         io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
@@ -267,6 +270,72 @@ void main()
             io.DisplayFramebufferScale = new Vector2(1f, 1f);
         io.DeltaTime = deltaSeconds;
     }
+    
+    public static void ApplyTheme()
+    {
+        var style = ImGui.GetStyle();
+        
+        style.WindowRounding = 4.0f;       
+        style.ChildRounding = 4.0f;
+        style.FrameRounding = 4.0f;        
+        style.PopupRounding = 4.0f;
+        style.TabRounding = 5.0f;
+        
+        style.WindowBorderSize = 0.0f;  
+        style.ChildBorderSize = 0.0f;
+        style.PopupBorderSize = 1.0f;
+        style.FrameBorderSize = 0.0f;
+        style.TabBorderSize = 0.0f;
+        
+        style.DockingSeparatorSize = 1.0f;
+        style.WindowPadding = new Vector2(4.0f, 4.0f);   
+        style.FramePadding = new Vector2(5.0f, 3.0f);    
+        style.ItemSpacing = new Vector2(6.0f, 4.0f);     
+        style.ItemInnerSpacing = new Vector2(4.0f, 4.0f);
+        
+        var colorBgMain = new Vector4(0.12f, 0.12f, 0.12f, 1.0f);       
+        var colorBgPanel = new Vector4(0.15f, 0.15f, 0.15f, 1.0f);      
+        var colorBgWidget = new Vector4(0.20f, 0.20f, 0.20f, 1.0f);     
+        var colorBorder = new Vector4(0.20f, 0.20f, 0.20f, 1.0f);
+        
+        var colorAccent = new Vector4(0.22f, 0.40f, 0.65f, 1.0f);
+        var colorAccentHover = new Vector4(0.28f, 0.48f, 0.75f, 1.0f);  
+        var colorAccentActive = new Vector4(0.32f, 0.55f, 0.85f, 1.0f); 
+        
+        style.Colors[(int)ImGuiCol.WindowBg] = colorBgPanel;
+        style.Colors[(int)ImGuiCol.ChildBg] = colorBgPanel;
+        style.Colors[(int)ImGuiCol.PopupBg] = colorBgPanel;
+        style.Colors[(int)ImGuiCol.Border] = colorBorder;
+        style.Colors[(int)ImGuiCol.BorderShadow] = Vector4.Zero;
+        
+        style.Colors[(int)ImGuiCol.Tab] = colorBgPanel;                  
+        style.Colors[(int)ImGuiCol.TabHovered] = colorAccentHover;      
+        style.Colors[(int)ImGuiCol.TabSelected] = colorAccent;           
+        style.Colors[(int)ImGuiCol.TabDimmed] = colorBgPanel;            
+        style.Colors[(int)ImGuiCol.TabDimmedSelected] = colorBgWidget;   
+        
+        style.Colors[(int)ImGuiCol.TabSelectedOverline] = colorAccent;
+        style.Colors[(int)ImGuiCol.TabDimmedSelectedOverline] = Vector4.Zero; 
+        
+        style.Colors[(int)ImGuiCol.Header] = colorBgWidget;
+        style.Colors[(int)ImGuiCol.HeaderHovered] = colorAccentHover;
+        style.Colors[(int)ImGuiCol.HeaderActive] = colorAccentActive;
+        
+        style.Colors[(int)ImGuiCol.Separator] = colorBorder;
+        style.Colors[(int)ImGuiCol.SeparatorHovered] = colorAccentHover;
+        style.Colors[(int)ImGuiCol.SeparatorActive] = colorAccentActive;
+        
+        style.Colors[(int)ImGuiCol.FrameBg] = colorBgWidget;
+        style.Colors[(int)ImGuiCol.FrameBgHovered] = new Vector4(0.25f, 0.25f, 0.25f, 1.0f);
+        style.Colors[(int)ImGuiCol.FrameBgActive] = new Vector4(0.30f, 0.30f, 0.30f, 1.0f);
+        style.Colors[(int)ImGuiCol.Button] = colorBgWidget;
+        style.Colors[(int)ImGuiCol.ButtonHovered] = colorAccentHover;
+        style.Colors[(int)ImGuiCol.ButtonActive] = colorAccentActive;
+        
+        style.Colors[(int)ImGuiCol.Text] = new Vector4(0.88f, 0.88f, 0.88f, 1.0f); 
+        style.Colors[(int)ImGuiCol.TextDisabled] = new Vector4(0.50f, 0.50f, 0.50f, 1.0f); 
+    }
+
 
     // Maps every GLFW Keys value that has a direct ImGuiKey counterpart.
     private static readonly (Keys glfw, ImGuiKey imgui)[] KeyMap =
