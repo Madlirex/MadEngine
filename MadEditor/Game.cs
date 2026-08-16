@@ -68,7 +68,7 @@ public class EditorWindow : GameWindow
         PackageManager.LoadPackages();
         AssetManager.LoadProject();
         _editorUI.Initialize();
-        
+
         SceneManager.LoadScene(0);
         _engine.EditorStart(SceneManager.ActiveScene);
     }
