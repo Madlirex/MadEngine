@@ -77,7 +77,7 @@ public class HierarchyDrawer : PanelDrawer
         }
         HierarchyPopup.Draw(context);
         
-        DragPayload.DragSource(DragPayload.GameObjectType, root.Guid, root.Name);
+        DragPayload.DragSource(DragPayload.MadObjectType, root.Guid, root.Name);
 
         CheckDragDrop(root);
         
@@ -97,7 +97,7 @@ public class HierarchyDrawer : PanelDrawer
 
     private static void CheckDragDrop(GameObject? root)
     {
-        DragPayload.DropTarget(DragPayload.GameObjectType, draggedId => 
+        DragPayload.DropTarget(DragPayload.MadObjectType, draggedId => 
         {
             Scene scene = SceneManager.ActiveScene;
             GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Guid == draggedId);
