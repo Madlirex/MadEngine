@@ -21,6 +21,11 @@ public abstract class MadObject
     {
         AssetRegistry.Unregister(this);
         _guid = guid;
-        AssetRegistry.Register(this);
+        AssetRegistry.Register(this); 
+    }
+
+    public override string ToString()
+    {
+        return $"{Name}##{Guid}";
     }
 }
