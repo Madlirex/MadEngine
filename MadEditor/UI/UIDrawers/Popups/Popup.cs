@@ -9,17 +9,39 @@ public abstract class Popup
 
     public string FullName => $"{Name} ({Id})";
 
+    private bool _isOpen;
+
     public void Open()
     {
+        _isOpen = true;
         ImGui.OpenPopup(FullName);
+        
+        OnOpen();
     }
+
+    public void Close()
+    {
+        _isOpen = false;
+
+        OnClose();
+    }
+
+    public virtual void OnOpen() {}
+    public virtual void OnClose() {}
 
     public void Draw(EditorUIContext context)
     {
+        if (!_isOpen) return;
+
         if (ImGui.BeginPopup(FullName))
         {
             Body(context);
-            ImGui.EndPopup();
+            
+            ImGui.EndPopup(); 
+        }
+        else
+        {
+            Close();
         }
     }
 
