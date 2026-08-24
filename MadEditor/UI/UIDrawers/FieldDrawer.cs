@@ -213,6 +213,14 @@ public class MadObjectDrawer : FieldDrawer
         
         ImGui.InputText(label, ref text, (uint)text.Length + 1, flags);
         
+        if (DragDrop.TryAcceptTarget(member.Type, out var droppedObj))
+        {
+            if (droppedObj != null && member.Type.IsInstanceOfType(droppedObj))
+            {
+                member.SetValue(target, droppedObj);
+            }
+        }
+        
         if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
         {
             _popup.Type = member.Type;

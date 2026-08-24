@@ -32,8 +32,11 @@ public class HierarchyDrawer : PanelDrawer
             HierarchyPopup.Open();
         }
         HierarchyPopup.Draw(context);
-        
-        CheckDragDrop(null);
+
+        if (DragDrop.TryAcceptTarget<GameObject>(out var draggedNode))
+        {
+            draggedNode!.Transform.Parent = null;
+        }
 
         if (sceneOpen)
         {
@@ -67,8 +70,13 @@ public class HierarchyDrawer : PanelDrawer
 
         bool open = ImGui.TreeNodeEx(label, flags);
         
-        if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
-            context.Selected = root;
+        if (ImGui.IsItemHovered() && ImGui.IsMouseReleased(ImGuiMouseButton.Left))
+        {
+            if (!ImGui.IsMouseDragging(ImGuiMouseButton.Left))
+            {
+                context.Selected = root;
+            }
+        }
 
         if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
         {
@@ -76,15 +84,13 @@ public class HierarchyDrawer : PanelDrawer
             HierarchyPopup.Open();
         }
         HierarchyPopup.Draw(context);
+
+        DragDrop.BeginSource(root, root.Name);
         
-        if (ImGui.BeginDragDropSource())
+        if (DragDrop.TryAcceptTarget<GameObject>(out var draggedNode))
         {
-            ImGuiPayload.Set(root.Guid);
-            ImGui.Text(root.Name);
-            ImGui.EndDragDropSource();
+            draggedNode!.Transform.Parent = root.Transform;
         }
-        
-        CheckDragDrop(root);
         
         if (open)
         {
@@ -97,30 +103,6 @@ public class HierarchyDrawer : PanelDrawer
             }
 
             ImGui.TreePop();
-        }
-    }
-    
-    
-
-    public void CheckDragDrop(GameObject? root)
-    {
-        if (ImGui.BeginDragDropTarget())
-        {
-            if (ImGuiPayload.TryGetData(out nint? data))
-            {
-                Guid draggedId = ImGuiPayload.DataToGuid((IntPtr)data!);
-                Scene scene = SceneManager.ActiveScene;
-                GameObject? dragged = scene.GameObjects.FirstOrDefault(x => x.Guid == draggedId);
-                
-                if (dragged != null && dragged != root)
-                {
-                    if(root != null && !dragged.Transform.IsDescendantOf(root.Transform))
-                        dragged.Transform.Parent = root.Transform;
-                    else if(root == null)
-                        dragged.Transform.Parent = null;
-                }
-            }
-            ImGui.EndDragDropTarget();
         }
     }
 }
