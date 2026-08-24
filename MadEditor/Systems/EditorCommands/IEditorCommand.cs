@@ -2,5 +2,5 @@
 
 public interface IEditorCommand
 {
-    public void Execute(EditorUIContext editorUIContext);
+    public void Execute(object target);
 }
