@@ -197,3 +197,43 @@ public class StringDrawer : FieldDrawer
         }
     }
 }
+
+[CustomFieldDrawer(typeof(MadObject))]
+public class MadObjectDrawer : FieldDrawer
+{
+    private readonly ReferenceSelectionPopup _popup = new();
+    
+    public override void Draw(object target, InspectorMember member)
+    {
+        string label = member.GetCustomName();
+        MadObject? value = (MadObject?)member.GetValue(target);
+        string text = value?.Name ?? $"None ({member.Type.GetCustomName()})";
+        
+        ImGuiInputTextFlags flags = ImGuiInputTextFlags.ReadOnly | ImGuiInputTextFlags.NoHorizontalScroll;
+        
+        ImGui.InputText(label, ref text, (uint)text.Length + 1, flags);
+        
+        if (DragDrop.TryAcceptTarget(member.Type, out var droppedObj))
+        {
+            if (droppedObj != null && member.Type.IsInstanceOfType(droppedObj))
+            {
+                member.SetValue(target, droppedObj);
+            }
+        }
+        
+        if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
+        {
+            _popup.Type = member.Type;
+            _popup.Selected = value;
+            
+            _popup.OnObjectSelected = selectedObj => 
+            {
+                member.SetValue(target, selectedObj);
+            };
+
+            _popup.Open();
+        }
+        
+        _popup.Draw(EditorUI.UiContext);
+    }
+}

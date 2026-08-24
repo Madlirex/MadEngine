@@ -6,11 +6,12 @@ namespace MadEditor;
 
 public class EditorUIContext
 {
+    
     public MadObject? Selected;
     public MadObject? RightClicked;
     
-    public required GameObject CameraObject;
-    public required SceneFramebuffer SceneFbo;
+    public GameObject CameraObject = new();
+    public SceneFramebuffer SceneFbo = new(600, 600);
     public Vector2 ViewportSize;
     public GameWindow Window = null!;
 

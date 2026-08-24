@@ -114,4 +114,9 @@ public static class AssetRegistry
     {
         return _pathByGuid[guid];
     }
+
+    public static MadObject[] GetObjectsImplementing(Type type)
+    {
+        return _objectMap.Values.Where(type.IsInstanceOfType).ToArray();
+    }
 }
