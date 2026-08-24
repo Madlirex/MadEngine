@@ -210,6 +210,7 @@ public class MadObjectDrawer : FieldDrawer
         string text = value?.Name ?? $"None ({member.Type.GetCustomName()})";
         
         _popup.Type = member.Type;
+        _popup.Selected = value;
         
         ImGuiInputTextFlags flags = ImGuiInputTextFlags.ReadOnly;
         

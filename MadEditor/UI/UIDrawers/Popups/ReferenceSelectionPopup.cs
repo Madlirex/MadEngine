@@ -7,12 +7,13 @@ public class ReferenceSelectionPopup : Popup
 {
     public override string Name => "ReferenceSelectionPopup";
     public Type Type = typeof(MadObject);
+    public MadObject? Selected;
     
     public Action<MadObject?>? OnObjectSelected { get; set; }
     
     protected override void Body(EditorUIContext context)
     {
-        if (ImGui.Button("None"))
+        if (ImGui.Selectable("None", Selected == null))
         {
             OnObjectSelected?.Invoke(null);
             ImGui.CloseCurrentPopup();
@@ -23,12 +24,11 @@ public class ReferenceSelectionPopup : Popup
         
         foreach (var obj in AssetRegistry.GetObjectsImplementing(Type))
         {
-            if (ImGui.Selectable(obj.ToString(), false))
-            {
-                OnObjectSelected?.Invoke(obj);
-                ImGui.CloseCurrentPopup();
-                return;
-            }
+            if (!ImGui.Selectable(obj.ToString(), Selected == obj)) continue;
+            
+            OnObjectSelected?.Invoke(obj);
+            ImGui.CloseCurrentPopup();
+            return;
         }
     }
 }
