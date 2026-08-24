@@ -32,4 +32,10 @@ public static class ImGuiEx
 
         ImGui.PopStyleColor();
     }
+
+    public static bool IsClicked(ImGuiMouseButton button)
+    {
+        if (!ImGui.IsItemHovered() || !ImGui.IsMouseReleased(button)) return false;
+        return !ImGui.IsMouseDragging(button);
+    }
 }

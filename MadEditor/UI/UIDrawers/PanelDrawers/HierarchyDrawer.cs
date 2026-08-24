@@ -25,13 +25,20 @@ public class HierarchyDrawer : PanelDrawer
         ImGui.PushStyleVar(ImGuiStyleVar.IndentSpacing, 4f);
         bool sceneOpen = ImGui.TreeNodeEx(scene.Name, sceneFlags);
         ImGui.PopStyleColor();
-        
-        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+
+        if (ImGuiEx.IsClicked(ImGuiMouseButton.Left))
         {
-            context.RightClicked = null;
+            context.Selected = scene;
+        }
+        
+        if (ImGuiEx.IsClicked(ImGuiMouseButton.Right))
+        {
+            context.RightClicked = scene;
             HierarchyPopup.Open();
         }
         HierarchyPopup.Draw(context);
+
+        DragDrop.BeginSource(scene, scene.Name);
 
         if (DragDrop.TryAcceptTarget<GameObject>(out var draggedNode))
         {
@@ -69,16 +76,13 @@ public class HierarchyDrawer : PanelDrawer
         string label = $"{root.Name}##{root.Guid}";
 
         bool open = ImGui.TreeNodeEx(label, flags);
-        
-        if (ImGui.IsItemHovered() && ImGui.IsMouseReleased(ImGuiMouseButton.Left))
+
+        if (ImGuiEx.IsClicked(ImGuiMouseButton.Left))
         {
-            if (!ImGui.IsMouseDragging(ImGuiMouseButton.Left))
-            {
-                context.Selected = root;
-            }
+            context.Selected = root;
         }
 
-        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+        if (ImGuiEx.IsClicked(ImGuiMouseButton.Right))
         {
             context.RightClicked = root;
             HierarchyPopup.Open();
