@@ -5,5 +5,5 @@ using MadEngine.Core;
 
 public class EditorTestComp : Component
 {
-    public Shader Shader;
+    public GameObject objUSBAndUSA;
 }

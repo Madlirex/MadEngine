@@ -32,17 +32,4 @@ public static class ImGuiEx
 
         ImGui.PopStyleColor();
     }
-    
-    public static void ReferenceButton(string label, string text, Popup popup)
-    {
-        ImGuiInputTextFlags flags = ImGuiInputTextFlags.ReadOnly;
-        
-        ImGui.InputText(label, ref text, (uint)text.Length + 1, flags);
-        
-        if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
-        {
-            popup.Open();
-        }
-        popup.Draw(EditorUI.UiContext);
-    }
 }

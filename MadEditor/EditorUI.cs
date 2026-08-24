@@ -11,7 +11,8 @@ public class EditorUI
     private readonly GameObject _cameraObject;
     private readonly SceneFramebuffer _sceneFbo;
 
-    private EditorUIContext _uiContext;
+    public static EditorUIContext UiContext => _uiContext;
+    private static EditorUIContext _uiContext = new();
 
     public EditorUI(GameObject cameraObject, SceneFramebuffer sceneFbo)
     {
