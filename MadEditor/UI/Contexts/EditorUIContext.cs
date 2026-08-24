@@ -31,7 +31,7 @@ public class EditorUIContext
     {
         foreach (var command in _commands)
         {
-            command.Execute();
+            command.Execute(this);
         }
     }
     

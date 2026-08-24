@@ -12,7 +12,7 @@ public class CreateGameObjectCommand : IEditorCommand
         _parent = parent;
     }
 
-    public void Execute()
+    public void Execute(EditorUIContext context)
     {
         GameObject newObj = new GameObject();
         
@@ -32,7 +32,7 @@ public class DeleteGameObjectCommand : IEditorCommand
         _gameObject = gameobject;
     }
     
-    public void Execute()
+    public void Execute(EditorUIContext context)
     {
         SceneManager.ActiveScene.Destroy(_gameObject);
     }
