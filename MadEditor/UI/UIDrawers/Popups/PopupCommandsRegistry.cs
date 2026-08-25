@@ -51,11 +51,15 @@ internal class PopupCommandsEngine : Registry
         
         var matchingCommands = PopupCommands.Where(cmd => cmd.TargetType.IsAssignableFrom(targetType));
 
-        foreach (var command in matchingCommands)
+        var popupCommands = matchingCommands as IPopupCommand[] ?? matchingCommands.ToArray();
+        foreach (var command in popupCommands)
         {
+            Console.WriteLine(command.Path);
             string[] parts = command.Path.Split('/');
             RenderMenuRecursive(parts, 0, command, target);
         }
+        
+        if(popupCommands.ToArray().Length == 0) ImGui.TextDisabled("None"); 
     }
 
     internal void RenderMenuRecursive(string[] parts, int index, IPopupCommand command, object target)
