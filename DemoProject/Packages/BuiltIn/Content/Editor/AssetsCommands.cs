@@ -1,8 +1,45 @@
 ﻿using ImGuiNET;
 using MadEngine;
 using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor.Commands;
+
+public class CreateTextureCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Texture";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Texture2D());
+    }
+}
+
+public class CreateShaderCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Shader";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Shader());
+    }
+}
+
+public class CreateMeshCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Mesh";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Mesh());
+    }
+}
+
+public class CreateSceneCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Scene";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Scene());
+    }
+}
 
 internal class RenamePopup : Popup
 {
@@ -59,14 +96,5 @@ public class DeleteAssetCommand : PopupCommand<Asset>
         File.Delete(target.AbsolutePath);
         File.Delete(target.AbsolutePath + ".meta");
         target.Destroy();
-    }
-}
-
-public class CreateTextureCommand : PopupCommand<Asset>
-{
-    public override string Path => "Create/Texture";
-    public override void Execute(Asset target)
-    {
-        AssetManager.SaveAsset(new Texture2D());
     }
 }
