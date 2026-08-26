@@ -9,7 +9,6 @@ public static class PopupManager
     {
         foreach (var popup in PopupsInternal.ToArray())
         {
-            Console.WriteLine(popup.Name);
             popup.Draw(context);
         }
     }

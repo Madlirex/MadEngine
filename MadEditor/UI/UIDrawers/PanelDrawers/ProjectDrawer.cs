@@ -7,6 +7,7 @@ namespace MadEditor;
 public class ProjectPanelDrawer : PanelDrawer
 {
     private readonly ProjectPopup _projectPopup = new();
+    private readonly NoneAsset _noneAsset = new();
     
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
 
@@ -24,6 +25,7 @@ public class ProjectPanelDrawer : PanelDrawer
 
     public override void Draw(EditorUIContext context)
     {
+        
         if (!Directory.Exists(_rootAssetsPath))
         {
             ImGui.TextColored(new Vector4(1, 0, 0, 1), $"Assets directory not found at: {_rootAssetsPath}");
@@ -42,7 +44,14 @@ public class ProjectPanelDrawer : PanelDrawer
         
         ImGui.BeginChild("FolderContentChild");
         RenderFolderContents(context);
+        
+        if (ImGuiEx.IsClickedOutside(ImGuiMouseButton.Right))
+        {
+            context.RightClicked = _noneAsset;
+            _projectPopup.Open();
+        }
         _projectPopup.Draw(context);
+        
         ImGui.EndChild();
         
         ImGui.Columns(1);
@@ -129,3 +138,5 @@ public class ProjectPanelDrawer : PanelDrawer
         }
     }
 }
+
+public class NoneAsset : Asset;

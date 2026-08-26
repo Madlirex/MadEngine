@@ -38,4 +38,9 @@ public static class ImGuiEx
         if (!ImGui.IsItemHovered() || !ImGui.IsMouseReleased(button)) return false;
         return !ImGui.IsMouseDragging(button);
     }
+
+    public static bool IsClickedOutside(ImGuiMouseButton button)
+    {
+        return ImGui.IsWindowHovered(ImGuiHoveredFlags.ChildWindows) && ImGui.IsMouseClicked(button) && !ImGui.IsAnyItemHovered();
+    }
 }
