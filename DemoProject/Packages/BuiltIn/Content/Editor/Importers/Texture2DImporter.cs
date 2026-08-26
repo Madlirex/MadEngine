@@ -1,40 +1,42 @@
-﻿using System.Text.Json.Nodes;
+﻿using System;
+using System.Text.Json.Nodes;
+using MadEngine;
 using MadEngine.Core;
 
 namespace MadEditor;
 
-public class TextureImporter : Importer<Texture>
+public class Texture2DImporter : Importer<Texture2D>
 {
     public override string Name => "TextureImporter";
     public override string Extension => ".tex";
-    public override void Save(Texture asset)
+    public override void Save(Texture2D asset)
     {
-        JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Texture))!.Serialize(asset);
+        JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Texture2D))!.Serialize(asset);
         File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
     }
 
-    public override Texture Initialize(string path)
+    public override Texture2D Initialize(string path)
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
         
-        return SerializerRegistry.GetSerializer(typeof(Texture))!.Deserialize(json) as Texture ?? new Texture();
+        return SerializerRegistry.GetSerializer(typeof(Texture2D))!.Deserialize(json) as Texture2D ?? new Texture2D();
     }
 
-    public override Texture Initialize(AssetMeta meta)
+    public override Texture2D Initialize(AssetMeta meta)
     {
-        return new Texture { Guid = meta.Guid, Name = meta.Name };
+        return new Texture2D { Guid = meta.Guid, Name = meta.Name };
     }
 
-    public override Texture Import(string path)
+    public override Texture2D Import(string path)
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
         
         Guid guid = json["$guid"]!.GetValue<Guid>();
-        Texture texture = (Texture)AssetRegistry.GetAsset(guid);
+        Texture2D texture = (Texture2D)AssetRegistry.GetAsset(guid);
 
-        SerializerRegistry.GetClassSerializer(typeof(Texture))!.DeserializeInto(texture, json["$data"]!);
+        SerializerRegistry.GetClassSerializer(typeof(Texture2D))!.DeserializeInto(texture, json["$data"]!);
         return texture;
     }
 }

@@ -82,13 +82,7 @@ public class EditorUI
                 {
                     if (ImGui.MenuItem("Cube"))
                     {
-                        GameObject obj = new GameObject();
-                        Camera camera = GameObject.FindFirstComponent<Camera>()!;
-                        obj.Transform.Position = camera.GameObject.Transform.Position + camera.Front * 2;
-
-                        Texture diffuse = new Texture("Textures/container2.png");
-                        Texture specular = new Texture("Textures/container2_specular.png");
-                        SceneManager.ActiveScene.Add(obj);
+                        
                     }
                     ImGui.EndMenu();
                 }
