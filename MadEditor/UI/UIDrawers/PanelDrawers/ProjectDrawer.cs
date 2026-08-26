@@ -51,6 +51,8 @@ public class ProjectPanelDrawer : PanelDrawer
     private void RenderDirectoryNode(DirectoryInfo directory)
     {
         ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick;
+
+        if (directory.Name is "obj" or "bin") return;
         
         if (_selectedDirectory == directory.FullName)
             flags |= ImGuiTreeNodeFlags.Selected;
@@ -85,6 +87,7 @@ public class ProjectPanelDrawer : PanelDrawer
         
         foreach (var dir in currentDir.GetDirectories())
         {
+            if (dir.Name is "obj" or "bin") continue;
             ImGui.Selectable($"? {dir.Name}", false);
             
             if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
@@ -96,6 +99,7 @@ public class ProjectPanelDrawer : PanelDrawer
         
         foreach (var file in currentDir.GetFiles())
         {
+            if (file.Extension is ".meta" or ".csproj") continue;
             string absolutePath = file.FullName; 
             
             Asset? mappedAsset = AssetRegistry.Assets.FirstOrDefault(a => a.AbsolutePath == absolutePath);
