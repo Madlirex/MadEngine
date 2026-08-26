@@ -8,7 +8,8 @@ public class DeleteAssetCommand : PopupCommand<Asset>
     public override string Path => "Delete";
     public override void Execute(Asset target)
     {
-        File.Delete(target!.AbsolutePath);
+        File.Delete(target.AbsolutePath);
+        File.Delete(target.AbsolutePath + ".meta");
         target.Destroy();
     }
 }

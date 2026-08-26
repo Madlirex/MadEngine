@@ -1,9 +1,0 @@
-{
-    "$type": "MadEngine.Core.Material, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "03cef7c8-01c5-4dc2-a38c-04dfd2c3ea89",
-    "$data": {
-        "Shader": "ccc51bb2-ebaf-46a4-8d25-b6b8603d82fc",
-        "Name": "NewMaterial",
-        "Guid": "03cef7c8-01c5-4dc2-a38c-04dfd2c3ea89"
-    }
-}

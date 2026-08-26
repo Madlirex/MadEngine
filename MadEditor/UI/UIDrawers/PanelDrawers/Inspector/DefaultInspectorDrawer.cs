@@ -17,9 +17,7 @@ public class DefaultInspectorDrawer : InspectorDrawer<MadObject>
 
     public void DrawHeader(MadObject selected)
     {
-        string name = selected.Name;
-        if (ImGui.InputText("Name", ref name, 128))
-            selected.Name = name;
+        ImGui.Text("Name: " + selected.Name);
         ImGui.Text("ID: " + selected.Guid);
         ImGui.Separator();
     }
