@@ -120,12 +120,12 @@ public class ProjectPanelDrawer : PanelDrawer
             }
 
             if (mappedAsset == null) continue;
+            
             DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
-            if (ImGuiEx.IsClicked(ImGuiMouseButton.Right))
-            {
-                context.RightClicked = mappedAsset;
-                _projectPopup.Open();
-            }
+
+            if (!ImGuiEx.IsClicked(ImGuiMouseButton.Right)) continue;
+            context.RightClicked = mappedAsset;
+            _projectPopup.Open();
         }
     }
 }
