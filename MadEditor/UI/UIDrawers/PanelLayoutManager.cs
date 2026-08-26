@@ -78,10 +78,10 @@ public static class PanelLayoutManager
         ImGuiInternal.DockBuilderSetNodeSize(mainDockSpaceId, ImGui.GetMainViewport().WorkSize);
 
         uint centralNodeId = mainDockSpaceId;
-        
+        uint bottomDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Down, 0.25f, out _, out centralNodeId);
         uint leftDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Left, 0.18f, out _, out centralNodeId);
-        uint rightDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Right, 0.22f, out _, out centralNodeId);
-        uint bottomDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Down, 0.20f, out _, out uint centerDockId);
+        uint rightDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Right, 0.22f, out _, out uint centerDockId);
+        
         
         DockIDs[PanelRegion.Left] = leftDockId;
         DockIDs[PanelRegion.Right] = rightDockId;
