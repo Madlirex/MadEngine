@@ -61,7 +61,7 @@ internal class PanelSystemEngine : Registry
             throw new InvalidOperationException("Not a valid panel");
 
         if (_panelDrawers.Contains(panelDrawer))
-            throw new InvalidOperationException("PanelDrawer already registered");
+            return;
 
         _panelDrawers.Add(panelDrawer);
     }

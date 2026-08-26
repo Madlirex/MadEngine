@@ -26,8 +26,6 @@ public static class RegistryBootstrapper
     
     public static void InitializeAll()
     {
-        Instances.Clear();
-        
         var registryTypes = ScriptDomain.GetTypesImplementing(typeof(Registry));
 
         foreach (var registryType in registryTypes)
@@ -58,9 +56,17 @@ public static class RegistryBootstrapper
     {
         if (Activator.CreateInstance(type) is not Registry registry)
             throw new Exception($"Cannot create instance of type {type}");
-
-        Instances.Add(type, registry);
-        registry.Initialize();
+        
+        if(Instances.TryAdd(type, registry))
+        {
+            registry.Initialize();
+        }
+        else
+        {
+            Instances[type].Initialize();
+            return Instances[type];
+        }
+            
 
         return registry;
     }
