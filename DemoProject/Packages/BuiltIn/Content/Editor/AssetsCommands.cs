@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using MadEngine;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
@@ -33,6 +34,7 @@ internal class RenamePopup : Popup
         asset.Name = _newName;
         File.Move(oldPath, asset.AbsolutePath);
         File.Move(oldPath + ".meta", asset.AbsolutePath + ".meta");
+        AssetManager.SaveAsset(asset);
         Close();
     }
     
@@ -56,5 +58,14 @@ public class DeleteAssetCommand : PopupCommand<Asset>
         File.Delete(target.AbsolutePath);
         File.Delete(target.AbsolutePath + ".meta");
         target.Destroy();
+    }
+}
+
+public class CreateTextureCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Texture";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Texture2D());
     }
 }
