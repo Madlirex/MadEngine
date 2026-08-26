@@ -101,6 +101,7 @@ public class ProjectPanelDrawer : PanelDrawer
             if (mappedAsset != null)
             {
                 fileLabel = $"? {mappedAsset.Name} ({mappedAsset.GetType().GetCustomName()})";
+                
             }
             
             if (ImGui.Selectable(fileLabel, false))
@@ -110,18 +111,10 @@ public class ProjectPanelDrawer : PanelDrawer
                     context.Selected = mappedAsset;
                 }
             }
-            
-            if (ImGui.BeginPopupContextItem($"AssetContext_{file.Name}"))
+
+            if (mappedAsset != null)
             {
-                if (mappedAsset != null)
-                {
-                    PopupCommandsRegistry.RenderContextMenu(mappedAsset);
-                }
-                else
-                {
-                    ImGui.TextDisabled("Untracked File");
-                }
-                ImGui.EndPopup();
+                DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
             }
         }
     }
