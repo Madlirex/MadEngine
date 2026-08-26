@@ -18,6 +18,7 @@ public static class PanelSystem
         Instance.CreatePanel<InspectorPanelDrawer>();
         Instance.CreatePanel<ViewportDrawer>();
         Instance.CreatePanel<StatsDrawer>();
+        Instance.CreatePanel<ProjectPanelDrawer>();
     }
     
     public static void Register(Type panelDrawer) => Instance.Register(panelDrawer);

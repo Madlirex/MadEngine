@@ -75,5 +75,11 @@ public static class Defaults
         33,35,34
     };
 
-    public static Material LitMaterial = new(ShaderSystem.LitShader);
+    public static Mesh Cube = new Mesh(Vertices, Indices);
+    
+    public static Shader LitShader = new Shader("Shaders/lit.vert", "Shaders/lit.frag");
+    public static Shader UnlitShader = new Shader("Shaders/unlit.vert", "Shaders/unlit.frag");
+    
+    public static Material LitMaterial = new Material(LitShader);
+    public static Material UnlitMaterial = new Material(UnlitShader);
 }

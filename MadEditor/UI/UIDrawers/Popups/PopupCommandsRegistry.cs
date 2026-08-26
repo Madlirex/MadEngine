@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System.Reflection;
+using ImGuiNET;
 
 namespace MadEditor;
 
@@ -48,17 +49,22 @@ internal class PopupCommandsEngine : Registry
     {
         if (target == null) return;
         Type targetType = target.GetType();
+
+        IPopupCommand[] matchingCommands = PopupCommands
+            .Where(cmd => 
+                !cmd.ExcludingTypes.Contains(targetType) && 
+                (cmd.IsExactType ? cmd.TargetType == targetType : cmd.TargetType.IsAssignableFrom(targetType))
+            )
+            .ToArray();
+
         
-        var matchingCommands = PopupCommands.Where(cmd => cmd.TargetType.IsAssignableFrom(targetType));
-        
-        var popupCommands = matchingCommands as IPopupCommand[] ?? matchingCommands.ToArray();
-        if(popupCommands.Length == 0)
+        if (matchingCommands.Length == 0)
         {
             ImGui.TextDisabled("None");
             return;
         }
         
-        foreach (var command in popupCommands)
+        foreach (var command in matchingCommands)
         {
             string[] parts = command.Path.Split('/');
             RenderMenuRecursive(parts, 0, command, target);

@@ -6,6 +6,17 @@ namespace MadEditor;
 
 public static class ScriptCompiler
 {
+    private static readonly string GlobalUsingsSource = """
+
+                                                                global using System;
+                                                                global using System.IO;
+                                                                global using System.Linq;
+                                                                global using System.Collections.Generic;
+                                                                global using MadEngine;
+                                                                global using MadEngine.Core;
+                                                            
+                                                        """;
+    
     public static string RuntimeAssemblyName = "GameScripts.Runtime";
     public static string EditorAssemblyName = "GameScripts.Editor";
     
@@ -28,15 +39,16 @@ public static class ScriptCompiler
     {
         if (sourceFiles.Length == 0) return [];
 
-        var syntaxTrees = sourceFiles
+        var treesList = sourceFiles
             .Select(f => CSharpSyntaxTree.ParseText(File.ReadAllText(f)))
-            .ToArray();
+            .ToList();
+
+        treesList.Add(CSharpSyntaxTree.ParseText(GlobalUsingsSource));
+        
+        var syntaxTrees = treesList.ToArray();
         
         var references = GetReferences();
-        Console.WriteLine(
-            references.Any(r =>
-                r.Display?.Contains("System.Console.dll") == true)
-        );
+        
         if (runtimeDependency != null)
         {
             references.Add(MetadataReference.CreateFromImage(runtimeDependency));

@@ -10,6 +10,8 @@ public class HierarchyDrawer : PanelDrawer
 {
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Left;
     public HierarchyPopup HierarchyPopup = new();
+    
+    private readonly SceneGameObject _sceneGameObject = new();
     public override void Draw(EditorUIContext context)
     {
         Scene scene = SceneManager.ActiveScene;
@@ -33,10 +35,10 @@ public class HierarchyDrawer : PanelDrawer
         
         if (ImGuiEx.IsClicked(ImGuiMouseButton.Right))
         {
-            context.RightClicked = scene;
+            context.RightClicked = _sceneGameObject;
             HierarchyPopup.Open();
         }
-
+        HierarchyPopup.Draw(context);
         DragDrop.BeginSource(scene, scene.Name);
 
         if (DragDrop.TryAcceptTarget<GameObject>(out var draggedNode))
@@ -94,18 +96,18 @@ public class HierarchyDrawer : PanelDrawer
         {
             draggedNode!.Transform.Parent = root.Transform;
         }
-        
-        if (open)
-        {
-            if (hasChildren)
-            {
-                foreach (var child in root.Transform.Children)
-                {
-                    DrawNode(child.GameObject, context);
-                }
-            }
 
-            ImGui.TreePop();
+        if (!open) return;
+        if (hasChildren)
+        {
+            foreach (var child in root.Transform.Children)
+            {
+                DrawNode(child.GameObject, context);
+            }
         }
+
+        ImGui.TreePop();
     }
 }
+
+public class SceneGameObject : GameObject;
