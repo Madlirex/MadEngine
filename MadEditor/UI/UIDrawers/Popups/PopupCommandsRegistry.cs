@@ -50,15 +50,19 @@ internal class PopupCommandsEngine : Registry
         Type targetType = target.GetType();
         
         var matchingCommands = PopupCommands.Where(cmd => cmd.TargetType.IsAssignableFrom(targetType));
-
+        
         var popupCommands = matchingCommands as IPopupCommand[] ?? matchingCommands.ToArray();
+        if(popupCommands.Length == 0)
+        {
+            ImGui.TextDisabled("None");
+            return;
+        }
+        
         foreach (var command in popupCommands)
         {
             string[] parts = command.Path.Split('/');
             RenderMenuRecursive(parts, 0, command, target);
         }
-        
-        if(popupCommands.ToArray().Length == 0) ImGui.TextDisabled("None"); 
     }
 
     internal void RenderMenuRecursive(string[] parts, int index, IPopupCommand command, object target)

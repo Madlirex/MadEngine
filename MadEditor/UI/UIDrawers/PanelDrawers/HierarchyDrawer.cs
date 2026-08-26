@@ -36,7 +36,6 @@ public class HierarchyDrawer : PanelDrawer
             context.RightClicked = scene;
             HierarchyPopup.Open();
         }
-        HierarchyPopup.Draw(context);
 
         DragDrop.BeginSource(scene, scene.Name);
 
