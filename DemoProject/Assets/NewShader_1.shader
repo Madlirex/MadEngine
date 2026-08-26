@@ -1,9 +1,9 @@
 {
     "$type": "MadEngine.Core.Shader, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "80dca39e-65c3-46db-b540-e31dafd89856",
+    "$guid": "b13e5f28-bbeb-414a-99b7-4c455ff7c911",
     "$data": {
         "Name": "NewShader_1",
-        "Guid": "80dca39e-65c3-46db-b540-e31dafd89856",
+        "Guid": "b13e5f28-bbeb-414a-99b7-4c455ff7c911",
         "VertexPath": "Shaders/unlit.vert",
         "FragmentPath": "Shaders/unlit.frag"
     }
