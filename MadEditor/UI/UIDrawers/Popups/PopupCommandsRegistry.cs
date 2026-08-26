@@ -54,7 +54,6 @@ internal class PopupCommandsEngine : Registry
         var popupCommands = matchingCommands as IPopupCommand[] ?? matchingCommands.ToArray();
         foreach (var command in popupCommands)
         {
-            Console.WriteLine(command.Path);
             string[] parts = command.Path.Split('/');
             RenderMenuRecursive(parts, 0, command, target);
         }
@@ -68,7 +67,7 @@ internal class PopupCommandsEngine : Registry
         {
             if (ImGui.MenuItem(parts[index]))
             {
-                command.Execute(target);
+                EditorUI.UiContext.EnqueueCommand(command);
             }
             return;
         }
