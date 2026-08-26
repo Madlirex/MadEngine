@@ -6,6 +6,8 @@ namespace MadEditor;
 
 public class ProjectPanelDrawer : PanelDrawer
 {
+    private readonly ProjectPopup _projectPopup = new();
+    
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
 
     private readonly string _rootAssetsPath = Application.Directory;
@@ -40,6 +42,7 @@ public class ProjectPanelDrawer : PanelDrawer
         
         ImGui.BeginChild("FolderContentChild");
         RenderFolderContents(context);
+        _projectPopup.Draw(context);
         ImGui.EndChild();
         
         ImGui.Columns(1);
@@ -112,9 +115,12 @@ public class ProjectPanelDrawer : PanelDrawer
                 }
             }
 
-            if (mappedAsset != null)
+            if (mappedAsset == null) continue;
+            DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
+            if (ImGuiEx.IsClicked(ImGuiMouseButton.Right))
             {
-                DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
+                context.RightClicked = mappedAsset;
+                _projectPopup.Open();
             }
         }
     }
