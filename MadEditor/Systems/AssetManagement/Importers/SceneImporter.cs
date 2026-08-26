@@ -73,7 +73,6 @@ public class SceneImporter : Importer<Scene>
             {
                 Component comp = (Component)Activator.CreateInstance(compType)!;
                 comp.Guid = guid;
-                Console.WriteLine(comp.Guid.ToString());
             }
         }
     }
