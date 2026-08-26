@@ -30,8 +30,7 @@ public class ProjectPanelDrawer : PanelDrawer
         
         ImGui.Columns(2, "ProjectPanelSplit", true);
         
-        if (ImGui.GetColumnWidth(0) == -1.0f) 
-            ImGui.SetColumnWidth(0, 200.0f); 
+        ImGui.SetColumnWidth(0, 200.0f); 
         
         ImGui.BeginChild("DirectoryTreeChild");
         RenderDirectoryNode(new DirectoryInfo(_rootAssetsPath));
