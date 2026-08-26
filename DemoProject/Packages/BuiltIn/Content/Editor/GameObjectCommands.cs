@@ -12,7 +12,7 @@ public class AddEmptyCommand : PopupCommand<GameObject>
         {
             Transform =
             {
-                Parent = target.Transform
+                Parent = target is SceneGameObject ? null : target.Transform
             }
         };
         
@@ -22,6 +22,7 @@ public class AddEmptyCommand : PopupCommand<GameObject>
 
 public class AddEmptyParentCommand : PopupCommand<GameObject>
 {
+    public override bool IsExactType => true;
     public override string Path => "Add Empty Parent";
     public override void Execute(GameObject target)
     {
@@ -36,6 +37,7 @@ public class AddEmptyParentCommand : PopupCommand<GameObject>
 
 public class DeleteCommand : PopupCommand<GameObject>
 {
+    public override bool IsExactType => true;
     public override string Path => "Delete";
     public override void Execute(GameObject target)
     {
