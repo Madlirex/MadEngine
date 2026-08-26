@@ -37,6 +37,7 @@ public class EditorUI
         _uiContext.CameraObject = _cameraObject;
         _uiContext.SceneFbo = _sceneFbo;
         PanelSystem.Draw(_uiContext);
+        PopupManager.Draw(_uiContext);
         
         DrawMainMenuBar();
         _uiContext.ExecuteCommands();

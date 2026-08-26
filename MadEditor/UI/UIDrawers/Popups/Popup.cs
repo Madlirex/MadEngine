@@ -15,6 +15,7 @@ public abstract class Popup
     {
         _isOpen = true;
         ImGui.OpenPopup(FullName);
+        PopupManager.Add(this);
         
         OnOpen();
     }
@@ -22,6 +23,7 @@ public abstract class Popup
     public void Close()
     {
         _isOpen = false;
+        PopupManager.Remove(this);
 
         OnClose();
     }
