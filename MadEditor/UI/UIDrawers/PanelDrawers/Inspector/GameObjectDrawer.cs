@@ -22,7 +22,7 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
         string name = selected.Name;
         if (ImGui.InputText("Name", ref name, 128))
             selected.Name = name;
-        ImGui.Text("ID: " + selected.Guid);
+        ImGuiEx.SelectableTextDisabled("ID: " + selected.Guid);
         ImGui.Separator();
     }
 

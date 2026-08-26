@@ -18,7 +18,7 @@ public class DefaultInspectorDrawer : InspectorDrawer<MadObject>
     public void DrawHeader(MadObject selected)
     {
         ImGui.Text("Name: " + selected.Name);
-        ImGui.Text("ID: " + selected.Guid);
+        ImGuiEx.SelectableTextDisabled("ID: " + selected.Guid);
         ImGui.Separator();
     }
 
