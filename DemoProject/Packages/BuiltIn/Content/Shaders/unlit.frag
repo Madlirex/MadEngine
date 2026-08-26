@@ -6,9 +6,9 @@ struct Material {
     vec4 specularColor;
 
     sampler2D diffuse;
-    int useDiffuse;
+    int diffuse_Enabled;
     sampler2D specular;
-    int useSpecular;
+    int specular_Enabled;
 
     float shininess;
 };
@@ -23,7 +23,7 @@ uniform int useTexture;
 
 void main()
 {
-    if (material.useDiffuse == 1)
+    if (material.diffuse_Enabled == 1)
         FragColor = texture(material.diffuse, texCoord) * material.ambientColor;
     else
         FragColor = material.ambientColor;

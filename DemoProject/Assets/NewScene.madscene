@@ -20,9 +20,12 @@
             "d988934e-79a6-4e75-a964-5026e04cbb87",
             "d988934e-79a6-4e75-a964-5026e04cbb87",
             "d988934e-79a6-4e75-a964-5026e04cbb87",
+            "d988934e-79a6-4e75-a964-5026e04cbb87",
             "d988934e-79a6-4e75-a964-5026e04cbb87"
         ],
-        "_renderers": []
+        "_renderers": [
+            "a5cf0353-0219-4e6e-95c7-75445a55c30b"
+        ]
     },
     "GameObjects": [
         {
@@ -94,7 +97,8 @@
                 "Guid": "3242f808-1cf0-4d14-9d46-0febf74a6f2b",
                 "Transform": "be1d55e3-be9c-48e6-adc4-2208a80e5a28",
                 "_components": [
-                    "be1d55e3-be9c-48e6-adc4-2208a80e5a28"
+                    "be1d55e3-be9c-48e6-adc4-2208a80e5a28",
+                    "a5cf0353-0219-4e6e-95c7-75445a55c30b"
                 ]
             }
         },
@@ -402,6 +406,17 @@
                     0,
                     0
                 ],
+                "_gameObject": "3242f808-1cf0-4d14-9d46-0febf74a6f2b"
+            }
+        },
+        {
+            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "a5cf0353-0219-4e6e-95c7-75445a55c30b",
+            "$data": {
+                "Name": "NewComponent",
+                "Guid": "a5cf0353-0219-4e6e-95c7-75445a55c30b",
+                "Mesh": "ce50e040-6d3d-4ed0-ab44-00a29199baa2",
+                "Material": "03cef7c8-01c5-4dc2-a38c-04dfd2c3ea89",
                 "_gameObject": "3242f808-1cf0-4d14-9d46-0febf74a6f2b"
             }
         },
