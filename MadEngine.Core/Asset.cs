@@ -21,6 +21,14 @@ public abstract class Asset : MadObject
 
     ~Asset()
     {
-        AssetRegistry.UnregisterAsset(this);
+        Dispose(false);
+    }
+
+    protected override void OnDispose(bool disposing)
+    {
+        if (disposing)
+        {
+            AssetRegistry.UnregisterAsset(this);
+        }
     }
 }

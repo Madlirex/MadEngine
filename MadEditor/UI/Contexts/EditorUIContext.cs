@@ -31,7 +31,8 @@ public class EditorUIContext
     {
         foreach (var command in _commands)
         {
-            command.Execute();
+            if(command is IPopupCommand popupCommand) popupCommand.Execute(RightClicked!);
+            else command.Execute(this);
         }
     }
     

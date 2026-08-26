@@ -1,22 +1,14 @@
 ﻿using ImGuiNET;
 using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
 public class HierarchyPopup : Popup
 {
-    public override string Name  => "Hierarchy Popup";
+    public override string Name  => "HierarchyPopup";
     protected override void Body(EditorUIContext context)
     {
-        if(context.RightClicked is not GameObject gameObject) return;
-        if (ImGui.MenuItem("Add Empty"))
-        {
-            context.EnqueueCommand(new CreateGameObjectCommand(gameObject.Transform));
-        }
-
-        if (ImGui.MenuItem("Delete"))
-        {
-            context.EnqueueCommand(new DeleteGameObjectCommand(gameObject));
-        }
+        PopupCommandsRegistry.RenderContextMenu(context.RightClicked);
     }
 }

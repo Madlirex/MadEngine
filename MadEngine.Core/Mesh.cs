@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
-public class Mesh : Asset, IDisposable
+public class Mesh : Asset
 {
     [DoNotSave]
     public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
@@ -19,8 +19,6 @@ public class Mesh : Asset, IDisposable
 
     [DoNotSave]
     private bool _initialized;
-    [DoNotSave]
-    private bool _disposedValue;
 
     public override string Name { get; set; } = "NewMesh";
     public override string Extension => ".mesh";
@@ -113,15 +111,12 @@ public class Mesh : Asset, IDisposable
         GL.DrawArrays(PrimitiveType.Triangles, 0, Vertices.Length);
     }
 
-    public void Dispose()
+    protected override void OnDispose(bool disposing)
     {
-        if (_disposedValue) return;
-        
         GL.DeleteBuffer(_vertexBufferObject);
         GL.DeleteVertexArray(_vertexArrayObject);
         GL.DeleteBuffer(_elementBufferObject);
-        
-        _disposedValue = true;
+        base.OnDispose(disposing);
     }
     
     public static void CalculateNormals(Mesh mesh)

@@ -36,7 +36,6 @@ public class HierarchyDrawer : PanelDrawer
             context.RightClicked = scene;
             HierarchyPopup.Open();
         }
-        HierarchyPopup.Draw(context);
 
         DragDrop.BeginSource(scene, scene.Name);
 
@@ -54,7 +53,7 @@ public class HierarchyDrawer : PanelDrawer
 
             ImGui.TreePop();
         }
-
+        
         ImGui.PopID();
         ImGui.PopStyleVar();
     }
@@ -88,7 +87,7 @@ public class HierarchyDrawer : PanelDrawer
             HierarchyPopup.Open();
         }
         HierarchyPopup.Draw(context);
-
+        
         DragDrop.BeginSource(root, root.Name);
         
         if (DragDrop.TryAcceptTarget<GameObject>(out var draggedNode))

@@ -26,8 +26,8 @@ public abstract class Popup
         OnClose();
     }
 
-    public virtual void OnOpen() {}
-    public virtual void OnClose() {}
+    protected virtual void OnOpen() {}
+    protected virtual void OnClose() {}
 
     public void Draw(EditorUIContext context)
     {
@@ -35,13 +35,14 @@ public abstract class Popup
 
         if (ImGui.BeginPopup(FullName))
         {
+            _isOpen = true;
             Body(context);
             
             ImGui.EndPopup(); 
         }
         else
         {
-            Close();
+            if(!_isOpen) Close();
         }
     }
 
