@@ -51,8 +51,12 @@ internal class PopupCommandsEngine : Registry
         Type targetType = target.GetType();
 
         IPopupCommand[] matchingCommands = PopupCommands
-            .Where(cmd => cmd.IsExactType ? cmd.TargetType == targetType : cmd.TargetType.IsAssignableFrom(targetType))
+            .Where(cmd => 
+                !cmd.ExcludingTypes.Contains(targetType) && 
+                (cmd.IsExactType ? cmd.TargetType == targetType : cmd.TargetType.IsAssignableFrom(targetType))
+            )
             .ToArray();
+
         
         if (matchingCommands.Length == 0)
         {

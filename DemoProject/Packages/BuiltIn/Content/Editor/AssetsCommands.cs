@@ -1,7 +1,6 @@
 ﻿using ImGuiNET;
 using MadEngine;
 using MadEngine.Core;
-using MadEngine.Core.SceneManagement;
 
 namespace MadEditor.Commands;
 
@@ -43,6 +42,7 @@ internal class RenamePopup : Popup
 public class RenameAssetCommand : PopupCommand<Asset>
 {
     private readonly RenamePopup _renamePopup = new();
+    public override Type[] ExcludingTypes => [typeof(NoneAsset)];
     public override string Path => "Rename";
     public override void Execute(Asset target)
     {
@@ -53,6 +53,7 @@ public class RenameAssetCommand : PopupCommand<Asset>
 public class DeleteAssetCommand : PopupCommand<Asset>
 {
     public override string Path => "Delete";
+    public override Type[] ExcludingTypes => [typeof(NoneAsset)];
     public override void Execute(Asset target)
     {
         File.Delete(target.AbsolutePath);

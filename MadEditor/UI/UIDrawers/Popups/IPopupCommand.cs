@@ -5,6 +5,7 @@ namespace MadEditor;
 public interface IPopupCommand : IEditorCommand
 {
     bool IsExactType { get; }
+    Type[] ExcludingTypes { get; }
     Type TargetType { get; }
     string Path { get; }
 
@@ -13,6 +14,7 @@ public interface IPopupCommand : IEditorCommand
 public abstract class PopupCommand<T> : IPopupCommand where T : class
 {
     public virtual bool IsExactType => false;
+    public virtual Type[] ExcludingTypes => [];
     public Type TargetType => typeof(T);
     public abstract string Path { get; }
 
