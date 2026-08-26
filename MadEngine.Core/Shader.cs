@@ -3,11 +3,10 @@ using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
-public class Shader : Asset, IDisposable
+public class Shader : Asset
 {
     [DoNotSave] private bool _initialized;
     [DoNotSave] private int _handle;
-    [DoNotSave] private bool _disposedValue;
 
     public string VertexPath = "";
     public string FragmentPath = "";
@@ -115,25 +114,18 @@ public class Shader : Asset, IDisposable
         GL.Uniform1(GL.GetUniformLocation(_handle, name), value);
     }
     
-    protected virtual void Dispose(bool disposing)
+    protected override void OnDispose(bool disposing)
     {
-        if (_disposedValue) return;
         GL.DeleteProgram(_handle);
-
-        _disposedValue = true;
+        
+        base.OnDispose(disposing);
     }
 
     ~Shader()
     {
-        if (!_disposedValue)
+        if (!Disposed)
         {
             Console.WriteLine("GPU Resource leak! Did you forget to call Dispose()?");
         }
-    }
-    
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }

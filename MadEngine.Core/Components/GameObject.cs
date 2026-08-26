@@ -38,10 +38,25 @@ public class GameObject : MadObject
             component.Update(deltaTime);
     }
 
-    public void Destroy()
+    protected override void OnDispose(bool disposing)
     {
-        foreach (Component component in Components)
-            component.OnDestroy();
+        if (disposing)
+        {
+            foreach (Component component in Components)
+            {
+                component.OnDestroy(); 
+            }
+            
+            var componentsArray = Components.ToArray();
+            foreach (Component component in componentsArray)
+            {
+                component.Destroy();
+            }
+        
+            _components.Clear();
+        }
+        
+        base.OnDispose(disposing);
     }
 
     public void EditorStart()

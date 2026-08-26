@@ -1,7 +1,7 @@
 ﻿using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
-namespace MadEditor;
+namespace MadEditor.Commands;
 
 public class AddEmptyCommand : PopupCommand<GameObject>
 {
@@ -31,5 +31,14 @@ public class AddEmptyParentCommand : PopupCommand<GameObject>
 
         go.Transform.Parent = target.Transform.Parent;
         target.Transform.Parent = go.Transform;
+    }
+}
+
+public class DeleteCommand : PopupCommand<GameObject>
+{
+    public override string Path => "Delete";
+    public override void Execute(GameObject target)
+    {
+        SceneManager.ActiveScene.Destroy(target);
     }
 }

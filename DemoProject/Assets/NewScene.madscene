@@ -10,15 +10,16 @@
             "c0663ba3-3c5e-48cf-873d-3238b244278a",
             "fe8e7973-da22-453c-bb9e-00be2372d393",
             "581cd695-efd3-42ec-b968-a065f861fcf4",
-            "e3cb7eda-7897-442c-8569-1f2785f17ff3",
             "3242f808-1cf0-4d14-9d46-0febf74a6f2b",
             "53470e7f-9be1-401a-9d1b-c541948553cd",
             "1ec044bb-532a-4626-9066-5ecfd283d30a",
             "22b8d083-f6dc-4a5c-9484-05f48af6f290",
-            "23363d29-b742-4a9b-bb8a-16af470dbebf",
-            "3697b6c3-94c9-4fe5-9b06-ee0228c771cd"
+            "ef6cacf7-5fa3-484f-b0ac-3f8f670c7cdb"
         ],
         "_lights": [
+            "d988934e-79a6-4e75-a964-5026e04cbb87",
+            "d988934e-79a6-4e75-a964-5026e04cbb87",
+            "d988934e-79a6-4e75-a964-5026e04cbb87",
             "d988934e-79a6-4e75-a964-5026e04cbb87"
         ],
         "_renderers": []
@@ -87,18 +88,6 @@
         },
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "e3cb7eda-7897-442c-8569-1f2785f17ff3",
-            "$data": {
-                "Name": "NewGameObject",
-                "Guid": "e3cb7eda-7897-442c-8569-1f2785f17ff3",
-                "Transform": "19cd8ada-c237-427c-89b7-4151b5e28200",
-                "_components": [
-                    "19cd8ada-c237-427c-89b7-4151b5e28200"
-                ]
-            }
-        },
-        {
-            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
             "$guid": "3242f808-1cf0-4d14-9d46-0febf74a6f2b",
             "$data": {
                 "Name": "NewGameObject",
@@ -147,25 +136,13 @@
         },
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "23363d29-b742-4a9b-bb8a-16af470dbebf",
+            "$guid": "ef6cacf7-5fa3-484f-b0ac-3f8f670c7cdb",
             "$data": {
                 "Name": "NewGameObject",
-                "Guid": "23363d29-b742-4a9b-bb8a-16af470dbebf",
-                "Transform": "d0f082fa-7fa5-4da9-9292-c9e4dc681e17",
+                "Guid": "ef6cacf7-5fa3-484f-b0ac-3f8f670c7cdb",
+                "Transform": "748532a8-d262-42a4-ab89-1fda99d61a93",
                 "_components": [
-                    "d0f082fa-7fa5-4da9-9292-c9e4dc681e17"
-                ]
-            }
-        },
-        {
-            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "3697b6c3-94c9-4fe5-9b06-ee0228c771cd",
-            "$data": {
-                "Name": "NewGameObject",
-                "Guid": "3697b6c3-94c9-4fe5-9b06-ee0228c771cd",
-                "Transform": "64683f6e-aca7-4ee6-a34a-f9f6e96c6648",
-                "_components": [
-                    "64683f6e-aca7-4ee6-a34a-f9f6e96c6648"
+                    "748532a8-d262-42a4-ab89-1fda99d61a93"
                 ]
             }
         }
@@ -341,7 +318,9 @@
                     1
                 ],
                 "_parent": null,
-                "_children": [],
+                "_children": [
+                    "748532a8-d262-42a4-ab89-1fda99d61a93"
+                ],
                 "_eulerRotation": [
                     0,
                     0,
@@ -386,44 +365,6 @@
                     0
                 ],
                 "_gameObject": "581cd695-efd3-42ec-b968-a065f861fcf4"
-            }
-        },
-        {
-            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "19cd8ada-c237-427c-89b7-4151b5e28200",
-            "$data": {
-                "EulerRotation": [
-                    0,
-                    0,
-                    0
-                ],
-                "Parent": null,
-                "Name": "NewComponent",
-                "Guid": "19cd8ada-c237-427c-89b7-4151b5e28200",
-                "Position": [
-                    0,
-                    0,
-                    0
-                ],
-                "Rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                ],
-                "Scale": [
-                    1,
-                    1,
-                    1
-                ],
-                "_parent": null,
-                "_children": [],
-                "_eulerRotation": [
-                    0,
-                    0,
-                    0
-                ],
-                "_gameObject": "e3cb7eda-7897-442c-8569-1f2785f17ff3"
             }
         },
         {
@@ -580,16 +521,16 @@
         },
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "d0f082fa-7fa5-4da9-9292-c9e4dc681e17",
+            "$guid": "748532a8-d262-42a4-ab89-1fda99d61a93",
             "$data": {
                 "EulerRotation": [
                     0,
                     0,
                     0
                 ],
-                "Parent": null,
+                "Parent": "581b9a69-355a-423d-a1ec-87f61940a0d7",
                 "Name": "NewComponent",
-                "Guid": "d0f082fa-7fa5-4da9-9292-c9e4dc681e17",
+                "Guid": "748532a8-d262-42a4-ab89-1fda99d61a93",
                 "Position": [
                     0,
                     0,
@@ -606,52 +547,14 @@
                     1,
                     1
                 ],
-                "_parent": null,
+                "_parent": "581b9a69-355a-423d-a1ec-87f61940a0d7",
                 "_children": [],
                 "_eulerRotation": [
                     0,
                     0,
                     0
                 ],
-                "_gameObject": "23363d29-b742-4a9b-bb8a-16af470dbebf"
-            }
-        },
-        {
-            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "64683f6e-aca7-4ee6-a34a-f9f6e96c6648",
-            "$data": {
-                "EulerRotation": [
-                    0,
-                    0,
-                    0
-                ],
-                "Parent": null,
-                "Name": "NewComponent",
-                "Guid": "64683f6e-aca7-4ee6-a34a-f9f6e96c6648",
-                "Position": [
-                    0,
-                    0,
-                    0
-                ],
-                "Rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                ],
-                "Scale": [
-                    1,
-                    1,
-                    1
-                ],
-                "_parent": null,
-                "_children": [],
-                "_eulerRotation": [
-                    0,
-                    0,
-                    0
-                ],
-                "_gameObject": "3697b6c3-94c9-4fe5-9b06-ee0228c771cd"
+                "_gameObject": "ef6cacf7-5fa3-484f-b0ac-3f8f670c7cdb"
             }
         }
     ]

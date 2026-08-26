@@ -32,27 +32,22 @@ public static class ScriptCompiler
             .Select(f => CSharpSyntaxTree.ParseText(File.ReadAllText(f)))
             .ToArray();
         
-        var references = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(a =>
-                !a.IsDynamic &&
-                !string.IsNullOrEmpty(a.Location) &&
-                !a.FullName!.Contains(RuntimeAssemblyName) &&
-                !a.FullName!.Contains(EditorAssemblyName))  
-            .Select(a => MetadataReference.CreateFromFile(a.Location))
-            .ToList();
-        
+        var references = GetReferences();
+        Console.WriteLine(
+            references.Any(r =>
+                r.Display?.Contains("System.Console.dll") == true)
+        );
         if (runtimeDependency != null)
         {
             references.Add(MetadataReference.CreateFromImage(runtimeDependency));
         }
-
+        
         var compilation = CSharpCompilation.Create(
             assemblyName,
             syntaxTrees,
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
         );
-
         using var ms = new MemoryStream();
         var result = compilation.Emit(ms);
 
@@ -69,5 +64,18 @@ public static class ScriptCompiler
 
         using var ms = new MemoryStream(dllBytes);
         return context.LoadFromStream(ms);
+    }
+    
+    private static List<PortableExecutableReference> GetReferences()
+    {
+        if (AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") is not string trustedAssemblies)
+            throw new InvalidOperationException("Could not obtain trusted platform assemblies.");
+
+        var references = trustedAssemblies
+            .Split(Path.PathSeparator)
+            .Select(path => MetadataReference.CreateFromFile(path))
+            .ToList();
+        
+        return references;
     }
 }
