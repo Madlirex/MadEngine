@@ -349,3 +349,111 @@ public class ListDrawer : FieldDrawer
         }
     }
 }
+
+[CustomFieldDrawer(typeof(IDictionary))]
+public class DictionaryDrawer : FieldDrawer
+{
+    private readonly Dictionary<Guid, object?> _newKeyCaches = new();
+
+    public override void Draw(object target, InspectorMember member)
+    {
+        IDictionary? dict = member.GetValue(target) as IDictionary;
+        
+        if (dict == null)
+        {
+            Type declaredType = member.Type;
+            if (declaredType.IsGenericType && declaredType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+            {
+                dict = (IDictionary)Activator.CreateInstance(declaredType)!;
+            }
+            else
+            {
+                dict = new Dictionary<string, object?>();
+            }
+            member.SetValue(target, dict);
+        }
+
+        Type[] genericArgs = dict.GetType().GetGenericArguments();
+        Type keyType = genericArgs[0];
+        Type valueType = genericArgs[1];
+        
+        if (!FieldDrawerRegistry.TryGetDrawer(keyType, out var keyDrawer)) return;
+        if (!FieldDrawerRegistry.TryGetDrawer(valueType, out var valueDrawer)) return;
+
+        string label = $"{member.Name} [Dict: {dict.Count}]";
+        int imguiId = member.Guid.GetHashCode();
+        
+        if (ImGui.TreeNodeEx(imguiId, ImGuiTreeNodeFlags.None, label))
+        {
+            object? keyToRemove = null;
+            
+            foreach (DictionaryEntry entry in dict)
+            {
+                ImGui.PushID(entry.Key.GetHashCode());
+                
+                if (ImGui.Button("X"))
+                {
+                    keyToRemove = entry.Key;
+                }
+                ImGui.SameLine();
+                
+                ImGui.Text($"[{entry.Key}]:");
+                ImGui.SameLine();
+                
+                var valueMember = new CollectionElementMember(
+                    name: $"##Value_{entry.Key}",
+                    type: valueType,
+                    parentGuid: member.Guid,
+                    elementIdentifier: entry.Key,
+                    getter: () => dict[entry.Key],
+                    setter: val => dict[entry.Key] = val
+                );
+
+                valueDrawer.Draw(dict, valueMember);
+
+                ImGui.PopID();
+            }
+            
+            if (keyToRemove != null)
+            {
+                dict.Remove(keyToRemove);
+            }
+
+            ImGui.Separator();
+            
+            ImGui.Text("Add Entry:");
+            
+            if (!_newKeyCaches.ContainsKey(member.Guid))
+            {
+                _newKeyCaches[member.Guid] = keyType == typeof(string) ? "" : Activator.CreateInstance(keyType);
+            }
+
+            var addKeyMember = new CollectionElementMember(
+                name: $"Key##Add_{member.Guid}",
+                type: keyType,
+                parentGuid: member.Guid,
+                elementIdentifier: "ADD_KEY_FIELD",
+                getter: () => _newKeyCaches[member.Guid],
+                setter: val => _newKeyCaches[member.Guid] = val
+            );
+            
+            keyDrawer.Draw(this, addKeyMember);
+
+            ImGui.SameLine();
+            if (ImGui.Button($"Add##Btn_{member.Guid}"))
+            {
+                object? targetKey = _newKeyCaches[member.Guid];
+                
+                if (targetKey != null && !dict.Contains(targetKey))
+                {
+                    object? defaultValue = valueType.IsValueType ? Activator.CreateInstance(valueType) : null;
+                    dict.Add(targetKey, defaultValue);
+                    
+                    _newKeyCaches[member.Guid] = keyType == typeof(string) ? "" : Activator.CreateInstance(keyType);
+                }
+            }
+
+            ImGui.TreePop();
+        }
+    }
+}

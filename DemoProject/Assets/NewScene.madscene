@@ -1,0 +1,79 @@
+{
+    "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "2735c98d-53a1-4209-a5ea-8e8e686775e8",
+    "$data": {
+        "Name": "NewScene",
+        "Guid": "2735c98d-53a1-4209-a5ea-8e8e686775e8",
+        "_gameObjects": [
+            "5d9cac49-91d7-45a2-b071-209ceb34f878"
+        ],
+        "_lights": [],
+        "_renderers": [
+            "08633530-7bf4-4d2a-897b-af5f6e61953a"
+        ]
+    },
+    "GameObjects": [
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5d9cac49-91d7-45a2-b071-209ceb34f878",
+            "$data": {
+                "Name": "NewGameObject",
+                "Guid": "5d9cac49-91d7-45a2-b071-209ceb34f878",
+                "Transform": "2a8bc47d-9bbd-44d8-bdc2-2d2b78690346",
+                "_components": [
+                    "2a8bc47d-9bbd-44d8-bdc2-2d2b78690346",
+                    "08633530-7bf4-4d2a-897b-af5f6e61953a"
+                ]
+            }
+        }
+    ],
+    "Components": [
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2a8bc47d-9bbd-44d8-bdc2-2d2b78690346",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Name": "NewComponent",
+                "Guid": "2a8bc47d-9bbd-44d8-bdc2-2d2b78690346",
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "08633530-7bf4-4d2a-897b-af5f6e61953a",
+            "$data": {
+                "Name": "NewComponent",
+                "Guid": "08633530-7bf4-4d2a-897b-af5f6e61953a",
+                "Mesh": "60e5f66b-c43b-4974-82c9-aa0b87860c27",
+                "Material": "6c0467a3-7f29-4eb4-8b20-8c2895d907fb"
+            }
+        }
+    ]
+}
