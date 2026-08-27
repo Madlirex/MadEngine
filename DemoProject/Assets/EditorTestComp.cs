@@ -5,5 +5,5 @@ using MadEngine.Core;
 
 public class EditorTestComp : Component
 {
-    public GameObject[] Objects;
+    public GameObject[] Objdwdects = [];
 }

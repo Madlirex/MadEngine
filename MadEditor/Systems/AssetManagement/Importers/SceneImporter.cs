@@ -109,6 +109,7 @@ public class SceneImporter : Importer<Scene>
             {
                 Component obj = (Component)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(compType)!.DeserializeInto(obj, compJson["$data"]!);
+                Console.WriteLine(obj.GameObject);
             }
         }
     }

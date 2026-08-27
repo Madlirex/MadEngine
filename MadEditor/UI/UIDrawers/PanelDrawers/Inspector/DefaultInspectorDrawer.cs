@@ -24,28 +24,7 @@ public class DefaultInspectorDrawer : InspectorDrawer<MadObject>
 
     public void DrawBody(MadObject selected)
     {
-        IOrderedEnumerable<InspectorMember> members = selected.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Public)
-            .Where(f => f.GetCustomAttribute<HideInInspectorAttribute>() == null)
-            .Select(f => (InspectorMember)new FieldMember(f))
-            .Concat(
-                selected.GetType()
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    .Where(p => p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
-                    .Select(p => (InspectorMember)new PropertyMember(p))
-            ).Concat(
-                selected.GetType()
-                    .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                    .Where(f => f.GetCustomAttribute<ShowInInspectorAttribute>() != null)
-                    .Select(f => (InspectorMember)new FieldMember(f)))
-            .OrderBy(m => m.Order);
-        foreach (InspectorMember member in members)
-        {
-            if (FieldDrawerRegistry.TryGetDrawer(member.Type, out FieldDrawer drawer))
-            {
-                FieldDrawerManager.Draw(selected, drawer, member);
-            }
-        }
+        FieldDrawingManager.Render(selected);
     }
 
     public void DrawFooter(EditorUIContext context)

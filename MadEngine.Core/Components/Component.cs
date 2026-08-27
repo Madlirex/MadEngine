@@ -9,7 +9,7 @@ public abstract class Component : MadObject
     }
     
     public GameObject GameObject => _gameObject;
-    protected GameObject _gameObject;
+    private GameObject _gameObject;
     
     internal void AssignGameObject(GameObject gameObject)
     {

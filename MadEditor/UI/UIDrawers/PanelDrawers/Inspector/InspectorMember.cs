@@ -20,12 +20,13 @@ public abstract class InspectorMember
 
 public class FieldMember : InspectorMember
 {
-    public override Guid Guid => Guid.NewGuid();
+    public override Guid Guid { get; }
     private readonly FieldInfo _field;
     public override string Name => _field.GetCustomName();
 
     public FieldMember(FieldInfo field)
     {
+        Guid = Guid.NewGuid();
         _field = field;
     }
 
@@ -37,12 +38,13 @@ public class FieldMember : InspectorMember
 
 public class PropertyMember : InspectorMember
 {
-    public override Guid Guid => Guid.NewGuid();
+    public override Guid Guid { get; }
     private readonly PropertyInfo _property;
     public override string Name => _property.GetCustomName();
 
     public PropertyMember(PropertyInfo property)
     {
+        Guid = Guid.NewGuid();
         _property = property;
     }
 

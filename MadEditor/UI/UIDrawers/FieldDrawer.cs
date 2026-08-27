@@ -201,7 +201,7 @@ public class UIntDrawer : FieldDrawer
 {
     public override void Draw(object target, InspectorMember member)
     {
-        int value = unchecked((int)member.GetValue(target)!);
+        int value = Convert.ToInt32(member.GetValue(target)!);
 
         if (ImGui.DragInt(member.GetCustomName(), ref value))
         {
@@ -274,14 +274,13 @@ public class ListDrawer : FieldDrawer
 {
     public override void Draw(object target, InspectorMember member)
     {
-        Console.WriteLine("Drawing");
         IList? list = member.GetValue(target) as IList;
         if (list == null) return;
-        
+    
         Type listType = list.GetType();
+
         Type elementType = listType.IsArray ? listType.GetElementType()! : listType.GetGenericArguments()[0];
         if (!FieldDrawerRegistry.TryGetDrawer(elementType, out var elementDrawer)) return;
-        
         string label = $"{member.Name} [{list.Count}]";
         
         if (ImGui.TreeNode(member.ToString(), label))
@@ -292,7 +291,7 @@ public class ListDrawer : FieldDrawer
                 if (currentSize < 0) currentSize = 0;
                 ResizeList(ref list, member, target, currentSize);
             }
-            
+        
             for (int i = 0; i < list.Count; i++)
             {
                 int index = i;
@@ -305,6 +304,8 @@ public class ListDrawer : FieldDrawer
                     getter: () => list[index],
                     setter: val => list[index] = val
                 );
+                
+                ImGui.PushID(elementMember.Guid.GetHashCode());
 
                 if (elementDrawer != null)
                 {
@@ -314,6 +315,8 @@ public class ListDrawer : FieldDrawer
                 {
                     ImGui.Text($"No drawer for {elementType.Name} at [{index}]");
                 }
+                
+                ImGui.PopID();
             }
 
             ImGui.TreePop();

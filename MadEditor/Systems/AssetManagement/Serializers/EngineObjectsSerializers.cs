@@ -89,6 +89,7 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
             if (field != null && !Attribute.IsDefined(field, typeof(DoNotSaveAttribute)))
             {
                 field.SetValue(target, SerializerRegistry.Deserialize(field.FieldType, valueNode));
+                if(field.Name == "_gameObject") Console.WriteLine(field.GetValue(target));
             }
         }
     }
