@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using ImGuiNET;
 using MadEngine.Core;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace MadEditor;
 
@@ -73,6 +75,21 @@ internal class FieldDrawerEngine : Registry
         while (current != null)
         {
             if (_drawers.TryGetValue(current, out var found))
+            {
+                drawer = found;
+                return true;
+            }
+            
+            if (current.GetInterfaces().Any(interfaceType => _drawers.TryGetValue(interfaceType, out found) || (interfaceType.IsGenericType &&
+                    _drawers.TryGetValue(
+                        interfaceType.GetGenericTypeDefinition(),
+                        out found))))
+            {
+                drawer = found!;
+                return true;
+            }
+            
+            if (current.IsGenericType && _drawers.TryGetValue(current.GetGenericTypeDefinition(), out found))
             {
                 drawer = found;
                 return true;
@@ -179,6 +196,20 @@ public class IntDrawer : FieldDrawer
     }
 }
 
+[CustomFieldDrawer(typeof(uint))]
+public class UIntDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member)
+    {
+        int value = unchecked((int)member.GetValue(target)!);
+
+        if (ImGui.DragInt(member.GetCustomName(), ref value))
+        {
+            member.SetValue(target, Unsafe.As<int, uint>(ref value));
+        }
+    }
+}
+
 [CustomFieldDrawer(typeof(string))]
 public class StringDrawer : FieldDrawer
 {
@@ -235,5 +266,83 @@ public class MadObjectDrawer : FieldDrawer
         }
         
         _popup.Draw(EditorUI.UiContext);
+    }
+}
+
+[CustomFieldDrawer(typeof(IList))]
+public class ListDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member)
+    {
+        Console.WriteLine("Drawing");
+        IList? list = member.GetValue(target) as IList;
+        if (list == null) return;
+        
+        Type listType = list.GetType();
+        Type elementType = listType.IsArray ? listType.GetElementType()! : listType.GetGenericArguments()[0];
+        if (!FieldDrawerRegistry.TryGetDrawer(elementType, out var elementDrawer)) return;
+        
+        string label = $"{member.Name} [{list.Count}]";
+        
+        if (ImGui.TreeNode(member.ToString(), label))
+        {
+            int currentSize = list.Count;
+            if (ImGui.InputInt($"Size##{member.Guid}", ref currentSize))
+            {
+                if (currentSize < 0) currentSize = 0;
+                ResizeList(ref list, member, target, currentSize);
+            }
+            
+            for (int i = 0; i < list.Count; i++)
+            {
+                int index = i;
+
+                var elementMember = new CollectionElementMember(
+                    name: $"Element {index}",
+                    type: elementType,
+                    parentGuid: member.Guid,
+                    elementIdentifier: index,
+                    getter: () => list[index],
+                    setter: val => list[index] = val
+                );
+
+                if (elementDrawer != null)
+                {
+                    elementDrawer.Draw(list, elementMember);
+                }
+                else
+                {
+                    ImGui.Text($"No drawer for {elementType.Name} at [{index}]");
+                }
+            }
+
+            ImGui.TreePop();
+        }
+    }
+
+    private void ResizeList(ref IList list, InspectorMember member, object target, int newSize)
+    {
+        Type listType = list.GetType();
+
+        if (listType.IsArray)
+        {
+            Type elementType = listType.GetElementType()!;
+            Array newArray = Array.CreateInstance(elementType, newSize);
+            Array.Copy((Array)list, newArray, Math.Min(list.Count, newSize));
+            member.SetValue(target, newArray);
+        }
+        else
+        {
+            while (list.Count < newSize)
+            {
+                Type elementType = listType.GetGenericArguments()[0];
+                object? defaultValue = elementType.IsValueType ? Activator.CreateInstance(elementType) : null;
+                list.Add(defaultValue);
+            }
+            while (list.Count > newSize)
+            {
+                list.RemoveAt(list.Count - 1);
+            }
+        }
     }
 }

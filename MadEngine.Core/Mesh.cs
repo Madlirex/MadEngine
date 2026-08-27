@@ -8,10 +8,10 @@ public class Mesh : Asset
 {
     [DoNotSave]
     public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
-    private Vertex[] _vertices = [];
+    [ShowInInspector] private Vertex[] _vertices = [];
     [DoNotSave]
     public uint[] Indices { get => _indices; set => _indices = value; }
-    private uint[] _indices = [];
+    [ShowInInspector] private uint[] _indices = [];
     
     [DoNotSave] private int _vertexBufferObject;
     [DoNotSave] private int _vertexArrayObject;

@@ -33,7 +33,11 @@ public class DefaultInspectorDrawer : InspectorDrawer<MadObject>
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                     .Where(p => p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
                     .Select(p => (InspectorMember)new PropertyMember(p))
-            )
+            ).Concat(
+                selected.GetType()
+                    .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Where(f => f.GetCustomAttribute<ShowInInspectorAttribute>() != null)
+                    .Select(f => (InspectorMember)new FieldMember(f)))
             .OrderBy(m => m.Order);
         foreach (InspectorMember member in members)
         {
