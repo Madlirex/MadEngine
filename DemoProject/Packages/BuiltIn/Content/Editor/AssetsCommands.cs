@@ -14,6 +14,15 @@ public class CreateTextureCommand : PopupCommand<Asset>
     }
 }
 
+public class CreateMaterialCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Material";
+    public override void Execute(Asset target)
+    {
+        AssetManager.SaveAsset(new Material());
+    }
+}
+
 public class CreateShaderCommand : PopupCommand<Asset>
 {
     public override string Path => "Create/Shader";

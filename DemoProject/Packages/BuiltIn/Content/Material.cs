@@ -5,7 +5,7 @@ namespace MadEngine.Core;
 
 public class Material : Asset
 {
-    public Shader Shader { get; set; } = Defaults.LitShader;
+    public Shader Shader = Defaults.LitShader;
     
     public Dictionary<string, Texture> Textures { get; } = new();
     public Dictionary<string, Vector4> Vectors { get; } = new();

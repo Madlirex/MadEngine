@@ -6,7 +6,7 @@ namespace MadEngine.Core;
 public abstract class Texture : Asset
 {
     [DoNotSave] public int Handle { get; protected set; }
-    public string FilePath { get; protected set; } = "";
+    [ShowInInspector] public string FilePath { get; protected set; } = "";
 
     public override string Name { get; set; } = "NewTexture";
     
