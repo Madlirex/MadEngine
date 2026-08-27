@@ -4,6 +4,7 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
+[CustomName("Project")]
 public class ProjectPanelDrawer : PanelDrawer
 {
     private readonly ProjectPopup _projectPopup = new();
