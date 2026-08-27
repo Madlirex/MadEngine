@@ -20,12 +20,13 @@ public abstract class InspectorMember
 
 public class FieldMember : InspectorMember
 {
-    public override Guid Guid => Guid.NewGuid();
+    public override Guid Guid { get; }
     private readonly FieldInfo _field;
     public override string Name => _field.GetCustomName();
 
     public FieldMember(FieldInfo field)
     {
+        Guid = Guid.NewGuid();
         _field = field;
     }
 
@@ -37,12 +38,13 @@ public class FieldMember : InspectorMember
 
 public class PropertyMember : InspectorMember
 {
-    public override Guid Guid => Guid.NewGuid();
+    public override Guid Guid { get; }
     private readonly PropertyInfo _property;
     public override string Name => _property.GetCustomName();
 
     public PropertyMember(PropertyInfo property)
     {
+        Guid = Guid.NewGuid();
         _property = property;
     }
 
@@ -50,4 +52,33 @@ public class PropertyMember : InspectorMember
     public override object? GetValue(object obj) => _property.GetValue(obj);
     public override void SetValue(object obj, object? value) => _property.SetValue(obj, value);
     public override int Order => _property.GetCustomAttribute<ShowInInspectorAttribute>()?.Order ?? 0;
+}
+
+public class CollectionElementMember : InspectorMember
+{
+    private readonly Func<object?> _getter;
+    private readonly Action<object?> _setter;
+
+    public override Guid Guid { get; }
+    public override string Name { get; }
+    public override Type Type { get; }
+    public override int Order => 0;
+
+    public CollectionElementMember(string name, Type type, Guid parentGuid, object elementIdentifier, Func<object?> getter, Action<object?> setter)
+    {
+        Name = name;
+        Type = type;
+        _getter = getter;
+        _setter = setter;
+        
+        byte[] parentBytes = parentGuid.ToByteArray();
+        int hash = elementIdentifier.GetHashCode();
+        byte[] hashBytes = BitConverter.GetBytes(hash);
+        for (int i = 0; i < hashBytes.Length; i++) 
+            parentBytes[i] ^= hashBytes[i];
+        Guid = new Guid(parentBytes);
+    }
+
+    public override object? GetValue(object obj) => _getter();
+    public override void SetValue(object obj, object? value) => _setter(value);
 }

@@ -35,11 +35,11 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
     {
         foreach (Component component in selected.Components.ToArray())
         {
-            DrawComponent(component);
+            DrawComponent(component, selected);
         }
     }
 
-    public void DrawComponent(Component component)
+    public void DrawComponent(Component component, GameObject selected)
     {
         ImGui.PushID(component.Guid.ToString());
 
@@ -78,24 +78,7 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
 
             if (open)
             {
-                IOrderedEnumerable<InspectorMember> members = component.GetType()
-                    .GetFields(BindingFlags.Instance | BindingFlags.Public)
-                    .Where(f => f.GetCustomAttribute<HideInInspectorAttribute>() == null)
-                    .Select(f => (InspectorMember)new FieldMember(f))
-                    .Concat(
-                        component.GetType()
-                            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            .Where(p => p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
-                            .Select(p => (InspectorMember)new PropertyMember(p))
-                    )
-                    .OrderBy(m => m.Order);
-                foreach (InspectorMember member in members)
-                {
-                    if (FieldDrawerRegistry.TryGetDrawer(member.Type, out FieldDrawer drawer))
-                    {
-                        FieldDrawerManager.Draw(component, drawer, member);
-                    }
-                }
+                FieldDrawingManager.Render(component, selected);
 
                 ImGui.Separator();
             }

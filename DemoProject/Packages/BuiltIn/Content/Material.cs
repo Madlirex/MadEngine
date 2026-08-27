@@ -5,12 +5,12 @@ namespace MadEngine.Core;
 
 public class Material : Asset
 {
-    public Shader Shader = Defaults.LitShader;
+    public Shader? Shader = Defaults.LitShader;
     
-    public Dictionary<string, Texture> Textures { get; } = new();
-    public Dictionary<string, Vector4> Vectors { get; } = new();
-    public Dictionary<string, float> Floats { get; } = new();
-    public Dictionary<string, int> Ints { get; } = new();
+    [ShowInInspector] public Dictionary<string, Texture> Textures = new();
+    [ShowInInspector] public Dictionary<string, Vector4> Vectors = new();
+    [ShowInInspector] public Dictionary<string, float> Floats = new();
+    [ShowInInspector] public Dictionary<string, int> Ints = new();
 
     public override string Name { get; set; } = "NewMaterial";
     public override string Extension => ".mat";
