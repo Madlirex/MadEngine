@@ -1,21 +1,12 @@
 {
     "$type": "MadEngine.Core.Material, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "ed4345ad-3fa0-4ca6-b2ae-e5651559c269",
+    "$guid": "493e1542-68f2-4556-86b3-c1754417b2f7",
     "$data": {
         "Name": "NewMaterial_2",
-        "Guid": "ed4345ad-3fa0-4ca6-b2ae-e5651559c269",
-        "Shader": "044e8aaa-aba4-4b21-bae1-a2c3063ea2e6",
-        "Textures": {
-            "": null
-        },
-        "Vectors": {
-            "": [
-                0,
-                0,
-                0,
-                0
-            ]
-        },
+        "Guid": "493e1542-68f2-4556-86b3-c1754417b2f7",
+        "Shader": "cd047ea0-c74f-4993-85c9-778accb2d2f7",
+        "Textures": {},
+        "Vectors": {},
         "Floats": {},
         "Ints": {}
     }

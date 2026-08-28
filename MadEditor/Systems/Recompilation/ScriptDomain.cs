@@ -1,4 +1,12 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
@@ -10,11 +18,18 @@ public static class ScriptDomain
     public static Assembly? EditorAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
 
+    // Stores a reference to the old context to analyze it if it leaks
+    private static WeakReference? _zombieContextRef;
+
     public static Type? GetType(string typeName)
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
-            .Select(assembly => assembly.GetType(typeName.Split(',')[0].Trim()))
-            .FirstOrDefault(type => type != null);
+        // FIX: Look inside active tracked assemblies to prevent zombie duplication lookups
+        foreach (var assembly in Assemblies)
+        {
+            var type = assembly.GetType(typeName.Split(',')[0].Trim());
+            if (type != null) return type;
+        }
+        return null;
     }
 
     public static void Compile(string[] sourceFiles)
@@ -44,6 +59,8 @@ public static class ScriptDomain
         CurrentContext = context;
         Assemblies.Clear();
         
+        AddCoreEngineAssemblies();
+        
         using (var ms = new MemoryStream(runtimeDll))
         {
             RuntimeAssembly = context.LoadFromStream(ms);
@@ -51,13 +68,31 @@ public static class ScriptDomain
         }
         
         if (editorDll is not { Length: > 0 }) return;
+        
+        using (var ms = new MemoryStream(editorDll))
         {
-            using var ms = new MemoryStream(editorDll);
             EditorAssembly = context.LoadFromStream(ms);
             Assemblies.Add(EditorAssembly);
         }
     }
-
+    
+    private static void AddCoreEngineAssemblies()
+    {
+        var runningAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+        
+        foreach (var assembly in runningAssemblies)
+        {
+            string? name = assembly.GetName().Name;
+            if (name == "MadEngine" || name == "MadEngine.Core" || name == "MadEditor")
+            {
+                if (!Assemblies.Contains(assembly))
+                {
+                    Assemblies.Add(assembly);
+                }
+            }
+        }
+    }
+    
     private static void Unload()
     {
         Assemblies.Clear();
@@ -70,8 +105,10 @@ public static class ScriptDomain
 
         if (context != null)
         {
-            context.Unload();
+            FieldDrawingManager.OnSelectionChanged(null);
 
+            context.Unload();
+            
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -80,24 +117,20 @@ public static class ScriptDomain
     
     public static Type[] GetAllTypes()
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(a => a.GetTypes())
-            .ToArray();
+        return Assemblies.SelectMany(a => a.GetTypes()).ToArray();
     }
 
     public static Type[] GetTypesImplementing(Type baseType)
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
+        return Assemblies
             .SelectMany(a => a.GetTypes())
-            .Where(t =>
-                t is { IsClass: true, IsAbstract: false } &&
-                baseType.IsAssignableFrom(t))
+            .Where(t => t is { IsClass: true, IsAbstract: false } && baseType.IsAssignableFrom(t))
             .ToArray();
     }
 
     public static Type[] GetTypesWithName(string name)
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
+        return Assemblies
             .SelectMany(a => a.GetTypes())
             .Where(t => t.Name == name)
             .ToArray();

@@ -30,5 +30,6 @@ public abstract class Asset : MadObject
         {
             AssetRegistry.UnregisterAsset(this);
         }
+        base.OnDispose(disposing);
     }
 }
