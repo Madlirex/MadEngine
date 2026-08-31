@@ -23,7 +23,6 @@ internal class InspectorDrawersEngine : Registry
         {
             if (Activator.CreateInstance(type) is not IInspectorDrawer drawer) continue;
             _inspectorDrawers.TryAdd(drawer.Type, drawer);
-            Console.WriteLine(drawer.Type);
         }
     }
 
