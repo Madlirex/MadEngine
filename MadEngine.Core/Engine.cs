@@ -31,6 +31,8 @@ public class Engine
         {
             renderer.Draw(view, projection);
         }
+        
+        EngineCommandsManager.ExecuteAll();
     }
 
     public void Awake(Scene scene)

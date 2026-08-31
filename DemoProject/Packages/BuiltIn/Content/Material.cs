@@ -6,8 +6,10 @@ namespace MadEngine.Core;
 public class Material : Asset
 {
     public Shader? Shader = Defaults.LitShader;
+
+    public string Prefix = "material.";
     
-    [ShowInInspector] public Dictionary<string, Texture> Textures = new();
+    [ShowInInspector] public Dictionary<string, Texture?> Textures = new();
     [ShowInInspector] public Dictionary<string, Vector4> Vectors = new();
     [ShowInInspector] public Dictionary<string, float> Floats = new();
     [ShowInInspector] public Dictionary<string, int> Ints = new();
@@ -43,19 +45,33 @@ public class Material : Asset
         if (Shader == null) return;
         Shader.Use();
         
-        foreach (var kvp in Vectors) Shader.SetVector4(kvp.Key, kvp.Value);
-        foreach (var kvp in Floats)  Shader.SetFloat(kvp.Key, kvp.Value);
-        foreach (var kvp in Ints)    Shader.SetInt(kvp.Key, kvp.Value);
+        foreach (var kvp in Vectors)
+        {
+            //if (kvp.Value == null) continue;
+            Shader.SetVector4(Prefix + kvp.Key, kvp.Value);
+        }
+        foreach (var kvp in Floats)
+        {
+            //if (kvp.Value == null) continue;
+            Shader.SetFloat(Prefix + kvp.Key, kvp.Value);
+        }
+        foreach (var kvp in Ints)
+        {
+            //if (kvp.Value == null) continue;
+            Shader.SetInt(Prefix + kvp.Key, kvp.Value);
+        }
         
         int textureUnitIndex = 0;
         
         foreach (var kvp in Textures)
         {
+            if(kvp.Value == null) continue;
+            
             TextureUnit unit = TextureUnit.Texture0 + textureUnitIndex;
             
             kvp.Value.Bind(unit);
-            Shader.SetInt(kvp.Key, textureUnitIndex);
-            Shader.SetInt(kvp.Key + "_Enabled", 1);
+            Shader.SetInt(Prefix + kvp.Key, textureUnitIndex);
+            Shader.SetInt(Prefix + kvp.Key + "_Enabled", 1);
 
             textureUnitIndex++;
         }

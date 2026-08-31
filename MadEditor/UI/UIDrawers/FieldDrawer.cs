@@ -309,7 +309,7 @@ public class ListDrawer : FieldDrawer
 
                 if (elementDrawer != null)
                 {
-                    elementDrawer.Draw(list, elementMember);
+                    FieldDrawerManager.Draw(list, elementDrawer, elementMember);
                 }
                 else
                 {
@@ -409,7 +409,7 @@ public class DictionaryDrawer : FieldDrawer
                     setter: val => dict[entry.Key] = val
                 );
 
-                valueDrawer.Draw(dict, valueMember);
+                FieldDrawerManager.Draw(dict, valueDrawer, valueMember);
 
                 ImGui.PopID();
             }
@@ -437,7 +437,7 @@ public class DictionaryDrawer : FieldDrawer
                 setter: val => _newKeyCaches[member.Guid] = val
             );
             
-            keyDrawer.Draw(this, addKeyMember);
+            FieldDrawerManager.Draw(this, keyDrawer, addKeyMember);
 
             ImGui.SameLine();
             if (ImGui.Button($"Add##Btn_{member.Guid}"))
@@ -455,5 +455,16 @@ public class DictionaryDrawer : FieldDrawer
 
             ImGui.TreePop();
         }
+    }
+}
+
+[CustomFieldDrawer(typeof(Vertex))]
+public class VertexDrawer : FieldDrawer
+{
+    public override void Draw(object target, InspectorMember member)
+    {
+        Vertex targetVertex = (Vertex)target;
+        
+        
     }
 }

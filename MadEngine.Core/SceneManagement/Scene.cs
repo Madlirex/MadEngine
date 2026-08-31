@@ -26,15 +26,42 @@ public class Scene : Asset
     
     public void Add(GameObject gameObject)
     {
-        _gameObjects.Add(gameObject);
-        Register(gameObject);
+        EngineCommandsManager.Enqueue(new AddGameObjectCommand(gameObject));
     }
 
     public void Destroy(GameObject gameObject)
     {
-        gameObject.Destroy();
+        EngineCommandsManager.Enqueue(new DestroyGameObjectCommand(gameObject));
+    }
+
+    internal void AddObjectSafe(GameObject gameObject)
+    {
+        if (_gameObjects.Contains(gameObject)) return;
+    
+        _gameObjects.Add(gameObject);
+        Register(gameObject);
+        
+        var children = gameObject.Transform.Children;
+        for (int i = 0; i < children.Count; i++)
+        {
+            AddObjectSafe(children[i].GameObject);
+        }
+    }
+
+    internal void DestroyObjectSafe(GameObject gameObject)
+    {
         _gameObjects.Remove(gameObject);
         Unregister(gameObject);
+        
+        var children = gameObject.Transform.Children;
+        for (int i = children.Count - 1; i >= 0; i--)
+        {
+            DestroyObjectSafe(children[i].GameObject);
+        }
+
+        gameObject.Transform.Parent = null;
+
+        gameObject.Destroy();
     }
 
     public void Register(GameObject gameObject)
