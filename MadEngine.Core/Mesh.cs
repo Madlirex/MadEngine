@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
-public class Mesh : Asset
+public class Mesh : Asset, IStateUpdateable
 {
     [DoNotSave]
     public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
@@ -153,5 +153,30 @@ public class Mesh : Asset
         {
             vertices[i].Normal = Vector3.Normalize(vertices[i].Normal);
         }
+    }
+
+    public void UpdateState()
+    {
+        if (!_initialized)
+        {
+            Initialize();
+            return;
+        }
+
+        int vertexSize = Marshal.SizeOf<Vertex>();
+        
+        GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
+        GL.BufferData(BufferTarget.ArrayBuffer,
+            Vertices.Length * vertexSize,
+            Vertices,
+            BufferUsageHint.StaticDraw);
+        
+        GL.BindBuffer(BufferTarget.ElementArrayBuffer, _elementBufferObject);
+        GL.BufferData(BufferTarget.ElementArrayBuffer,
+            Indices.Length * sizeof(uint),
+            Indices,
+            BufferUsageHint.StaticDraw);
+
+        GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
     }
 }
