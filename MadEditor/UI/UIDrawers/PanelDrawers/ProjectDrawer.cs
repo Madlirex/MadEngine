@@ -140,4 +140,7 @@ public class ProjectPanelDrawer : PanelDrawer
     }
 }
 
-public class NoneAsset : Asset;
+public class NoneAsset : Asset
+{
+    public static NoneAsset Instance = new();
+}

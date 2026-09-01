@@ -1,10 +1,43 @@
 {
     "$type": "MadEngine.Core.Mesh, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "59c6417d-4a59-48fd-bd75-3f0c0ebe88b5",
+    "$guid": "afd7c7aa-a742-4e11-b94b-bee07e0a3466",
     "$data": {
         "Name": "NewMesh",
-        "Guid": "59c6417d-4a59-48fd-bd75-3f0c0ebe88b5",
-        "_vertices": [],
+        "Guid": "afd7c7aa-a742-4e11-b94b-bee07e0a3466",
+        "_vertices": [
+            {
+                "Normal": [
+                    0,
+                    17,
+                    29
+                ],
+                "Position": [
+                    39,
+                    0,
+                    25
+                ],
+                "TexCoord": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "Normal": [
+                    0,
+                    0,
+                    0
+                ],
+                "Position": [
+                    14,
+                    0,
+                    0
+                ],
+                "TexCoord": [
+                    0,
+                    0
+                ]
+            }
+        ],
         "_indices": []
     }
 }
