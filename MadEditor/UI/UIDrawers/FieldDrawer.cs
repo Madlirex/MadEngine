@@ -483,14 +483,16 @@ public class VertexDrawer : FieldDrawer
 {
     public override void Draw(object target, InspectorMember member)
     {
-        
         object? structInstance = member.GetValue(target);
+        if (structInstance == null) return;
         
-        if (structInstance != null)
-        {
-            FieldDrawingManager.RenderChild(structInstance);
+        string label = $"{member.Name} (Vertex)";
+
+        if (!ImGui.TreeNode(member.ToString(), label)) return;
+        FieldDrawingManager.RenderChild(structInstance);
             
-            member.SetValue(target, structInstance);
-        }
+        member.SetValue(target, structInstance);
+            
+        ImGui.TreePop();
     }
 }
