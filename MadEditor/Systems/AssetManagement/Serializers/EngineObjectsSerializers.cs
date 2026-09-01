@@ -15,30 +15,41 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
             ["$type"] = obj.GetType().AssemblyQualifiedName,
             ["$guid"] = obj.Guid.ToString()
         };
-        
+    
         JsonObject dataJson = new JsonObject();
+        Type? type = obj.GetType();
+    
         
-        Type type = obj.GetType();
-        
-        foreach (var prop in type.GetProperties(EngineFlags))
+        while (type != null && type != typeof(object))
         {
-            if (prop is { CanRead: true, CanWrite: true } && !Attribute.IsDefined(prop, typeof(DoNotSaveAttribute)))
+            var localFlags = EngineFlags | BindingFlags.DeclaredOnly;
+            
+            foreach (var prop in type.GetProperties(localFlags))
             {
-                object? value = prop.GetValue(obj);
-                dataJson[prop.Name] = SerializerRegistry.Serialize(value);
+                if (prop is { CanRead: true, CanWrite: true } && !Attribute.IsDefined(prop, typeof(DoNotSaveAttribute)))
+                {
+                    if (dataJson.ContainsKey(prop.Name)) continue;
+
+                    object? value = prop.GetValue(obj);
+                    dataJson[prop.Name] = SerializerRegistry.Serialize(value);
+                }
             }
+            
+            foreach (var field in type.GetFields(localFlags))
+            {
+                if (field.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false))
+                    continue;
+            
+                if (Attribute.IsDefined(field, typeof(DoNotSaveAttribute))) continue;
+                if (dataJson.ContainsKey(field.Name)) continue;
+
+                object? value = field.GetValue(obj);
+                dataJson[field.Name] = SerializerRegistry.Serialize(value);
+            }
+
+            type = type.BaseType;
         }
 
-        foreach (var field in type.GetFields(EngineFlags))
-        {
-            if (field.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), false))
-                continue;
-            
-            if (Attribute.IsDefined(field, typeof(DoNotSaveAttribute))) continue;
-            
-            object? value = field.GetValue(obj);
-            dataJson[field.Name] = SerializerRegistry.Serialize(value);
-        }
 
         objJson["$data"] = dataJson;
         return objJson;
@@ -72,27 +83,44 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
     {
         if (source is not JsonObject sourceObject || target == null) return;
 
-        Type type = target.GetType();
-        
+        Type startType = target.GetType();
+    
         foreach (var pair in sourceObject)
         {
             string memberName = pair.Key;
             JsonNode? valueNode = pair.Value;
             
-            var prop = type.GetProperty(memberName, EngineFlags);
+            PropertyInfo? prop = null;
+            Type? currentType = startType;
+            while (currentType != null && currentType != typeof(object))
+            {
+                prop = currentType.GetProperty(memberName, EngineFlags | BindingFlags.DeclaredOnly);
+                if (prop != null) break;
+                currentType = currentType.BaseType;
+            }
+
             if (prop != null && prop.CanWrite && !Attribute.IsDefined(prop, typeof(DoNotSaveAttribute)))
             {
                 prop.SetValue(target, SerializerRegistry.Deserialize(prop.PropertyType, valueNode));
+                continue;
             }
             
-            var field = type.GetField(memberName, EngineFlags);
+            FieldInfo? field = null;
+            currentType = startType;
+            while (currentType != null && currentType != typeof(object))
+            {
+                field = currentType.GetField(memberName, EngineFlags | BindingFlags.DeclaredOnly);
+                if (field != null) break;
+                currentType = currentType.BaseType;
+            }
+
             if (field != null && !Attribute.IsDefined(field, typeof(DoNotSaveAttribute)))
             {
                 field.SetValue(target, SerializerRegistry.Deserialize(field.FieldType, valueNode));
-                if(field.Name == "_gameObject") Console.WriteLine(field.GetValue(target));
             }
         }
     }
+
 
     public override MadObject DeserializeReference(JsonNode obj)
     {
