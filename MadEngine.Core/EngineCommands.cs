@@ -2,20 +2,43 @@
 
 namespace MadEngine.Core;
 
-public class AddGameObjectCommand(object target) : EngineCommand(target)
+public class AddGameObjectCommand(GameObject target) : EngineCommand
 {
-    public override void Execute(object target)
+    public GameObject Target = target;
+    public override void Execute()
     {
-        if (target is not GameObject targetObj) return;
-        SceneManager.ActiveScene.AddObjectSafe(targetObj);
+        SceneManager.ActiveScene.AddObjectSafe(Target);
     }
 }
 
-public class DestroyGameObjectCommand(object target) : EngineCommand(target)
+public class DestroyGameObjectCommand(GameObject target) : EngineCommand
 {
-    public override void Execute(object target)
+    public GameObject Target = target;
+    
+    public override void Execute()
     {
-        if (target is not GameObject targetObj) return;
-        SceneManager.ActiveScene.DestroyObjectSafe(targetObj);
+        SceneManager.ActiveScene.DestroyObjectSafe(Target);
+    }
+}
+
+public class AddComponentCommand(GameObject target, Component component) : EngineCommand
+{
+    public GameObject Target = target;
+    public Component Component = component;
+    
+    public override void Execute()
+    {
+        Target.AddComponentSafe(Component);
+    }
+}
+
+public class RemoveComponentCommand(GameObject target, Component component) : EngineCommand
+{
+    public GameObject Target = target;
+    public Component Component = component;
+    
+    public override void Execute()
+    {
+        Target.RemoveComponentSafe(Component);
     }
 }

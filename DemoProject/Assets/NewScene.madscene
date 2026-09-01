@@ -5,7 +5,7 @@
         "Name": "NewScene",
         "Guid": "0d5aab20-93fc-4fb2-b3b3-98143e32fdcb",
         "_gameObjects": [
-            "0a97c2ee-902c-4442-9f23-8befb9b1e7af"
+            "4a81f713-b68b-4e04-b057-f28e1220304a"
         ],
         "_lights": [],
         "_renderers": []
@@ -13,14 +13,14 @@
     "GameObjects": [
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "0a97c2ee-902c-4442-9f23-8befb9b1e7af",
+            "$guid": "4a81f713-b68b-4e04-b057-f28e1220304a",
             "$data": {
                 "Name": "NewGameObject",
-                "Guid": "0a97c2ee-902c-4442-9f23-8befb9b1e7af",
-                "Transform": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
+                "Guid": "4a81f713-b68b-4e04-b057-f28e1220304a",
+                "Transform": "feb01a06-599a-4b62-9496-9a4aebcd45ee",
                 "_components": [
-                    "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
-                    "b314edb0-cc99-4aac-93da-14900c8eaa11"
+                    "feb01a06-599a-4b62-9496-9a4aebcd45ee",
+                    "aa0237db-b485-4fc7-ab7c-2b49ebf4ff68"
                 ]
             }
         }
@@ -28,7 +28,7 @@
     "Components": [
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
+            "$guid": "feb01a06-599a-4b62-9496-9a4aebcd45ee",
             "$data": {
                 "EulerRotation": [
                     0,
@@ -37,7 +37,7 @@
                 ],
                 "Parent": null,
                 "Name": "NewComponent",
-                "Guid": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
+                "Guid": "feb01a06-599a-4b62-9496-9a4aebcd45ee",
                 "Position": [
                     0,
                     0,
@@ -65,18 +65,12 @@
         },
         {
             "$type": "EditorTestComp, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "b314edb0-cc99-4aac-93da-14900c8eaa11",
+            "$guid": "aa0237db-b485-4fc7-ab7c-2b49ebf4ff68",
             "$data": {
                 "Name": "NewComponent",
-                "Guid": "b314edb0-cc99-4aac-93da-14900c8eaa11",
-                "vertices": {
-                    "": 10,
-                    "ef": 22
-                },
-                "more": [
-                    13,
-                    4
-                ]
+                "Guid": "aa0237db-b485-4fc7-ab7c-2b49ebf4ff68",
+                "vertices": {},
+                "more": []
             }
         }
     ]

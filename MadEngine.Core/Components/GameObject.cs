@@ -44,18 +44,18 @@ public class GameObject : MadObject
         {
             foreach (Component component in Components)
             {
-                component.OnDestroy(); 
+                component.OnDestroy();
             }
-            
+
             var componentsArray = Components.ToArray();
             foreach (Component component in componentsArray)
             {
                 component.Destroy();
             }
-        
+
             _components.Clear();
         }
-        
+
         base.OnDispose(disposing);
     }
 
@@ -72,36 +72,69 @@ public class GameObject : MadObject
         foreach (Component component in Components)
             component.EditorUpdate(deltaTime);
     }
-    
+
     public T? AddComponent<T>() where T : Component
     {
         if (!ComponentRules.CanBeAdded(typeof(T)))
             return null;
 
-        T component = (T)Activator.CreateInstance(typeof(T))!;
-        
-        _components.Add(component);
-        component.AssignGameObject(this);
-        
-        ComponentAdded?.Invoke(component);
-        return component;
+        return (T?)AddComponent(typeof(T));
     }
-    
+
     public Component? AddComponent(Type type)
     {
         if (!ComponentRules.CanBeAdded(type))
             return null;
 
         Component component = (Component)Activator.CreateInstance(type)!;
-        
-        _components.Add(component);
-        component.AssignGameObject(this);
-        
-        ComponentAdded?.Invoke(component);
-        return component;
+        return AddComponent(component);
     }
 
     public Component? AddComponent(Component component)
+    {
+        if (!ComponentRules.CanBeAdded(component.GetType()))
+            return null;
+
+        EngineCommandsManager.Enqueue(new AddComponentCommand(this, component));
+        return component;
+    }
+
+    public bool RemoveComponent(Type type)
+    {
+        if (!ComponentRules.CanBeRemoved(type))
+            return false;
+
+        Component? component = GetComponent(type);
+        if (component == null)
+            return false;
+        
+        if (!_components.Contains(component))
+            return false;
+
+        EngineCommandsManager.Enqueue(new RemoveComponentCommand(this, component));
+
+        return true;
+    }
+
+    public bool RemoveComponent(Component component)
+    {
+        if (!ComponentRules.CanBeRemoved(component.GetType()))
+            return false;
+
+        if (!_components.Contains(component))
+            return false;
+        
+        EngineCommandsManager.Enqueue(new RemoveComponentCommand(this, component));
+
+        return true;
+    }
+    
+    public bool RemoveComponent<T>() where T : Component
+    {
+        return RemoveComponent(typeof(T));
+    }
+
+    internal Component? AddComponentSafe(Component component)
     {
         if (!ComponentRules.CanBeAdded(component.GetType()))
             return null;
@@ -113,37 +146,40 @@ public class GameObject : MadObject
         return component;
     }
 
-    public bool RemoveComponent(Component component)
+    internal bool RemoveComponentSafe(Component? component)
     {
-        if (!ComponentRules.CanBeRemoved(component.GetType()))
-            return false;
-
-        if (!_components.Remove(component))
-            return false;
-
-        ComponentRemoved?.Invoke(component);
-        return true;
-    }
-    
-    public bool RemoveComponent<T>() where T : Component
-    {
-        if (!ComponentRules.CanBeRemoved(typeof(T)))
-            return false;
-
-        T? component = GetComponent<T>();
         if (component == null)
             return false;
         
-        if (!_components.Remove(component))
+        if (!ComponentRules.CanBeRemoved(component.GetType()))
             return false;
 
+        if(!_components.Remove(component))
+            return false;
+        
         ComponentRemoved?.Invoke(component);
+
         return true;
+    }
+
+    public Component? AddComponentUnsafe(Component component)
+    {
+        return AddComponentSafe(component);
+    }
+
+    public bool RemoveComponentUnsafe(Component? component)
+    {
+        return RemoveComponentSafe(component);
     }
 
     public T? GetComponent<T>() where T : Component
     {
         return Components.OfType<T>().FirstOrDefault();
+    }
+
+    public Component? GetComponent(Type type)
+    {
+        return Components.FirstOrDefault(c => c.GetType() == type);
     }
 
     public T[] GetComponents<T>() where T : Component

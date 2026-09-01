@@ -40,7 +40,7 @@ public class EditorWindow : GameWindow
 
         _camera = new GameObject();
         _camera.Name = "MainCamera";
-        _camera.AddComponent(new Camera());
+        _camera.AddComponentUnsafe(new Camera());
         
         CursorState = CursorState.Normal;
         _camera.GetComponent<Camera>()!.Width = width;

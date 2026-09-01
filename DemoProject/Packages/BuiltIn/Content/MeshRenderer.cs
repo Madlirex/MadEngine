@@ -10,6 +10,7 @@ public class MeshRenderer : Renderer
 
     public override void Draw(Matrix4 view, Matrix4 projection)
     {
+        Console.WriteLine(GameObject);
         if (Mesh == null || Material?.Shader == null) return;
         if (GameObject == null) return;
         
