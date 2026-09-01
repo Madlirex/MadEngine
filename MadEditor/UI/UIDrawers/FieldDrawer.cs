@@ -413,7 +413,7 @@ public class DictionaryDrawer : FieldDrawer
                 object? valueInstance = dict[entry.Key] ?? NoneAsset.Instance;
                 
                 var valueMember = new CollectionElementMember(
-                    name: $"##Value_{entry.Key}",
+                    name: $"{entry.Key}",
                     type: valueType,
                     parentGuid: member.Guid,
                     elementIdentifier: entry.Key,

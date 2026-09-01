@@ -4,7 +4,40 @@
     "$data": {
         "Name": "NewMesh",
         "Guid": "afd7c7aa-a742-4e11-b94b-bee07e0a3466",
-        "_vertices": [],
+        "_vertices": [
+            {
+                "Normal": [
+                    0,
+                    17,
+                    29
+                ],
+                "Position": [
+                    39,
+                    0,
+                    25
+                ],
+                "TexCoord": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "Normal": [
+                    0,
+                    0,
+                    0
+                ],
+                "Position": [
+                    14,
+                    0,
+                    0
+                ],
+                "TexCoord": [
+                    0,
+                    0
+                ]
+            }
+        ],
         "_indices": []
     }
 }

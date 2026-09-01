@@ -6,7 +6,9 @@ using MadEngine.Core.SceneManagement;
 
 public class EditorTestComp : Component
 {
-    public Dictionary<string, Vertex> vertices = [];
+    public Dictionary<string, int> vertices = [];
+
+    public int[] more = [];
     /*
     public override void EditorUpdate(float deltaTime)
     {

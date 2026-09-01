@@ -1,0 +1,77 @@
+{
+    "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "be342d51-dc4b-43d8-86fb-69a6305182d1",
+    "$data": {
+        "Name": "NewScene",
+        "Guid": "be342d51-dc4b-43d8-86fb-69a6305182d1",
+        "_gameObjects": [
+            "76d21d81-670f-4cd1-9444-923207f4f4d0"
+        ],
+        "_lights": [],
+        "_renderers": []
+    },
+    "GameObjects": [
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "76d21d81-670f-4cd1-9444-923207f4f4d0",
+            "$data": {
+                "Name": "NewGameObject",
+                "Guid": "76d21d81-670f-4cd1-9444-923207f4f4d0",
+                "Transform": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+                "_components": [
+                    "51428100-8cdd-4eab-a509-c13c33fd93b4",
+                    "abc6643b-2a51-4b54-9ce7-84987ab59fcf"
+                ]
+            }
+        }
+    ],
+    "Components": [
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Name": "NewComponent",
+                "Guid": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        },
+        {
+            "$type": "EditorTestComp, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "abc6643b-2a51-4b54-9ce7-84987ab59fcf",
+            "$data": {
+                "Name": "NewComponent",
+                "Guid": "abc6643b-2a51-4b54-9ce7-84987ab59fcf",
+                "vertices": {},
+                "more": []
+            }
+        }
+    ]
+}
