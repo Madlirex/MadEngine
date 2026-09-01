@@ -296,20 +296,30 @@ public class ListDrawer : FieldDrawer
             {
                 int index = i;
 
+                object? elementInstance = list[index] ?? NoneAsset.Instance;
+                
                 var elementMember = new CollectionElementMember(
                     name: $"Element {index}",
                     type: elementType,
                     parentGuid: member.Guid,
                     elementIdentifier: index,
-                    getter: () => list[index],
-                    setter: val => list[index] = val
+                    getter: () => elementInstance,
+                    setter: val => {
+                        elementInstance = val;
+                        list[index] = val;
+                    }
                 );
                 
                 ImGui.PushID(elementMember.Guid.GetHashCode());
 
                 if (elementDrawer != null)
                 {
-                    FieldDrawerManager.Draw(list, elementDrawer, elementMember);
+                    FieldDrawerManager.Draw(elementInstance, elementDrawer, elementMember);
+    
+                    if (elementType.IsValueType && elementInstance != NoneAsset.Instance)
+                    {
+                        list[index] = elementInstance;
+                    }
                 }
                 else
                 {
@@ -400,16 +410,26 @@ public class DictionaryDrawer : FieldDrawer
                 ImGui.Text($"[{entry.Key}]:");
                 ImGui.SameLine();
                 
+                object? valueInstance = dict[entry.Key] ?? NoneAsset.Instance;
+                
                 var valueMember = new CollectionElementMember(
                     name: $"##Value_{entry.Key}",
                     type: valueType,
                     parentGuid: member.Guid,
                     elementIdentifier: entry.Key,
-                    getter: () => dict[entry.Key],
-                    setter: val => dict[entry.Key] = val
+                    getter: () => valueInstance,
+                    setter: val => {
+                        valueInstance = val;
+                        dict[entry.Key] = val;
+                    }
                 );
+                
+                FieldDrawerManager.Draw(valueInstance, valueDrawer, valueMember);
 
-                FieldDrawerManager.Draw(dict, valueDrawer, valueMember);
+                if (valueType.IsValueType && valueInstance != NoneAsset.Instance)
+                {
+                    dict[entry.Key] = valueInstance; 
+                }
 
                 ImGui.PopID();
             }
@@ -463,8 +483,14 @@ public class VertexDrawer : FieldDrawer
 {
     public override void Draw(object target, InspectorMember member)
     {
-        Vertex targetVertex = (Vertex)target;
         
+        object? structInstance = member.GetValue(target);
         
+        if (structInstance != null)
+        {
+            FieldDrawingManager.RenderChild(structInstance);
+            
+            member.SetValue(target, structInstance);
+        }
     }
 }
