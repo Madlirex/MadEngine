@@ -103,13 +103,12 @@ public class SceneImporter : Importer<Scene>
             
             if (string.IsNullOrEmpty(typeStr)) continue;
             
-            Type compType = Type.GetType(typeStr)!;
+            Type compType = ScriptDomain.GetType(typeStr)!;
             
             if (compType is { IsAbstract: false })
             {
                 Component obj = (Component)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(compType)!.DeserializeInto(obj, compJson["$data"]!);
-                Console.WriteLine(obj.GameObject);
             }
         }
     }

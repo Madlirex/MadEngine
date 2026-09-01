@@ -1,11 +1,11 @@
 {
     "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "be342d51-dc4b-43d8-86fb-69a6305182d1",
+    "$guid": "0d5aab20-93fc-4fb2-b3b3-98143e32fdcb",
     "$data": {
         "Name": "NewScene",
-        "Guid": "be342d51-dc4b-43d8-86fb-69a6305182d1",
+        "Guid": "0d5aab20-93fc-4fb2-b3b3-98143e32fdcb",
         "_gameObjects": [
-            "76d21d81-670f-4cd1-9444-923207f4f4d0"
+            "0a97c2ee-902c-4442-9f23-8befb9b1e7af"
         ],
         "_lights": [],
         "_renderers": []
@@ -13,14 +13,14 @@
     "GameObjects": [
         {
             "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "76d21d81-670f-4cd1-9444-923207f4f4d0",
+            "$guid": "0a97c2ee-902c-4442-9f23-8befb9b1e7af",
             "$data": {
                 "Name": "NewGameObject",
-                "Guid": "76d21d81-670f-4cd1-9444-923207f4f4d0",
-                "Transform": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+                "Guid": "0a97c2ee-902c-4442-9f23-8befb9b1e7af",
+                "Transform": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
                 "_components": [
-                    "51428100-8cdd-4eab-a509-c13c33fd93b4",
-                    "abc6643b-2a51-4b54-9ce7-84987ab59fcf"
+                    "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
+                    "b314edb0-cc99-4aac-93da-14900c8eaa11"
                 ]
             }
         }
@@ -28,7 +28,7 @@
     "Components": [
         {
             "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+            "$guid": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
             "$data": {
                 "EulerRotation": [
                     0,
@@ -37,7 +37,7 @@
                 ],
                 "Parent": null,
                 "Name": "NewComponent",
-                "Guid": "51428100-8cdd-4eab-a509-c13c33fd93b4",
+                "Guid": "0dd1cd69-3189-48e0-8684-df2463b9eeaa",
                 "Position": [
                     0,
                     0,
@@ -65,12 +65,18 @@
         },
         {
             "$type": "EditorTestComp, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "abc6643b-2a51-4b54-9ce7-84987ab59fcf",
+            "$guid": "b314edb0-cc99-4aac-93da-14900c8eaa11",
             "$data": {
                 "Name": "NewComponent",
-                "Guid": "abc6643b-2a51-4b54-9ce7-84987ab59fcf",
-                "vertices": {},
-                "more": []
+                "Guid": "b314edb0-cc99-4aac-93da-14900c8eaa11",
+                "vertices": {
+                    "": 10,
+                    "ef": 22
+                },
+                "more": [
+                    13,
+                    4
+                ]
             }
         }
     ]
