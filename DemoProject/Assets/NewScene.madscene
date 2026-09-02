@@ -28,13 +28,81 @@
             "f5da2dbd-5f5d-4529-baf5-d4d4c4bab0e4",
             "e1662020-346a-4af1-b057-c534de30e370",
             "5e6b9ec9-6d29-43b2-9afa-17e36cbf728c",
-            "f3fb74e6-2b2c-47db-b005-6b2fb4e68220"
+            "f3fb74e6-2b2c-47db-b005-6b2fb4e68220",
+            "55b32dc9-24a8-4162-91b7-d551d3372566",
+            "117068cd-1972-4c51-ab04-b8c2c74d5938",
+            "6aae5e33-2dbc-4ab6-8cd9-db1e39b41bb0",
+            "9b619e2c-5c1c-4146-9511-efa1f7ba4695",
+            "20b63f59-5d55-4f08-8e49-7ba167e9bbce",
+            "645608f5-e83b-4ef4-a623-47f2db4337ef",
+            "c7e5a9f2-f6ee-453a-8ab2-59952ac833d0",
+            "0aae49b8-424d-4dce-98b8-38cfbc921e6d",
+            "2468ce2c-e075-4ff7-8417-6d8571439f69",
+            "72414b03-4d87-4861-a7ab-751efc7906e0",
+            "d5e9a13c-5ae9-4508-826e-7edb895d8ec4",
+            "d3daa597-13bb-41e0-aeba-503c0ea4f325",
+            "e4fa0617-9f71-491a-983b-5aa4661dbca3",
+            "8571a370-b9f0-4d99-9860-c05c637a1439",
+            "69202091-4597-43eb-900b-880acf694069",
+            "d4c825a6-82fa-4a6d-886c-6849139389bc",
+            "0d2e8b6c-4750-4d6f-8a3e-0ce134beb98c",
+            "72ea8dc5-f722-4ded-98dc-f2250196421f",
+            "a788a464-a634-4353-af43-7f0987fe415f",
+            "b471e82d-7062-415f-bf34-4e5af3413658",
+            "4ded27f7-89c3-400a-80e3-cf44987c2700",
+            "37af30be-de8a-424c-9d8f-8a94ccde743f",
+            "442b4d7d-c643-44ff-b227-b0906e727a20",
+            "b4d35f04-3e82-4eb4-ac59-68cd10cf47e1",
+            "a36afef9-1a77-4ea2-ad18-6b75739e617e",
+            "9043baaf-12fc-41b1-aa74-423622fe0a71",
+            "5a57c25d-76ef-43f7-abc1-4d2156ef0adf",
+            "487c9900-184b-4582-8079-255c56c99130",
+            "2d9ce6b2-5414-4cbe-a648-96b8030e56a1",
+            "e545cb7e-c05b-49f2-914d-7e63f0d61357",
+            "fdfcfdc1-c305-4919-9192-85cc8f7c629d",
+            "047fd5ee-d8aa-487f-9735-d5288bbc095e",
+            "955bbb4b-f750-4a6f-a3af-1aeb20728692",
+            "5d6cf5eb-e794-4f85-a608-94bf55db950e",
+            "c30f0a7c-0ccc-4eeb-a2fb-9f00e8154e13",
+            "27a9e9aa-52d6-4028-b83a-579aa846bdf8",
+            "9c973b98-b6a6-4fb9-a532-9dd36b27837e",
+            "55cf1387-4abe-4664-b609-60e42c9e8177",
+            "ff31cc21-aa63-4bdc-abd7-ae8828d57946",
+            "926e5234-974b-45d2-86d4-7219caebf27e",
+            "4cc6e991-c432-41d7-8dd0-7b47edf024cc",
+            "6b3476ec-63d9-47c8-8c59-4f61a1964685",
+            "dcb6d25f-5323-43e0-a870-5e4b794b88a9",
+            "8e2ff2d2-09ce-41e4-8b2f-daec80453496",
+            "22877748-971c-41f9-b48b-8de9f9ef754e",
+            "5d675cad-64f0-4cf5-9fc8-0ab376b4f8b4",
+            "4e655662-9063-47ea-954f-7519c3acbb93",
+            "c7135467-ab9e-4489-81e0-48ddc0208298",
+            "a22d1855-0141-4385-b801-831477891904",
+            "c7678498-443f-4c4d-9cb7-b7e753b68b51",
+            "e5871ff6-ece0-49d1-8692-1a86ab1d14c9",
+            "318fc476-91d1-4d2e-9932-fa37cd1a9d0d",
+            "d1dd67b1-db71-4d6e-9cb6-c606052d5c55",
+            "74351028-e4ce-4f27-9825-43ed2b41ec6b",
+            "6d4b64dd-10a6-4f8c-9f62-d6ec3185b3a3",
+            "29bfdc00-e736-4249-bc46-09d2df0ac1b5",
+            "d83ac200-2668-4cc7-ab44-2513a699abda",
+            "237c65ba-3776-42db-bfa4-967ca37ad5ec",
+            "079502e1-1b70-4f19-a77d-4a506bf502a0",
+            "2f4f93d2-896a-4639-95d3-bf8d8b38edbc",
+            "d8e11537-76dd-4594-8835-ed406baae0d6",
+            "6896fd9d-05d5-4d29-a64e-c3c3ceb53b3d"
         ],
         "_lights": [],
         "_renderers": [
             "796a04a0-6e4f-4b04-b129-6403dab8152a",
             "796a04a0-6e4f-4b04-b129-6403dab8152a",
-            "796a04a0-6e4f-4b04-b129-6403dab8152a"
+            "796a04a0-6e4f-4b04-b129-6403dab8152a",
+            "796a04a0-6e4f-4b04-b129-6403dab8152a",
+            "b39529c4-0753-40d1-94fd-998f3686c663",
+            "796a04a0-6e4f-4b04-b129-6403dab8152a",
+            "b39529c4-0753-40d1-94fd-998f3686c663",
+            "796a04a0-6e4f-4b04-b129-6403dab8152a",
+            "b39529c4-0753-40d1-94fd-998f3686c663"
         ],
         "Guid": "ef677ff1-f937-4586-a20e-960dd1ea9ec6",
         "_guid": "ef677ff1-f937-4586-a20e-960dd1ea9ec6"
@@ -61,7 +129,8 @@
             "$data": {
                 "Transform": "ab862cb6-6cce-4863-877b-6b18ffc26a83",
                 "_components": [
-                    "ab862cb6-6cce-4863-877b-6b18ffc26a83"
+                    "ab862cb6-6cce-4863-877b-6b18ffc26a83",
+                    "b39529c4-0753-40d1-94fd-998f3686c663"
                 ],
                 "Name": "NewGameObject",
                 "Guid": "3221b431-6cb0-4323-ba0b-95c20776d2d2",
@@ -366,6 +435,812 @@
                 "Guid": "f3fb74e6-2b2c-47db-b005-6b2fb4e68220",
                 "_guid": "f3fb74e6-2b2c-47db-b005-6b2fb4e68220"
             }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "55b32dc9-24a8-4162-91b7-d551d3372566",
+            "$data": {
+                "Transform": "5cbbf3b2-e129-4c43-b293-9a80002c1935",
+                "_components": [
+                    "5cbbf3b2-e129-4c43-b293-9a80002c1935"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "55b32dc9-24a8-4162-91b7-d551d3372566",
+                "_guid": "55b32dc9-24a8-4162-91b7-d551d3372566"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "117068cd-1972-4c51-ab04-b8c2c74d5938",
+            "$data": {
+                "Transform": "b1cf4544-9b43-4438-8787-4a9cbfea5c9a",
+                "_components": [
+                    "b1cf4544-9b43-4438-8787-4a9cbfea5c9a"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "117068cd-1972-4c51-ab04-b8c2c74d5938",
+                "_guid": "117068cd-1972-4c51-ab04-b8c2c74d5938"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "6aae5e33-2dbc-4ab6-8cd9-db1e39b41bb0",
+            "$data": {
+                "Transform": "2ae74225-0aa0-4dbf-92ff-ffb48ef17633",
+                "_components": [
+                    "2ae74225-0aa0-4dbf-92ff-ffb48ef17633"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "6aae5e33-2dbc-4ab6-8cd9-db1e39b41bb0",
+                "_guid": "6aae5e33-2dbc-4ab6-8cd9-db1e39b41bb0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9b619e2c-5c1c-4146-9511-efa1f7ba4695",
+            "$data": {
+                "Transform": "87264134-12af-4306-a01d-90887a190d52",
+                "_components": [
+                    "87264134-12af-4306-a01d-90887a190d52"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "9b619e2c-5c1c-4146-9511-efa1f7ba4695",
+                "_guid": "9b619e2c-5c1c-4146-9511-efa1f7ba4695"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "20b63f59-5d55-4f08-8e49-7ba167e9bbce",
+            "$data": {
+                "Transform": "e8de2492-2dc7-4dfb-ab76-2225916ad969",
+                "_components": [
+                    "e8de2492-2dc7-4dfb-ab76-2225916ad969"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "20b63f59-5d55-4f08-8e49-7ba167e9bbce",
+                "_guid": "20b63f59-5d55-4f08-8e49-7ba167e9bbce"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "645608f5-e83b-4ef4-a623-47f2db4337ef",
+            "$data": {
+                "Transform": "4dedc0af-a615-4d16-9ca9-dad14715eaba",
+                "_components": [
+                    "4dedc0af-a615-4d16-9ca9-dad14715eaba"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "645608f5-e83b-4ef4-a623-47f2db4337ef",
+                "_guid": "645608f5-e83b-4ef4-a623-47f2db4337ef"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c7e5a9f2-f6ee-453a-8ab2-59952ac833d0",
+            "$data": {
+                "Transform": "cc0f6a76-ff62-4392-95b0-704eb69010fc",
+                "_components": [
+                    "cc0f6a76-ff62-4392-95b0-704eb69010fc"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "c7e5a9f2-f6ee-453a-8ab2-59952ac833d0",
+                "_guid": "c7e5a9f2-f6ee-453a-8ab2-59952ac833d0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "0aae49b8-424d-4dce-98b8-38cfbc921e6d",
+            "$data": {
+                "Transform": "9fb3a27c-7368-4f2f-9407-592e0f688b96",
+                "_components": [
+                    "9fb3a27c-7368-4f2f-9407-592e0f688b96"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "0aae49b8-424d-4dce-98b8-38cfbc921e6d",
+                "_guid": "0aae49b8-424d-4dce-98b8-38cfbc921e6d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2468ce2c-e075-4ff7-8417-6d8571439f69",
+            "$data": {
+                "Transform": "f804af31-83b3-4ae0-8520-eaca6bf7971c",
+                "_components": [
+                    "f804af31-83b3-4ae0-8520-eaca6bf7971c"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "2468ce2c-e075-4ff7-8417-6d8571439f69",
+                "_guid": "2468ce2c-e075-4ff7-8417-6d8571439f69"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "72414b03-4d87-4861-a7ab-751efc7906e0",
+            "$data": {
+                "Transform": "29fda671-0941-46f8-bc72-79ab1cb3347c",
+                "_components": [
+                    "29fda671-0941-46f8-bc72-79ab1cb3347c"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "72414b03-4d87-4861-a7ab-751efc7906e0",
+                "_guid": "72414b03-4d87-4861-a7ab-751efc7906e0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d5e9a13c-5ae9-4508-826e-7edb895d8ec4",
+            "$data": {
+                "Transform": "c7f8c8a3-b8ec-41d1-938a-9f672c12f657",
+                "_components": [
+                    "c7f8c8a3-b8ec-41d1-938a-9f672c12f657"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d5e9a13c-5ae9-4508-826e-7edb895d8ec4",
+                "_guid": "d5e9a13c-5ae9-4508-826e-7edb895d8ec4"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d3daa597-13bb-41e0-aeba-503c0ea4f325",
+            "$data": {
+                "Transform": "2cd0eb85-d071-45e7-8bee-1ee087013f53",
+                "_components": [
+                    "2cd0eb85-d071-45e7-8bee-1ee087013f53"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d3daa597-13bb-41e0-aeba-503c0ea4f325",
+                "_guid": "d3daa597-13bb-41e0-aeba-503c0ea4f325"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e4fa0617-9f71-491a-983b-5aa4661dbca3",
+            "$data": {
+                "Transform": "fdb0d2a7-135f-4c69-a426-edbbf08e7b9e",
+                "_components": [
+                    "fdb0d2a7-135f-4c69-a426-edbbf08e7b9e"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "e4fa0617-9f71-491a-983b-5aa4661dbca3",
+                "_guid": "e4fa0617-9f71-491a-983b-5aa4661dbca3"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "8571a370-b9f0-4d99-9860-c05c637a1439",
+            "$data": {
+                "Transform": "a763c1b5-da96-4720-8a0d-ac806731908e",
+                "_components": [
+                    "a763c1b5-da96-4720-8a0d-ac806731908e"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "8571a370-b9f0-4d99-9860-c05c637a1439",
+                "_guid": "8571a370-b9f0-4d99-9860-c05c637a1439"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "69202091-4597-43eb-900b-880acf694069",
+            "$data": {
+                "Transform": "f3b2f402-2011-4265-b88a-111934298b06",
+                "_components": [
+                    "f3b2f402-2011-4265-b88a-111934298b06"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "69202091-4597-43eb-900b-880acf694069",
+                "_guid": "69202091-4597-43eb-900b-880acf694069"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d4c825a6-82fa-4a6d-886c-6849139389bc",
+            "$data": {
+                "Transform": "f41d1e37-fa6d-440d-b835-30d9f9f48a8d",
+                "_components": [
+                    "f41d1e37-fa6d-440d-b835-30d9f9f48a8d"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d4c825a6-82fa-4a6d-886c-6849139389bc",
+                "_guid": "d4c825a6-82fa-4a6d-886c-6849139389bc"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "0d2e8b6c-4750-4d6f-8a3e-0ce134beb98c",
+            "$data": {
+                "Transform": "47390994-64dc-40cf-b92d-439fd7c8abfe",
+                "_components": [
+                    "47390994-64dc-40cf-b92d-439fd7c8abfe"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "0d2e8b6c-4750-4d6f-8a3e-0ce134beb98c",
+                "_guid": "0d2e8b6c-4750-4d6f-8a3e-0ce134beb98c"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "72ea8dc5-f722-4ded-98dc-f2250196421f",
+            "$data": {
+                "Transform": "73676081-94b2-484c-9ab2-8b17da798b24",
+                "_components": [
+                    "73676081-94b2-484c-9ab2-8b17da798b24"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "72ea8dc5-f722-4ded-98dc-f2250196421f",
+                "_guid": "72ea8dc5-f722-4ded-98dc-f2250196421f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "a788a464-a634-4353-af43-7f0987fe415f",
+            "$data": {
+                "Transform": "9f038a83-3c92-407c-a3f1-91f21a3c864a",
+                "_components": [
+                    "9f038a83-3c92-407c-a3f1-91f21a3c864a"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "a788a464-a634-4353-af43-7f0987fe415f",
+                "_guid": "a788a464-a634-4353-af43-7f0987fe415f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "b471e82d-7062-415f-bf34-4e5af3413658",
+            "$data": {
+                "Transform": "041b05f4-dedf-4cb5-bf7f-3850105c49a4",
+                "_components": [
+                    "041b05f4-dedf-4cb5-bf7f-3850105c49a4"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "b471e82d-7062-415f-bf34-4e5af3413658",
+                "_guid": "b471e82d-7062-415f-bf34-4e5af3413658"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "4ded27f7-89c3-400a-80e3-cf44987c2700",
+            "$data": {
+                "Transform": "1f56c617-1215-4dd3-9adb-6ef6a844322d",
+                "_components": [
+                    "1f56c617-1215-4dd3-9adb-6ef6a844322d"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "4ded27f7-89c3-400a-80e3-cf44987c2700",
+                "_guid": "4ded27f7-89c3-400a-80e3-cf44987c2700"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "37af30be-de8a-424c-9d8f-8a94ccde743f",
+            "$data": {
+                "Transform": "5f3c5315-0ebc-4fc0-8d4c-44cb10c65d92",
+                "_components": [
+                    "5f3c5315-0ebc-4fc0-8d4c-44cb10c65d92"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "37af30be-de8a-424c-9d8f-8a94ccde743f",
+                "_guid": "37af30be-de8a-424c-9d8f-8a94ccde743f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "442b4d7d-c643-44ff-b227-b0906e727a20",
+            "$data": {
+                "Transform": "cae28f95-b799-4ff4-a70c-18f136611321",
+                "_components": [
+                    "cae28f95-b799-4ff4-a70c-18f136611321"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "442b4d7d-c643-44ff-b227-b0906e727a20",
+                "_guid": "442b4d7d-c643-44ff-b227-b0906e727a20"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "b4d35f04-3e82-4eb4-ac59-68cd10cf47e1",
+            "$data": {
+                "Transform": "4e8790ba-ce2c-43bd-850b-bd213ee424e0",
+                "_components": [
+                    "4e8790ba-ce2c-43bd-850b-bd213ee424e0"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "b4d35f04-3e82-4eb4-ac59-68cd10cf47e1",
+                "_guid": "b4d35f04-3e82-4eb4-ac59-68cd10cf47e1"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "a36afef9-1a77-4ea2-ad18-6b75739e617e",
+            "$data": {
+                "Transform": "f2aa8f0d-28b7-4943-97ef-c26e8ef66fef",
+                "_components": [
+                    "f2aa8f0d-28b7-4943-97ef-c26e8ef66fef"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "a36afef9-1a77-4ea2-ad18-6b75739e617e",
+                "_guid": "a36afef9-1a77-4ea2-ad18-6b75739e617e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9043baaf-12fc-41b1-aa74-423622fe0a71",
+            "$data": {
+                "Transform": "24266514-0e13-46c5-b613-161d5ed82932",
+                "_components": [
+                    "24266514-0e13-46c5-b613-161d5ed82932"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "9043baaf-12fc-41b1-aa74-423622fe0a71",
+                "_guid": "9043baaf-12fc-41b1-aa74-423622fe0a71"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5a57c25d-76ef-43f7-abc1-4d2156ef0adf",
+            "$data": {
+                "Transform": "5d66e243-20a9-4e6e-825b-a94fe641d08d",
+                "_components": [
+                    "5d66e243-20a9-4e6e-825b-a94fe641d08d"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "5a57c25d-76ef-43f7-abc1-4d2156ef0adf",
+                "_guid": "5a57c25d-76ef-43f7-abc1-4d2156ef0adf"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "487c9900-184b-4582-8079-255c56c99130",
+            "$data": {
+                "Transform": "9693b3db-c8fe-4ee4-96be-8c696865ad53",
+                "_components": [
+                    "9693b3db-c8fe-4ee4-96be-8c696865ad53"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "487c9900-184b-4582-8079-255c56c99130",
+                "_guid": "487c9900-184b-4582-8079-255c56c99130"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2d9ce6b2-5414-4cbe-a648-96b8030e56a1",
+            "$data": {
+                "Transform": "73015782-6b46-4814-8bf4-53165689bc23",
+                "_components": [
+                    "73015782-6b46-4814-8bf4-53165689bc23"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "2d9ce6b2-5414-4cbe-a648-96b8030e56a1",
+                "_guid": "2d9ce6b2-5414-4cbe-a648-96b8030e56a1"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e545cb7e-c05b-49f2-914d-7e63f0d61357",
+            "$data": {
+                "Transform": "f74c2f1f-b94b-483a-9fdc-c14a2e207224",
+                "_components": [
+                    "f74c2f1f-b94b-483a-9fdc-c14a2e207224"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "e545cb7e-c05b-49f2-914d-7e63f0d61357",
+                "_guid": "e545cb7e-c05b-49f2-914d-7e63f0d61357"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "fdfcfdc1-c305-4919-9192-85cc8f7c629d",
+            "$data": {
+                "Transform": "8d9035d7-483e-4c15-9a9d-5731e1bdbc7a",
+                "_components": [
+                    "8d9035d7-483e-4c15-9a9d-5731e1bdbc7a"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "fdfcfdc1-c305-4919-9192-85cc8f7c629d",
+                "_guid": "fdfcfdc1-c305-4919-9192-85cc8f7c629d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "047fd5ee-d8aa-487f-9735-d5288bbc095e",
+            "$data": {
+                "Transform": "fabb462b-5f26-4359-bfeb-2bda01281bf0",
+                "_components": [
+                    "fabb462b-5f26-4359-bfeb-2bda01281bf0"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "047fd5ee-d8aa-487f-9735-d5288bbc095e",
+                "_guid": "047fd5ee-d8aa-487f-9735-d5288bbc095e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "955bbb4b-f750-4a6f-a3af-1aeb20728692",
+            "$data": {
+                "Transform": "c969d626-c0d8-4c72-a7f0-02742843f3a9",
+                "_components": [
+                    "c969d626-c0d8-4c72-a7f0-02742843f3a9"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "955bbb4b-f750-4a6f-a3af-1aeb20728692",
+                "_guid": "955bbb4b-f750-4a6f-a3af-1aeb20728692"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5d6cf5eb-e794-4f85-a608-94bf55db950e",
+            "$data": {
+                "Transform": "f452e663-42c1-460f-a129-46a2772ac8d0",
+                "_components": [
+                    "f452e663-42c1-460f-a129-46a2772ac8d0"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "5d6cf5eb-e794-4f85-a608-94bf55db950e",
+                "_guid": "5d6cf5eb-e794-4f85-a608-94bf55db950e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c30f0a7c-0ccc-4eeb-a2fb-9f00e8154e13",
+            "$data": {
+                "Transform": "c38bbbe4-f333-4650-a0db-f6fb4bb26c45",
+                "_components": [
+                    "c38bbbe4-f333-4650-a0db-f6fb4bb26c45"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "c30f0a7c-0ccc-4eeb-a2fb-9f00e8154e13",
+                "_guid": "c30f0a7c-0ccc-4eeb-a2fb-9f00e8154e13"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "27a9e9aa-52d6-4028-b83a-579aa846bdf8",
+            "$data": {
+                "Transform": "9ab3616a-c395-4cd0-a902-c629d8f8ca2f",
+                "_components": [
+                    "9ab3616a-c395-4cd0-a902-c629d8f8ca2f"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "27a9e9aa-52d6-4028-b83a-579aa846bdf8",
+                "_guid": "27a9e9aa-52d6-4028-b83a-579aa846bdf8"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9c973b98-b6a6-4fb9-a532-9dd36b27837e",
+            "$data": {
+                "Transform": "e37ab5ba-6b9b-4bf5-8a39-bebe4b0bf778",
+                "_components": [
+                    "e37ab5ba-6b9b-4bf5-8a39-bebe4b0bf778"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "9c973b98-b6a6-4fb9-a532-9dd36b27837e",
+                "_guid": "9c973b98-b6a6-4fb9-a532-9dd36b27837e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "55cf1387-4abe-4664-b609-60e42c9e8177",
+            "$data": {
+                "Transform": "77180290-c08c-4d74-b300-dd039ad4bc40",
+                "_components": [
+                    "77180290-c08c-4d74-b300-dd039ad4bc40"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "55cf1387-4abe-4664-b609-60e42c9e8177",
+                "_guid": "55cf1387-4abe-4664-b609-60e42c9e8177"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "ff31cc21-aa63-4bdc-abd7-ae8828d57946",
+            "$data": {
+                "Transform": "5518b19d-63a5-4cc7-8249-f8cd7e9237c2",
+                "_components": [
+                    "5518b19d-63a5-4cc7-8249-f8cd7e9237c2"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "ff31cc21-aa63-4bdc-abd7-ae8828d57946",
+                "_guid": "ff31cc21-aa63-4bdc-abd7-ae8828d57946"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "926e5234-974b-45d2-86d4-7219caebf27e",
+            "$data": {
+                "Transform": "1b7b26b9-da1d-4d04-b0cb-7bafd3d4d226",
+                "_components": [
+                    "1b7b26b9-da1d-4d04-b0cb-7bafd3d4d226"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "926e5234-974b-45d2-86d4-7219caebf27e",
+                "_guid": "926e5234-974b-45d2-86d4-7219caebf27e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "4cc6e991-c432-41d7-8dd0-7b47edf024cc",
+            "$data": {
+                "Transform": "c1bc857c-07b6-4f6e-8811-be4de7798739",
+                "_components": [
+                    "c1bc857c-07b6-4f6e-8811-be4de7798739"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "4cc6e991-c432-41d7-8dd0-7b47edf024cc",
+                "_guid": "4cc6e991-c432-41d7-8dd0-7b47edf024cc"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "6b3476ec-63d9-47c8-8c59-4f61a1964685",
+            "$data": {
+                "Transform": "25191ea4-42f2-4c7a-ab42-b25a0364182b",
+                "_components": [
+                    "25191ea4-42f2-4c7a-ab42-b25a0364182b"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "6b3476ec-63d9-47c8-8c59-4f61a1964685",
+                "_guid": "6b3476ec-63d9-47c8-8c59-4f61a1964685"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "dcb6d25f-5323-43e0-a870-5e4b794b88a9",
+            "$data": {
+                "Transform": "f0999ea9-87cc-4e28-a1de-a98dae1a97bc",
+                "_components": [
+                    "f0999ea9-87cc-4e28-a1de-a98dae1a97bc"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "dcb6d25f-5323-43e0-a870-5e4b794b88a9",
+                "_guid": "dcb6d25f-5323-43e0-a870-5e4b794b88a9"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "8e2ff2d2-09ce-41e4-8b2f-daec80453496",
+            "$data": {
+                "Transform": "3fb5ac5e-3d37-4912-b38f-9467f3dba17c",
+                "_components": [
+                    "3fb5ac5e-3d37-4912-b38f-9467f3dba17c"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "8e2ff2d2-09ce-41e4-8b2f-daec80453496",
+                "_guid": "8e2ff2d2-09ce-41e4-8b2f-daec80453496"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "22877748-971c-41f9-b48b-8de9f9ef754e",
+            "$data": {
+                "Transform": "81ba38ab-37f6-4801-888f-fdd1065c2ae3",
+                "_components": [
+                    "81ba38ab-37f6-4801-888f-fdd1065c2ae3"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "22877748-971c-41f9-b48b-8de9f9ef754e",
+                "_guid": "22877748-971c-41f9-b48b-8de9f9ef754e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5d675cad-64f0-4cf5-9fc8-0ab376b4f8b4",
+            "$data": {
+                "Transform": "d5cb9814-d49f-4200-b6ac-a0ebd9a73f24",
+                "_components": [
+                    "d5cb9814-d49f-4200-b6ac-a0ebd9a73f24"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "5d675cad-64f0-4cf5-9fc8-0ab376b4f8b4",
+                "_guid": "5d675cad-64f0-4cf5-9fc8-0ab376b4f8b4"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "4e655662-9063-47ea-954f-7519c3acbb93",
+            "$data": {
+                "Transform": "f55d31db-84c7-44bc-9fe9-4e18b0d4bb84",
+                "_components": [
+                    "f55d31db-84c7-44bc-9fe9-4e18b0d4bb84"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "4e655662-9063-47ea-954f-7519c3acbb93",
+                "_guid": "4e655662-9063-47ea-954f-7519c3acbb93"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c7135467-ab9e-4489-81e0-48ddc0208298",
+            "$data": {
+                "Transform": "fe21508b-1206-463d-8413-7de804a3b2e0",
+                "_components": [
+                    "fe21508b-1206-463d-8413-7de804a3b2e0"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "c7135467-ab9e-4489-81e0-48ddc0208298",
+                "_guid": "c7135467-ab9e-4489-81e0-48ddc0208298"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "a22d1855-0141-4385-b801-831477891904",
+            "$data": {
+                "Transform": "c4707708-5060-4d23-9b24-e180a406cc62",
+                "_components": [
+                    "c4707708-5060-4d23-9b24-e180a406cc62"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "a22d1855-0141-4385-b801-831477891904",
+                "_guid": "a22d1855-0141-4385-b801-831477891904"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c7678498-443f-4c4d-9cb7-b7e753b68b51",
+            "$data": {
+                "Transform": "bbe00c72-51a3-415a-9964-a36ed5219334",
+                "_components": [
+                    "bbe00c72-51a3-415a-9964-a36ed5219334"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "c7678498-443f-4c4d-9cb7-b7e753b68b51",
+                "_guid": "c7678498-443f-4c4d-9cb7-b7e753b68b51"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e5871ff6-ece0-49d1-8692-1a86ab1d14c9",
+            "$data": {
+                "Transform": "99744e68-989b-4275-8f1f-225df292c006",
+                "_components": [
+                    "99744e68-989b-4275-8f1f-225df292c006"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "e5871ff6-ece0-49d1-8692-1a86ab1d14c9",
+                "_guid": "e5871ff6-ece0-49d1-8692-1a86ab1d14c9"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "318fc476-91d1-4d2e-9932-fa37cd1a9d0d",
+            "$data": {
+                "Transform": "df37a617-fa93-4f03-9890-ed767098f0f4",
+                "_components": [
+                    "df37a617-fa93-4f03-9890-ed767098f0f4"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "318fc476-91d1-4d2e-9932-fa37cd1a9d0d",
+                "_guid": "318fc476-91d1-4d2e-9932-fa37cd1a9d0d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d1dd67b1-db71-4d6e-9cb6-c606052d5c55",
+            "$data": {
+                "Transform": "3f0d29c6-bef6-4ff5-be37-8d87c85e5ff6",
+                "_components": [
+                    "3f0d29c6-bef6-4ff5-be37-8d87c85e5ff6"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d1dd67b1-db71-4d6e-9cb6-c606052d5c55",
+                "_guid": "d1dd67b1-db71-4d6e-9cb6-c606052d5c55"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "74351028-e4ce-4f27-9825-43ed2b41ec6b",
+            "$data": {
+                "Transform": "ce346432-7a14-4688-9e3f-8d51e789256c",
+                "_components": [
+                    "ce346432-7a14-4688-9e3f-8d51e789256c"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "74351028-e4ce-4f27-9825-43ed2b41ec6b",
+                "_guid": "74351028-e4ce-4f27-9825-43ed2b41ec6b"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "6d4b64dd-10a6-4f8c-9f62-d6ec3185b3a3",
+            "$data": {
+                "Transform": "f0866bfd-7256-4322-a27d-276568987f7d",
+                "_components": [
+                    "f0866bfd-7256-4322-a27d-276568987f7d"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "6d4b64dd-10a6-4f8c-9f62-d6ec3185b3a3",
+                "_guid": "6d4b64dd-10a6-4f8c-9f62-d6ec3185b3a3"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "29bfdc00-e736-4249-bc46-09d2df0ac1b5",
+            "$data": {
+                "Transform": "c1651ae6-f1b7-4e58-9cd3-7d1a4843697f",
+                "_components": [
+                    "c1651ae6-f1b7-4e58-9cd3-7d1a4843697f"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "29bfdc00-e736-4249-bc46-09d2df0ac1b5",
+                "_guid": "29bfdc00-e736-4249-bc46-09d2df0ac1b5"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d83ac200-2668-4cc7-ab44-2513a699abda",
+            "$data": {
+                "Transform": "5854cf51-c4b5-4e7b-b418-83ad723b2f3d",
+                "_components": [
+                    "5854cf51-c4b5-4e7b-b418-83ad723b2f3d"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d83ac200-2668-4cc7-ab44-2513a699abda",
+                "_guid": "d83ac200-2668-4cc7-ab44-2513a699abda"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "237c65ba-3776-42db-bfa4-967ca37ad5ec",
+            "$data": {
+                "Transform": "de6ad19c-7761-4416-95c2-632ec1062012",
+                "_components": [
+                    "de6ad19c-7761-4416-95c2-632ec1062012"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "237c65ba-3776-42db-bfa4-967ca37ad5ec",
+                "_guid": "237c65ba-3776-42db-bfa4-967ca37ad5ec"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "079502e1-1b70-4f19-a77d-4a506bf502a0",
+            "$data": {
+                "Transform": "dba2ad58-5601-4d8d-8d83-7bbfb1c20b2e",
+                "_components": [
+                    "dba2ad58-5601-4d8d-8d83-7bbfb1c20b2e"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "079502e1-1b70-4f19-a77d-4a506bf502a0",
+                "_guid": "079502e1-1b70-4f19-a77d-4a506bf502a0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2f4f93d2-896a-4639-95d3-bf8d8b38edbc",
+            "$data": {
+                "Transform": "25f49022-4972-4d21-97b1-b0c122d74425",
+                "_components": [
+                    "25f49022-4972-4d21-97b1-b0c122d74425"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "2f4f93d2-896a-4639-95d3-bf8d8b38edbc",
+                "_guid": "2f4f93d2-896a-4639-95d3-bf8d8b38edbc"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d8e11537-76dd-4594-8835-ed406baae0d6",
+            "$data": {
+                "Transform": "940336c8-9938-4dfa-a67e-ca1b60881891",
+                "_components": [
+                    "940336c8-9938-4dfa-a67e-ca1b60881891"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "d8e11537-76dd-4594-8835-ed406baae0d6",
+                "_guid": "d8e11537-76dd-4594-8835-ed406baae0d6"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "6896fd9d-05d5-4d29-a64e-c3c3ceb53b3d",
+            "$data": {
+                "Transform": "cf53cc06-7869-4536-bf05-eab7ab9c6f0e",
+                "_components": [
+                    "cf53cc06-7869-4536-bf05-eab7ab9c6f0e"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "6896fd9d-05d5-4d29-a64e-c3c3ceb53b3d",
+                "_guid": "6896fd9d-05d5-4d29-a64e-c3c3ceb53b3d"
+            }
         }
     ],
     "Components": [
@@ -443,7 +1318,7 @@
                 ],
                 "Parent": null,
                 "Position": [
-                    0,
+                    4,
                     0,
                     0
                 ],
@@ -469,6 +1344,18 @@
                 "Name": "NewComponent",
                 "Guid": "ab862cb6-6cce-4863-877b-6b18ffc26a83",
                 "_guid": "ab862cb6-6cce-4863-877b-6b18ffc26a83"
+            }
+        },
+        {
+            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "b39529c4-0753-40d1-94fd-998f3686c663",
+            "$data": {
+                "Mesh": "8cea9d68-9e54-473f-bd8c-0ec9c6cb9fdf",
+                "Material": "89afd505-3e37-4441-8a2c-c4371e0e8df8",
+                "_gameObject": "3221b431-6cb0-4323-ba0b-95c20776d2d2",
+                "Name": "NewComponent",
+                "Guid": "b39529c4-0753-40d1-94fd-998f3686c663",
+                "_guid": "b39529c4-0753-40d1-94fd-998f3686c663"
             }
         },
         {
@@ -1366,6 +2253,2424 @@
                 "Name": "NewComponent",
                 "Guid": "4de76453-e1a6-4c9d-986c-167c026f09f7",
                 "_guid": "4de76453-e1a6-4c9d-986c-167c026f09f7"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5cbbf3b2-e129-4c43-b293-9a80002c1935",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "55b32dc9-24a8-4162-91b7-d551d3372566",
+                "Name": "NewComponent",
+                "Guid": "5cbbf3b2-e129-4c43-b293-9a80002c1935",
+                "_guid": "5cbbf3b2-e129-4c43-b293-9a80002c1935"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "b1cf4544-9b43-4438-8787-4a9cbfea5c9a",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "117068cd-1972-4c51-ab04-b8c2c74d5938",
+                "Name": "NewComponent",
+                "Guid": "b1cf4544-9b43-4438-8787-4a9cbfea5c9a",
+                "_guid": "b1cf4544-9b43-4438-8787-4a9cbfea5c9a"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2ae74225-0aa0-4dbf-92ff-ffb48ef17633",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "6aae5e33-2dbc-4ab6-8cd9-db1e39b41bb0",
+                "Name": "NewComponent",
+                "Guid": "2ae74225-0aa0-4dbf-92ff-ffb48ef17633",
+                "_guid": "2ae74225-0aa0-4dbf-92ff-ffb48ef17633"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "87264134-12af-4306-a01d-90887a190d52",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "9b619e2c-5c1c-4146-9511-efa1f7ba4695",
+                "Name": "NewComponent",
+                "Guid": "87264134-12af-4306-a01d-90887a190d52",
+                "_guid": "87264134-12af-4306-a01d-90887a190d52"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e8de2492-2dc7-4dfb-ab76-2225916ad969",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "20b63f59-5d55-4f08-8e49-7ba167e9bbce",
+                "Name": "NewComponent",
+                "Guid": "e8de2492-2dc7-4dfb-ab76-2225916ad969",
+                "_guid": "e8de2492-2dc7-4dfb-ab76-2225916ad969"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "4dedc0af-a615-4d16-9ca9-dad14715eaba",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "645608f5-e83b-4ef4-a623-47f2db4337ef",
+                "Name": "NewComponent",
+                "Guid": "4dedc0af-a615-4d16-9ca9-dad14715eaba",
+                "_guid": "4dedc0af-a615-4d16-9ca9-dad14715eaba"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "cc0f6a76-ff62-4392-95b0-704eb69010fc",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "c7e5a9f2-f6ee-453a-8ab2-59952ac833d0",
+                "Name": "NewComponent",
+                "Guid": "cc0f6a76-ff62-4392-95b0-704eb69010fc",
+                "_guid": "cc0f6a76-ff62-4392-95b0-704eb69010fc"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9fb3a27c-7368-4f2f-9407-592e0f688b96",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "0aae49b8-424d-4dce-98b8-38cfbc921e6d",
+                "Name": "NewComponent",
+                "Guid": "9fb3a27c-7368-4f2f-9407-592e0f688b96",
+                "_guid": "9fb3a27c-7368-4f2f-9407-592e0f688b96"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f804af31-83b3-4ae0-8520-eaca6bf7971c",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "2468ce2c-e075-4ff7-8417-6d8571439f69",
+                "Name": "NewComponent",
+                "Guid": "f804af31-83b3-4ae0-8520-eaca6bf7971c",
+                "_guid": "f804af31-83b3-4ae0-8520-eaca6bf7971c"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "29fda671-0941-46f8-bc72-79ab1cb3347c",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "72414b03-4d87-4861-a7ab-751efc7906e0",
+                "Name": "NewComponent",
+                "Guid": "29fda671-0941-46f8-bc72-79ab1cb3347c",
+                "_guid": "29fda671-0941-46f8-bc72-79ab1cb3347c"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c7f8c8a3-b8ec-41d1-938a-9f672c12f657",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d5e9a13c-5ae9-4508-826e-7edb895d8ec4",
+                "Name": "NewComponent",
+                "Guid": "c7f8c8a3-b8ec-41d1-938a-9f672c12f657",
+                "_guid": "c7f8c8a3-b8ec-41d1-938a-9f672c12f657"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2cd0eb85-d071-45e7-8bee-1ee087013f53",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d3daa597-13bb-41e0-aeba-503c0ea4f325",
+                "Name": "NewComponent",
+                "Guid": "2cd0eb85-d071-45e7-8bee-1ee087013f53",
+                "_guid": "2cd0eb85-d071-45e7-8bee-1ee087013f53"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "fdb0d2a7-135f-4c69-a426-edbbf08e7b9e",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "e4fa0617-9f71-491a-983b-5aa4661dbca3",
+                "Name": "NewComponent",
+                "Guid": "fdb0d2a7-135f-4c69-a426-edbbf08e7b9e",
+                "_guid": "fdb0d2a7-135f-4c69-a426-edbbf08e7b9e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "a763c1b5-da96-4720-8a0d-ac806731908e",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "8571a370-b9f0-4d99-9860-c05c637a1439",
+                "Name": "NewComponent",
+                "Guid": "a763c1b5-da96-4720-8a0d-ac806731908e",
+                "_guid": "a763c1b5-da96-4720-8a0d-ac806731908e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f3b2f402-2011-4265-b88a-111934298b06",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "69202091-4597-43eb-900b-880acf694069",
+                "Name": "NewComponent",
+                "Guid": "f3b2f402-2011-4265-b88a-111934298b06",
+                "_guid": "f3b2f402-2011-4265-b88a-111934298b06"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f41d1e37-fa6d-440d-b835-30d9f9f48a8d",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d4c825a6-82fa-4a6d-886c-6849139389bc",
+                "Name": "NewComponent",
+                "Guid": "f41d1e37-fa6d-440d-b835-30d9f9f48a8d",
+                "_guid": "f41d1e37-fa6d-440d-b835-30d9f9f48a8d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "47390994-64dc-40cf-b92d-439fd7c8abfe",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "0d2e8b6c-4750-4d6f-8a3e-0ce134beb98c",
+                "Name": "NewComponent",
+                "Guid": "47390994-64dc-40cf-b92d-439fd7c8abfe",
+                "_guid": "47390994-64dc-40cf-b92d-439fd7c8abfe"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "73676081-94b2-484c-9ab2-8b17da798b24",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "72ea8dc5-f722-4ded-98dc-f2250196421f",
+                "Name": "NewComponent",
+                "Guid": "73676081-94b2-484c-9ab2-8b17da798b24",
+                "_guid": "73676081-94b2-484c-9ab2-8b17da798b24"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9f038a83-3c92-407c-a3f1-91f21a3c864a",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "a788a464-a634-4353-af43-7f0987fe415f",
+                "Name": "NewComponent",
+                "Guid": "9f038a83-3c92-407c-a3f1-91f21a3c864a",
+                "_guid": "9f038a83-3c92-407c-a3f1-91f21a3c864a"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "041b05f4-dedf-4cb5-bf7f-3850105c49a4",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "b471e82d-7062-415f-bf34-4e5af3413658",
+                "Name": "NewComponent",
+                "Guid": "041b05f4-dedf-4cb5-bf7f-3850105c49a4",
+                "_guid": "041b05f4-dedf-4cb5-bf7f-3850105c49a4"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "1f56c617-1215-4dd3-9adb-6ef6a844322d",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "4ded27f7-89c3-400a-80e3-cf44987c2700",
+                "Name": "NewComponent",
+                "Guid": "1f56c617-1215-4dd3-9adb-6ef6a844322d",
+                "_guid": "1f56c617-1215-4dd3-9adb-6ef6a844322d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5f3c5315-0ebc-4fc0-8d4c-44cb10c65d92",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "37af30be-de8a-424c-9d8f-8a94ccde743f",
+                "Name": "NewComponent",
+                "Guid": "5f3c5315-0ebc-4fc0-8d4c-44cb10c65d92",
+                "_guid": "5f3c5315-0ebc-4fc0-8d4c-44cb10c65d92"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "cae28f95-b799-4ff4-a70c-18f136611321",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "442b4d7d-c643-44ff-b227-b0906e727a20",
+                "Name": "NewComponent",
+                "Guid": "cae28f95-b799-4ff4-a70c-18f136611321",
+                "_guid": "cae28f95-b799-4ff4-a70c-18f136611321"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "4e8790ba-ce2c-43bd-850b-bd213ee424e0",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "b4d35f04-3e82-4eb4-ac59-68cd10cf47e1",
+                "Name": "NewComponent",
+                "Guid": "4e8790ba-ce2c-43bd-850b-bd213ee424e0",
+                "_guid": "4e8790ba-ce2c-43bd-850b-bd213ee424e0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f2aa8f0d-28b7-4943-97ef-c26e8ef66fef",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "a36afef9-1a77-4ea2-ad18-6b75739e617e",
+                "Name": "NewComponent",
+                "Guid": "f2aa8f0d-28b7-4943-97ef-c26e8ef66fef",
+                "_guid": "f2aa8f0d-28b7-4943-97ef-c26e8ef66fef"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "24266514-0e13-46c5-b613-161d5ed82932",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "9043baaf-12fc-41b1-aa74-423622fe0a71",
+                "Name": "NewComponent",
+                "Guid": "24266514-0e13-46c5-b613-161d5ed82932",
+                "_guid": "24266514-0e13-46c5-b613-161d5ed82932"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5d66e243-20a9-4e6e-825b-a94fe641d08d",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "5a57c25d-76ef-43f7-abc1-4d2156ef0adf",
+                "Name": "NewComponent",
+                "Guid": "5d66e243-20a9-4e6e-825b-a94fe641d08d",
+                "_guid": "5d66e243-20a9-4e6e-825b-a94fe641d08d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9693b3db-c8fe-4ee4-96be-8c696865ad53",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "487c9900-184b-4582-8079-255c56c99130",
+                "Name": "NewComponent",
+                "Guid": "9693b3db-c8fe-4ee4-96be-8c696865ad53",
+                "_guid": "9693b3db-c8fe-4ee4-96be-8c696865ad53"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "73015782-6b46-4814-8bf4-53165689bc23",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "2d9ce6b2-5414-4cbe-a648-96b8030e56a1",
+                "Name": "NewComponent",
+                "Guid": "73015782-6b46-4814-8bf4-53165689bc23",
+                "_guid": "73015782-6b46-4814-8bf4-53165689bc23"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f74c2f1f-b94b-483a-9fdc-c14a2e207224",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "e545cb7e-c05b-49f2-914d-7e63f0d61357",
+                "Name": "NewComponent",
+                "Guid": "f74c2f1f-b94b-483a-9fdc-c14a2e207224",
+                "_guid": "f74c2f1f-b94b-483a-9fdc-c14a2e207224"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "8d9035d7-483e-4c15-9a9d-5731e1bdbc7a",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "fdfcfdc1-c305-4919-9192-85cc8f7c629d",
+                "Name": "NewComponent",
+                "Guid": "8d9035d7-483e-4c15-9a9d-5731e1bdbc7a",
+                "_guid": "8d9035d7-483e-4c15-9a9d-5731e1bdbc7a"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "fabb462b-5f26-4359-bfeb-2bda01281bf0",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "047fd5ee-d8aa-487f-9735-d5288bbc095e",
+                "Name": "NewComponent",
+                "Guid": "fabb462b-5f26-4359-bfeb-2bda01281bf0",
+                "_guid": "fabb462b-5f26-4359-bfeb-2bda01281bf0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c969d626-c0d8-4c72-a7f0-02742843f3a9",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "955bbb4b-f750-4a6f-a3af-1aeb20728692",
+                "Name": "NewComponent",
+                "Guid": "c969d626-c0d8-4c72-a7f0-02742843f3a9",
+                "_guid": "c969d626-c0d8-4c72-a7f0-02742843f3a9"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f452e663-42c1-460f-a129-46a2772ac8d0",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "5d6cf5eb-e794-4f85-a608-94bf55db950e",
+                "Name": "NewComponent",
+                "Guid": "f452e663-42c1-460f-a129-46a2772ac8d0",
+                "_guid": "f452e663-42c1-460f-a129-46a2772ac8d0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c38bbbe4-f333-4650-a0db-f6fb4bb26c45",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "c30f0a7c-0ccc-4eeb-a2fb-9f00e8154e13",
+                "Name": "NewComponent",
+                "Guid": "c38bbbe4-f333-4650-a0db-f6fb4bb26c45",
+                "_guid": "c38bbbe4-f333-4650-a0db-f6fb4bb26c45"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "9ab3616a-c395-4cd0-a902-c629d8f8ca2f",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "27a9e9aa-52d6-4028-b83a-579aa846bdf8",
+                "Name": "NewComponent",
+                "Guid": "9ab3616a-c395-4cd0-a902-c629d8f8ca2f",
+                "_guid": "9ab3616a-c395-4cd0-a902-c629d8f8ca2f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e37ab5ba-6b9b-4bf5-8a39-bebe4b0bf778",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "9c973b98-b6a6-4fb9-a532-9dd36b27837e",
+                "Name": "NewComponent",
+                "Guid": "e37ab5ba-6b9b-4bf5-8a39-bebe4b0bf778",
+                "_guid": "e37ab5ba-6b9b-4bf5-8a39-bebe4b0bf778"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "77180290-c08c-4d74-b300-dd039ad4bc40",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "55cf1387-4abe-4664-b609-60e42c9e8177",
+                "Name": "NewComponent",
+                "Guid": "77180290-c08c-4d74-b300-dd039ad4bc40",
+                "_guid": "77180290-c08c-4d74-b300-dd039ad4bc40"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5518b19d-63a5-4cc7-8249-f8cd7e9237c2",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "ff31cc21-aa63-4bdc-abd7-ae8828d57946",
+                "Name": "NewComponent",
+                "Guid": "5518b19d-63a5-4cc7-8249-f8cd7e9237c2",
+                "_guid": "5518b19d-63a5-4cc7-8249-f8cd7e9237c2"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "1b7b26b9-da1d-4d04-b0cb-7bafd3d4d226",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "926e5234-974b-45d2-86d4-7219caebf27e",
+                "Name": "NewComponent",
+                "Guid": "1b7b26b9-da1d-4d04-b0cb-7bafd3d4d226",
+                "_guid": "1b7b26b9-da1d-4d04-b0cb-7bafd3d4d226"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c1bc857c-07b6-4f6e-8811-be4de7798739",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "4cc6e991-c432-41d7-8dd0-7b47edf024cc",
+                "Name": "NewComponent",
+                "Guid": "c1bc857c-07b6-4f6e-8811-be4de7798739",
+                "_guid": "c1bc857c-07b6-4f6e-8811-be4de7798739"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "25191ea4-42f2-4c7a-ab42-b25a0364182b",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "6b3476ec-63d9-47c8-8c59-4f61a1964685",
+                "Name": "NewComponent",
+                "Guid": "25191ea4-42f2-4c7a-ab42-b25a0364182b",
+                "_guid": "25191ea4-42f2-4c7a-ab42-b25a0364182b"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f0999ea9-87cc-4e28-a1de-a98dae1a97bc",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "dcb6d25f-5323-43e0-a870-5e4b794b88a9",
+                "Name": "NewComponent",
+                "Guid": "f0999ea9-87cc-4e28-a1de-a98dae1a97bc",
+                "_guid": "f0999ea9-87cc-4e28-a1de-a98dae1a97bc"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "3fb5ac5e-3d37-4912-b38f-9467f3dba17c",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "8e2ff2d2-09ce-41e4-8b2f-daec80453496",
+                "Name": "NewComponent",
+                "Guid": "3fb5ac5e-3d37-4912-b38f-9467f3dba17c",
+                "_guid": "3fb5ac5e-3d37-4912-b38f-9467f3dba17c"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "81ba38ab-37f6-4801-888f-fdd1065c2ae3",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "22877748-971c-41f9-b48b-8de9f9ef754e",
+                "Name": "NewComponent",
+                "Guid": "81ba38ab-37f6-4801-888f-fdd1065c2ae3",
+                "_guid": "81ba38ab-37f6-4801-888f-fdd1065c2ae3"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "d5cb9814-d49f-4200-b6ac-a0ebd9a73f24",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "5d675cad-64f0-4cf5-9fc8-0ab376b4f8b4",
+                "Name": "NewComponent",
+                "Guid": "d5cb9814-d49f-4200-b6ac-a0ebd9a73f24",
+                "_guid": "d5cb9814-d49f-4200-b6ac-a0ebd9a73f24"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f55d31db-84c7-44bc-9fe9-4e18b0d4bb84",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "4e655662-9063-47ea-954f-7519c3acbb93",
+                "Name": "NewComponent",
+                "Guid": "f55d31db-84c7-44bc-9fe9-4e18b0d4bb84",
+                "_guid": "f55d31db-84c7-44bc-9fe9-4e18b0d4bb84"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "fe21508b-1206-463d-8413-7de804a3b2e0",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "c7135467-ab9e-4489-81e0-48ddc0208298",
+                "Name": "NewComponent",
+                "Guid": "fe21508b-1206-463d-8413-7de804a3b2e0",
+                "_guid": "fe21508b-1206-463d-8413-7de804a3b2e0"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c4707708-5060-4d23-9b24-e180a406cc62",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "a22d1855-0141-4385-b801-831477891904",
+                "Name": "NewComponent",
+                "Guid": "c4707708-5060-4d23-9b24-e180a406cc62",
+                "_guid": "c4707708-5060-4d23-9b24-e180a406cc62"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "bbe00c72-51a3-415a-9964-a36ed5219334",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "c7678498-443f-4c4d-9cb7-b7e753b68b51",
+                "Name": "NewComponent",
+                "Guid": "bbe00c72-51a3-415a-9964-a36ed5219334",
+                "_guid": "bbe00c72-51a3-415a-9964-a36ed5219334"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "99744e68-989b-4275-8f1f-225df292c006",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "e5871ff6-ece0-49d1-8692-1a86ab1d14c9",
+                "Name": "NewComponent",
+                "Guid": "99744e68-989b-4275-8f1f-225df292c006",
+                "_guid": "99744e68-989b-4275-8f1f-225df292c006"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "df37a617-fa93-4f03-9890-ed767098f0f4",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "318fc476-91d1-4d2e-9932-fa37cd1a9d0d",
+                "Name": "NewComponent",
+                "Guid": "df37a617-fa93-4f03-9890-ed767098f0f4",
+                "_guid": "df37a617-fa93-4f03-9890-ed767098f0f4"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "3f0d29c6-bef6-4ff5-be37-8d87c85e5ff6",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d1dd67b1-db71-4d6e-9cb6-c606052d5c55",
+                "Name": "NewComponent",
+                "Guid": "3f0d29c6-bef6-4ff5-be37-8d87c85e5ff6",
+                "_guid": "3f0d29c6-bef6-4ff5-be37-8d87c85e5ff6"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "ce346432-7a14-4688-9e3f-8d51e789256c",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "74351028-e4ce-4f27-9825-43ed2b41ec6b",
+                "Name": "NewComponent",
+                "Guid": "ce346432-7a14-4688-9e3f-8d51e789256c",
+                "_guid": "ce346432-7a14-4688-9e3f-8d51e789256c"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "f0866bfd-7256-4322-a27d-276568987f7d",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "6d4b64dd-10a6-4f8c-9f62-d6ec3185b3a3",
+                "Name": "NewComponent",
+                "Guid": "f0866bfd-7256-4322-a27d-276568987f7d",
+                "_guid": "f0866bfd-7256-4322-a27d-276568987f7d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "c1651ae6-f1b7-4e58-9cd3-7d1a4843697f",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "29bfdc00-e736-4249-bc46-09d2df0ac1b5",
+                "Name": "NewComponent",
+                "Guid": "c1651ae6-f1b7-4e58-9cd3-7d1a4843697f",
+                "_guid": "c1651ae6-f1b7-4e58-9cd3-7d1a4843697f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "5854cf51-c4b5-4e7b-b418-83ad723b2f3d",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d83ac200-2668-4cc7-ab44-2513a699abda",
+                "Name": "NewComponent",
+                "Guid": "5854cf51-c4b5-4e7b-b418-83ad723b2f3d",
+                "_guid": "5854cf51-c4b5-4e7b-b418-83ad723b2f3d"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "de6ad19c-7761-4416-95c2-632ec1062012",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "237c65ba-3776-42db-bfa4-967ca37ad5ec",
+                "Name": "NewComponent",
+                "Guid": "de6ad19c-7761-4416-95c2-632ec1062012",
+                "_guid": "de6ad19c-7761-4416-95c2-632ec1062012"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "dba2ad58-5601-4d8d-8d83-7bbfb1c20b2e",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "079502e1-1b70-4f19-a77d-4a506bf502a0",
+                "Name": "NewComponent",
+                "Guid": "dba2ad58-5601-4d8d-8d83-7bbfb1c20b2e",
+                "_guid": "dba2ad58-5601-4d8d-8d83-7bbfb1c20b2e"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "25f49022-4972-4d21-97b1-b0c122d74425",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "2f4f93d2-896a-4639-95d3-bf8d8b38edbc",
+                "Name": "NewComponent",
+                "Guid": "25f49022-4972-4d21-97b1-b0c122d74425",
+                "_guid": "25f49022-4972-4d21-97b1-b0c122d74425"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "940336c8-9938-4dfa-a67e-ca1b60881891",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "d8e11537-76dd-4594-8835-ed406baae0d6",
+                "Name": "NewComponent",
+                "Guid": "940336c8-9938-4dfa-a67e-ca1b60881891",
+                "_guid": "940336c8-9938-4dfa-a67e-ca1b60881891"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "cf53cc06-7869-4536-bf05-eab7ab9c6f0e",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "6896fd9d-05d5-4d29-a64e-c3c3ceb53b3d",
+                "Name": "NewComponent",
+                "Guid": "cf53cc06-7869-4536-bf05-eab7ab9c6f0e",
+                "_guid": "cf53cc06-7869-4536-bf05-eab7ab9c6f0e"
             }
         }
     ]

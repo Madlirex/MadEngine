@@ -77,10 +77,8 @@ public class Material : Asset
             textureUnitIndex++;
         }
         
-        for (int i = textureUnitIndex; i < 8; i++) 
-        {
-            GL.ActiveTexture(TextureUnit.Texture0 + i);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-        }
+        var diffuse = Textures.GetValueOrDefault("diffuse");
+        
+        diffuse?.Bind(TextureUnit.Texture0);
     }
 }

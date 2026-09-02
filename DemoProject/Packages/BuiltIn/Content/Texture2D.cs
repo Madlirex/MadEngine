@@ -19,7 +19,9 @@ public class Texture2D : Texture, IStateUpdateable
 
     private void LoadFromFile()
     {
+        Console.WriteLine(FilePath);
         if (!File.Exists(FilePath)) return;
+        Console.WriteLine(FilePath);
         
         GL.BindTexture(Target, Handle);
         
@@ -35,7 +37,7 @@ public class Texture2D : Texture, IStateUpdateable
         GL.TexParameter(Target, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
         
         GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-        
+        Console.WriteLine("loaded");
         GL.BindTexture(Target, 0);
     }
 
