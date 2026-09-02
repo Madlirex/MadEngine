@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using MadEditor;
+using MadEngine.Core.SceneManagement;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
@@ -46,6 +47,11 @@ public class Material : Asset
     {
         if (Shader == null) return;
         Shader.Use();
+
+        Light.UseLights(
+            Shader,
+            SceneManager.ActiveScene.Lights.ToArray()
+        );
         foreach (var kvp in Vectors)
         {
             //if (kvp.Value == null) continue;
