@@ -56,17 +56,20 @@ public class EditorWindow : GameWindow
         base.OnLoad();
 
         _engine.Initialize();
-        
+        Console.WriteLine("Compiling");
         AssetManager.RecompileScripts();
         
         RegistryBootstrapper.InitializeAll();
         
         PackageManager.LoadPackageMetas();
 
+        Console.WriteLine("loading package");
         PackageManager.LoadPackages();
+        Console.WriteLine("loading assets");
         AssetManager.LoadProject();
         _editorUI.Initialize();
 
+        Console.WriteLine("Loading scene");
         SceneManager.LoadScene(0);
         _engine.EditorStart(SceneManager.ActiveScene);
     }

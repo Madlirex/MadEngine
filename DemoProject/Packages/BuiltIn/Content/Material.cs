@@ -1,11 +1,13 @@
-﻿using OpenTK.Mathematics;
+﻿using System.Runtime.CompilerServices;
+using MadEditor;
+using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
 namespace MadEngine.Core;
 
 public class Material : Asset
 {
-    public Shader? Shader = Defaults.LitShader;
+    public Shader? Shader = null;
 
     public string Prefix = "material.";
     
@@ -44,7 +46,6 @@ public class Material : Asset
     {
         if (Shader == null) return;
         Shader.Use();
-        
         foreach (var kvp in Vectors)
         {
             //if (kvp.Value == null) continue;
