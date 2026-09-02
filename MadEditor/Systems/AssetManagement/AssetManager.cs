@@ -56,16 +56,24 @@ public static class AssetManager
 
     public static void LoadAssets(string path)
     {
+        List<Asset> assets = [];
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
-            LoadAsset(file);
+            var asset = LoadAsset(file);
+            if(asset != null) assets.Add(asset);
+        }
+
+        foreach (Asset asset in assets)
+        {
+            if(asset is IStateUpdateable stateUpdateable) stateUpdateable.UpdateState();
+            ;
         }
     }
 
-    public static void LoadAsset(string file)
+    public static Asset? LoadAsset(string file)
     {
         var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
-        importer?.Import(file);
+        return importer?.Import(file);
     }
 
     public static void SaveAssets(Asset[] assets)

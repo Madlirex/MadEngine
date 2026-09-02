@@ -87,24 +87,44 @@ public static class InspectorMemberFactory
 {
     public static InspectorMember[] CreateMembers(object? target)
     {
-        if(target == null) return [];
-        
-        var membersQuery = target.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Public)
-            .Where(f => f.GetCustomAttribute<HideInInspectorAttribute>() == null)
-            .Select(f => (InspectorMember)new FieldMember(f))
-            .Concat(
-                target.GetType()
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    .Where(p => p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
-                    .Select(p => (InspectorMember)new PropertyMember(p))
-            ).Concat(
-                target.GetType()
-                    .GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Where(f => f.GetCustomAttribute<ShowInInspectorAttribute>() != null)
-                    .Select(f => (InspectorMember)new FieldMember(f)))
-            .OrderBy(m => m.Order);
+        if (target == null)
+            return [];
 
-        return membersQuery.ToArray();
+        var type = target.GetType();
+        var members = new List<InspectorMember>();
+
+        while (type != null)
+        {
+            members.AddRange(
+                type.GetFields(
+                        BindingFlags.Instance |
+                        BindingFlags.Public |
+                        BindingFlags.NonPublic |
+                        BindingFlags.DeclaredOnly)
+                    .Where(f =>
+                        f.GetCustomAttribute<HideInInspectorAttribute>() == null)
+                    .Where(f =>
+                        f.IsPublic ||
+                        f.GetCustomAttribute<ShowInInspectorAttribute>() != null)
+                    .Select(f => (InspectorMember)new FieldMember(f))
+            );
+
+            members.AddRange(
+                type.GetProperties(
+                        BindingFlags.Instance |
+                        BindingFlags.Public |
+                        BindingFlags.NonPublic |
+                        BindingFlags.DeclaredOnly)
+                    .Where(p =>
+                        p.GetCustomAttribute<ShowInInspectorAttribute>() != null)
+                    .Select(p => (InspectorMember)new PropertyMember(p))
+            );
+
+            type = type.BaseType;
+        }
+
+        return members
+            .OrderBy(m => m.Order)
+            .ToArray();
     }
 }

@@ -1,11 +1,14 @@
-﻿using OpenTK.Mathematics;
+﻿using System.Runtime.CompilerServices;
+using MadEditor;
+using MadEngine.Core.SceneManagement;
+using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 
 namespace MadEngine.Core;
 
 public class Material : Asset
 {
-    public Shader? Shader = Defaults.LitShader;
+    public Shader? Shader = null;
 
     public string Prefix = "material.";
     
@@ -44,7 +47,11 @@ public class Material : Asset
     {
         if (Shader == null) return;
         Shader.Use();
-        
+
+        Light.UseLights(
+            Shader,
+            SceneManager.ActiveScene.Lights.ToArray()
+        );
         foreach (var kvp in Vectors)
         {
             //if (kvp.Value == null) continue;
@@ -76,10 +83,8 @@ public class Material : Asset
             textureUnitIndex++;
         }
         
-        for (int i = textureUnitIndex; i < 8; i++) 
-        {
-            GL.ActiveTexture(TextureUnit.Texture0 + i);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-        }
+        var diffuse = Textures.GetValueOrDefault("diffuse");
+        
+        diffuse?.Bind(TextureUnit.Texture0);
     }
 }

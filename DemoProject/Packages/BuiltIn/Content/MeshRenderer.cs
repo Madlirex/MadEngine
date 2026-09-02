@@ -5,8 +5,8 @@ namespace MadEngine;
 
 public class MeshRenderer : Renderer
 {
-    public Mesh? Mesh = Defaults.Cube;
-    public Material? Material = Defaults.LitMaterial;
+    public Mesh? Mesh = null;
+    public Material? Material = null;
 
     public override void Draw(Matrix4 view, Matrix4 projection)
     {
