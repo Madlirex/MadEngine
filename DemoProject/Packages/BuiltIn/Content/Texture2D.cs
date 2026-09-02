@@ -4,7 +4,7 @@ using StbImageSharp;
 
 namespace MadEngine;
 
-public class Texture2D : Texture
+public class Texture2D : Texture, IStateUpdateable
 {
     public override string Extension => ".tex";
     public override TextureTarget Target => TextureTarget.Texture2D;
@@ -19,7 +19,9 @@ public class Texture2D : Texture
 
     private void LoadFromFile()
     {
+        Console.WriteLine(FilePath);
         if (!File.Exists(FilePath)) return;
+        Console.WriteLine(FilePath);
         
         GL.BindTexture(Target, Handle);
         
@@ -35,7 +37,12 @@ public class Texture2D : Texture
         GL.TexParameter(Target, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
         
         GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
-        
+        Console.WriteLine("loaded");
         GL.BindTexture(Target, 0);
+    }
+
+    public void UpdateState()
+    {
+        LoadFromFile();
     }
 }

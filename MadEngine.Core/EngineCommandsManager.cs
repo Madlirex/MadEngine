@@ -1,10 +1,8 @@
 ﻿namespace MadEngine.Core;
 
-public abstract class EngineCommand(object target)
+public abstract class EngineCommand
 {
-    public object Target = target;
-
-    public abstract void Execute(object target);
+    public abstract void Execute();
 }
 
 public static class EngineCommandsManager
@@ -25,7 +23,7 @@ public static class EngineCommandsManager
     {
         foreach (var command in _commands)
         {
-            command.Execute(command.Target);
+            command.Execute();
         }
         _commands.Clear();
     }

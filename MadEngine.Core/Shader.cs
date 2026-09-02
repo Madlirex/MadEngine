@@ -75,6 +75,8 @@ public class Shader : Asset
         GL.DeleteShader(fragmentShader);
         GL.DeleteShader(vertexShader);
         _initialized = true;
+        
+        ShaderSystem.RegisterShader(this);
     }
 
     public void Use()

@@ -6,9 +6,9 @@ struct Material {
     vec4 specularColor;
     
     sampler2D diffuse;
-    int useDiffuse;
+    int diffuse_Enabled;
     sampler2D specular;
-    int useSpecular;
+    int specular_Enabled;
     
     float shininess;
 };
@@ -75,7 +75,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec4 ambient;
     vec4 diffuse;
 
-    if (material.useDiffuse == 1)
+    if (material.diffuse_Enabled == 1)
     {
         vec4 textureColor = vec4(vec3(texture(material.diffuse, texCoord)), 1.0);
         ambient = light.ambient * textureColor * material.ambientColor;
@@ -91,7 +91,7 @@ vec4 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec4 specular;
-    if (material.useSpecular == 1)
+    if (material.specular_Enabled == 1)
     {
         specular = light.specular * spec * vec4(vec3(texture(material.specular, texCoord)), 1.0) * material.specularColor;
     }
@@ -119,7 +119,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     vec4 ambient;
     vec4 diffuse;
 
-    if (material.useDiffuse == 1)
+    if (material.diffuse_Enabled == 1)
     {
         vec4 textureColor = vec4(vec3(texture(material.diffuse, texCoord)), 1.0);
         ambient = light.ambient * textureColor * material.ambientColor;
@@ -131,7 +131,7 @@ vec4 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
         diffuse = light.diffuse * diff * material.diffuseColor;
     }
     vec4 specular;
-    if (material.useSpecular == 1)
+    if (material.specular_Enabled == 1)
     {
         specular = light.specular * spec * vec4(vec3(texture(material.specular, texCoord)), 1.0) * material.specularColor;
     }
@@ -158,7 +158,7 @@ vec4 CalcSpotLights(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec4 specular;
 
-    if (material.useDiffuse == 1)
+    if (material.diffuse_Enabled == 1)
     {
         vec4 textureColor = vec4(vec3(texture(material.diffuse, texCoord)), 1.0);
         ambient = light.ambient * textureColor * material.ambientColor;
@@ -169,7 +169,7 @@ vec4 CalcSpotLights(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
         ambient = light.ambient * material.ambientColor;
         diffuse = light.diffuse * diff * material.diffuseColor;
     }
-    if (material.useSpecular == 1)
+    if (material.specular_Enabled == 1)
     {
         specular = light.specular * spec * vec4(vec3(texture(material.specular, texCoord)), 1.0) * material.specularColor;
     }
