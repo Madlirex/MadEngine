@@ -20,6 +20,12 @@ public class Mesh : Asset, IStateUpdateable
     [DoNotSave]
     private bool _initialized;
 
+    [ShowInInspector] [DoNotSave] public bool Update
+    {
+        get => true;
+        set => UpdateState();
+    }
+
     public override string Name { get; set; } = "NewMesh";
     public override string Extension => ".mesh";
 
