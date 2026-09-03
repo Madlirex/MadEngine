@@ -6,8 +6,12 @@ namespace MadEngine.Core;
 
 public class Engine
 {
+    public FlatBackground Background;
     public void Initialize()
     {
+        Background = new();
+        Background.Initialize();
+        
         GL.Enable(EnableCap.DepthTest);
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
     }
@@ -31,6 +35,8 @@ public class Engine
         {
             renderer.Draw(view, projection);
         }
+
+        Background.Render(view, projection);
         
         EngineCommandsManager.ExecuteAll();
     }

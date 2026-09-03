@@ -6,15 +6,23 @@ using MadEngine.Core.SceneManagement;
 
 public class EditorTestComp : Component
 {
-    public Dictionary<string, int> vertices = [];
+    public int Count = 0;
+    public Mesh? mesh = null;
+    public Material? material = null;
 
-    public int[] more = [];
-    /*
     public override void EditorUpdate(float deltaTime)
     {
-        Console.WriteLine(SceneManager.ActiveScene.GameObjects.Count);
+	if(mesh == null || material == null) return;
+	
+	for(int i = 0; i<=100; i++)
+	{
         GameObject obj = new GameObject();
-        obj.AddComponent<MeshRenderer>();
+	MeshRenderer renderer = new MeshRenderer();
+	renderer.Mesh = mesh;
+	renderer.Material = material;
+        obj.AddComponent(renderer);
         SceneManager.ActiveScene.Add(obj);
-    }*/
+	}
+	Count += 100;
+    }
 }
