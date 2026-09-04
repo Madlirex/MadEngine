@@ -1,7 +1,5 @@
 ﻿using System.Numerics;
-using System.Reflection;
 using ImGuiNET;
-using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -19,6 +17,7 @@ public static class PanelSystem
         Instance.CreatePanel<ViewportDrawer>();
         Instance.CreatePanel<StatsDrawer>();
         Instance.CreatePanel<ProjectPanelDrawer>();
+        Instance.CreatePanel<ConsoleDrawer>();
     }
     
     public static void Register(Type panelDrawer) => Instance.Register(panelDrawer);

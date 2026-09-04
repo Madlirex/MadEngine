@@ -10,6 +10,13 @@ public class EditorTestComp : Component
     public Mesh? mesh = null;
     public Material? material = null;
 
+    public override void EditorStart()
+    {
+	    Debug.Log("EditorTestComp Start");
+	    Debug.LogWarning("hola");
+	    Debug.LogError("ou no");
+    }
+
     public override void EditorUpdate(float deltaTime)
     {
 	if(mesh == null || material == null) return;
