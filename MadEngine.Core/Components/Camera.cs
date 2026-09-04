@@ -8,7 +8,7 @@ public class Camera : Component
     public float Height;
 
     public float DepthNear = 0.01f;
-    public float DepthFar = 100f;
+    public float DepthFar = 1000f;
     
     public Vector3 Front = -Vector3.UnitZ;
     public Vector3 Up = Vector3.UnitY;
