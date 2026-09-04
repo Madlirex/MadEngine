@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using ImGuiNET;
 using MadEngine.Core;
 
@@ -44,7 +45,7 @@ public class ConsoleDrawer : PanelDrawer
         }
         
         float scrollbarWidth = ImGui.GetStyle().ScrollbarSize;
-        float rightSideOffset = ImGui.GetWindowWidth() - (280.0f + scrollbarWidth); 
+        float rightSideOffset = ImGui.GetWindowWidth() - (320.0f + scrollbarWidth); // Bumped padding slightly for clean text spacing
         
         if (ImGui.GetCursorPosX() < rightSideOffset) 
         {
@@ -55,21 +56,16 @@ public class ConsoleDrawer : PanelDrawer
             ImGui.SameLine();
         }
         
-        ImGui.PushID("info_filter");
-        ImGui.Checkbox($"Info ({infoCount})##info_filter", ref _showInfo);
-        ImGui.PopID();
+        // FIX: Pass raw static string literals to the checkboxes so ImGui never resets their ID hashes.
+        // Then append the dynamic numbers via a SameLine text command.
+        ImGui.Checkbox("##info_filter_cb", ref _showInfo); ImGui.SameLine();
+        ImGui.Text($"Info ({infoCount})"); ImGui.SameLine();
         
-        ImGui.SameLine();
+        ImGui.Checkbox("##warn_filter_cb", ref _showWarnings); ImGui.SameLine();
+        ImGui.Text($"Warn ({warnCount})"); ImGui.SameLine();
         
-        ImGui.PushID("warn_filter");
-        ImGui.Checkbox($"Warn ({warnCount})##warn_filter", ref _showWarnings);
-        ImGui.PopID();
-        
-        ImGui.SameLine();
-        
-        ImGui.PushID("error_filter");
-        ImGui.Checkbox($"Error ({errorCount})##error_filter", ref _showErrors);
-        ImGui.PopID();
+        ImGui.Checkbox("##error_filter_cb", ref _showErrors); ImGui.SameLine();
+        ImGui.Text($"Error ({errorCount})");
 
         ImGui.Separator();
         
