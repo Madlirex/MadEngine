@@ -1,0 +1,122 @@
+{
+    "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
+    "$data": {
+        "Name": "NewScene",
+        "_gameObjects": [
+            "e1f87b3b-a32a-4630-88f7-303b043088e8"
+        ],
+        "_lights": [
+            "30e2e950-bceb-454d-aea9-004b875c90cb"
+        ],
+        "_renderers": [
+            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
+            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
+        ],
+        "Guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
+        "_guid": "0c575771-2cfc-4f24-8e85-031be43658b5"
+    },
+    "GameObjects": [
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+            "$data": {
+                "Transform": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
+                "_components": [
+                    "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
+                    "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
+                    "30e2e950-bceb-454d-aea9-004b875c90cb"
+                ],
+                "Name": "NewGameObject",
+                "Guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "_guid": "e1f87b3b-a32a-4630-88f7-303b043088e8"
+            }
+        }
+    ],
+    "Components": [
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "Name": "NewComponent",
+                "Guid": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
+                "_guid": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68"
+            }
+        },
+        {
+            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
+            "$data": {
+                "Mesh": "8cea9d68-9e54-473f-bd8c-0ec9c6cb9fdf",
+                "Material": "94f8c704-bb7b-40f0-ac32-117fb501b719",
+                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "Name": "NewComponent",
+                "Guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
+                "_guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.DirectionalLight, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "30e2e950-bceb-454d-aea9-004b875c90cb",
+            "$data": {
+                "Direction": [
+                    3,
+                    -8,
+                    4
+                ],
+                "AmbientColor": [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                "DiffuseColor": [
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "SpecularColor": [
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "Name": "NewComponent",
+                "Guid": "30e2e950-bceb-454d-aea9-004b875c90cb",
+                "_guid": "30e2e950-bceb-454d-aea9-004b875c90cb"
+            }
+        }
+    ]
+}
