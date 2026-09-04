@@ -19,7 +19,12 @@ public class EditorTestComp : Component
 
     public override void EditorUpdate(float deltaTime)
     {
-	if(mesh == null || material == null) return;
+	    if (mesh == null || material == null)
+	    {
+		    Debug.LogError("No mesh");
+		    Debug.LogWarning("e");
+		    return;
+	    }
 	
 	for(int i = 0; i<=100; i++)
 	{
