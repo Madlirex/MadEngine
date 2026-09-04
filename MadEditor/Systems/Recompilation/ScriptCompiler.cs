@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using System.Reflection;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -62,12 +63,60 @@ public static class ScriptCompiler
         );
         using var ms = new MemoryStream();
         var result = compilation.Emit(ms);
-
-        if (result.Success) return ms.ToArray();
+        
         foreach (var d in result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error))
-            Console.WriteLine(d);
+        {
+            var lineSpan = d.Location.GetLineSpan();
+            
+            string filePath = !string.IsNullOrEmpty(lineSpan.Path) ? lineSpan.Path : "UnknownScript";
 
-        return null;
+            int line = lineSpan.StartLinePosition.Line + 1;
+            int character = lineSpan.StartLinePosition.Character + 1;
+            
+            string errorCode = d.Id;
+            string errorMessage = d.GetMessage();
+            
+            string formattedError = $"{filePath}({line},{character}): error {errorCode}: {errorMessage}";
+            
+            Debug.LogError(formattedError);
+            Console.WriteLine(formattedError);
+        }
+        foreach (var d in result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Warning))
+        {
+            var lineSpan = d.Location.GetLineSpan();
+            
+            string filePath = !string.IsNullOrEmpty(lineSpan.Path) ? lineSpan.Path : "UnknownScript";
+
+            int line = lineSpan.StartLinePosition.Line + 1;
+            int character = lineSpan.StartLinePosition.Character + 1;
+            
+            string warnCode = d.Id;
+            string warnMessage = d.GetMessage();
+            
+            string formattedWarning = $"{filePath}({line},{character}): warning {warnCode}: {warnMessage}";
+            
+            Debug.LogWarning(formattedWarning);
+            Console.WriteLine(formattedWarning);
+        }
+        foreach (var d in result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Info))
+        {
+            var lineSpan = d.Location.GetLineSpan();
+            
+            string filePath = !string.IsNullOrEmpty(lineSpan.Path) ? lineSpan.Path : "UnknownScript";
+
+            int line = lineSpan.StartLinePosition.Line + 1;
+            int character = lineSpan.StartLinePosition.Character + 1;
+            
+            string infoCode = d.Id;
+            string infoMessage = d.GetMessage();
+            
+            string formattedInfo = $"{filePath}({line},{character}): info {infoCode}: {infoMessage}";
+            
+            Debug.Log(formattedInfo);
+            Console.WriteLine(formattedInfo);
+        }
+        
+        return result.Success ? ms.ToArray() : null;
     }
 
     public static Assembly LoadAssembly(byte[] dllBytes, out ScriptLoadContext context)
