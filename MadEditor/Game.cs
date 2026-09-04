@@ -23,6 +23,7 @@ public class EditorWindow : GameWindow
     private ImGuiController _imGui;
     private SceneFramebuffer _sceneFbo;
     private EditorUI _editorUI;
+    private SceneGridRenderer _gridRenderer;
     
     public EditorWindow(int width, int height, string title) : base(new GameWindowSettings()
     {
@@ -49,6 +50,7 @@ public class EditorWindow : GameWindow
         _imGui = new ImGuiController(width, height);
         _sceneFbo = new SceneFramebuffer(width, height);
         _editorUI = new EditorUI(_camera, _sceneFbo);
+        _gridRenderer = new SceneGridRenderer();
     }
 
     protected override void OnLoad()
@@ -99,7 +101,7 @@ public class EditorWindow : GameWindow
         _imGui.Dispose();    
     }
 
-    protected override unsafe void OnRenderFrame(FrameEventArgs args)
+    protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
         
@@ -108,6 +110,7 @@ public class EditorWindow : GameWindow
         Camera camera = _camera.GetComponent<Camera>()!;
 
         _engine.Render(SceneManager.ActiveScene, camera);
+        _gridRenderer.Render(camera.GetViewMatrix(), camera.GetPerspectiveMatrix(), _camera.Transform.Position, camera.DepthFar);
         
         SceneFramebuffer.Unbind();
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
