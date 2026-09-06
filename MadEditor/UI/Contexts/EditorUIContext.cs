@@ -9,6 +9,7 @@ public class EditorUIContext
     public MadObject? Selected;
     public MadObject? RightClicked;
     public GameWindow Window = null!;
+    public bool IsPlaying { get; internal set; }
     
     private readonly Dictionary<string, ViewportContext> _activeViewports = new();
     
