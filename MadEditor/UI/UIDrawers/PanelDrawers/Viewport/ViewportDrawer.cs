@@ -5,7 +5,7 @@
  
  namespace MadEditor;
  
- [CustomName("Scene")]
+ [CustomName("Scene View")]
  public class ViewportDrawer : PanelDrawer
  {
      public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
