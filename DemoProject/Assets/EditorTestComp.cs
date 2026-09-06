@@ -10,6 +10,21 @@ public class EditorTestComp : Component
     public Mesh? mesh = null;
     public Material? material = null;
 
+    public override void Awake()
+    {
+	    Debug.Log("Awake");
+    }
+
+    public override void Start()
+    {
+	    Debug.Log("Start");
+    }
+
+    public override void Update(float deltaTime)
+    {
+	    GameObject.Transform.Position.X += deltaTime;
+    }
+
     public override void EditorStart()
     {
 	    Debug.Log("EditorTestComp Start");
@@ -17,10 +32,11 @@ public class EditorTestComp : Component
 
     public override void EditorUpdate(float deltaTime)
     {
+	   
+	    Debug.LogWarning("EditorTestComp Update");
+	    
 	    if (mesh == null || material == null)
 	    {
-		    Debug.LogError("No mesh");
-		    Debug.LogWarning("e");
 		    return;
 	    }
 	

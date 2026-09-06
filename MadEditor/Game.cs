@@ -136,7 +136,14 @@ public class EditorWindow : GameWindow
         _imGui.Update(this, (float)args.Time);
         
         UpdateCamera(args);
-        Engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+        if(EditorUI.UiContext.IsPlaying)
+        {
+            Engine.Update((float)args.Time, SceneManager.ActiveScene);
+        }
+        else
+        {
+            Engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+        }
     }
     
     public void UpdateCamera(FrameEventArgs args)

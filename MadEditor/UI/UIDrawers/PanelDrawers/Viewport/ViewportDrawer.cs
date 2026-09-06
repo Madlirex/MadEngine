@@ -73,7 +73,7 @@ public class ViewportDrawer : PanelDrawer
             
             if (ImGui.Button(" > ", new Vector2(36, 24)))
             {
-                //context.EnqueueCommand(new StartPlaymodeCommand());
+                context.EnqueueCommand(new EnterPlaymodeCommand());
             }
 
             if (context.IsPlaying)
@@ -85,7 +85,7 @@ public class ViewportDrawer : PanelDrawer
             
             if (ImGui.Button("||", new Vector2(36, 24)))
             {
-                //context.EnqueueCommand(new StopPlaymodeCommand());
+                context.EnqueueCommand(new ExitPlaymodeCommand());
             }
         }
         ImGui.EndChild();
