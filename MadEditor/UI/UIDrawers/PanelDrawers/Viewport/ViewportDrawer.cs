@@ -66,8 +66,8 @@ public class ViewportDrawer : PanelDrawer
             if (context.IsPlaying)
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.2f, 1.0f, 0.2f, 1.0f));
-                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.02f, 0.02f, 0.02f, 1.0f)); 
-                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.05f, 0.05f, 0.05f, 1.0f));
+                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.1f, 0.1f, 1.0f)); 
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.15f, 0.15f, 0.15f, 1.0f));
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             }
             
