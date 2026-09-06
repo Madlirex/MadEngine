@@ -5,6 +5,7 @@ namespace MadEditor;
 
 public static class AssetManager
 {
+    public static List<string> PathsToSkip = [];
     public static string ProjectPath => _projectPath;
     private static string _projectPath = "";
 
@@ -37,6 +38,7 @@ public static class AssetManager
     {
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
+            if (PathsToSkip.Contains(file)) continue;
             InitializeAsset(file);
         }
     }
@@ -61,6 +63,7 @@ public static class AssetManager
         List<Asset> assets = [];
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
+            if (PathsToSkip.Contains(file)) continue;
             var asset = LoadAsset(file);
             if(asset != null) assets.Add(asset);
         }

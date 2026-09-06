@@ -16,12 +16,13 @@ public static class SceneSnapshotController
         _cachedState = importer.SaveToJson(scene);
     }
 
-    public static Scene RestoreSnapshot()
+    public static Scene RestoreSnapshot(bool instantiate = true)
     {
         if (_cachedState == null) return new Scene();
         SceneImporter? importer = (SceneImporter?)ImporterRegistry.GetImporter(typeof(Scene));
 
-        importer?.InstantiateFromJson(_cachedState);
-        return importer?.ImportFromJson(_cachedState) ?? new Scene();
+        if (instantiate)
+            importer?.InstantiateFromJson(_cachedState);
+        return importer?.ImportFromJson(_cachedState, instantiate) ?? new Scene();
     }
 }

@@ -9,7 +9,7 @@ public static class ImporterRegistry
     public static IAssetImporter? GetImporterByExtension(string extension) => Instance.GetImporterByExtension(extension);
 }
 
-internal class ImporterEngine : Registry
+internal class ImporterEngine : Registry, IDomainResetable
 {
     public override void Initialize()
     {
@@ -74,5 +74,12 @@ internal class ImporterEngine : Registry
             _importerNames.TryAdd(importer.Name, importer);
             _importerExtensions.TryAdd(importer.Extension, importer);
         }
+    }
+
+    public void ResetCache()
+    {
+        _importers.Clear();
+        _importerExtensions.Clear();
+        _importerNames.Clear();
     }
 }

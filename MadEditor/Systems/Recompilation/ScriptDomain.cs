@@ -34,18 +34,24 @@ public static class ScriptDomain
     
     public static void ReloadDomain(string[] sourceFiles)
     {
-        int index = SceneManager.Scenes.IndexOf(SceneManager.ActiveScene);
-        
+        Scene activeScene = SceneManager.ActiveScene;
+        string activeScenePath = activeScene.AbsolutePath;
+    
+        SceneSnapshotController.TakeSnapshot(activeScene);
+    
         Compile(sourceFiles);
-        
         AssetRegistry.Clear(); 
-        
         RegistryBootstrapper.ReinitializeAll();
-        
+
+        AssetManager.PathsToSkip.Add(activeScenePath);
+    
         PackageManager.LoadPackages();
         AssetManager.LoadProject();
+
+        AssetManager.PathsToSkip.Clear();
         
-        SceneManager.LoadScene(index);
+        Scene restoredScene = SceneSnapshotController.RestoreSnapshot();
+        SceneManager.LoadScene(restoredScene);
     }
 
     public static void Compile(string[] sourceFiles)

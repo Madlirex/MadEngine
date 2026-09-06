@@ -134,10 +134,9 @@ public class SceneImporter : Importer<Scene>
         return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
     }
 
-    public Scene ImportFromJson(JsonNode json)
+    public Scene ImportFromJson(JsonNode json, bool instantiate = true)
     {
-        InstantiateObjects(json);
-        
+        if(instantiate) InstantiateObjects(json);
         Guid guid = json["$guid"]!.GetGuid();
 
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;

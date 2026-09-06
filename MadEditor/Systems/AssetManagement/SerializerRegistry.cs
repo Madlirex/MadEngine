@@ -13,7 +13,7 @@ public static class SerializerRegistry
     public static IClassSerializer? GetClassSerializer(Type type) => Instance.GetClassSerializer(type);
 }
 
-internal class SerializerEngine : Registry
+internal class SerializerEngine : Registry, IDomainResetable
 {
     private readonly Dictionary<Type, ISerializer> _serializers = [];
     
@@ -135,5 +135,10 @@ internal class SerializerEngine : Registry
         Type valueType = genericArgs[1];
         Type dictSerializerType = typeof(DictionarySerializer<>).MakeGenericType(valueType);
         return CreateSerializer(dictSerializerType);
+    }
+
+    public void ResetCache()
+    {
+        _serializers.Clear();
     }
 }

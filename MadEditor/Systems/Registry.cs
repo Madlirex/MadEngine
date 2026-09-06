@@ -39,7 +39,13 @@ public static class RegistryBootstrapper
     {
         if(!_initialized) return;
         
-        Instances.Clear(); 
+        foreach (var pair in Instances.Values)
+        {
+            if (pair is IDomainResetable resetableRegistry)
+            {
+                resetableRegistry.ResetCache();
+            }
+        }
     
         InitializeAll();
 
