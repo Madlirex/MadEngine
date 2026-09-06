@@ -16,6 +16,8 @@ class Program
             break;
         }
         
+        Diagnostics.EngineCrashHook.Initialize();
+        
         using (EditorWindow game = new EditorWindow(1200, 800, "Mad Engine"))
         {
             game.Run();

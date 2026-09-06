@@ -96,7 +96,7 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
 
         if (ImGui.Button("Recompile Scripts"))
         {
-            AssetManager.RecompileScripts();
+            EditorUI.UiContext.EnqueueCommand(new RecompilationCommand());
         }
 
         AddComponentPopup.Draw(context);

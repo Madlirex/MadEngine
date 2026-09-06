@@ -19,9 +19,16 @@ public class Scene : Asset
         SceneManager.Scenes.Add(this);
     }
 
-    ~Scene()
+    protected override void OnDispose(bool disposing)
     {
-        SceneManager.Scenes.Remove(this);
+        if (disposing)
+        {
+            foreach(GameObject obj in GameObjects)
+                obj.Destroy();
+            
+            SceneManager.Scenes.Remove(this);
+        }
+        base.OnDispose(disposing);
     }
     
     public void Add(GameObject gameObject)

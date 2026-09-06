@@ -6,11 +6,8 @@
         "_gameObjects": [
             "e1f87b3b-a32a-4630-88f7-303b043088e8"
         ],
-        "_lights": [
-            "30e2e950-bceb-454d-aea9-004b875c90cb"
-        ],
+        "_lights": [],
         "_renderers": [
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
             "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
         ],
         "Guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
@@ -24,8 +21,7 @@
                 "Transform": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
                 "_components": [
                     "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
-                    "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-                    "30e2e950-bceb-454d-aea9-004b875c90cb"
+                    "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
                 ],
                 "Name": "NewGameObject",
                 "Guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
@@ -83,39 +79,6 @@
                 "Name": "NewComponent",
                 "Guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
                 "_guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
-            }
-        },
-        {
-            "$type": "MadEngine.Core.DirectionalLight, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "30e2e950-bceb-454d-aea9-004b875c90cb",
-            "$data": {
-                "Direction": [
-                    3,
-                    -8,
-                    4
-                ],
-                "AmbientColor": [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
-                "DiffuseColor": [
-                    1,
-                    1,
-                    1,
-                    1
-                ],
-                "SpecularColor": [
-                    0.5,
-                    0.5,
-                    0.5,
-                    0.5
-                ],
-                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
-                "Name": "NewComponent",
-                "Guid": "30e2e950-bceb-454d-aea9-004b875c90cb",
-                "_guid": "30e2e950-bceb-454d-aea9-004b875c90cb"
             }
         }
     ]

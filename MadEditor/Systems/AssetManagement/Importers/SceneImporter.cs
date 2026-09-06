@@ -11,6 +11,13 @@ public class SceneImporter : Importer<Scene>
     
     public override void Save(Scene asset)
     {
+        JsonNode jsonObject = SaveToJson(asset);
+
+        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+    }
+
+    public JsonNode SaveToJson(Scene asset)
+    {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Scene))!.Serialize(asset);
 
         JsonArray objArray = new JsonArray();
@@ -27,16 +34,15 @@ public class SceneImporter : Importer<Scene>
         }
         jsonObject.Add("GameObjects", objArray);
         jsonObject.Add("Components", compArray);
-
-        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+        return jsonObject;
     }
 
     public override Scene Initialize(string path)
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
-        
-        return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
+
+        return InstantiateFromJson(json);
     }
 
     public override Scene Initialize(AssetMeta meta)
@@ -52,7 +58,7 @@ public class SceneImporter : Importer<Scene>
             {
                 if (node is not JsonObject goJson) continue;
 
-                Guid guid = goJson["$guid"]!.GetValue<Guid>();
+                Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = new GameObject() {Guid = guid};
             }
         }
@@ -64,7 +70,7 @@ public class SceneImporter : Importer<Scene>
             if (node is not JsonObject compJson) continue;
 
             string typeStr = compJson["$type"]!.GetValue<string>();
-            Guid guid = compJson["$guid"]!.GetValue<Guid>();
+            Guid guid = compJson["$guid"]!.GetGuid();
 
             if (string.IsNullOrEmpty(typeStr)) continue;
             Type compType = ScriptDomain.GetType(typeStr)!;
@@ -85,7 +91,7 @@ public class SceneImporter : Importer<Scene>
             {
                 if (node is not JsonObject goJson) continue;
 
-                Guid guid = goJson["$guid"]!.GetValue<Guid>();
+                Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = (GameObject)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(typeof(GameObject))!.DeserializeInto(obj, goJson["$data"]!);
                 scene.Register(obj);
@@ -98,7 +104,7 @@ public class SceneImporter : Importer<Scene>
         {
             if (node is not JsonObject compJson) continue;
             
-            Guid guid = compJson["$guid"]!.GetValue<Guid>();
+            Guid guid = compJson["$guid"]!.GetGuid();
             string typeStr = compJson["$type"]!.GetValue<string>();
             
             if (string.IsNullOrEmpty(typeStr)) continue;
@@ -117,14 +123,25 @@ public class SceneImporter : Importer<Scene>
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
-        InstantiateObjects(json);
+
+        Scene obj = ImportFromJson(json);
         
-        Guid guid = json["$guid"]!.GetValue<Guid>();
+        return obj;
+    }
+    
+    public Scene InstantiateFromJson(JsonNode json)
+    {
+        return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
+    }
+
+    public Scene ImportFromJson(JsonNode json, bool instantiate = true)
+    {
+        if(instantiate) InstantiateObjects(json);
+        Guid guid = json["$guid"]!.GetGuid();
 
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;
         SerializerRegistry.GetClassSerializer(typeof(Scene))!.DeserializeInto(obj, json["$data"]!);
         ImportObjects(json, obj);
-        
         return obj;
     }
 }

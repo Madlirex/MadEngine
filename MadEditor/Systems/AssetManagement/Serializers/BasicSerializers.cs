@@ -146,3 +146,18 @@ public class SByteSerializer : NumberSerializer<sbyte>;
 public class FloatSerializer : NumberSerializer<float>;
 public class DoubleSerializer : NumberSerializer<double>;
 public class DecimalSerializer : NumberSerializer<decimal>;
+
+public class EnumSerializer<T> : Serializer<T> where T : struct, Enum
+{
+    public override JsonNode Serialize(T obj) 
+    {
+        return JsonValue.Create(obj.ToString());
+    }
+    
+    public override T Deserialize(JsonNode obj) 
+    {
+        string enumString = obj.GetValue<string>();
+        
+        return Enum.TryParse(enumString, out T result) ? result : default;
+    }
+}

@@ -1,18 +1,21 @@
 ﻿using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
 public static class AssetManager
 {
+    public static List<string> PathsToSkip = [];
     public static string ProjectPath => _projectPath;
     private static string _projectPath = "";
 
-    public static void RecompileScripts()
+    public static void RecompileScripts(bool performSnapshot = true)
     {
         if (!Directory.Exists(ProjectPath)) return;
         var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
-
-        ScriptDomain.Compile(scriptFiles);
+        
+        if(performSnapshot) ScriptDomain.ReloadDomain(scriptFiles);
+        else ScriptDomain.Compile(scriptFiles);
     }
     
     public static void SetProjectPath(string path)
@@ -35,6 +38,7 @@ public static class AssetManager
     {
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
+            if (PathsToSkip.Contains(file)) continue;
             InitializeAsset(file);
         }
     }
@@ -59,6 +63,7 @@ public static class AssetManager
         List<Asset> assets = [];
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
+            if (PathsToSkip.Contains(file)) continue;
             var asset = LoadAsset(file);
             if(asset != null) assets.Add(asset);
         }
