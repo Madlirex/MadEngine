@@ -7,8 +7,7 @@ public enum Test
 {
 	Value1,
 	Value2,
-	_ef,
-	DzigaMore
+	_ef
 }
 
 public class EditorTestComp : Component

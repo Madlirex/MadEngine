@@ -28,6 +28,11 @@ public static class StringExtensions
         
         return attribute != null ? attribute.Name : type.Name.Prettify();
     }
+
+    public static string GetCustomName(this string obj)
+    {
+        return obj.Prettify();
+    }
     
     public static string GetCustomName(this MemberInfo member)
     {

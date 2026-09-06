@@ -506,11 +506,17 @@ public class EnumDrawer : FieldDrawer
         Type enumType = member.Type;
         
         string[] enumNames = Enum.GetNames(enumType);
+        string[] prettyNames = new string[enumNames.Length];
+        
+        for (int i = 0; i < enumNames.Length; i++)
+        {
+            prettyNames[i] = enumNames[i].GetCustomName();
+        }
         
         string currentName = currentValue.ToString()!;
         int currentIndex = Array.IndexOf(enumNames, currentName);
         
-        if (ImGui.Combo(member.GetCustomName(), ref currentIndex, enumNames, enumNames.Length))
+        if (ImGui.Combo(member.GetCustomName(), ref currentIndex, prettyNames, enumNames.Length))
         {
             string selectedName = enumNames[currentIndex];
             object newValue = Enum.Parse(enumType, selectedName);

@@ -8,11 +8,6 @@
         ],
         "_lights": [],
         "_renderers": [
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-            "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
             "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
         ],
         "Guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
@@ -26,8 +21,7 @@
                 "Transform": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
                 "_components": [
                     "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
-                    "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
-                    "dabf8e48-0c2c-41b7-a96b-ed948605aceb"
+                    "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
                 ],
                 "Name": "NewGameObject",
                 "Guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
@@ -85,20 +79,6 @@
                 "Name": "NewComponent",
                 "Guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59",
                 "_guid": "3e676d20-d1cf-4f55-8d9f-428cf1b94b59"
-            }
-        },
-        {
-            "$type": "EditorTestComp, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "dabf8e48-0c2c-41b7-a96b-ed948605aceb",
-            "$data": {
-                "Count": 0,
-                "mesh": null,
-                "material": null,
-                "test": "Value2",
-                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
-                "Name": "NewComponent",
-                "Guid": "dabf8e48-0c2c-41b7-a96b-ed948605aceb",
-                "_guid": "dabf8e48-0c2c-41b7-a96b-ed948605aceb"
             }
         }
     ]
