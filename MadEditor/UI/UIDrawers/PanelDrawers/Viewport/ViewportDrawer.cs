@@ -26,7 +26,7 @@ public class ViewportDrawer : PanelDrawer
                  viewportContext.Size = new Vector2(availableW, availableH);
                  viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
                  
-                 Camera cam = viewportContext.CameraObject.GetComponent<Camera>()!;
+                 Camera cam = viewportContext.CameraComponent;
                  cam.Width = (int)availableW;
                  cam.Height = (int)availableH;
              }
@@ -63,7 +63,7 @@ public class ViewportDrawer : PanelDrawer
         var childFlags = ImGuiChildFlags.Borders | ImGuiChildFlags.AlwaysUseWindowPadding;
         if (ImGui.BeginChild("##ViewportToolbar", new Vector2(90, 32), childFlags))
         {
-            if (Application.IsPlaying)
+            if (context.IsPlaying)
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.2f, 1.0f, 0.2f, 1.0f));
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.02f, 0.02f, 0.02f, 1.0f)); 
@@ -73,7 +73,7 @@ public class ViewportDrawer : PanelDrawer
             
             if (ImGui.Button(" > ", new Vector2(36, 24)))
             {
-                context.EnqueueCommand(new StartPlaymodeCommand());
+                //context.EnqueueCommand(new StartPlaymodeCommand());
             }
 
             if (context.IsPlaying)
@@ -85,7 +85,7 @@ public class ViewportDrawer : PanelDrawer
             
             if (ImGui.Button("||", new Vector2(36, 24)))
             {
-                context.EnqueueCommand(new StopPlaymodeCommand());
+                //context.EnqueueCommand(new StopPlaymodeCommand());
             }
         }
         ImGui.EndChild();

@@ -13,7 +13,7 @@ namespace MadEditor;
 
 public class EditorWindow : GameWindow
 {
-    private Engine _engine;
+    public Engine Engine;
 
     private Vector2 _lastPos;
     private bool _firstMove = true;
@@ -34,11 +34,11 @@ public class EditorWindow : GameWindow
     {
         Application.Directory = AssetManager.ProjectPath;
         
-        _engine = new Engine();
+        Engine = new Engine();
         
         CursorState = CursorState.Normal;
         _imGui = new ImGuiController(width, height);
-        _editorUI = new EditorUI();
+        _editorUI = new EditorUI(Engine);
         _gridRenderer = new SceneGridRenderer();
     }
 
@@ -46,7 +46,7 @@ public class EditorWindow : GameWindow
     {
         base.OnLoad();
 
-        _engine.Initialize();
+        Engine.Initialize();
         Console.WriteLine("Compiling");
         AssetManager.RecompileScripts(false);
         
@@ -62,7 +62,7 @@ public class EditorWindow : GameWindow
 
         Console.WriteLine("Loading scene");
         SceneManager.LoadScene(0);
-        _engine.EditorStart(SceneManager.ActiveScene);
+        Engine.EditorStart(SceneManager.ActiveScene);
     }
 
     protected override void OnTextInput(TextInputEventArgs e)
@@ -85,7 +85,7 @@ public class EditorWindow : GameWindow
 
         CursorState = CursorState.Normal;
         
-        _engine.Dispose();
+        Engine.Dispose();
         foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
             vp.Dispose();
@@ -107,7 +107,7 @@ public class EditorWindow : GameWindow
         
             Camera camera = vp.CameraComponent;
         
-            _engine.Render(SceneManager.ActiveScene, camera);
+            Engine.Render(SceneManager.ActiveScene, camera);
         
             _gridRenderer.Render(
                 camera.GetViewMatrix(), 
@@ -136,7 +136,7 @@ public class EditorWindow : GameWindow
         _imGui.Update(this, (float)args.Time);
         
         UpdateCamera(args);
-        _engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+        Engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
     }
     
     public void UpdateCamera(FrameEventArgs args)
@@ -160,7 +160,7 @@ public class EditorWindow : GameWindow
             return;
         }
 
-        Camera camera = currentFlyingCamera.GetComponent<Camera>()!;
+        Camera camera = EditorUI.UiContext.ActiveViewport!.CameraComponent;
         float speed = camera.Speed * (float)args.Time;
         KeyboardState input = KeyboardState;
 
@@ -224,7 +224,7 @@ public class EditorWindow : GameWindow
         base.OnMouseWheel(e);
 
         if (CursorState == CursorState.Grabbed)
-            EditorUI.UiContext.ActiveViewport!.CameraObject.GetComponent<Camera>()!.Fov -= e.OffsetY;
+            EditorUI.UiContext.ActiveViewport!.CameraComponent.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)

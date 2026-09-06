@@ -8,12 +8,14 @@ namespace MadEditor;
 
 public class EditorUI
 {
-    private readonly GameObject _cameraObject;
-    private readonly SceneFramebuffer _sceneFbo;
-
     public static EditorUIContext UiContext => _uiContext;
-    private static EditorUIContext _uiContext = new();
+    private static EditorUIContext _uiContext = null!;
 
+    public EditorUI(Engine engine)
+    {
+        _uiContext = new EditorUIContext(engine);
+    }
+    
     public void Initialize()
     {
         PanelSystem.Initialize();

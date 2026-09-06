@@ -6,6 +6,8 @@ namespace MadEditor;
 
 public class EditorUIContext
 {
+    public Engine Engine;
+    
     public MadObject? Selected;
     public MadObject? RightClicked;
     public GameWindow Window = null!;
@@ -16,6 +18,11 @@ public class EditorUIContext
     public ViewportContext? ActiveViewport { get; set; }
 
     private List<IEditorCommand> _commands = [];
+
+    public EditorUIContext(Engine engine)
+    {
+        Engine = engine;
+    }
     
     public ViewportContext GetOrCreateViewport(string panelTitle)
     {
