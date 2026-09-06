@@ -15,28 +15,28 @@ public static class Debug
     public static void Log(string message) => AddEntry(message, LogType.Info);
     public static void LogWarning(string message) => AddEntry(message, LogType.Warning);
     public static void LogError(string message) => AddEntry(message, LogType.Error);
-
-    private static void AddEntry(string message, LogType type)
+    public static void LogError(string message, string stackTrace) => AddEntry(message, LogType.Error, stackTrace);
+    
+    private static void AddEntry(string message, LogType type, string? customStackTrace = null)
     {
         lock (Lock)
         {
             if (Logs.Count > 0 && Logs[^1].Message == message && Logs[^1].Type == type)
             {
-                var last = Logs[^1];
-                last.Count++;
-                Logs[^1] = last;
+                Logs[^1].Count++;
             }
             else
             {
-                Logs.Add(new LogEntry(message, Environment.StackTrace, type));
+                string trace = customStackTrace ?? Environment.StackTrace;
+                Logs.Add(new LogEntry(message, trace, type));
             }
-            
+
             if (Logs.Count > MaxLogCount)
             {
                 Logs.RemoveAt(0);
             }
         }
-        
+
         OnLogAdded?.Invoke();
     }
     
