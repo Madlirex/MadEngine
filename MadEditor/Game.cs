@@ -59,7 +59,7 @@ public class EditorWindow : GameWindow
 
         _engine.Initialize();
         Console.WriteLine("Compiling");
-        AssetManager.RecompileScripts();
+        AssetManager.RecompileScripts(false);
         
         RegistryBootstrapper.InitializeAll();
         
@@ -108,7 +108,14 @@ public class EditorWindow : GameWindow
         _sceneFbo.Bind();
 
         Camera camera = _camera.GetComponent<Camera>()!;
-
+        if (_camera == null || camera == null)
+        {
+            _camera = new GameObject();
+            camera = new Camera();
+            _camera.AddComponentUnsafe(camera);
+            _editorUI = new EditorUI(_camera, _sceneFbo);
+        }
+        
         _engine.Render(SceneManager.ActiveScene, camera);
         _gridRenderer.Render(camera.GetViewMatrix(), camera.GetPerspectiveMatrix(), _camera.Transform.Position, camera.DepthFar);
         
@@ -160,6 +167,7 @@ public class EditorWindow : GameWindow
         
         if (input.IsKeyDown(Keys.W))
         {
+            Console.WriteLine("hola");
             _camera.Transform.Position += camera.Front * speed;
             //SceneManager.ActiveScene.Add(new GameObject());
         }

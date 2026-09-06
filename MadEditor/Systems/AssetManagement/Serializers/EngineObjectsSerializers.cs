@@ -70,12 +70,12 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
         if (string.IsNullOrEmpty(typeString))
             throw new InvalidOperationException("JSON missing required '$type' metadata tag.");
         
-        Type? type = Type.GetType(typeString);
+        Type? type = ScriptDomain.GetType(typeString);
         if (type == null)
             throw new TypeLoadException($"Unable to find type '{typeString}'.");
 
         MadObject instance = (MadObject)Activator.CreateInstance(type)!;
-        instance.Guid = jsonObject["$guid"]!.GetValue<Guid>();
+        instance.Guid = jsonObject["$guid"]!.GetGuid();
         return instance;
     }
 
@@ -124,6 +124,6 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
 
     public override MadObject DeserializeReference(JsonNode obj)
     {
-        return AssetRegistry.GetObject(Guid.Parse(obj.GetValue<string>()))!;
+        return AssetRegistry.GetObject(obj.GetGuid())!;
     }
 }

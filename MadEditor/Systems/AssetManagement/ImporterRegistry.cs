@@ -9,7 +9,7 @@ public static class ImporterRegistry
     public static IAssetImporter? GetImporterByExtension(string extension) => Instance.GetImporterByExtension(extension);
 }
 
-internal class ImporterEngine : Registry
+internal class ImporterEngine : Registry, IDomainResetable
 {
     public override void Initialize()
     {
@@ -55,7 +55,7 @@ internal class ImporterEngine : Registry
     private void DiscoverImporters()
     {
         _importers.Clear();
-        var importerTypes = AppDomain.CurrentDomain.GetAssemblies()
+        var importerTypes = ScriptDomain.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(IAssetImporter)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false });
@@ -74,5 +74,12 @@ internal class ImporterEngine : Registry
             _importerNames.TryAdd(importer.Name, importer);
             _importerExtensions.TryAdd(importer.Extension, importer);
         }
+    }
+
+    public void ResetCache()
+    {
+        _importers.Clear();
+        _importerExtensions.Clear();
+        _importerNames.Clear();
     }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using MadEditor.PackageManagement;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
@@ -12,18 +13,17 @@ namespace MadEditor;
 
 public static class ScriptDomain
 {
-    private static readonly List<Assembly> Assemblies = new();
+    public static IReadOnlyList<Assembly> Assemblies => _assemblies;
+    private static List<Assembly> _assemblies = [];
 
     public static Assembly? RuntimeAssembly { get; private set; }
     public static Assembly? EditorAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
-
-    // Stores a reference to the old context to analyze it if it leaks
+    
     private static WeakReference? _zombieContextRef;
 
     public static Type? GetType(string typeName)
     {
-        // FIX: Look inside active tracked assemblies to prevent zombie duplication lookups
         foreach (var assembly in Assemblies)
         {
             var type = assembly.GetType(typeName.Split(',')[0].Trim());
@@ -31,11 +31,32 @@ public static class ScriptDomain
         }
         return null;
     }
+    
+    public static void ReloadDomain(string[] sourceFiles)
+    {
+        Scene activeScene = SceneManager.ActiveScene;
+        string activeScenePath = activeScene.AbsolutePath;
+    
+        SceneSnapshotController.TakeSnapshot(activeScene);
+    
+        Compile(sourceFiles);
+        AssetRegistry.Clear(); 
+        RegistryBootstrapper.ReinitializeAll();
+
+        AssetManager.PathsToSkip.Add(activeScenePath);
+    
+        PackageManager.LoadPackages();
+        AssetManager.LoadProject();
+
+        AssetManager.PathsToSkip.Clear();
+        
+        Scene restoredScene = SceneSnapshotController.RestoreSnapshot();
+        SceneManager.LoadScene(restoredScene);
+    }
 
     public static void Compile(string[] sourceFiles)
     {
         ReloadFromFiles(sourceFiles);
-        RegistryBootstrapper.ReinitializeAll();
     }
 
     private static void ReloadFromFiles(string[] sourceFiles)
@@ -57,14 +78,14 @@ public static class ScriptDomain
 
         var context = new ScriptLoadContext();
         CurrentContext = context;
-        Assemblies.Clear();
+        _assemblies.Clear();
         
         AddCoreEngineAssemblies();
         
         using (var ms = new MemoryStream(runtimeDll))
         {
             RuntimeAssembly = context.LoadFromStream(ms);
-            Assemblies.Add(RuntimeAssembly);
+            _assemblies.Add(RuntimeAssembly);
         }
         
         if (editorDll is not { Length: > 0 }) return;
@@ -72,30 +93,29 @@ public static class ScriptDomain
         using (var ms = new MemoryStream(editorDll))
         {
             EditorAssembly = context.LoadFromStream(ms);
-            Assemblies.Add(EditorAssembly);
+            _assemblies.Add(EditorAssembly);
         }
     }
     
     private static void AddCoreEngineAssemblies()
     {
-        var runningAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-        
-        foreach (var assembly in runningAssemblies)
+        Assembly coreAssembly = typeof(MadObject).Assembly;
+        Assembly editorAssembly = typeof(ScriptDomain).Assembly;
+
+        if (!_assemblies.Contains(coreAssembly))
         {
-            string? name = assembly.GetName().Name;
-            if (name == "MadEngine" || name == "MadEngine.Core" || name == "MadEditor")
-            {
-                if (!Assemblies.Contains(assembly))
-                {
-                    Assemblies.Add(assembly);
-                }
-            }
+            _assemblies.Add(coreAssembly);
+        }
+
+        if (!_assemblies.Contains(editorAssembly))
+        {
+            _assemblies.Add(editorAssembly);
         }
     }
     
     private static void Unload()
     {
-        Assemblies.Clear();
+        _assemblies.Clear();
 
         var context = CurrentContext;
 

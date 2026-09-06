@@ -13,7 +13,7 @@ public static class SerializerRegistry
     public static IClassSerializer? GetClassSerializer(Type type) => Instance.GetClassSerializer(type);
 }
 
-internal class SerializerEngine : Registry
+internal class SerializerEngine : Registry, IDomainResetable
 {
     private readonly Dictionary<Type, ISerializer> _serializers = [];
     
@@ -25,7 +25,8 @@ internal class SerializerEngine : Registry
     private void DiscoverSerializers()
     {
         _serializers.Clear();
-        var serializerTypes = AppDomain.CurrentDomain.GetAssemblies()
+        
+        var serializerTypes = ScriptDomain.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(ISerializer)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false, IsGenericTypeDefinition: false });
@@ -134,5 +135,10 @@ internal class SerializerEngine : Registry
         Type valueType = genericArgs[1];
         Type dictSerializerType = typeof(DictionarySerializer<>).MakeGenericType(valueType);
         return CreateSerializer(dictSerializerType);
+    }
+
+    public void ResetCache()
+    {
+        _serializers.Clear();
     }
 }

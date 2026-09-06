@@ -119,4 +119,17 @@ public static class AssetRegistry
     {
         return _objectMap.Values.Where(type.IsInstanceOfType).ToArray();
     }
+
+    public static void Clear()
+    {
+        foreach (var pair in _objectMap.ToArray())
+        {
+            pair.Value.Destroy();
+        }
+        _objectMap.Clear();
+        _pathByGuid.Clear();
+        _guidByPath.Clear();
+        _assets.Clear();
+        _assetRegistries.Clear();
+    }
 }

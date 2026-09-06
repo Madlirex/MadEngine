@@ -9,6 +9,7 @@ public class EditorTestComp : Component
     public int Count = 0;
     public Mesh? mesh = null;
     public Material? material = null;
+
     public override void EditorStart()
     {
 	    Debug.Log("EditorTestComp Start");
