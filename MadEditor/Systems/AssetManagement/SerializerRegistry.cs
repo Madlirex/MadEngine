@@ -110,6 +110,12 @@ internal class SerializerEngine : Registry, IDomainResetable
 
     private ISerializer? TryGenerateDynamicSerializer(Type type)
     {
+        if (type.IsEnum)
+        {
+            Type enumSerializerType = typeof(EnumSerializer<>).MakeGenericType(type);
+            return CreateSerializer(enumSerializerType);
+        }
+        
         if (type.IsArray)
         {
             Type elementType = type.GetElementType()!;
