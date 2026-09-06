@@ -11,6 +11,13 @@ public class SceneImporter : Importer<Scene>
     
     public override void Save(Scene asset)
     {
+        JsonNode jsonObject = SaveToJson(asset);
+
+        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+    }
+
+    public JsonNode SaveToJson(Scene asset)
+    {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Scene))!.Serialize(asset);
 
         JsonArray objArray = new JsonArray();
@@ -27,16 +34,15 @@ public class SceneImporter : Importer<Scene>
         }
         jsonObject.Add("GameObjects", objArray);
         jsonObject.Add("Components", compArray);
-
-        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+        return jsonObject;
     }
 
     public override Scene Initialize(string path)
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
-        
-        return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
+
+        return InstantiateFromJson(json);
     }
 
     public override Scene Initialize(AssetMeta meta)
@@ -117,6 +123,19 @@ public class SceneImporter : Importer<Scene>
     {
         string data = File.ReadAllText(path);
         JsonNode json = JsonNode.Parse(data)!;
+
+        Scene obj = ImportFromJson(json);
+        
+        return obj;
+    }
+    
+    public Scene InstantiateFromJson(JsonNode json)
+    {
+        return SerializerRegistry.GetSerializer(typeof(Scene))!.Deserialize(json) as Scene ?? new Scene();
+    }
+
+    public Scene ImportFromJson(JsonNode json)
+    {
         InstantiateObjects(json);
         
         Guid guid = json["$guid"]!.GetValue<Guid>();
@@ -124,7 +143,6 @@ public class SceneImporter : Importer<Scene>
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;
         SerializerRegistry.GetClassSerializer(typeof(Scene))!.DeserializeInto(obj, json["$data"]!);
         ImportObjects(json, obj);
-        
         return obj;
     }
 }
