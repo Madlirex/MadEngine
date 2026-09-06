@@ -31,7 +31,7 @@ public class DefaultInspectorDrawer : InspectorDrawer<MadObject>
     {
         if (ImGui.Button("Recompile Scripts"))
         {
-            AssetManager.RecompileScripts();
+            EditorUI.UiContext.EnqueueCommand(new RecompilationCommand());
         }
     }
 }

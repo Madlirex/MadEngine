@@ -13,15 +13,12 @@ namespace MadEditor;
 
 public class EditorWindow : GameWindow
 {
-    private Engine _engine;
-    
-    private GameObject _camera;
+    public Engine Engine;
 
     private Vector2 _lastPos;
     private bool _firstMove = true;
 
     private ImGuiController _imGui;
-    private SceneFramebuffer _sceneFbo;
     private EditorUI _editorUI;
     private SceneGridRenderer _gridRenderer;
     
@@ -37,19 +34,11 @@ public class EditorWindow : GameWindow
     {
         Application.Directory = AssetManager.ProjectPath;
         
-        _engine = new Engine();
-
-        _camera = new GameObject();
-        _camera.Name = "MainCamera";
-        _camera.AddComponentUnsafe(new Camera());
+        Engine = new Engine();
         
         CursorState = CursorState.Normal;
-        _camera.GetComponent<Camera>()!.Width = width;
-        _camera.GetComponent<Camera>()!.Height = height;
-
         _imGui = new ImGuiController(width, height);
-        _sceneFbo = new SceneFramebuffer(width, height);
-        _editorUI = new EditorUI(_camera, _sceneFbo);
+        _editorUI = new EditorUI(Engine);
         _gridRenderer = new SceneGridRenderer();
     }
 
@@ -57,7 +46,7 @@ public class EditorWindow : GameWindow
     {
         base.OnLoad();
 
-        _engine.Initialize();
+        Engine.Initialize();
         Console.WriteLine("Compiling");
         AssetManager.RecompileScripts(false);
         
@@ -73,7 +62,7 @@ public class EditorWindow : GameWindow
 
         Console.WriteLine("Loading scene");
         SceneManager.LoadScene(0);
-        _engine.EditorStart(SceneManager.ActiveScene);
+        Engine.EditorStart(SceneManager.ActiveScene);
     }
 
     protected override void OnTextInput(TextInputEventArgs e)
@@ -96,8 +85,11 @@ public class EditorWindow : GameWindow
 
         CursorState = CursorState.Normal;
         
-        _engine.Dispose();
-        _sceneFbo.Dispose(); 
+        Engine.Dispose();
+        foreach (var vp in EditorUI.UiContext.GetAllViewports())
+        {
+            vp.Dispose();
+        }
         _imGui.Dispose();    
     }
 
@@ -105,26 +97,35 @@ public class EditorWindow : GameWindow
     {
         base.OnRenderFrame(args);
         
-        _sceneFbo.Bind();
-
-        Camera camera = _camera.GetComponent<Camera>()!;
-        if (_camera == null || camera == null)
+        foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
-            _camera = new GameObject();
-            camera = new Camera();
-            _camera.AddComponentUnsafe(camera);
-            _editorUI = new EditorUI(_camera, _sceneFbo);
+            if (vp.Size.X <= 1 || vp.Size.Y <= 1) continue;
+        
+            vp.Framebuffer.Bind();
+            GL.Viewport(0, 0, (int)vp.Size.X, (int)vp.Size.Y);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        
+            Camera camera = vp.CameraComponent;
+        
+            Engine.Render(SceneManager.ActiveScene, camera);
+        
+            _gridRenderer.Render(
+                camera.GetViewMatrix(), 
+                camera.GetPerspectiveMatrix(), 
+                vp.CameraObject.Transform.Position, 
+                camera.DepthFar
+            );
         }
         
-        _engine.Render(SceneManager.ActiveScene, camera);
-        _gridRenderer.Render(camera.GetViewMatrix(), camera.GetPerspectiveMatrix(), _camera.Transform.Position, camera.DepthFar);
-        
         SceneFramebuffer.Unbind();
+        
         GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
-        GL.Clear(ClearBufferMask.ColorBufferBit);
+        GL.ClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        
         _editorUI.Draw(this);
         _imGui.Render();
-        
+    
         SwapBuffers();
     }
 
@@ -135,14 +136,29 @@ public class EditorWindow : GameWindow
         _imGui.Update(this, (float)args.Time);
         
         UpdateCamera(args);
-        _engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+        if(EditorUI.UiContext.IsPlaying)
+        {
+            Engine.Update((float)args.Time, SceneManager.ActiveScene);
+        }
+        else
+        {
+            Engine.EditorUpdate((float)args.Time, SceneManager.ActiveScene);
+        }
     }
     
     public void UpdateCamera(FrameEventArgs args)
     {
+        GameObject? currentFlyingCamera = EditorUI.UiContext.ActiveViewport?.CameraObject;
+        if (currentFlyingCamera == null || !IsFocused) return;
+    
         if (!IsFocused)
         {
             return;
+        }
+
+        if (KeyboardState.IsKeyDown(Keys.Escape))
+        {
+            CursorState = CursorState.Normal;
         }
         
         if (CursorState != CursorState.Grabbed)
@@ -151,14 +167,9 @@ public class EditorWindow : GameWindow
             return;
         }
 
-        if (KeyboardState.IsKeyDown(Keys.Escape))
-        {
-            CursorState = CursorState.Normal;
-        }
-
-        Camera camera = _camera.GetComponent<Camera>()!;
-        KeyboardState input = KeyboardState;
+        Camera camera = EditorUI.UiContext.ActiveViewport!.CameraComponent;
         float speed = camera.Speed * (float)args.Time;
+        KeyboardState input = KeyboardState;
 
         if (input.IsKeyDown(Keys.LeftControl))
         {
@@ -167,34 +178,33 @@ public class EditorWindow : GameWindow
         
         if (input.IsKeyDown(Keys.W))
         {
-            Console.WriteLine("hola");
-            _camera.Transform.Position += camera.Front * speed;
+            currentFlyingCamera.Transform.Position += camera.Front * speed;
             //SceneManager.ActiveScene.Add(new GameObject());
         }
 
         if (input.IsKeyDown(Keys.S))
         {
-            _camera.Transform.Position -= camera.Front * speed;
+            currentFlyingCamera.Transform.Position -= camera.Front * speed;
         }
 
         if (input.IsKeyDown(Keys.A))
         {
-            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; 
+            currentFlyingCamera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; 
         }
 
         if (input.IsKeyDown(Keys.D))
         {
-            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed;
+            currentFlyingCamera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed;
         }
 
         if (input.IsKeyDown(Keys.Space))
         {
-            _camera.Transform.Position += camera.Up * speed;
+            currentFlyingCamera.Transform.Position += camera.Up * speed;
         }
 
         if (input.IsKeyDown(Keys.LeftShift))
         {
-            _camera.Transform.Position -= camera.Up * speed;
+            currentFlyingCamera.Transform.Position -= camera.Up * speed;
         }
         
         const float sensitivity = 0.2f;
@@ -221,15 +231,13 @@ public class EditorWindow : GameWindow
         base.OnMouseWheel(e);
 
         if (CursorState == CursorState.Grabbed)
-            _camera.GetComponent<Camera>()!.Fov -= e.OffsetY;
+            EditorUI.UiContext.ActiveViewport!.CameraComponent.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
         base.OnFramebufferResize(e);
-        _camera.GetComponent<Camera>()!.Width = e.Width;
-        _camera.GetComponent<Camera>()!.Height = e.Height;
-        GL.Viewport(0, 0, e.Width, e.Height);
+        
         _imGui.Resize(e.Width, e.Height);
     }
 }

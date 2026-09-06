@@ -98,15 +98,12 @@ internal class PanelSystemEngine : Registry
 
         foreach (PanelDrawer panelDrawer in _panels)
         {
+            if (panelDrawer is ViewportDrawer)
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
+            
             if (panelDrawer.PanelRegion != PanelRegion.Floating)
             {
-                if (panelDrawer is ViewportDrawer)
-                    ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
-                
                 ImGui.Begin(panelDrawer.ToString(), ImGuiWindowFlags.NoCollapse);
-
-                if (panelDrawer is ViewportDrawer)
-                    ImGui.PopStyleVar();
             }
             else
             {
@@ -119,9 +116,14 @@ internal class PanelSystemEngine : Registry
                 {
                     context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
                     ImGui.End();
+                    if (panelDrawer is ViewportDrawer)
+                        ImGui.PopStyleVar();
                     continue;
                 }
             }
+
+            if (panelDrawer is ViewportDrawer)
+                ImGui.PopStyleVar();
 
             panelDrawer.Draw(context);
             ImGui.End();

@@ -95,8 +95,8 @@ public static class ScriptCompiler
             
             string formattedWarning = $"{filePath}({line},{character}): warning {warnCode}: {warnMessage}";
             
-            Debug.LogWarning(formattedWarning);
-            Console.WriteLine(formattedWarning);
+            //Debug.LogWarning(formattedWarning);
+            //Console.WriteLine(formattedWarning);
         }
         foreach (var d in result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Info))
         {
@@ -112,8 +112,8 @@ public static class ScriptCompiler
             
             string formattedInfo = $"{filePath}({line},{character}): info {infoCode}: {infoMessage}";
             
-            Debug.Log(formattedInfo);
-            Console.WriteLine(formattedInfo);
+            //Debug.Log(formattedInfo);
+            //Console.WriteLine(formattedInfo);
         }
         
         return result.Success ? ms.ToArray() : null;
