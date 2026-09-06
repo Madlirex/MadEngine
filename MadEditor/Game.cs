@@ -21,6 +21,8 @@ public class EditorWindow : GameWindow
     private ImGuiController _imGui;
     private EditorUI _editorUI;
     private SceneGridRenderer _gridRenderer;
+
+    private DateTime _start;
     
     public EditorWindow(int width, int height, string title) : base(new GameWindowSettings()
     {
@@ -32,6 +34,8 @@ public class EditorWindow : GameWindow
 
     })
     {
+        _start = DateTime.Now;
+        
         Application.Directory = AssetManager.ProjectPath;
         
         Engine = new Engine();
@@ -62,6 +66,10 @@ public class EditorWindow : GameWindow
 
         Console.WriteLine("Loading scene");
         SceneManager.LoadScene(0);
+
+        DateTime end = DateTime.Now;
+        Debug.Log($"Startup finished in: {end - _start}");
+        
         Engine.EditorStart(SceneManager.ActiveScene);
     }
 
