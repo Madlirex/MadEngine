@@ -14,18 +14,6 @@ public class EditorUI
     public static EditorUIContext UiContext => _uiContext;
     private static EditorUIContext _uiContext = new();
 
-    public EditorUI(GameObject cameraObject, SceneFramebuffer sceneFbo)
-    {
-        _cameraObject = cameraObject;
-        _sceneFbo = sceneFbo;
-        
-        _uiContext = new EditorUIContext()
-        {
-            CameraObject = _cameraObject,
-            SceneFbo = _sceneFbo
-        };
-    }
-
     public void Initialize()
     {
         PanelSystem.Initialize();
@@ -34,8 +22,7 @@ public class EditorUI
     public void Draw(GameWindow wnd)
     {
         _uiContext.Window = wnd;
-        _uiContext.CameraObject = _cameraObject;
-        _uiContext.SceneFbo = _sceneFbo;
+
         PanelSystem.Draw(_uiContext);
         PopupManager.Draw(_uiContext);
         

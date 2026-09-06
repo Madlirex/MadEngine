@@ -11,6 +11,9 @@
      public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
      public override void Draw(EditorUIContext context)
      {
+         string panelTitle = ToString();
+         ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
+         
          Vector2 availableSpace = ImGui.GetContentRegionAvail();
         
          float availableW = availableSpace.X;
@@ -18,21 +21,24 @@
          
          if (availableW > 1 && availableH > 1)
          {
-             if (availableW != context.ViewportSize.X || availableH != context.ViewportSize.Y)
+             if (availableW != viewportContext.Size.X || availableH != viewportContext.Size.Y)
              {
-                 context.ViewportSize = new Vector2(availableW, availableH);
-                 context.SceneFbo.Resize((int)availableW, (int)availableH);
+                 viewportContext.Size = new Vector2(availableW, availableH);
+                 viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
                  
-                 Camera cam = context.CameraObject.GetComponent<Camera>()!;
+                 Camera cam = viewportContext.CameraObject.GetComponent<Camera>()!;
                  cam.Width = (int)availableW;
                  cam.Height = (int)availableH;
              }
          }
          
          if (ImGui.IsWindowHovered() && ImGui.IsMouseClicked(ImGuiMouseButton.Right))
+         {
              context.Window!.CursorState = CursorState.Grabbed;
+             context.ActiveViewport = viewportContext;
+         }
          
-         ImGui.Image(context.SceneFbo.ColorTexture, context.ViewportSize, new Vector2(0, 1), new Vector2(1, 0));
+         ImGui.Image(viewportContext.Framebuffer.ColorTexture, viewportContext.Size, new Vector2(0, 1), new Vector2(1, 0));
          
          if (context.Window!.CursorState == CursorState.Normal)
          {

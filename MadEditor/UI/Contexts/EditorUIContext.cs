@@ -6,16 +6,30 @@ namespace MadEditor;
 
 public class EditorUIContext
 {
-    
     public MadObject? Selected;
     public MadObject? RightClicked;
-    
-    public GameObject CameraObject = new();
-    public SceneFramebuffer SceneFbo = new(600, 600);
-    public Vector2 ViewportSize;
     public GameWindow Window = null!;
+    
+    private readonly Dictionary<string, ViewportContext> _activeViewports = new();
+    
+    public ViewportContext? ActiveViewport { get; set; }
 
     private List<IEditorCommand> _commands = [];
+    
+    public ViewportContext GetOrCreateViewport(string panelTitle)
+    {
+        if (_activeViewports.TryGetValue(panelTitle, out var context)) return context;
+        context = new ViewportContext(panelTitle, 800, 600);
+        _activeViewports[panelTitle] = context;
+
+        ActiveViewport = context;
+        return context;
+    }
+
+    public ViewportContext[] GetAllViewports()
+    {
+        return _activeViewports.Values.ToArray();
+    }
     
     public void EnqueueCommand(IEditorCommand command)
     {
