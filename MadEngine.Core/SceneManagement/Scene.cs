@@ -23,6 +23,9 @@ public class Scene : Asset
     {
         if (disposing)
         {
+            foreach(GameObject obj in GameObjects)
+                obj.Destroy();
+            
             SceneManager.Scenes.Remove(this);
         }
         base.OnDispose(disposing);

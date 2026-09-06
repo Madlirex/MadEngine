@@ -55,7 +55,7 @@ internal class ImporterEngine : Registry
     private void DiscoverImporters()
     {
         _importers.Clear();
-        var importerTypes = AppDomain.CurrentDomain.GetAssemblies()
+        var importerTypes = ScriptDomain.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(IAssetImporter)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false });

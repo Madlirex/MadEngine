@@ -6,7 +6,7 @@ public abstract class Registry
 
     protected IEnumerable<Type> FindTypesImplementing<TInterface>()
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
+        return ScriptDomain.Assemblies
             .SelectMany(s => s.GetTypes())
             .Where(p => typeof(TInterface).IsAssignableFrom(p) && p is { IsInterface: false, IsAbstract: false });
     }
@@ -38,7 +38,11 @@ public static class RegistryBootstrapper
     public static void ReinitializeAll()
     {
         if(!_initialized) return;
+        
+        Instances.Clear(); 
+    
         InitializeAll();
+
     }
 
     internal static T Get<T>() where T : Registry

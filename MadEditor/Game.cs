@@ -59,7 +59,7 @@ public class EditorWindow : GameWindow
 
         _engine.Initialize();
         Console.WriteLine("Compiling");
-        AssetManager.RecompileScripts();
+        AssetManager.RecompileScripts(false);
         
         RegistryBootstrapper.InitializeAll();
         

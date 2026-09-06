@@ -58,7 +58,7 @@ public class SceneImporter : Importer<Scene>
             {
                 if (node is not JsonObject goJson) continue;
 
-                Guid guid = goJson["$guid"]!.GetValue<Guid>();
+                Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = new GameObject() {Guid = guid};
             }
         }
@@ -70,7 +70,7 @@ public class SceneImporter : Importer<Scene>
             if (node is not JsonObject compJson) continue;
 
             string typeStr = compJson["$type"]!.GetValue<string>();
-            Guid guid = compJson["$guid"]!.GetValue<Guid>();
+            Guid guid = compJson["$guid"]!.GetGuid();
 
             if (string.IsNullOrEmpty(typeStr)) continue;
             Type compType = ScriptDomain.GetType(typeStr)!;
@@ -91,7 +91,7 @@ public class SceneImporter : Importer<Scene>
             {
                 if (node is not JsonObject goJson) continue;
 
-                Guid guid = goJson["$guid"]!.GetValue<Guid>();
+                Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = (GameObject)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(typeof(GameObject))!.DeserializeInto(obj, goJson["$data"]!);
                 scene.Register(obj);
@@ -104,7 +104,7 @@ public class SceneImporter : Importer<Scene>
         {
             if (node is not JsonObject compJson) continue;
             
-            Guid guid = compJson["$guid"]!.GetValue<Guid>();
+            Guid guid = compJson["$guid"]!.GetGuid();
             string typeStr = compJson["$type"]!.GetValue<string>();
             
             if (string.IsNullOrEmpty(typeStr)) continue;
@@ -138,7 +138,7 @@ public class SceneImporter : Importer<Scene>
     {
         InstantiateObjects(json);
         
-        Guid guid = json["$guid"]!.GetValue<Guid>();
+        Guid guid = json["$guid"]!.GetGuid();
 
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;
         SerializerRegistry.GetClassSerializer(typeof(Scene))!.DeserializeInto(obj, json["$data"]!);

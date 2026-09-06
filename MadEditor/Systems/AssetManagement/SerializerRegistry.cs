@@ -25,7 +25,8 @@ internal class SerializerEngine : Registry
     private void DiscoverSerializers()
     {
         _serializers.Clear();
-        var serializerTypes = AppDomain.CurrentDomain.GetAssemblies()
+        
+        var serializerTypes = ScriptDomain.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(ISerializer)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false, IsGenericTypeDefinition: false });

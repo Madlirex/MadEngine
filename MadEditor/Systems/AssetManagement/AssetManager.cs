@@ -1,4 +1,5 @@
 ﻿using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
@@ -7,12 +8,13 @@ public static class AssetManager
     public static string ProjectPath => _projectPath;
     private static string _projectPath = "";
 
-    public static void RecompileScripts()
+    public static void RecompileScripts(bool performSnapshot = true)
     {
         if (!Directory.Exists(ProjectPath)) return;
         var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
-
-        ScriptDomain.Compile(scriptFiles);
+        
+        if(performSnapshot) ScriptDomain.ReloadDomain(scriptFiles);
+        else ScriptDomain.Compile(scriptFiles);
     }
     
     public static void SetProjectPath(string path)
