@@ -26,6 +26,7 @@ public static class RegistryBootstrapper
     
     public static void InitializeAll()
     {
+        Console.WriteLine("Initializing registries...");
         var registryTypes = ScriptDomain.GetTypesImplementing(typeof(Registry));
 
         foreach (var registryType in registryTypes)
@@ -48,7 +49,6 @@ public static class RegistryBootstrapper
         }
     
         InitializeAll();
-
     }
 
     internal static T Get<T>() where T : Registry

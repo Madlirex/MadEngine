@@ -11,6 +11,7 @@ public static class AssetManager
 
     public static void RecompileScripts(bool performSnapshot = true)
     {
+        Console.WriteLine("Recompiling scripts...");
         if (!Directory.Exists(ProjectPath)) return;
         var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
         
@@ -36,6 +37,7 @@ public static class AssetManager
     
     public static void InitializeAssets(string path)
     {
+        Console.WriteLine($"Initializing assets at {path}...");
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {
             if (PathsToSkip.Contains(file)) continue;
@@ -60,6 +62,7 @@ public static class AssetManager
 
     public static void LoadAssets(string path)
     {
+        Console.WriteLine($"Loading assets at {path}...");
         List<Asset> assets = [];
         foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
         {

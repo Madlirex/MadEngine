@@ -20,6 +20,5 @@ public class RecompilationCommand : IEditorCommand
         Debug.Log($"Compilation finished in: {end - start}");
         
         EditorUI.UiContext.Engine.EditorStart(SceneManager.ActiveScene);
-        
     }
 }

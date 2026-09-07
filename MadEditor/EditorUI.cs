@@ -18,6 +18,7 @@ public class EditorUI
     
     public void Initialize()
     {
+        Console.WriteLine("Intializing UI...");
         PanelSystem.Initialize();
     }
 
