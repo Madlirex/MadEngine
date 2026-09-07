@@ -1,176 +1,4 @@
-﻿--- Engine Session Started: 7. 9. 2026 17:56:23 ---
-Compiling
-loading package
-Couldn't find importer for extension .pck
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .pck
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-loading assets
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Getting importer for MaterialImporter
-Couldn't find importer for extension .meta
-Getting importer for MaterialImporter
-Couldn't find importer for extension .meta
-Getting importer for MeshImporter
-Couldn't find importer for extension .meta
-Getting importer for SceneImporter
-Couldn't find importer for extension .meta
-Getting importer for ShaderImporter
-Couldn't find importer for extension .meta
-Getting importer for ShaderImporter
-Couldn't find importer for extension .meta
-Getting importer for TextureImporter
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .png
-Couldn't find importer for extension .png
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .png
-Couldn't find importer for extension .png
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-C:\Users\simon\Projekty\C#\MadEngine\DemoProject\Assets\Textures/charlie.jpg
-C:\Users\simon\Projekty\C#\MadEngine\DemoProject\Assets\Textures/charlie.jpg
-loaded
-Loading scene
---- Engine Session Started: 7. 9. 2026 17:57:05 ---
-Compiling
-UnknownScript(17,5): error CS1585: Member modifier 'public' must precede the member type and name
-Script compilation failed.
-loading package
-Couldn't find importer for extension .pck
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .pck
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .frag
-Couldn't find importer for extension .vert
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .cs
-loading assets
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Getting importer for MaterialImporter
-Couldn't find importer with name MaterialImporter
-Couldn't find importer for extension .meta
-Getting importer for MaterialImporter
-Couldn't find importer with name MaterialImporter
-Couldn't find importer for extension .meta
-Getting importer for MeshImporter
-Couldn't find importer with name MeshImporter
-Couldn't find importer for extension .meta
-Getting importer for SceneImporter
-Couldn't find importer with name SceneImporter
-Couldn't find importer for extension .meta
-Getting importer for ShaderImporter
-Couldn't find importer with name ShaderImporter
-Couldn't find importer for extension .meta
-Getting importer for ShaderImporter
-Couldn't find importer with name ShaderImporter
-Couldn't find importer for extension .meta
-Getting importer for TextureImporter
-Couldn't find importer with name TextureImporter
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .png
-Couldn't find importer for extension .png
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .cs
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .mat
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .mat
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .mesh
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .madscene
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .shader
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .shader
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .tex
-Couldn't find importer for extension .meta
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .png
-Couldn't find importer for extension .png
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Couldn't find importer for extension .jpg
-Loading scene
-Could not find importer for MadEngine.Core.SceneManagement.Scene
---- Engine Session Started: 7. 9. 2026 17:57:59 ---
+﻿--- Engine Session Started: 7. 9. 2026 18:05:44 ---
 Compiling
 loading package
 Couldn't find importer for extension .pck
@@ -231,9 +59,45 @@ Couldn't find importer for extension .meta
 Couldn't find importer for extension .meta
 
 [FATAL CRASH DETECTED]
-Message: 'e' is an invalid start of a value. LineNumber: 8 | BytePositionInLine: 23.
+Message: 'nulfe,
+            "specular": null
+        },
+        "Vectors": {
+            "ambientColor": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "diffuseColor": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "specularColor": [
+                1,
+                1,
+                1,
+                1
+            ]
+        },
+        "Floats": {
+            "shininess": 32
+        },
+        "Ints": {
+            "diffuse_Enabled": 0,
+            "specular_Enabled": 0
+        },
+        "Guid": "94f8c704-bb7b-40f0-ac32-117fb501b719",
+        "_guid": "94f8c704-bb7b-40f0-ac32-117fb501b719"
+    }
+}' is an invalid JSON literal. Expected the literal 'null'. LineNumber: 8 | BytePositionInLine: 26.
 Stack Trace:
    at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.ThrowInvalidLiteral(ReadOnlySpan`1 span)
+   at System.Text.Json.Utf8JsonReader.CheckLiteral(ReadOnlySpan`1 span, ReadOnlySpan`1 literal)
+   at System.Text.Json.Utf8JsonReader.ConsumeLiteral(ReadOnlySpan`1 literal, JsonTokenType tokenType)
    at System.Text.Json.Utf8JsonReader.ConsumeValue(Byte marker)
    at System.Text.Json.Utf8JsonReader.ReadSingleSegment()
    at System.Text.Json.Utf8JsonReader.Read()
@@ -248,6 +112,5 @@ Stack Trace:
    at MadEditor.AssetManager.LoadProject() in C:\Users\simon\Projekty\C#\MadEngine\MadEditor\Systems\AssetManagement\AssetManager.cs:line 29
    at MadEditor.EditorWindow.OnLoad() in C:\Users\simon\Projekty\C#\MadEngine\MadEditor\Game.cs:line 64
    at OpenTK.Windowing.Desktop.GameWindow.Run()
-   at MadEditor.Program.Main(String[] args) in C:\Users\simon\Projekty\C#\MadEngine\MadEditor\Program.cs:line 33
-
-Press any key to close...
+   at MadEditor.Program.Main(String[] args) in C:\Users\simon\Projekty\C#\MadEngine\MadEditor\Program.cs:line 37
+--- Engine Session Ended: 7. 9. 2026 18:05:52 ---

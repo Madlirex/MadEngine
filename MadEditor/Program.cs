@@ -1,9 +1,13 @@
-﻿using NativeFileDialogSharp;
+﻿using System.Runtime.InteropServices;
+using NativeFileDialogSharp;
 
 namespace MadEditor;
 
 class Program
 {
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
+    
     static void Main(string[] args)
     {
         string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "engine-log.txt");
@@ -43,9 +47,18 @@ class Program
                 Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
                 Console.WriteLine($"Inner Stack Trace:\n{ex.InnerException.StackTrace}");
             }
-
-            Console.WriteLine("\nPress any key to close...");
-            Console.ReadKey();
+            
+            Console.WriteLine($"--- Engine Session Ended: {DateTime.Now} ---");
+            
+            string title = "MadEditor - Fatal Crash";
+            string message = $"The engine encountered an unhandled exception and must close.\n\n" +
+                             $"Error: {ex.Message}\n\n" +
+                             $"A full stack trace has been saved to 'engine-log.txt'.";
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                MessageBox(IntPtr.Zero, message, title, 0x00000010); 
+            }
         }
     }
 }
