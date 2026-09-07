@@ -42,8 +42,6 @@ public class SceneGridRenderer : IDisposable
         in vec3 nearPoint;
         in vec3 farPoint;
 
-        out float gl_FragDepth;
-
         uniform mat4 view;
         uniform mat4 projection;
         uniform float cameraFarPlane;
