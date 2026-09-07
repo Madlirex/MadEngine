@@ -50,21 +50,21 @@ public class EditorWindow : GameWindow
     {
         base.OnLoad();
 
+        Console.WriteLine("Initializing engine...");
         Engine.Initialize();
-        Console.WriteLine("Compiling");
+        
         AssetManager.RecompileScripts(false);
         
         RegistryBootstrapper.InitializeAll();
         
         PackageManager.LoadPackageMetas();
-
-        Console.WriteLine("loading package");
+        
         PackageManager.LoadPackages();
-        Console.WriteLine("loading assets");
         AssetManager.LoadProject();
+        
         _editorUI.Initialize();
 
-        Console.WriteLine("Loading scene");
+        Console.WriteLine("Loading scene...");
         SceneManager.LoadScene(0);
 
         DateTime end = DateTime.Now;

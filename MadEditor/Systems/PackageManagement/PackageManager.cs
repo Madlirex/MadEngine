@@ -67,6 +67,7 @@ public static class PackageManager
 
     public static void LoadPackages()
     {
+        Console.WriteLine("Loading packages...");
         if(!Directory.Exists(Application.PackagesPath)) Directory.CreateDirectory(Application.PackagesPath);
         
         AssetManager.InitializeAssets(Application.PackagesPath);

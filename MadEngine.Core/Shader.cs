@@ -29,6 +29,8 @@ public class Shader : Asset
     public void Initialize()
     {
         if(_initialized) return;
+        Console.WriteLine($"Compiling shaders {VertexPath}...");
+        Console.WriteLine($"Compiling shaders {FragmentPath}...");
         string vertexShaderSource = File.ReadAllText(VertexPath);
         string fragmentShaderSource = File.ReadAllText(FragmentPath);
         
