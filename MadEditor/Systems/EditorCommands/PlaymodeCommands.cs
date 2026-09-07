@@ -1,4 +1,5 @@
-﻿using MadEngine.Core.SceneManagement;
+﻿using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
 
@@ -23,6 +24,10 @@ public class ExitPlaymodeCommand : IEditorCommand
         
         SceneManager.ActiveScene.Destroy();
         SceneManager.LoadScene(SceneSnapshotController.RestoreSnapshot());
+        
+        if(EditorUI.UiContext.Selected != null)
+            EditorUI.UiContext.Selected = AssetRegistry.GetObject(EditorUI.UiContext.Selected.Guid);
+        
         EditorUI.UiContext.Engine.EditorStart(SceneManager.ActiveScene);
     }
 }
