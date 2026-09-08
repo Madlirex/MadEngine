@@ -13,7 +13,7 @@ public class DualWriter : TextWriter
     {
         _oldConsoleOut = oldConsoleOut;
         
-        var fileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+        var fileStream = new FileStream(logFilePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
         _fileWriter = new StreamWriter(fileStream, Encoding.UTF8) { AutoFlush = true };
     }
     
