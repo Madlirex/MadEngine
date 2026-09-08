@@ -1,9 +1,7 @@
-﻿using MadEngine.Core;
-
-namespace DefaultNamespace;
+﻿namespace MadEngine.Core;
 
 public class ImageAsset : Asset
 {
-    public override string Name { get; set; } = "NewImage";
-    [DoNotSave] public string PathToImage => AbsolutePath;
+    protected override string NameInternal { get; set; } = "NewImage";
+    [DoNotSave] public string Path => AbsolutePath;
 }
