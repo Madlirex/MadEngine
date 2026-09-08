@@ -5,14 +5,14 @@ public class Scene : Asset
     private readonly List<GameObject> _gameObjects = [];
     public IReadOnlyList<GameObject> GameObjects => _gameObjects;
 
-    private readonly List<Light> _lights = [];
+    [DoNotSave] private readonly List<Light> _lights = [];
     public IReadOnlyList<Light> Lights => _lights;
 
-    private readonly List<Renderer> _renderers = [];
+    [DoNotSave] private readonly List<Renderer> _renderers = [];
     public IReadOnlyList<Renderer> Renderers => _renderers;
     
-    public override string Name { get; set; } = "NewScene";
-    public override string Extension => ".madscene";
+    protected override string NameInternal { get; set; } = "NewScene";
+    protected override string ExtensionInternal { get; set; } = ".madscene";
 
     public Scene()
     {
@@ -95,14 +95,14 @@ public class Scene : Asset
 
     public void RegisterComponent(Component component)
     {
-        if (component is Light light)
+        switch (component)
         {
-            _lights.Add(light);
-        }
-
-        if (component is Renderer renderer)
-        {
-            _renderers.Add(renderer);
+            case Light light:
+                _lights.Add(light);
+                break;
+            case Renderer renderer:
+                _renderers.Add(renderer);
+                break;
         }
     }
 
