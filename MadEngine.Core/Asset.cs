@@ -2,17 +2,32 @@
 
 public abstract class Asset : MadObject
 {
-    public override string Name { get; set; } = "NewAsset";
-    [DoNotSave]
-    public string AbsolutePath => Path.Combine(FullDir, $"{Name}{Extension}");
-    [DoNotSave]
-    public string RelativePath => Path.Combine(RelativeDir, $"{Name}{Extension}");
-    [DoNotSave]
-    public virtual string Extension => ".asset";
-    [DoNotSave]
-    public string FullDir { get; set; } = Application.AssetsPath;
-    [DoNotSave]
-    public string RelativeDir => FullDir.Replace(Application.AssetsPath, "");
+    protected override string NameInternal { get; set; } = "NewAsset";
+    [DoNotSave] public string AbsolutePath => Path.Combine(FullDir, $"{Name}{Extension}");
+    [DoNotSave] public string RelativePath => Path.Combine(RelativeDir, $"{Name}{Extension}");
+    [DoNotSave] public string Extension
+    {
+        get => ExtensionInternal;
+        set
+        {
+            AssetRegistry.Unregister(this);
+            ExtensionInternal = value;
+            AssetRegistry.Register(this);
+        }
+    }
+    [DoNotSave] protected virtual string ExtensionInternal { get; set; }= ".asset";
+    [DoNotSave] public string FullDir
+    {
+        get => _fullDir;
+        set
+        {
+            AssetRegistry.Unregister(this);
+            _fullDir = value;
+            AssetRegistry.Register(this);
+        }
+    }
+    [DoNotSave] private string _fullDir = Application.AssetsPath;
+    [DoNotSave] public string RelativeDir => FullDir.Replace(Application.AssetsPath, "");
 
     public Asset()
     {

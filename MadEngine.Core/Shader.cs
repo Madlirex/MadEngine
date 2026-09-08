@@ -11,8 +11,8 @@ public class Shader : Asset
     public string VertexPath = "";
     public string FragmentPath = "";
 
-    public override string Name { get; set; } = "NewShader";
-    public override string Extension => ".shader";
+    protected override string NameInternal { get; set; } = "NewShader";
+    protected override string ExtensionInternal { get; set; } = ".shader";
 
     public Shader(string vertexPath, string fragmentPath)
     {

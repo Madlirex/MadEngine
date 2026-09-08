@@ -47,17 +47,23 @@ public static class AssetManager
 
     public static void InitializeAsset(string file)
     {
+        Asset? asset;
         if (File.Exists(file + ".meta"))
         {
             AssetMeta meta = AssetMeta.Load(file + ".meta");
             var importer = ImporterRegistry.GetImporter(meta.Importer);
-            importer?.Initialize(meta);
+            asset = importer?.Initialize(meta);
         }
         else
         {
             var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
-            importer?.Initialize(file);
+            asset = importer?.Initialize(file);
         }
+
+        if (asset == null) return;
+        asset.FullDir = Path.GetFullPath(Path.GetDirectoryName(file)!);
+        asset.Extension = Path.GetExtension(file);
+        Console.WriteLine(asset.AbsolutePath);
     }
 
     public static void LoadAssets(string path)

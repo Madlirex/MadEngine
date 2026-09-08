@@ -2,7 +2,18 @@
 
 public abstract class MadObject : IDisposable
 {
-    public virtual string Name { get; set; } = "NewObject";
+    public string Name
+    {
+        get => NameInternal;
+        set
+        {
+            AssetRegistry.Unregister(this);
+            NameInternal = value;
+            AssetRegistry.Register(this);
+        }
+    }
+
+    protected virtual string NameInternal { get; set; } = "NewObject";
 
     private Guid _guid = Guid.NewGuid();
     public Guid Guid { get => _guid; set => SetGuid(value); }
