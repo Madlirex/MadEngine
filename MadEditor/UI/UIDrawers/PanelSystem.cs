@@ -15,6 +15,7 @@ public static class PanelSystem
         Instance.CreatePanel<HierarchyDrawer>();
         Instance.CreatePanel<InspectorPanelDrawer>();
         Instance.CreatePanel<ViewportDrawer>();
+        Instance.CreatePanel<GameDrawer>();
         Instance.CreatePanel<StatsDrawer>();
         Instance.CreatePanel<ProjectPanelDrawer>();
         Instance.CreatePanel<ConsoleDrawer>();
@@ -98,7 +99,7 @@ internal class PanelSystemEngine : Registry
 
         foreach (PanelDrawer panelDrawer in _panels)
         {
-            if (panelDrawer is ViewportDrawer)
+            if (panelDrawer is IBorderlessPanel)
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
             
             if (panelDrawer.PanelRegion != PanelRegion.Floating)
@@ -116,13 +117,13 @@ internal class PanelSystemEngine : Registry
                 {
                     context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
                     ImGui.End();
-                    if (panelDrawer is ViewportDrawer)
+                    if (panelDrawer is IBorderlessPanel)
                         ImGui.PopStyleVar();
                     continue;
                 }
             }
 
-            if (panelDrawer is ViewportDrawer)
+            if (panelDrawer is IBorderlessPanel)
                 ImGui.PopStyleVar();
 
             panelDrawer.Draw(context);

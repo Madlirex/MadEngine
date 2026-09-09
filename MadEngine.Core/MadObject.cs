@@ -2,7 +2,7 @@
 
 public abstract class MadObject : IDisposable
 {
-    private bool _initialized;
+    [DoNotSave] private bool _initialized;
     
     public string Name
     {

@@ -1,36 +1,33 @@
 ﻿using System.Numerics;
 using ImGuiNET;
 using MadEngine.Core;
+using MadEngine.Core.SceneManagement;
 using OpenTK.Windowing.Common;
 
 namespace MadEditor;
 
-[CustomName("Scene View")]
-public class ViewportDrawer : PanelDrawer, IBorderlessPanel
+[CustomName("Game View")]
+public class GameDrawer : PanelDrawer, IBorderlessPanel
 {
+    private static GameObject? _defaultObject;
+    private static Camera _defaultCamera = new();
+    
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
     public override void Draw(EditorUIContext context)
     {
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
-         viewportContext.EditMode = true;
          
-         Vector2 availableSpace = ImGui.GetContentRegionAvail();
-
-         float availableW = availableSpace.X;
-         float availableH = availableSpace.Y;
-         
-         if (availableW > 1 && availableH > 1)
+         if(Camera.MainCamera != null)
          {
-             if (availableW != viewportContext.Size.X || availableH != viewportContext.Size.Y)
-             {
-                 viewportContext.Size = new Vector2(availableW, availableH);
-                 viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
-                 
-                 Camera cam = viewportContext.CameraComponent;
-                 cam.Width = (int)availableW;
-                 cam.Height = (int)availableH;
-             }
+             viewportContext.CameraObject = Camera.MainCamera.GameObject;
+             viewportContext.CameraComponent = Camera.MainCamera;
+             RecalculateSize(viewportContext);
+         }
+         else
+         {
+             UseDefaultCamera(viewportContext);
+             RecalculateSize(viewportContext);
          }
          
          if (ImGui.IsWindowHovered() && ImGui.IsMouseClicked(ImGuiMouseButton.Right))
@@ -45,7 +42,6 @@ public class ViewportDrawer : PanelDrawer, IBorderlessPanel
          
          if (context.Window!.CursorState != CursorState.Normal) return;
          ImGui.SetCursorPos(new Vector2(8, ImGui.GetFrameHeight() + 4));
-         ImGui.TextDisabled("Right-click + WASD to fly  |  Esc to release");
     }
 
     private void RenderFloatingToolbar(EditorUIContext context)
@@ -93,5 +89,39 @@ public class ViewportDrawer : PanelDrawer, IBorderlessPanel
         
         ImGui.PopStyleVar(2);
         ImGui.PopStyleColor();
+    }
+
+    private void UseDefaultCamera(ViewportContext context)
+    {
+        if (_defaultObject == null)
+            InitializeDefaultCamera();
+
+        context.CameraComponent = _defaultCamera;
+        context.CameraObject = _defaultObject!;
+    }
+
+    private void InitializeDefaultCamera()
+    {
+        _defaultObject = new GameObject();
+        _defaultCamera = new Camera();
+
+        _defaultObject.AddComponentUnsafe(_defaultCamera);
+    }
+
+    private void RecalculateSize(ViewportContext viewportContext)
+    {
+        Vector2 availableSpace = ImGui.GetContentRegionAvail();
+
+        float availableW = availableSpace.X;
+        float availableH = availableSpace.Y;
+
+        if (!(availableW > 1) || !(availableH > 1)) return;
+        
+        viewportContext.Size = new Vector2(availableW, availableH);
+        viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
+             
+        Camera cam = viewportContext.CameraComponent;
+        cam.Width = (int)availableW;
+        cam.Height = (int)availableH;
     }
 }
