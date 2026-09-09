@@ -29,6 +29,16 @@ public class Camera : Component
             }
         }
     }
+    
+    public bool IsMainCameraInstance
+    {
+        get => MainCamera == this;
+        set 
+        {
+            if (value) 
+                IsMainCamera = true;
+        }
+    }
 
     public float Width;
     public float Height;
