@@ -8,6 +8,7 @@
         ],
         "Name": "NewScene",
         "Guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
+        "_initialized": false,
         "_guid": "0c575771-2cfc-4f24-8e85-031be43658b5"
     },
     "GameObjects": [
@@ -19,11 +20,13 @@
                 "_components": [
                     "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
                     "badb5602-dcdf-4a41-9e74-f587360ea225",
-                    "b5348f91-8c0a-485b-b930-5d43c3ee2d43"
+                    "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
+                    "273f3f45-54b7-4b5a-b3ff-29ee95358a4f"
                 ],
                 "Name": "NewGameObject",
                 "NameInternal": "NewGameObject",
                 "Guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "_initialized": true,
                 "_guid": "e1f87b3b-a32a-4630-88f7-303b043088e8"
             }
         }
@@ -66,6 +69,7 @@
                 "Name": "NewComponent",
                 "NameInternal": "NewComponent",
                 "Guid": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
+                "_initialized": true,
                 "_guid": "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68"
             }
         },
@@ -100,6 +104,7 @@
                 "Name": "NewComponent",
                 "NameInternal": "NewComponent",
                 "Guid": "badb5602-dcdf-4a41-9e74-f587360ea225",
+                "_initialized": true,
                 "_guid": "badb5602-dcdf-4a41-9e74-f587360ea225"
             }
         },
@@ -113,7 +118,48 @@
                 "Name": "NewComponent",
                 "NameInternal": "NewComponent",
                 "Guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
+                "_initialized": true,
                 "_guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Camera, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f",
+            "$data": {
+                "IsMainCamera": true,
+                "Yaw": -90,
+                "Pitch": 0,
+                "Fov": 90,
+                "_isMainCamera": true,
+                "Width": 0,
+                "Height": 0,
+                "DepthNear": 0.01,
+                "DepthFar": 1000,
+                "Front": [
+                    -0,
+                    -0,
+                    -1
+                ],
+                "Up": [
+                    0,
+                    1,
+                    0
+                ],
+                "Right": [
+                    1,
+                    0,
+                    0
+                ],
+                "_yaw": -1.5707964,
+                "_pitch": 0,
+                "_fov": 1.5707964,
+                "Speed": 1,
+                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "Name": "NewComponent",
+                "NameInternal": "NewComponent",
+                "Guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f",
+                "_initialized": true,
+                "_guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f"
             }
         }
     ]

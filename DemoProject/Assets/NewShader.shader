@@ -7,6 +7,7 @@
         "FragmentPath": "Shaders/lit.frag",
         "Name": "NewShader",
         "Guid": "752a19bd-4808-45d2-a75e-85fc6709cfd9",
+        "_initialized": false,
         "_guid": "752a19bd-4808-45d2-a75e-85fc6709cfd9"
     }
 }

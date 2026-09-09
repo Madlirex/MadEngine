@@ -34,6 +34,7 @@
         "Ints": {},
         "Name": "NewMaterial_1",
         "Guid": "89afd505-3e37-4441-8a2c-c4371e0e8df8",
+        "_initialized": false,
         "_guid": "89afd505-3e37-4441-8a2c-c4371e0e8df8"
     }
 }
