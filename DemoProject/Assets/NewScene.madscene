@@ -4,7 +4,8 @@
     "$data": {
         "NameInternal": "NewScene",
         "_gameObjects": [
-            "e1f87b3b-a32a-4630-88f7-303b043088e8"
+            "e1f87b3b-a32a-4630-88f7-303b043088e8",
+            "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e"
         ],
         "Name": "NewScene",
         "Guid": "0c575771-2cfc-4f24-8e85-031be43658b5",
@@ -19,12 +20,28 @@
                 "_components": [
                     "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
                     "badb5602-dcdf-4a41-9e74-f587360ea225",
-                    "b5348f91-8c0a-485b-b930-5d43c3ee2d43"
+                    "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
+                    "273f3f45-54b7-4b5a-b3ff-29ee95358a4f"
                 ],
                 "Name": "NewGameObject",
                 "NameInternal": "NewGameObject",
                 "Guid": "e1f87b3b-a32a-4630-88f7-303b043088e8",
                 "_guid": "e1f87b3b-a32a-4630-88f7-303b043088e8"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.GameObject, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
+            "$data": {
+                "Transform": "97911796-c499-4422-834f-f7b837d3d090",
+                "_components": [
+                    "97911796-c499-4422-834f-f7b837d3d090",
+                    "2a55121c-2ea8-4f99-b16e-35cd4f65781c"
+                ],
+                "Name": "NewGameObject",
+                "NameInternal": "NewGameObject",
+                "Guid": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
+                "_guid": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e"
             }
         }
     ],
@@ -114,6 +131,124 @@
                 "NameInternal": "NewComponent",
                 "Guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
                 "_guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Camera, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f",
+            "$data": {
+                "IsMainCameraInstance": false,
+                "Yaw": -90,
+                "Pitch": 0,
+                "Fov": 90,
+                "_isMainCamera": false,
+                "Width": 0,
+                "Height": 0,
+                "DepthNear": 0.01,
+                "DepthFar": 1000,
+                "Front": [
+                    -0,
+                    -0,
+                    -1
+                ],
+                "Up": [
+                    0,
+                    1,
+                    0
+                ],
+                "Right": [
+                    1,
+                    0,
+                    0
+                ],
+                "_yaw": -1.5707964,
+                "_pitch": 0,
+                "_fov": 1.5707964,
+                "Speed": 1,
+                "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
+                "Name": "NewComponent",
+                "NameInternal": "NewComponent",
+                "Guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f",
+                "_guid": "273f3f45-54b7-4b5a-b3ff-29ee95358a4f"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Transform, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "97911796-c499-4422-834f-f7b837d3d090",
+            "$data": {
+                "EulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Parent": null,
+                "Position": [
+                    0,
+                    0,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0,
+                    1
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "_parent": null,
+                "_children": [],
+                "_eulerRotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "_gameObject": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
+                "Name": "NewComponent",
+                "NameInternal": "NewComponent",
+                "Guid": "97911796-c499-4422-834f-f7b837d3d090",
+                "_guid": "97911796-c499-4422-834f-f7b837d3d090"
+            }
+        },
+        {
+            "$type": "MadEngine.Core.Camera, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "2a55121c-2ea8-4f99-b16e-35cd4f65781c",
+            "$data": {
+                "IsMainCameraInstance": true,
+                "Yaw": -90,
+                "Pitch": 0,
+                "Fov": 90,
+                "_isMainCamera": true,
+                "Width": 0,
+                "Height": 0,
+                "DepthNear": 0.01,
+                "DepthFar": 1000,
+                "Front": [
+                    -0,
+                    -0,
+                    -1
+                ],
+                "Up": [
+                    0,
+                    1,
+                    0
+                ],
+                "Right": [
+                    1,
+                    0,
+                    0
+                ],
+                "_yaw": -1.5707964,
+                "_pitch": 0,
+                "_fov": 1.5707964,
+                "Speed": 1,
+                "_gameObject": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
+                "Name": "NewComponent",
+                "NameInternal": "NewComponent",
+                "Guid": "2a55121c-2ea8-4f99-b16e-35cd4f65781c",
+                "_guid": "2a55121c-2ea8-4f99-b16e-35cd4f65781c"
             }
         }
     ]

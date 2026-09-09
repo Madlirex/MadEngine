@@ -14,3 +14,5 @@ public abstract class PanelDrawer
         return $"{this.GetCustomName()}##{Guid}";
     }
 }
+
+public interface IBorderlessPanel;

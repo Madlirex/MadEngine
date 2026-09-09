@@ -5,6 +5,8 @@ namespace MadEditor;
 
 public class ViewportContext : IDisposable
 {
+    public bool EditMode { get; internal set; }
+    
     public string Id { get; }
     public GameObject CameraObject
     {
@@ -16,6 +18,7 @@ public class ViewportContext : IDisposable
             _camera.AddComponentUnsafe(_cameraComponent);
             return _camera;
         }
+        internal set  => _camera = value;
     }
 
     private GameObject? _camera;
@@ -28,6 +31,7 @@ public class ViewportContext : IDisposable
             _camera = null;
             return CameraObject.GetComponent<Camera>()!;
         }
+        internal set => _cameraComponent = value;
     }
 
     private Camera? _cameraComponent;

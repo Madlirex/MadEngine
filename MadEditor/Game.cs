@@ -116,7 +116,9 @@ public class EditorWindow : GameWindow
             Camera camera = vp.CameraComponent;
         
             Engine.Render(SceneManager.ActiveScene, camera);
-        
+
+            if (!vp.EditMode) continue;
+            
             _gridRenderer.Render(
                 camera.GetViewMatrix(), 
                 camera.GetPerspectiveMatrix(), 
@@ -175,6 +177,8 @@ public class EditorWindow : GameWindow
             return;
         }
 
+        if (EditorUI.UiContext.ActiveViewport?.EditMode != true) return;
+        
         Camera camera = EditorUI.UiContext.ActiveViewport!.CameraComponent;
         float speed = camera.Speed * (float)args.Time;
         KeyboardState input = KeyboardState;
@@ -238,8 +242,8 @@ public class EditorWindow : GameWindow
     {
         base.OnMouseWheel(e);
 
-        if (CursorState == CursorState.Grabbed)
-            EditorUI.UiContext.ActiveViewport!.CameraComponent.Fov -= e.OffsetY;
+        if (CursorState == CursorState.Grabbed && EditorUI.UiContext.ActiveViewport?.EditMode == true)
+            EditorUI.UiContext.ActiveViewport.CameraComponent.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)

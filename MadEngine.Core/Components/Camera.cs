@@ -4,6 +4,42 @@ namespace MadEngine.Core;
 
 public class Camera : Component
 {
+    public static Camera? MainCamera { get; private set; }
+    private bool _isMainCamera;
+    
+    [DoNotSave] [ShowInInspector] public bool IsMainCamera
+    {
+        get => _isMainCamera;
+        set
+        {
+            if (value)
+            {
+                if (MainCamera != null && MainCamera != this)
+                    MainCamera._isMainCamera = false;
+                
+                MainCamera = this;
+                _isMainCamera = true;
+            }
+            else
+            {
+                if (MainCamera == this)
+                    MainCamera = null;
+                
+                _isMainCamera = false;
+            }
+        }
+    }
+    
+    public bool IsMainCameraInstance
+    {
+        get => MainCamera == this;
+        set 
+        {
+            if (value) 
+                IsMainCamera = true;
+        }
+    }
+
     public float Width;
     public float Height;
 
@@ -13,7 +49,14 @@ public class Camera : Component
     public Vector3 Front = -Vector3.UnitZ;
     public Vector3 Up = Vector3.UnitY;
     public Vector3 Right = Vector3.UnitX;
-    
+
+    public override void OnDestroy()
+    {
+        if(MainCamera == this)
+            MainCamera = null;
+        base.OnDestroy();
+    }
+
     public float Yaw
     {
         get => MathHelper.RadiansToDegrees(_yaw);
