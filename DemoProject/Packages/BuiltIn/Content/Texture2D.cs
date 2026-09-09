@@ -6,27 +6,32 @@ namespace MadEngine;
 
 public class Texture2D : Texture, IStateUpdateable
 {
-    public override string Extension => ".tex";
     public override TextureTarget Target => TextureTarget.Texture2D;
 
     public Texture2D() {}
     
     public Texture2D(string path)
     {
-        FilePath = path;
+        Image = new ImageAsset()
+        {
+            Extension =  Path.GetExtension(path),
+            FullDir = Path.GetDirectoryName(path) ?? "",
+            Name = Path.GetFileNameWithoutExtension(path)
+        };
         LoadFromFile();
     }
 
     private void LoadFromFile()
     {
-        Console.WriteLine(FilePath);
-        if (!File.Exists(FilePath)) return;
-        Console.WriteLine(FilePath);
+        if (Image == null) return;
+        Console.WriteLine(Image.Path);
+        if (!File.Exists(Image.Path)) return;
+        Console.WriteLine(Image.Path);
         
         GL.BindTexture(Target, Handle);
         
         StbImage.stbi_set_flip_vertically_on_load(1);
-        using Stream stream = File.OpenRead(FilePath);
+        using Stream stream = File.OpenRead(Image.Path);
         ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
         
         GL.TexImage2D(Target, 0, PixelInternalFormat.Rgba, image.Width, image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Data);
@@ -41,7 +46,7 @@ public class Texture2D : Texture, IStateUpdateable
         GL.BindTexture(Target, 0);
     }
 
-    public void UpdateState()
+    public override void UpdateState()
     {
         LoadFromFile();
     }

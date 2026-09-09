@@ -3,21 +3,24 @@ using StbImageSharp;
 
 namespace MadEngine.Core;
 
-public abstract class Texture : Asset
+public abstract class Texture : Asset, IStateUpdateable
 {
     [DoNotSave] public int Handle { get; protected set; }
 
-    [DoNotSave]
-    [HideInInspector]
-    public string FilePath
+    [ShowInInspector] public ImageAsset? Image
     {
-        get => Path.Combine(FullDir, _filePath);
-        protected set => _filePath = value;
+        get => _image;
+        set
+        {
+            _image = value;
+            UpdateState();
+        }
     }
 
-    [ShowInInspector] private string _filePath = "";
+    private ImageAsset? _image;
 
-    public override string Name { get; set; } = "NewTexture";
+    protected override string NameInternal { get; set; } = "NewTexture";
+    protected  override string ExtensionInternal { get; set; } = ".tex";
     
     public abstract TextureTarget Target { get; }
 
@@ -41,4 +44,6 @@ public abstract class Texture : Asset
         }
         base.OnDispose(disposing);
     }
+
+    public abstract void UpdateState();
 }

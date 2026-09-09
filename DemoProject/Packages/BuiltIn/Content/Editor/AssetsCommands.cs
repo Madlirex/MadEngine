@@ -10,7 +10,7 @@ public class CreateTextureCommand : PopupCommand<Asset>
     public override string Path => "Create/Texture";
     public override void Execute(Asset target)
     {
-        AssetManager.SaveAsset(new Texture2D());
+        AssetManager.CreateAsset<Texture2D>(target.FullDir);
     }
 }
 
@@ -19,7 +19,7 @@ public class CreateMaterialCommand : PopupCommand<Asset>
     public override string Path => "Create/Material";
     public override void Execute(Asset target)
     {
-        AssetManager.SaveAsset(new Material());
+        AssetManager.CreateAsset<Material>(target.FullDir);
     }
 }
 
@@ -28,7 +28,7 @@ public class CreateShaderCommand : PopupCommand<Asset>
     public override string Path => "Create/Shader";
     public override void Execute(Asset target)
     {
-        AssetManager.SaveAsset(new Shader());
+        AssetManager.CreateAsset<Shader>(target.FullDir);
     }
 }
 
@@ -37,7 +37,7 @@ public class CreateMeshCommand : PopupCommand<Asset>
     public override string Path => "Create/Mesh";
     public override void Execute(Asset target)
     {
-        AssetManager.SaveAsset(new Mesh());
+        AssetManager.CreateAsset<Mesh>(target.FullDir);
     }
 }
 
@@ -46,7 +46,7 @@ public class CreateSceneCommand : PopupCommand<Asset>
     public override string Path => "Create/Scene";
     public override void Execute(Asset target)
     {
-        AssetManager.SaveAsset(new Scene());
+        AssetManager.CreateAsset<Scene>(target.FullDir);
     }
 }
 

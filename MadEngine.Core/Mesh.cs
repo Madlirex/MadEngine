@@ -26,8 +26,8 @@ public class Mesh : Asset, IStateUpdateable
         set => UpdateState();
     }
 
-    public override string Name { get; set; } = "NewMesh";
-    public override string Extension => ".mesh";
+    protected override string NameInternal { get; set; } = "NewMesh";
+    protected override string ExtensionInternal { get; set; } = ".mesh";
 
     public Mesh()
     {

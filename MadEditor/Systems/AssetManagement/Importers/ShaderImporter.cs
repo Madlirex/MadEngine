@@ -6,7 +6,7 @@ namespace MadEditor;
 public class ShaderImporter : Importer<Shader>
 {
     public override string Name => "ShaderImporter";
-    public override string Extension => ".shader";
+    public override string[] Extensions => [".shader"];
     public override void Save(Shader asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Shader))!.Serialize(asset);
