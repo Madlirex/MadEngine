@@ -15,6 +15,7 @@ public static class PanelSystem
         Instance.CreatePanel<HierarchyDrawer>();
         Instance.CreatePanel<InspectorPanelDrawer>();
         Instance.CreatePanel<ViewportDrawer>();
+        Instance.CreatePanel<GameDrawer>();
         Instance.CreatePanel<StatsDrawer>();
         Instance.CreatePanel<ProjectPanelDrawer>();
         Instance.CreatePanel<ConsoleDrawer>();
