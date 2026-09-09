@@ -116,7 +116,9 @@ public class EditorWindow : GameWindow
             Camera camera = vp.CameraComponent;
         
             Engine.Render(SceneManager.ActiveScene, camera);
-        
+
+            if (!vp.EditMode) continue;
+            
             _gridRenderer.Render(
                 camera.GetViewMatrix(), 
                 camera.GetPerspectiveMatrix(), 

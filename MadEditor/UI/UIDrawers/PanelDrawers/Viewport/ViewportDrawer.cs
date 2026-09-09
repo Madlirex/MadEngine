@@ -6,7 +6,7 @@ using OpenTK.Windowing.Common;
 namespace MadEditor;
 
 [CustomName("Scene View")]
-public class ViewportDrawer : PanelDrawer
+public class ViewportDrawer : PanelDrawer, IBorderlessPanel
 {
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
     public override void Draw(EditorUIContext context)

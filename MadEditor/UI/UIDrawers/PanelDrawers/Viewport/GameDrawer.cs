@@ -7,7 +7,7 @@ using OpenTK.Windowing.Common;
 namespace MadEditor;
 
 [CustomName("Game View")]
-public class GameDrawer : PanelDrawer
+public class GameDrawer : PanelDrawer, IBorderlessPanel
 {
     private static GameObject? _defaultObject;
     private static Camera _defaultCamera = new();
