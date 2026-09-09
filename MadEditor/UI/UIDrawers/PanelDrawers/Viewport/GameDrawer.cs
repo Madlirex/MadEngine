@@ -9,13 +9,24 @@ namespace MadEditor;
 [CustomName("Game View")]
 public class GameDrawer : PanelDrawer
 {
+    private static GameObject? _defaultObject;
+    private static Camera _defaultCamera = new();
+    
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Center;
     public override void Draw(EditorUIContext context)
     {
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
 
-         viewportContext.CameraComponent = Camera.MainCamera;
+         if(Camera.MainCamera != null)
+         {
+             viewportContext.CameraObject = Camera.MainCamera.GameObject;
+             viewportContext.CameraComponent = Camera.MainCamera;
+         }
+         else
+         {
+             UseDefaultCamera(viewportContext);
+         }
          
          Vector2 availableSpace = ImGui.GetContentRegionAvail();
 
@@ -94,5 +105,22 @@ public class GameDrawer : PanelDrawer
         
         ImGui.PopStyleVar(2);
         ImGui.PopStyleColor();
+    }
+
+    private void UseDefaultCamera(ViewportContext context)
+    {
+        if (_defaultObject == null)
+            InitializeDefaultCamera();
+
+        context.CameraComponent = _defaultCamera;
+        context.CameraObject = _defaultObject!;
+    }
+
+    private void InitializeDefaultCamera()
+    {
+        _defaultObject = new GameObject();
+        _defaultCamera = new Camera();
+
+        _defaultObject.AddComponentUnsafe(_defaultCamera);
     }
 }
