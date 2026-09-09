@@ -104,4 +104,24 @@ public static class AssetManager
         importer?.Save(asset);
         AssetMeta.Save(asset);
     }
+
+    public static void CreateAsset<T>(string path) where T : Asset, new()
+    { 
+        try
+        {
+            MadObject.SuppressRegistration = true;
+            T asset = new T();
+
+            asset.FullDir = path;
+            MadObject.SuppressRegistration = false;
+
+            asset.EndInit();
+
+            SaveAsset(asset);
+        }
+        finally
+        {
+            MadObject.SuppressRegistration = false;
+        }
+    }
 }
