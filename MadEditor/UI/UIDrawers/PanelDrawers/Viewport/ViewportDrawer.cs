@@ -13,6 +13,7 @@ public class ViewportDrawer : PanelDrawer
     {
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
+         viewportContext.EditMode = true;
          
          Vector2 availableSpace = ImGui.GetContentRegionAvail();
 

@@ -17,33 +17,17 @@ public class GameDrawer : PanelDrawer
     {
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
-
+         
          if(Camera.MainCamera != null)
          {
              viewportContext.CameraObject = Camera.MainCamera.GameObject;
              viewportContext.CameraComponent = Camera.MainCamera;
+             RecalculateSize(viewportContext);
          }
          else
          {
              UseDefaultCamera(viewportContext);
-         }
-         
-         Vector2 availableSpace = ImGui.GetContentRegionAvail();
-
-         float availableW = availableSpace.X;
-         float availableH = availableSpace.Y;
-         
-         if (availableW > 1 && availableH > 1)
-         {
-             if (availableW != viewportContext.Size.X || availableH != viewportContext.Size.Y)
-             {
-                 viewportContext.Size = new Vector2(availableW, availableH);
-                 viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
-                 
-                 Camera cam = viewportContext.CameraComponent;
-                 cam.Width = (int)availableW;
-                 cam.Height = (int)availableH;
-             }
+             RecalculateSize(viewportContext);
          }
          
          if (ImGui.IsWindowHovered() && ImGui.IsMouseClicked(ImGuiMouseButton.Right))
@@ -122,5 +106,22 @@ public class GameDrawer : PanelDrawer
         _defaultCamera = new Camera();
 
         _defaultObject.AddComponentUnsafe(_defaultCamera);
+    }
+
+    private void RecalculateSize(ViewportContext viewportContext)
+    {
+        Vector2 availableSpace = ImGui.GetContentRegionAvail();
+
+        float availableW = availableSpace.X;
+        float availableH = availableSpace.Y;
+
+        if (!(availableW > 1) || !(availableH > 1)) return;
+        
+        viewportContext.Size = new Vector2(availableW, availableH);
+        viewportContext.Framebuffer.Resize((int)availableW, (int)availableH);
+             
+        Camera cam = viewportContext.CameraComponent;
+        cam.Width = (int)availableW;
+        cam.Height = (int)availableH;
     }
 }
