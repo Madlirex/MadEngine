@@ -8,7 +8,7 @@ namespace MadEditor;
 public class Texture2DImporter : Importer<Texture2D>
 {
     public override string Name => "TextureImporter";
-    public override string Extension => ".tex";
+    public override string[] Extensions => [".tex"];
     public override void Save(Texture2D asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Texture2D))!.Serialize(asset);

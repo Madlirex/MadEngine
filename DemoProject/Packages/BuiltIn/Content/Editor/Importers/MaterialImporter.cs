@@ -6,7 +6,7 @@ namespace MadEditor;
 public class MaterialImporter : Importer<Material>
 {
     public override string Name => "MaterialImporter";
-    public override string Extension => ".mat";
+    public override string[] Extensions => [".mat"];
     public override void Save(Material asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Material))!.Serialize(asset);

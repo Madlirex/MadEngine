@@ -72,7 +72,8 @@ internal class ImporterEngine : Registry, IDomainResetable
         {
             _importers.TryAdd(importer.Type, importer);
             _importerNames.TryAdd(importer.Name, importer);
-            _importerExtensions.TryAdd(importer.Extension, importer);
+            foreach(var extension in importer.Extensions)
+                _importerExtensions.TryAdd(extension, importer);
         }
     }
 

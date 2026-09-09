@@ -17,8 +17,8 @@ public class Material : Asset
     [ShowInInspector] public Dictionary<string, float> Floats = new();
     [ShowInInspector] public Dictionary<string, int> Ints = new();
 
-    public override string Name { get; set; } = "NewMaterial";
-    public override string Extension => ".mat";
+    protected override string NameInternal { get; set; } = "NewMaterial";
+    protected override string ExtensionInternal { get; set; } = ".mat";
 
     public Material() { }
 

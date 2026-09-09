@@ -6,7 +6,7 @@ namespace MadEditor;
 public class MeshImporter : Importer<Mesh>
 {
     public override string Name => "MeshImporter";
-    public override string Extension => ".mesh";
+    public override string[] Extensions => [".mesh"];
     public override void Save(Mesh asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(Mesh))!.Serialize(asset);

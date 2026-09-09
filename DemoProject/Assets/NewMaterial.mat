@@ -2,12 +2,12 @@
     "$type": "MadEngine.Core.Material, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "$guid": "94f8c704-bb7b-40f0-ac32-117fb501b719",
     "$data": {
-        "Name": "NewMaterial",
+        "NameInternal": "NewMaterial",
         "Shader": "752a19bd-4808-45d2-a75e-85fc6709cfd9",
         "Prefix": "material.",
         "Textures": {
-            "diffuse": null,
-            "specular": null
+            "diffuse": "a46f1ead-e597-467f-ab62-a876c0ae9831",
+            "specular": "a46f1ead-e597-467f-ab62-a876c0ae9831"
         },
         "Vectors": {
             "ambientColor": [
@@ -36,6 +36,7 @@
             "diffuse_Enabled": 0,
             "specular_Enabled": 0
         },
+        "Name": "NewMaterial",
         "Guid": "94f8c704-bb7b-40f0-ac32-117fb501b719",
         "_guid": "94f8c704-bb7b-40f0-ac32-117fb501b719"
     }

@@ -7,7 +7,7 @@ namespace MadEditor;
 public class SceneImporter : Importer<Scene>
 {
     public override string Name => "SceneImporter";
-    public override string Extension => ".madscene";
+    public override string[] Extensions => [".madscene"];
     
     public override void Save(Scene asset)
     {
