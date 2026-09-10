@@ -23,16 +23,32 @@ public class EditorWindow : GameWindow
     private SceneGridRenderer _gridRenderer;
 
     private DateTime _start;
-    
-    public EditorWindow(int width, int height, string title) : base(new GameWindowSettings()
-    {
-        UpdateFrequency = 60
-    },
-        new NativeWindowSettings()
-    {
-        ClientSize = (width, height), Title = title
 
-    })
+    public static EditorWindow Create(int width, int height, string title)
+    {
+        var gameSettings = new GameWindowSettings() { UpdateFrequency = 60 };
+
+        var windowSettings = new NativeWindowSettings()
+        {
+            ClientSize = (width, height),
+            Title = title,
+            APIVersion = new Version(3, 3),
+            Profile = ContextProfile.Core
+        };
+
+        try
+        {
+            return new EditorWindow(gameSettings, windowSettings);
+        }
+        catch (GLFWException e)
+        {
+            Debug.LogError($"GLFW Exception: {e.Message}");
+            windowSettings.Profile = ContextProfile.Any;
+            return new EditorWindow(gameSettings, windowSettings);
+        }
+    }
+    
+    public EditorWindow(GameWindowSettings gameSettings, NativeWindowSettings windowSettings) : base(gameSettings, windowSettings)
     {
         _start = DateTime.Now;
         
@@ -41,7 +57,7 @@ public class EditorWindow : GameWindow
         Engine = new Engine();
         
         CursorState = CursorState.Normal;
-        _imGui = new ImGuiController(width, height);
+        _imGui = new ImGuiController(windowSettings.ClientSize.X, windowSettings.ClientSize.Y);
         _editorUI = new EditorUI(Engine);
         _gridRenderer = new SceneGridRenderer();
     }

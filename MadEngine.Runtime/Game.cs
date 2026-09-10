@@ -18,16 +18,32 @@ public class RuntimeWindow : GameWindow
 
     private Vector2 _lastPos;
     private bool _firstMove = true;
-    
-    public RuntimeWindow(int width, int height, string title) : base(new GameWindowSettings()
-    {
-        UpdateFrequency = 60
-    },
-        new NativeWindowSettings()
-    {
-        ClientSize = (width, height), Title = title
 
-    })
+    public RuntimeWindow Create(int width, int height, string title)
+    {
+        var gameSettings = new GameWindowSettings() { UpdateFrequency = 60 };
+
+        var windowSettings = new NativeWindowSettings()
+        {
+            ClientSize = (width, height),
+            Title = title,
+            APIVersion = new Version(3, 3),
+            Profile = ContextProfile.Core
+        };
+        
+        try
+        {
+            return new RuntimeWindow(gameSettings, windowSettings);
+        }
+        catch (GLFWException e)
+        {
+            Debug.LogError($"GLFW Exception: {e.Message}");
+            windowSettings.Profile = ContextProfile.Any;
+            return new RuntimeWindow(gameSettings, windowSettings);
+        }
+    }
+    
+    public RuntimeWindow(GameWindowSettings gameSettings, NativeWindowSettings windowSettings) : base(gameSettings, windowSettings)
     {
         _engine = new Engine();
         
@@ -39,8 +55,8 @@ public class RuntimeWindow : GameWindow
         _camera.AddComponent(new Camera());
         
         CursorState = CursorState.Grabbed; // changed: editor uses normal cursor by default
-        _camera.GetComponent<Camera>()!.Width = width;
-        _camera.GetComponent<Camera>()!.Height = height;
+        _camera.GetComponent<Camera>()!.Width = windowSettings.ClientSize.X;
+        _camera.GetComponent<Camera>()!.Height = windowSettings.ClientSize.Y;
         
         MeshRenderer defaultRenderer = new MeshRenderer
         {
