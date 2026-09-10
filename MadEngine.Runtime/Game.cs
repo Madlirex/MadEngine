@@ -19,7 +19,7 @@ public class RuntimeWindow : GameWindow
     private Vector2 _lastPos;
     private bool _firstMove = true;
 
-    public RuntimeWindow Create(int width, int height, string title)
+    public static RuntimeWindow Create(int width, int height, string title)
     {
         var gameSettings = new GameWindowSettings() { UpdateFrequency = 60 };
 

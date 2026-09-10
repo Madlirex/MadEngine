@@ -4,9 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        using (RuntimeWindow game = new RuntimeWindow(800, 600, "Mad Engine"))
-        {
-            game.Run();
-        }
+        using RuntimeWindow game = RuntimeWindow.Create(800, 600, "Mad Engine");
+        game.Run();
     }
 }
