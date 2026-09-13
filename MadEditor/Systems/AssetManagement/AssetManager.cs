@@ -48,23 +48,34 @@ public static class AssetManager
 
     public static void InitializeAsset(string file)
     {
-        Asset? asset;
-        if (File.Exists(file + ".meta"))
+        MadObject.SuppressRegistration = true;
+        try
         {
-            AssetMeta meta = AssetMeta.Load(file + ".meta");
-            var importer = ImporterRegistry.GetImporter(meta.Importer);
-            asset = importer?.Initialize(meta);
-        }
-        else
-        {
-            var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
-            asset = importer?.Initialize(file);
-        }
+            Asset? asset;
 
-        if (asset == null) return;
-        asset.FullDir = Path.GetFullPath(Path.GetDirectoryName(file)!);
-        asset.Extension = Path.GetExtension(file);
-        Console.WriteLine(asset.AbsolutePath);
+            if (File.Exists(file + ".meta"))
+            {
+                AssetMeta meta = AssetMeta.Load(file + ".meta");
+                var importer = ImporterRegistry.GetImporter(meta.Importer);
+                asset = importer?.Initialize(meta);
+            }
+            else
+            {
+                var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
+                asset = importer?.Initialize(file);
+            }
+
+            if (asset == null) return;
+            asset.FullDir = Path.GetFullPath(Path.GetDirectoryName(file)!);
+            asset.Extension = Path.GetExtension(file);
+
+            asset.EndInit();
+            Console.WriteLine($"[Registry Success] Loaded: {asset.AbsolutePath}");
+        }
+        finally
+        {
+            MadObject.SuppressRegistration = false;
+        }
     }
 
     public static void LoadAssets(string path)
