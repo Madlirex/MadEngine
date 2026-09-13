@@ -2,7 +2,7 @@
 
 namespace MadEditor;
 
-public abstract class MenubarCommand : IEditorCommand
+public abstract class MenubarCommand : IEditorCommand, IHasShortcut
 {
     public virtual ImGuiKey[] Shortcut => [];
     public abstract string Path { get; set; }

@@ -17,25 +17,15 @@ public static class MenubarCommandsRegistry
 
 internal class MenubarCommandsEngine : Registry
 {
-    private readonly List<MenuNode> _menuTreeRoot = [];
     private readonly Dictionary<string, int> _categoryWeights = new(StringComparer.Ordinal);
-
-    private class MenuNode
-    {
-        public string Name { get; set; } = string.Empty;
-        public int Order { get; set; }
-        
-        public ImGuiKey[] ShortcutKeys { get; set; } = [];
-        public string ShortcutText { get; set; } = string.Empty;
-        
-        public MenubarCommand? Command { get; set; }
-        public List<MenuNode> Children { get; } = [];
-        public bool IsLeaf => Command != null;
-    }
+    internal readonly List<MenubarCommand> MenubarCommands = [];
+    
+    private MenuTreeRenderer? _menuTreeRenderer;
     
     public override void Initialize()
     {
         LoadCategoryWeights();
+        _menuTreeRenderer = new MenuTreeRenderer(_categoryWeights);
         DiscoverCommands();
     }
 
@@ -53,21 +43,26 @@ internal class MenubarCommandsEngine : Registry
 
     public void DiscoverCommands()
     {
-        _menuTreeRoot.Clear();
-
-        var flatCommands = new List<(MenubarCommand Command, int Order)>();
+        MenubarCommands.Clear();
         
         var types = ScriptDomain.GetTypesImplementing(typeof(MenubarCommand));
         foreach (var type in types)
         {
             if (Activator.CreateInstance(type) is not MenubarCommand command) continue;
-            
-            var orderAttr = type.GetCustomAttribute<OrderAttribute>();
-            var order = orderAttr?.Order ?? 0;
-            flatCommands.Add((command, order));
+            MenubarCommands.Add(command);
         }
 
-        BuildTree(flatCommands);
+        RebuildTree();
+    }
+    
+    private void RebuildTree()
+    {
+        var menuData = MenubarCommands.Select(cmd => {
+            var orderAttr = cmd.GetType().GetCustomAttribute<OrderAttribute>();
+            return new CommandMenuData(cmd, cmd.Path, orderAttr?.Order ?? 0, cmd.Shortcut);
+        });
+        
+        _menuTreeRenderer?.RegenerateTree(menuData);
     }
     
     public MenubarCommand? CreateCommand(Type type)
@@ -77,151 +72,20 @@ internal class MenubarCommandsEngine : Registry
     
     public void RegisterCommand(MenubarCommand command)
     {
-        var orderAttr = command.GetType().GetCustomAttribute<OrderAttribute>();
-        int order = orderAttr?.Order ?? 0;
+        if (MenubarCommands.Contains(command)) return;
         
-        BuildTree([(command, order)]); 
+        MenubarCommands.Add(command);
+        
+        RebuildTree(); 
     }
 
-    public void BuildTree(List<(MenubarCommand Command, int Order)> commands)
-    {
-        foreach (var (command, order) in commands)
-        {
-            string[] parts = command.Path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-            List<MenuNode> currentLevel = _menuTreeRoot;
-            
-            string currentFullPath = string.Empty;
 
-            for (int i = 0; i < parts.Length; i++)
-            {
-                string part = parts[i];
-                bool isLast = i == parts.Length - 1;
-                
-                currentFullPath = i == 0 ? part : $"{currentFullPath}/{part}";
-
-                int nodeOrder = isLast ? order : 0;
-                
-                var existingNode = currentLevel.FirstOrDefault(n => n.Name.Equals(part, StringComparison.Ordinal));
-
-                if (existingNode == null)
-                {
-                    var newNode = new MenuNode
-                    {
-                        Name = part,
-                        Order = _categoryWeights.GetValueOrDefault(currentFullPath, nodeOrder)
-                    };
-
-                    if (isLast)
-                    {
-                        newNode.Command = command;
-                        newNode.ShortcutKeys = command.Shortcut;
-                        newNode.ShortcutText = ShortcutUtility.ToDisplayString(command.Shortcut);
-                    }
-
-                    currentLevel.Add(newNode);
-                    existingNode = newNode;
-                }
-                else if (isLast)
-                {
-                    existingNode.Command = command;
-                    existingNode.Order = _categoryWeights.GetValueOrDefault(currentFullPath, order);
-                    existingNode.ShortcutKeys = command.Shortcut;
-                    existingNode.ShortcutText = ShortcutUtility.ToDisplayString(command.Shortcut);
-                }
-
-                currentLevel = existingNode.Children;
-            }
-        }
-        SortTreeRecursive(_menuTreeRoot);
-    }
-    
-    private void SortTreeRecursive(List<MenuNode> nodes)
-    {
-        if (nodes.Count == 0) return;
-        
-        nodes.Sort((a, b) => a.Order.CompareTo(b.Order));
-        
-        foreach (var node in nodes)
-        {
-            SortTreeRecursive(node.Children);
-        }
-    }
-    
     public void Draw(EditorUIContext context)
     {
-        ProcessShortcuts(context);
         if (!ImGui.BeginMainMenuBar()) return;
-
-        if (_menuTreeRoot.Count == 0)
-        {
-            ImGui.TextDisabled("None");
-        }
-        else
-        {
-            RenderMenuLevel(_menuTreeRoot, context);
-        }
-
+        
+        _menuTreeRenderer?.Draw(cmd => context.EnqueueCommand((MenubarCommand)cmd));
+        
         ImGui.EndMainMenuBar();
-    }
-
-    private void RenderMenuLevel(List<MenuNode> nodes, EditorUIContext context)
-    {
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            var currentNode = nodes[i];
-
-            if (currentNode.IsLeaf)
-            {
-                if (ImGui.MenuItem(currentNode.Name, currentNode.ShortcutText))
-                {
-                    context.EnqueueCommand(currentNode.Command!);
-                }
-            }
-            else
-            {
-                if (ImGui.BeginMenu(currentNode.Name))
-                {
-                    RenderMenuLevel(currentNode.Children, context);
-                    ImGui.EndMenu();
-                }
-            }
-
-            if (i >= nodes.Count - 1) continue;
-            var nextNode = nodes[i + 1];
-            
-            int currentBucket = (int)Math.Floor((double)currentNode.Order / 1000);
-            int nextBucket = (int)Math.Floor((double)nextNode.Order / 1000);
-
-            if (currentBucket == nextBucket) continue;
-            int separatorCount = Math.Abs(nextBucket - currentBucket);
-            for (int s = 0; s < separatorCount; s++)
-            {
-                ImGui.Separator();
-            }
-        }
-    }
-    
-    private IEnumerable<MenuNode> FlatLeafNodes(List<MenuNode> nodes)
-    {
-        foreach (var node in nodes)
-        {
-            if (node.IsLeaf) yield return node;
-            foreach (var childLeaf in FlatLeafNodes(node.Children))
-            {
-                yield return childLeaf;
-            }
-        }
-    }
-    
-    public void ProcessShortcuts(EditorUIContext context)
-    {
-        if (ImGui.GetIO().WantTextInput) return;
-
-        foreach (var node in FlatLeafNodes(_menuTreeRoot))
-        {
-            if (!ShortcutInputEngine.IsShortcutPressed(node.ShortcutKeys)) continue;
-            context.EnqueueCommand(node.Command!);
-            break;
-        }
     }
 }

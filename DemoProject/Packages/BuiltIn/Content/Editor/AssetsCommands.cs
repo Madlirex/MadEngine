@@ -96,6 +96,7 @@ public class RenameAssetCommand : PopupCommand<Asset>
     }
 }
 
+[Order(1000)]
 public class DeleteAssetCommand : PopupCommand<Asset>
 {
     public override string Path => "Delete";
