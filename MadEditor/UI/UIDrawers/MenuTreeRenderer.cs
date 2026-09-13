@@ -108,6 +108,7 @@ internal class MenuTreeRenderer
         }
 
         RenderMenuLevel(_treeRoot, onCommandTriggered);
+        ProcessShortcuts(onCommandTriggered);
     }
 
     private void RenderMenuLevel(List<MenuNode> nodes, Action<object> onCommandTriggered)
@@ -142,6 +143,30 @@ internal class MenuTreeRenderer
             
             for (int s = 0; s < separatorCount; s++) 
                 ImGui.Separator();
+        }
+    }
+    
+    private IEnumerable<MenuNode> FlatLeafNodes(List<MenuNode> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            if (node.IsLeaf) yield return node;
+            foreach (var childLeaf in FlatLeafNodes(node.Children))
+            {
+                yield return childLeaf;
+            }
+        }
+    }
+    
+    public void ProcessShortcuts(Action<object> onCommandTriggered)
+    {
+        if (ImGui.GetIO().WantTextInput) return;
+
+        foreach (var node in FlatLeafNodes(_treeRoot))
+        {
+            if (!ShortcutInputEngine.IsShortcutPressed(node.ShortcutKeys)) continue;
+            onCommandTriggered(node.CommandInstance!);
+            break;
         }
     }
 }

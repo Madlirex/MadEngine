@@ -68,7 +68,7 @@ public class CreateGameObjectMenubar : MenubarCommand
 public class RecompileScriptsMenubar : MenubarCommand
 {
     public override string Path { get; set; } = "GameObject/Recompile Scripts";
-    public override ImGuiKey[] Shortcut => [ImGuiKey.C];
+    public override ImGuiKey[] Shortcut => [ImGuiKey.ModAlt, ImGuiKey.C];
 
     public override void Execute(EditorUIContext context)
     {
