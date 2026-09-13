@@ -1,14 +1,14 @@
-﻿using MadEngine.Core;
+﻿using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
-public interface IPopupCommand : IEditorCommand
+public interface IPopupCommand : IEditorCommand, IHasShortcut
 {
     bool IsExactType { get; }
     Type[] ExcludingTypes { get; }
     Type TargetType { get; }
     string Path { get; }
-
 }
 
 public abstract class PopupCommand<T> : IPopupCommand where T : class
@@ -17,6 +17,7 @@ public abstract class PopupCommand<T> : IPopupCommand where T : class
     public virtual Type[] ExcludingTypes => [];
     public Type TargetType => typeof(T);
     public abstract string Path { get; }
+    public virtual ImGuiKey[] Shortcut => [];
 
     public abstract void Execute(T target);
     

@@ -10,11 +10,13 @@ public abstract class Popup
     public string FullName => $"{Name} ({Id})";
 
     private bool _isOpen;
+    private bool _shouldOpen;
 
     public void Open()
     {
         _isOpen = true;
-        ImGui.OpenPopup(FullName);
+        _shouldOpen = true;
+
         PopupManager.Add(this);
         
         OnOpen();
@@ -23,6 +25,7 @@ public abstract class Popup
     public void Close()
     {
         _isOpen = false;
+        _shouldOpen = false;
         PopupManager.Remove(this);
 
         OnClose();
@@ -34,7 +37,13 @@ public abstract class Popup
     public void Draw(EditorUIContext context)
     {
         if (!_isOpen) return;
-
+        
+        if (_shouldOpen)
+        {
+            ImGui.OpenPopup(FullName);
+            _shouldOpen = false; 
+        }
+        
         if (ImGui.BeginPopup(FullName))
         {
             _isOpen = true;
@@ -44,7 +53,7 @@ public abstract class Popup
         }
         else
         {
-            if(!_isOpen) Close();
+            Close();
         }
     }
 

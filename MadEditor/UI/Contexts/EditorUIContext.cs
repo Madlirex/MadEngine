@@ -17,7 +17,7 @@ public class EditorUIContext
     
     public ViewportContext? ActiveViewport { get; set; }
 
-    private List<IEditorCommand> _commands = [];
+    private Queue<IEditorCommand> _commands = [];
 
     public EditorUIContext(Engine engine)
     {
@@ -41,20 +41,24 @@ public class EditorUIContext
     
     public void EnqueueCommand(IEditorCommand command)
     {
-        _commands.Add(command);
+        _commands.Enqueue(command);
     }
 
-    public void DequeueCommand(IEditorCommand command)
+    public void DequeueCommand()
     {
-        _commands.Remove(command);
+        _commands.Dequeue();
     }
 
     public void ExecuteCommands()
     {
-        foreach (var command in _commands)
+        while (_commands.Count > 0)
         {
-            if(command is IPopupCommand popupCommand) popupCommand.Execute(RightClicked!);
-            else command.Execute(this);
+            var command = _commands.Dequeue();
+
+            if (command is IPopupCommand popupCommand) 
+                popupCommand.Execute(RightClicked!);
+            else 
+                command.Execute(this);
         }
     }
     

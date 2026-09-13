@@ -51,7 +51,6 @@ public class ProjectPanelDrawer : PanelDrawer
             context.RightClicked = _noneAsset;
             _projectPopup.Open();
         }
-        _projectPopup.Draw(context);
         
         ImGui.EndChild();
         
@@ -98,13 +97,11 @@ public class ProjectPanelDrawer : PanelDrawer
         foreach (var dir in currentDir.GetDirectories())
         {
             if (dir.Name is "obj" or "bin") continue;
-            ImGui.Selectable($"? {dir.Name}", false);
-            
-            if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
-            {
-                _selectedDirectory = dir.FullName;
-                return;
-            }
+            RenderItem(context, dir.FullName);
+
+            if (!ImGui.IsItemHovered() || !ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left)) continue;
+            _selectedDirectory = dir.FullName;
+            return;
         }
         
         foreach (var file in currentDir.GetFiles())
@@ -112,31 +109,36 @@ public class ProjectPanelDrawer : PanelDrawer
             if (file.Extension is ".meta" or ".csproj") continue;
             string absolutePath = file.FullName; 
             
-            Asset? mappedAsset = AssetRegistry.Assets.FirstOrDefault(a => a.AbsolutePath == absolutePath);
-
-            string fileLabel = $"? {file.Name}";
-            if (mappedAsset != null)
-            {
-                fileLabel = $"? {mappedAsset.Name} ({mappedAsset.GetType().GetCustomName()})";
-                
-            }
-            
-            if (ImGui.Selectable(fileLabel, false))
-            {
-                if(mappedAsset != null)
-                {
-                    context.Selected = mappedAsset;
-                }
-            }
-
-            if (mappedAsset == null) continue;
-            
-            DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
-
-            if (!ImGuiEx.IsClicked(ImGuiMouseButton.Right)) continue;
-            context.RightClicked = mappedAsset;
-            _projectPopup.Open();
+            RenderItem(context, absolutePath);
         }
+    }
+
+    public void RenderItem(EditorUIContext context, string path)
+    {
+        Asset? mappedAsset = AssetRegistry.Assets.FirstOrDefault(a => a.AbsolutePath == path);
+
+        string fileLabel = $"? {Path.GetFileNameWithoutExtension(path)}";
+        if (mappedAsset != null)
+        {
+            fileLabel = $"? {mappedAsset.Name} ({mappedAsset.GetType().GetCustomName()})";
+                
+        }
+            
+        if (ImGui.Selectable(fileLabel, false))
+        {
+            if(mappedAsset != null)
+            {
+                context.Selected = mappedAsset;
+            }
+        }
+
+        if (mappedAsset == null) return;
+            
+        DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
+
+        if (!ImGuiEx.IsClicked(ImGuiMouseButton.Right)) return;
+        context.RightClicked = mappedAsset;
+        _projectPopup.Open();
     }
 }
 

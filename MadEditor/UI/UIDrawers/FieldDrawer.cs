@@ -264,8 +264,6 @@ public class MadObjectDrawer : FieldDrawer
 
             _popup.Open();
         }
-        
-        _popup.Draw(EditorUI.UiContext);
     }
 }
 

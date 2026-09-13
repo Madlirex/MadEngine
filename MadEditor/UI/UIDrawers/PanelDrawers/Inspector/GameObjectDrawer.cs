@@ -98,8 +98,6 @@ public class GameObjectDrawer : InspectorDrawer<GameObject>
         {
             EditorUI.UiContext.EnqueueCommand(new RecompilationCommand());
         }
-
-        AddComponentPopup.Draw(context);
     }
 
 }

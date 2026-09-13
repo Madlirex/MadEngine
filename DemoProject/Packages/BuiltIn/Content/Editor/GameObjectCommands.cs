@@ -3,6 +3,7 @@ using MadEngine.Core.SceneManagement;
 
 namespace MadEditor.Commands;
 
+[Order(100)]
 public class AddEmptyCommand : PopupCommand<GameObject>
 {
     public override string Path => "Add Empty";
@@ -20,6 +21,7 @@ public class AddEmptyCommand : PopupCommand<GameObject>
     }
 }
 
+[Order(200)]
 public class AddEmptyParentCommand : PopupCommand<GameObject>
 {
     public override bool IsExactType => true;
@@ -35,6 +37,7 @@ public class AddEmptyParentCommand : PopupCommand<GameObject>
     }
 }
 
+[Order(1200)]
 public class DeleteCommand : PopupCommand<GameObject>
 {
     public override bool IsExactType => true;

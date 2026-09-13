@@ -33,7 +33,7 @@ public class FieldMember : InspectorMember
     public override Type Type => _field.FieldType;
     public override object? GetValue(object obj) => _field.GetValue(obj);
     public override void SetValue(object obj, object? value) => _field.SetValue(obj, value);
-    public override int Order => _field.GetCustomAttribute<ShowInInspectorAttribute>()?.Order ?? 0;
+    public override int Order => _field.GetCustomAttribute<OrderAttribute>()?.Order ?? 0;
 }
 
 public class PropertyMember : InspectorMember
@@ -51,7 +51,7 @@ public class PropertyMember : InspectorMember
     public override Type Type => _property.PropertyType;
     public override object? GetValue(object obj) => _property.GetValue(obj);
     public override void SetValue(object obj, object? value) => _property.SetValue(obj, value);
-    public override int Order => _property.GetCustomAttribute<ShowInInspectorAttribute>()?.Order ?? 0;
+    public override int Order => _property.GetCustomAttribute<OrderAttribute>()?.Order ?? 0;
 }
 
 public class CollectionElementMember : InspectorMember

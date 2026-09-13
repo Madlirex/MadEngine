@@ -33,7 +33,7 @@ class Program
 
             Diagnostics.EngineCrashHook.Initialize();
 
-            using EditorWindow game = new EditorWindow(1200, 800, "Mad Engine");
+            using EditorWindow game = EditorWindow.Create(1200, 800, "Mad Engine");
             game.Run();
         }
         catch (Exception ex)
