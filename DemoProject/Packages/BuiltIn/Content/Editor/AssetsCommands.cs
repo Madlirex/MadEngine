@@ -80,24 +80,40 @@ internal class RenamePopup : Popup
         _newName = name;
         _first = false;
     }
-    
+
     private void SubmitRename(EditorUIContext context)
     {
         if (string.IsNullOrEmpty(_newName)) return;
-
         if (context.RightClicked is not Asset asset) return;
-        
+
         string oldPath = asset.AbsolutePath;
+        
         asset.Name = _newName;
         string newPath = asset.AbsolutePath;
-        
+
         if (oldPath.Equals(newPath, StringComparison.Ordinal))
         {
             Close();
             return;
         }
+
+        bool isFolder = asset is FolderAsset || Directory.Exists(oldPath);
+        List<Asset> subAssetsToUpdate = [];
         
-        if (asset is FolderAsset || Directory.Exists(oldPath))
+        if (isFolder)
+        {
+            string oldFolderPrefix = oldPath.EndsWith(Path.DirectorySeparatorChar)
+                ? oldPath
+                : oldPath + Path.DirectorySeparatorChar;
+            
+            foreach (var subAsset in AssetRegistry.Assets)
+            {
+                if (!subAsset.AbsolutePath.StartsWith(oldFolderPrefix, StringComparison.OrdinalIgnoreCase)) continue;
+                subAssetsToUpdate.Add(subAsset);
+            }
+        }
+        
+        if (isFolder)
         {
             Directory.Move(oldPath, newPath);
         }
@@ -108,18 +124,28 @@ internal class RenamePopup : Popup
         
         string oldMetaPath = oldPath + ".meta";
         string newMetaPath = newPath + ".meta";
-    
         if (File.Exists(oldMetaPath))
         {
             File.Move(oldMetaPath, newMetaPath);
         }
         
-        AssetManager.SaveAsset(asset);
+        if (isFolder && subAssetsToUpdate.Count > 0)
+        {
+            foreach (var subAsset in subAssetsToUpdate)
+            {
+                string updatedSubDir = subAsset.FullDir.Replace(oldPath, newPath, StringComparison.Ordinal);
+                
+                subAsset.FullDir = updatedSubDir;
+                
+                AssetManager.SaveAsset(subAsset);
+            }
+        }
         
+        AssetManager.SaveAsset(asset);
+
         _first = true;
         Close();
     }
-    
 }
 
 [Order(600)]

@@ -221,8 +221,8 @@
                 "Pitch": 0,
                 "Fov": 90,
                 "_isMainCamera": true,
-                "Width": 765,
-                "Height": 565,
+                "Width": 1226,
+                "Height": 735,
                 "DepthNear": 0.01,
                 "DepthFar": 1000,
                 "Front": [
