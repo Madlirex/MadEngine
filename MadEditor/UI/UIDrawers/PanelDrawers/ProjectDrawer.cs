@@ -98,12 +98,10 @@ public class ProjectPanelDrawer : PanelDrawer
         {
             if (dir.Name is "obj" or "bin") continue;
             ImGui.Selectable($"? {dir.Name}", false);
-            
-            if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
-            {
-                _selectedDirectory = dir.FullName;
-                return;
-            }
+
+            if (!ImGui.IsItemHovered() || !ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left)) continue;
+            _selectedDirectory = dir.FullName;
+            return;
         }
         
         foreach (var file in currentDir.GetFiles())

@@ -38,7 +38,8 @@ public static class AssetManager
     public static void InitializeAssets(string path)
     {
         Console.WriteLine($"Initializing assets at {path}...");
-        foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
+        var paths = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Concat(Directory.GetDirectories(path, "*", SearchOption.AllDirectories)).ToList();
+        foreach (string file in paths)
         {
             if (PathsToSkip.Contains(file)) continue;
             InitializeAsset(file);
@@ -70,7 +71,10 @@ public static class AssetManager
     {
         Console.WriteLine($"Loading assets at {path}...");
         List<Asset> assets = [];
-        foreach (string file in Directory.GetFiles(path, "*", SearchOption.AllDirectories))
+        
+        var paths = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Concat(Directory.GetDirectories(path, "*", SearchOption.AllDirectories)).ToList();
+        
+        foreach (string file in paths)
         {
             if (PathsToSkip.Contains(file)) continue;
             var asset = LoadAsset(file);
@@ -86,7 +90,7 @@ public static class AssetManager
 
     public static Asset? LoadAsset(string file)
     {
-        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
+        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file) ?? "");
         return importer?.Import(file);
     }
 

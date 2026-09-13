@@ -39,7 +39,7 @@ public static class AssetRegistry
             Console.WriteLine($"[Error] Path collision skipped: {asset.AbsolutePath}");
             return;
         }
-    
+        
         _guidByPath.Add(asset.AbsolutePath, asset.Guid);
         _pathByGuid.Add(asset.Guid, asset.AbsolutePath);
         _assets.Add(asset.Guid, asset);
