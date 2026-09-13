@@ -13,7 +13,14 @@ public class CustomNameAttribute(string name) : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, Inherited = false)]
-public class OrderAttribute(int order = 0) : Attribute
+public class OrderAttribute(int order) : Attribute
 {
+    public int Order { get; } = order;
+}
+
+[AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class, AllowMultiple = true)]
+public class CategoryOrderAttribute(string name, int order)
+{
+    public string Name { get; } = name;
     public int Order { get; } = order;
 }
