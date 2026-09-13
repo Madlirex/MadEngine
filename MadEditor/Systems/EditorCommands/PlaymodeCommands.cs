@@ -8,6 +8,7 @@ public class EnterPlaymodeCommand : IEditorCommand
     public void Execute(object target)
     {
         SceneSnapshotController.TakeSnapshot(SceneManager.ActiveScene);
+        Console.WriteLine(SceneManager.ActiveScene.Guid);
 
         EditorUI.UiContext.IsPlaying = true;
         

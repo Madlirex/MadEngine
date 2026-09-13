@@ -94,6 +94,7 @@ public class SceneImporter : Importer<Scene>
                 Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = (GameObject)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(typeof(GameObject))!.DeserializeInto(obj, goJson["$data"]!);
+                if(obj == null) Console.WriteLine("hovno");
                 scene.Register(obj);
             }
         }
@@ -140,6 +141,7 @@ public class SceneImporter : Importer<Scene>
         Guid guid = json["$guid"]!.GetGuid();
 
         Scene obj = (Scene)AssetRegistry.GetObject(guid)!;
+        
         SerializerRegistry.GetClassSerializer(typeof(Scene))!.DeserializeInto(obj, json["$data"]!);
         ImportObjects(json, obj);
         return obj;

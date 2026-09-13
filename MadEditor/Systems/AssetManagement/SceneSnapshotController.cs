@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Nodes;
+using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
 namespace MadEditor;
@@ -20,9 +21,10 @@ public static class SceneSnapshotController
     {
         if (_cachedState == null) return new Scene();
         SceneImporter? importer = (SceneImporter?)ImporterRegistry.GetImporter(typeof(Scene));
-
+        
         if (instantiate)
-            importer?.InstantiateFromJson(_cachedState);
+            AssetRegistry.Register(importer?.InstantiateFromJson(_cachedState)!);
+        
         return importer?.ImportFromJson(_cachedState, instantiate) ?? new Scene();
     }
 }
