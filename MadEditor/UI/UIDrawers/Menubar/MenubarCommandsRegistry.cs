@@ -18,6 +18,7 @@ public static class MenubarCommandsRegistry
 internal class MenubarCommandsEngine : Registry
 {
     private readonly List<MenuNode> _menuTreeRoot = [];
+    private readonly Dictionary<string, int> _categoryWeights = new(StringComparer.Ordinal);
 
     private class MenuNode
     {
@@ -34,7 +35,20 @@ internal class MenubarCommandsEngine : Registry
     
     public override void Initialize()
     {
+        LoadCategoryWeights();
         DiscoverCommands();
+    }
+
+    public void LoadCategoryWeights()
+    {
+        _categoryWeights.Clear();
+
+        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+
+        foreach (var attribute in attributes)
+        {
+            _categoryWeights[attribute.Name] = attribute.Order;
+        }
     }
 
     public void DiscoverCommands()
@@ -75,11 +89,17 @@ internal class MenubarCommandsEngine : Registry
         {
             string[] parts = command.Path.Split('/', StringSplitOptions.RemoveEmptyEntries);
             List<MenuNode> currentLevel = _menuTreeRoot;
+            
+            string currentFullPath = string.Empty;
 
             for (int i = 0; i < parts.Length; i++)
             {
                 string part = parts[i];
                 bool isLast = i == parts.Length - 1;
+                
+                currentFullPath = i == 0 ? part : $"{currentFullPath}/{part}";
+
+                int nodeOrder = isLast ? order : 0;
                 
                 var existingNode = currentLevel.FirstOrDefault(n => n.Name.Equals(part, StringComparison.Ordinal));
 
@@ -88,7 +108,7 @@ internal class MenubarCommandsEngine : Registry
                     var newNode = new MenuNode
                     {
                         Name = part,
-                        Order = isLast ? order : 0
+                        Order = _categoryWeights.GetValueOrDefault(currentFullPath, nodeOrder)
                     };
 
                     if (isLast)
@@ -104,7 +124,7 @@ internal class MenubarCommandsEngine : Registry
                 else if (isLast)
                 {
                     existingNode.Command = command;
-                    existingNode.Order = order;
+                    existingNode.Order = _categoryWeights.GetValueOrDefault(currentFullPath, order);
                     existingNode.ShortcutKeys = command.Shortcut;
                     existingNode.ShortcutText = ShortcutUtility.ToDisplayString(command.Shortcut);
                 }

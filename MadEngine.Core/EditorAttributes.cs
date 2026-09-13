@@ -19,7 +19,7 @@ public class OrderAttribute(int order) : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class, AllowMultiple = true)]
-public class CategoryOrderAttribute(string name, int order)
+public class CategoryOrderAttribute(string name, int order) : Attribute
 {
     public string Name { get; } = name;
     public int Order { get; } = order;
