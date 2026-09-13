@@ -12,7 +12,7 @@ public static class MenubarCommandsRegistry
     public static void RegisterCommand(MenubarCommand command) => Instance.RegisterCommand(command);
     public static void CreateCommand(Type type) => Instance.CreateCommand(type);
     
-    public static void Draw() => Instance.Draw();
+    public static void Draw(EditorUIContext context) => Instance.Draw(context);
 }
 
 internal class MenubarCommandsEngine : Registry
@@ -22,7 +22,11 @@ internal class MenubarCommandsEngine : Registry
     private class MenuNode
     {
         public string Name { get; set; } = string.Empty;
-        public int Order { get; set; } = 0;
+        public int Order { get; set; }
+        
+        public ImGuiKey[] ShortcutKeys { get; set; } = [];
+        public string ShortcutText { get; set; } = string.Empty;
+        
         public MenubarCommand? Command { get; set; }
         public List<MenuNode> Children { get; } = [];
         public bool IsLeaf => Command != null;
@@ -90,6 +94,8 @@ internal class MenubarCommandsEngine : Registry
                     if (isLast)
                     {
                         newNode.Command = command;
+                        newNode.ShortcutKeys = command.Shortcut;
+                        newNode.ShortcutText = ShortcutUtility.ToDisplayString(command.Shortcut);
                     }
 
                     currentLevel.Add(newNode);
@@ -99,6 +105,8 @@ internal class MenubarCommandsEngine : Registry
                 {
                     existingNode.Command = command;
                     existingNode.Order = order;
+                    existingNode.ShortcutKeys = command.Shortcut;
+                    existingNode.ShortcutText = ShortcutUtility.ToDisplayString(command.Shortcut);
                 }
 
                 currentLevel = existingNode.Children;
@@ -119,8 +127,9 @@ internal class MenubarCommandsEngine : Registry
         }
     }
     
-    public void Draw()
+    public void Draw(EditorUIContext context)
     {
+        ProcessShortcuts(context);
         if (!ImGui.BeginMainMenuBar()) return;
 
         if (_menuTreeRoot.Count == 0)
@@ -129,13 +138,13 @@ internal class MenubarCommandsEngine : Registry
         }
         else
         {
-            RenderMenuLevel(_menuTreeRoot);
+            RenderMenuLevel(_menuTreeRoot, context);
         }
 
         ImGui.EndMainMenuBar();
     }
 
-    private void RenderMenuLevel(List<MenuNode> nodes)
+    private void RenderMenuLevel(List<MenuNode> nodes, EditorUIContext context)
     {
         for (int i = 0; i < nodes.Count; i++)
         {
@@ -143,16 +152,16 @@ internal class MenubarCommandsEngine : Registry
 
             if (currentNode.IsLeaf)
             {
-                if (ImGui.MenuItem(currentNode.Name))
+                if (ImGui.MenuItem(currentNode.Name, currentNode.ShortcutText))
                 {
-                    EditorUI.UiContext.EnqueueCommand(currentNode.Command!);
+                    context.EnqueueCommand(currentNode.Command!);
                 }
             }
             else
             {
                 if (ImGui.BeginMenu(currentNode.Name))
                 {
-                    RenderMenuLevel(currentNode.Children);
+                    RenderMenuLevel(currentNode.Children, context);
                     ImGui.EndMenu();
                 }
             }
@@ -169,6 +178,30 @@ internal class MenubarCommandsEngine : Registry
             {
                 ImGui.Separator();
             }
+        }
+    }
+    
+    private IEnumerable<MenuNode> FlatLeafNodes(List<MenuNode> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            if (node.IsLeaf) yield return node;
+            foreach (var childLeaf in FlatLeafNodes(node.Children))
+            {
+                yield return childLeaf;
+            }
+        }
+    }
+    
+    public void ProcessShortcuts(EditorUIContext context)
+    {
+        if (ImGui.GetIO().WantTextInput) return;
+
+        foreach (var node in FlatLeafNodes(_menuTreeRoot))
+        {
+            if (!ShortcutInputEngine.IsShortcutPressed(node.ShortcutKeys)) continue;
+            context.EnqueueCommand(node.Command!);
+            break;
         }
     }
 }

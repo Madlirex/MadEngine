@@ -1,4 +1,5 @@
-﻿using MadEngine.Core;
+﻿using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -6,6 +7,8 @@ namespace MadEditor;
 public class SaveFileMenubar : MenubarCommand
 {
     public override string Path { get; set; } = "File/Save";
+    public override ImGuiKey[] Shortcut => [ImGuiKey.ModCtrl, ImGuiKey.S, ImGuiKey.A];
+
     public override void Execute(EditorUIContext context)
     {
         AssetManager.SaveProject(AssetRegistry.Assets);
@@ -15,7 +18,8 @@ public class SaveFileMenubar : MenubarCommand
 [Order(1500)]
 public class ExitFileMenubar : MenubarCommand
 {
-    public override string Path { get; set; } = "File/Exit";
+    public override string Path { get; set; } = "file/Exit";
+    public override ImGuiKey[] Shortcut => [ImGuiKey.NumLock];
     public override void Execute(EditorUIContext context)
     {
         context.Window.Close();
