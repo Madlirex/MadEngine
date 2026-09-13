@@ -56,9 +56,9 @@ public abstract class MadObject : IDisposable
     
     public void SetGuid(Guid guid)
     {
-        AssetRegistry.Unregister(this);
+        if(_initialized) AssetRegistry.Unregister(this);
         _guid = guid;
-        AssetRegistry.Register(this); 
+        if(_initialized) AssetRegistry.Register(this); 
     }
 
     public override string ToString()
