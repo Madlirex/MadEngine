@@ -18,7 +18,7 @@ public class SaveFileMenubar : MenubarCommand
 [Order(1500)]
 public class ExitFileMenubar : MenubarCommand
 {
-    public override string Path { get; set; } = "file/Exit";
+    public override string Path { get; set; } = "fwadile/Exit";
     public override ImGuiKey[] Shortcut => [ImGuiKey.NumLock];
     public override void Execute(EditorUIContext context)
     {

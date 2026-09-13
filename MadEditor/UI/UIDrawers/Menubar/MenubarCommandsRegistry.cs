@@ -88,7 +88,7 @@ internal class MenubarCommandsEngine : Registry
                     var newNode = new MenuNode
                     {
                         Name = part,
-                        Order = order 
+                        Order = isLast ? order : 0
                     };
 
                     if (isLast)
