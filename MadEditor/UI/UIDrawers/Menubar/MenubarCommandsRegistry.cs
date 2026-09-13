@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -11,12 +12,21 @@ public static class MenubarCommandsRegistry
     public static void RegisterCommand(MenubarCommand command) => Instance.RegisterCommand(command);
     public static void CreateCommand(Type type) => Instance.CreateCommand(type);
     
-    public static void Draw(EditorUIContext context) => Instance.Draw(context);
+    public static void Draw() => Instance.Draw();
 }
 
 internal class MenubarCommandsEngine : Registry
 {
-    internal readonly List<MenubarCommand> MenubarCommands = [];
+    private readonly List<MenuNode> _menuTreeRoot = [];
+
+    private class MenuNode
+    {
+        public string Name { get; set; } = string.Empty;
+        public int Order { get; set; } = 0;
+        public MenubarCommand? Command { get; set; }
+        public List<MenuNode> Children { get; } = [];
+        public bool IsLeaf => Command != null;
+    }
     
     public override void Initialize()
     {
@@ -25,57 +35,140 @@ internal class MenubarCommandsEngine : Registry
 
     public void DiscoverCommands()
     {
-        MenubarCommands.Clear();
+        _menuTreeRoot.Clear();
+
+        var flatCommands = new List<(MenubarCommand Command, int Order)>();
+        
         var types = ScriptDomain.GetTypesImplementing(typeof(MenubarCommand));
         foreach (var type in types)
         {
-            var command = CreateCommand(type);
-            if(command != null) RegisterCommand(command);
+            if (Activator.CreateInstance(type) is not MenubarCommand command) continue;
+            
+            var orderAttr = type.GetCustomAttribute<OrderAttribute>();
+            var order = orderAttr?.Order ?? 0;
+            flatCommands.Add((command, order));
         }
-    }
 
-    public void RegisterCommand(MenubarCommand command)
-    {
-        MenubarCommands.Add(command);
-    }
-
-    public MenubarCommand? CreateCommand(Type type)
-    {
-        MenubarCommand? command = Activator.CreateInstance(type) as MenubarCommand;
-        return command;
+        BuildTree(flatCommands);
     }
     
-    public void Draw(EditorUIContext context)
+    public MenubarCommand? CreateCommand(Type type)
+    {
+        return Activator.CreateInstance(type) as MenubarCommand;
+    }
+    
+    public void RegisterCommand(MenubarCommand command)
+    {
+        var orderAttr = command.GetType().GetCustomAttribute<OrderAttribute>();
+        int order = orderAttr?.Order ?? 0;
+        
+        BuildTree([(command, order)]); 
+    }
+
+    public void BuildTree(List<(MenubarCommand Command, int Order)> commands)
+    {
+        foreach (var (command, order) in commands)
+        {
+            string[] parts = command.Path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            List<MenuNode> currentLevel = _menuTreeRoot;
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string part = parts[i];
+                bool isLast = i == parts.Length - 1;
+                
+                var existingNode = currentLevel.FirstOrDefault(n => n.Name.Equals(part, StringComparison.Ordinal));
+
+                if (existingNode == null)
+                {
+                    var newNode = new MenuNode
+                    {
+                        Name = part,
+                        Order = order 
+                    };
+
+                    if (isLast)
+                    {
+                        newNode.Command = command;
+                    }
+
+                    currentLevel.Add(newNode);
+                    existingNode = newNode;
+                }
+                else if (isLast)
+                {
+                    existingNode.Command = command;
+                    existingNode.Order = order;
+                }
+
+                currentLevel = existingNode.Children;
+            }
+        }
+        SortTreeRecursive(_menuTreeRoot);
+    }
+    
+    private void SortTreeRecursive(List<MenuNode> nodes)
+    {
+        if (nodes.Count == 0) return;
+        
+        nodes.Sort((a, b) => a.Order.CompareTo(b.Order));
+        
+        foreach (var node in nodes)
+        {
+            SortTreeRecursive(node.Children);
+        }
+    }
+    
+    public void Draw()
     {
         if (!ImGui.BeginMainMenuBar()) return;
-        
-        if (MenubarCommands.Count == 0)
+
+        if (_menuTreeRoot.Count == 0)
         {
             ImGui.TextDisabled("None");
         }
-        
-        foreach (var command in MenubarCommands)
+        else
         {
-            string[] parts = command.Path.Split('/');
-            RenderMenuRecursive(parts, 0, command);
+            RenderMenuLevel(_menuTreeRoot);
         }
-        
+
         ImGui.EndMainMenuBar();
     }
 
-    internal void RenderMenuRecursive(string[] parts, int index, MenubarCommand command)
+    private void RenderMenuLevel(List<MenuNode> nodes)
     {
-        if (index == parts.Length - 1)
+        for (int i = 0; i < nodes.Count; i++)
         {
-            if (ImGui.MenuItem(parts[index]))
-            {
-                EditorUI.UiContext.EnqueueCommand(command);
-            }
-            return;
-        }
+            var currentNode = nodes[i];
 
-        if (!ImGui.BeginMenu(parts[index])) return;
-        RenderMenuRecursive(parts, index + 1, command);
-        ImGui.EndMenu();
+            if (currentNode.IsLeaf)
+            {
+                if (ImGui.MenuItem(currentNode.Name))
+                {
+                    EditorUI.UiContext.EnqueueCommand(currentNode.Command!);
+                }
+            }
+            else
+            {
+                if (ImGui.BeginMenu(currentNode.Name))
+                {
+                    RenderMenuLevel(currentNode.Children);
+                    ImGui.EndMenu();
+                }
+            }
+
+            if (i >= nodes.Count - 1) continue;
+            var nextNode = nodes[i + 1];
+            
+            int currentBucket = (int)Math.Floor((double)currentNode.Order / 1000);
+            int nextBucket = (int)Math.Floor((double)nextNode.Order / 1000);
+
+            if (currentBucket == nextBucket) continue;
+            int separatorCount = Math.Abs(nextBucket - currentBucket);
+            for (int s = 0; s < separatorCount; s++)
+            {
+                ImGui.Separator();
+            }
+        }
     }
 }

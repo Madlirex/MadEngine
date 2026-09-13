@@ -2,6 +2,7 @@
 
 namespace MadEditor;
 
+[Order(600)]
 public class SaveFileMenubar : MenubarCommand
 {
     public override string Path { get; set; } = "File/Save";
@@ -11,6 +12,7 @@ public class SaveFileMenubar : MenubarCommand
     }
 }
 
+[Order(1500)]
 public class ExitFileMenubar : MenubarCommand
 {
     public override string Path { get; set; } = "File/Exit";
