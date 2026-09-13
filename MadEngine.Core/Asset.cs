@@ -29,7 +29,7 @@ public abstract class Asset : MadObject
         }
     }
     [DoNotSave] private string _fullDir = Application.AssetsPath;
-    [DoNotSave] public string RelativeDir => FullDir.Replace(Application.AssetsPath, "");
+    [DoNotSave] public string RelativeDir => FullDir.Replace(Application.Directory, "");
 
     public Asset() : base(false) 
     {

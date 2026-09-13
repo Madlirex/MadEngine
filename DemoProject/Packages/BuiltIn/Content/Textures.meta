@@ -1,7 +1,7 @@
 {
     "Guid": "5b6e32ea-1728-4401-bddb-e8f3260e04bc",
     "Name": "Textures",
-    "RelativePath": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Packages\\BuiltIn\\Content\\Textures",
+    "RelativePath": "\\Packages\\BuiltIn\\Content\\Textures",
     "Importer": "FolderImporter",
     "ImportSettings": {}
 }

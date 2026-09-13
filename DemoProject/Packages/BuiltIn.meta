@@ -1,7 +1,7 @@
 {
     "Guid": "36b614e7-13c3-4a6a-8c85-974d7a0afb49",
     "Name": "BuiltIn",
-    "RelativePath": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Packages\\BuiltIn",
+    "RelativePath": "\\Packages\\BuiltIn",
     "Importer": "FolderImporter",
     "ImportSettings": {}
 }

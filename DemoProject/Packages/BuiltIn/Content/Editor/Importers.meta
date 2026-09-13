@@ -1,7 +1,7 @@
 {
     "Guid": "67759111-c3bd-48fb-900a-1be8bd177114",
     "Name": "Importers",
-    "RelativePath": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Packages\\BuiltIn\\Content\\Editor\\Importers",
+    "RelativePath": "\\Packages\\BuiltIn\\Content\\Editor\\Importers",
     "Importer": "FolderImporter",
     "ImportSettings": {}
 }
