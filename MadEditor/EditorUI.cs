@@ -28,8 +28,8 @@ public class EditorUI
 
         PanelSystem.Draw(_uiContext);
         PopupManager.Draw(_uiContext);
-        
-        DrawMainMenuBar();
+        MenubarCommandsRegistry.Draw(_uiContext);
+
         _uiContext.ExecuteCommands();
         _uiContext.ClearCommands();
     }

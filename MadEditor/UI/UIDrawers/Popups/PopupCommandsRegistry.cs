@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -16,27 +17,54 @@ public static class PopupCommandsRegistry
 
 internal class PopupCommandsEngine : Registry
 {
+    private readonly Dictionary<string, int> _categoryWeights = new(StringComparer.Ordinal);
     internal readonly List<IPopupCommand> PopupCommands = [];
+
+    private MenuTreeRenderer? _menuTreeRenderer;
     
     public override void Initialize()
     {
+        LoadCategoryWeights();
+        _menuTreeRenderer = new MenuTreeRenderer(_categoryWeights);
         DiscoverCommands();
     }
 
+    public void LoadCategoryWeights()
+    {
+        _categoryWeights.Clear();
+
+        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+
+        foreach (var attribute in attributes)
+        {
+            _categoryWeights[attribute.Name] = attribute.Order;
+        }
+    }
+    
     public void DiscoverCommands()
     {
         PopupCommands.Clear();
         var types = ScriptDomain.GetTypesImplementing(typeof(IPopupCommand));
         foreach (var type in types)
         {
-            var command = CreateCommand(type);
-            if(command != null) RegisterCommand(command);
+            if (Activator.CreateInstance(type) is not IPopupCommand command) continue;
+            PopupCommands.Add(command);
         }
     }
 
     public void RegisterCommand(IPopupCommand command)
     {
         PopupCommands.Add(command);
+        
+        RebuildTree();
+    }
+    
+    private void RebuildTree()
+    {
+        var menuData = PopupCommands.Select(cmd => {
+            var orderAttr = cmd.GetType().GetCustomAttribute<OrderAttribute>();
+            return new CommandMenuData(cmd, cmd.Path, orderAttr?.Order ?? 0, cmd.Shortcut);
+        });
     }
 
     public IPopupCommand? CreateCommand(Type type)
@@ -47,43 +75,29 @@ internal class PopupCommandsEngine : Registry
     
     public void RenderContextMenu(object? target)
     {
-        if (target == null) return;
+        if (target == null || _menuTreeRenderer == null) return;
         Type targetType = target.GetType();
-
-        IPopupCommand[] matchingCommands = PopupCommands
-            .Where(cmd => 
-                !cmd.ExcludingTypes.Contains(targetType) && 
-                (cmd.IsExactType ? cmd.TargetType == targetType : cmd.TargetType.IsAssignableFrom(targetType))
-            )
-            .ToArray();
-
         
-        if (matchingCommands.Length == 0)
-        {
-            ImGui.TextDisabled("None");
-            return;
-        }
+        var matchingCommands = PopupCommands.Where(cmd => 
+            !cmd.ExcludingTypes.Contains(targetType) && 
+            (cmd.IsExactType ? cmd.TargetType == targetType : cmd.TargetType.IsAssignableFrom(targetType))
+        );
         
-        foreach (var command in matchingCommands)
+        var menuDataList = matchingCommands.Select(cmd =>
         {
-            string[] parts = command.Path.Split('/');
-            RenderMenuRecursive(parts, 0, command, target);
-        }
-    }
+            var orderAttr = cmd.GetType().GetCustomAttribute<OrderAttribute>();
+            int order = orderAttr?.Order ?? 0;
+            
+            ImGuiKey[] shortcuts = cmd.Shortcut ?? []; 
 
-    internal void RenderMenuRecursive(string[] parts, int index, IPopupCommand command, object target)
-    {
-        if (index == parts.Length - 1)
+            return new CommandMenuData(cmd, cmd.Path, order, shortcuts);
+        }).ToList();
+        
+        _menuTreeRenderer.RegenerateTree(menuDataList);
+        _menuTreeRenderer.Draw(commandInstance =>
         {
-            if (ImGui.MenuItem(parts[index]))
-            {
-                EditorUI.UiContext.EnqueueCommand(command);
-            }
-            return;
-        }
-
-        if (!ImGui.BeginMenu(parts[index])) return;
-        RenderMenuRecursive(parts, index + 1, command, target);
-        ImGui.EndMenu();
+            var popupCmd = (IPopupCommand)commandInstance;
+            EditorUI.UiContext.EnqueueCommand(popupCmd);
+        });
     }
 }
