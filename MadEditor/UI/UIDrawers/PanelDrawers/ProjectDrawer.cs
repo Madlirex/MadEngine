@@ -51,7 +51,7 @@ public class ProjectPanelDrawer : PanelDrawer
             context.RightClicked = _noneAsset;
             _projectPopup.Open();
         }
-        _projectPopup.Draw(context);
+        //_projectPopup.Draw(context);
         
         ImGui.EndChild();
         
