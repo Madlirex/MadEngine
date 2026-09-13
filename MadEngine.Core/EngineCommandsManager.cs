@@ -7,24 +7,26 @@ public abstract class EngineCommand
 
 public static class EngineCommandsManager
 {
-    private static readonly List<EngineCommand> _commands = [];
+    private static readonly Queue<EngineCommand> Commands = [];
 
     public static void Enqueue(EngineCommand command)
     {
-        _commands.Add(command);
+        Commands.Enqueue(command);
     }
 
-    public static void Dequeue(EngineCommand command)
+    public static void Dequeue()
     {
-        _commands.Remove(command);
+        Commands.Dequeue();
     }
 
     public static void ExecuteAll()
     {
-        foreach (var command in _commands)
+        while (Commands.Count > 0)
         {
+            var command = Commands.Dequeue();
+
             command.Execute();
         }
-        _commands.Clear();
+        Commands.Clear();
     }
 }

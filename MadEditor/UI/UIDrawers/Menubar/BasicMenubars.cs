@@ -64,6 +64,18 @@ public class CreateGameObjectMenubar : MenubarCommand
     }
 }
 
+[Order(1200)]
+public class RecompileScriptsMenubar : MenubarCommand
+{
+    public override string Path { get; set; } = "GameObject/Recompile Scripts";
+    public override ImGuiKey[] Shortcut => [ImGuiKey.C];
+
+    public override void Execute(EditorUIContext context)
+    {
+        context.EnqueueCommand(new RecompilationCommand());
+    }
+}
+
 public abstract class OpenPanelCommand<T> : MenubarCommand where T : PanelDrawer, new()
 {
     public override string Path { get; set; } = $"Windows/{typeof(T).GetCustomName()}";
