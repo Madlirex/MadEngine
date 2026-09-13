@@ -17,7 +17,7 @@ public abstract class Asset : MadObject
             if(_initialized) AssetRegistry.Register(this);
         }
     }
-    [DoNotSave] protected virtual string ExtensionInternal { get; set; }= ".asset";
+    [DoNotSave] protected virtual string ExtensionInternal { get; set; } = ".asset";
     [DoNotSave] public string FullDir
     {
         get => _fullDir;

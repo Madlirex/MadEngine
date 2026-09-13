@@ -68,13 +68,15 @@ internal class ImporterEngine : Registry, IDomainResetable
     
     private void RegisterImporter(Type type)
     {
-        if (Activator.CreateInstance(type) is IAssetImporter importer)
-        {
-            _importers.TryAdd(importer.Type, importer);
-            _importerNames.TryAdd(importer.Name, importer);
-            foreach(var extension in importer.Extensions)
-                _importerExtensions.TryAdd(extension, importer);
-        }
+        if (type.ContainsGenericParameters) return;
+
+        if (Activator.CreateInstance(type) is not IAssetImporter importer) return;
+        
+        _importers.TryAdd(importer.Type, importer);
+        _importerNames.TryAdd(importer.Name, importer);
+        
+        foreach(var extension in importer.Extensions)
+            _importerExtensions.TryAdd(extension, importer);
     }
 
     public void ResetCache()
