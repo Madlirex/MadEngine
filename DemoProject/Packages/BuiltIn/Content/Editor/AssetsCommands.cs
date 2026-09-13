@@ -51,6 +51,16 @@ public class CreateSceneCommand : PopupCommand<Asset>
     }
 }
 
+[Order(-600)]
+public class CreateFolderCommand : PopupCommand<Asset>
+{
+    public override string Path => "Create/Folder";
+    public override void Execute(Asset target)
+    {
+        AssetManager.CreateAsset<FolderAsset>(target.FullDir);
+    }
+}
+
 internal class RenamePopup : Popup
 {
     private bool _first = true;
@@ -79,11 +89,33 @@ internal class RenamePopup : Popup
         
         string oldPath = asset.AbsolutePath;
         asset.Name = _newName;
+        string newPath = asset.AbsolutePath;
         
-        File.Move(oldPath, asset.AbsolutePath);
-        File.Move(oldPath + ".meta", asset.AbsolutePath + ".meta");
+        if (oldPath.Equals(newPath, StringComparison.Ordinal))
+        {
+            Close();
+            return;
+        }
+        
+        if (asset is FolderAsset || Directory.Exists(oldPath))
+        {
+            Directory.Move(oldPath, newPath);
+        }
+        else if (File.Exists(oldPath))
+        {
+            File.Move(oldPath, newPath);
+        }
+        
+        string oldMetaPath = oldPath + ".meta";
+        string newMetaPath = newPath + ".meta";
+    
+        if (File.Exists(oldMetaPath))
+        {
+            File.Move(oldMetaPath, newMetaPath);
+        }
+        
         AssetManager.SaveAsset(asset);
-
+        
         _first = true;
         Close();
     }
@@ -110,8 +142,37 @@ public class DeleteAssetCommand : PopupCommand<Asset>
     public override Type[] ExcludingTypes => [typeof(NoneAsset)];
     public override void Execute(Asset target)
     {
-        File.Delete(target.AbsolutePath);
-        File.Delete(target.AbsolutePath + ".meta");
+        string targetPath = target.AbsolutePath;
+        if (!System.IO.Path.Exists(targetPath)) return;
+        
+        if (target is FolderAsset || Directory.Exists(targetPath))
+        {
+            string folderPrefix = targetPath.EndsWith(System.IO.Path.DirectorySeparatorChar) ? targetPath : targetPath + System.IO.Path.DirectorySeparatorChar;
+            
+            var subAssets = AssetRegistry.Assets
+                .Where(asset => asset.AbsolutePath.StartsWith(folderPrefix, StringComparison.Ordinal))
+                .ToArray();
+
+            foreach (var subAsset in subAssets)
+            {
+                if (File.Exists(subAsset.AbsolutePath + ".meta"))
+                {
+                    File.Delete(subAsset.AbsolutePath + ".meta");
+                }
+                
+                subAsset.Destroy(); 
+            }
+            
+            Directory.Delete(targetPath, recursive: true);
+        }
+        else
+        {
+            File.Delete(targetPath);
+        }
+        
+        if(File.Exists(targetPath + ".meta"))
+            File.Delete(targetPath + ".meta");
+        
         target.Destroy();
     }
 }

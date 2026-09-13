@@ -49,6 +49,7 @@ public class ProjectPanelDrawer : PanelDrawer
         if (ImGuiEx.IsClickedOutside(ImGuiMouseButton.Right))
         {
             context.RightClicked = _noneAsset;
+            _noneAsset.FullDir = _selectedDirectory;
             _projectPopup.Open();
         }
         
