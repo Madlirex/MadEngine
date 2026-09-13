@@ -5,6 +5,7 @@ using MadEngine.Core.SceneManagement;
 
 namespace MadEditor.Commands;
 
+[CategoryOrder("Create", 200)]
 public class CreateTextureCommand : PopupCommand<Asset>
 {
     public override string Path => "Create/Texture";
@@ -57,7 +58,7 @@ internal class RenamePopup : Popup
     
     protected override void Body(EditorUIContext context)
     {
-        if (_first) SetName(context.Selected!.Name);
+        if (_first) SetName(context.RightClicked!.Name);
         if (ImGui.InputText("Name", ref _newName, 256, ImGuiInputTextFlags.EnterReturnsTrue))
         {
             SubmitRename(context);
@@ -74,17 +75,22 @@ internal class RenamePopup : Popup
     {
         if (string.IsNullOrEmpty(_newName)) return;
 
-        if (context.Selected is not Asset asset) return;
+        if (context.RightClicked is not Asset asset) return;
+        
         string oldPath = asset.AbsolutePath;
         asset.Name = _newName;
+        
         File.Move(oldPath, asset.AbsolutePath);
         File.Move(oldPath + ".meta", asset.AbsolutePath + ".meta");
         AssetManager.SaveAsset(asset);
+
+        _first = true;
         Close();
     }
     
 }
 
+[Order(600)]
 public class RenameAssetCommand : PopupCommand<Asset>
 {
     private readonly RenamePopup _renamePopup = new();
@@ -92,11 +98,12 @@ public class RenameAssetCommand : PopupCommand<Asset>
     public override string Path => "Rename";
     public override void Execute(Asset target)
     {
+        EditorUI.UiContext.RightClicked = target;
         _renamePopup.Open();
     }
 }
 
-[Order(1000)]
+[Order(1500)]
 public class DeleteAssetCommand : PopupCommand<Asset>
 {
     public override string Path => "Delete";
