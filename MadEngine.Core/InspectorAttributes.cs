@@ -14,3 +14,9 @@ public class CustomNameAttribute(string name) : Attribute
 {
     public string Name = name;
 }
+
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Interface)]
+public class OrderAttribute(int order = 0) : Attribute
+{
+    public int Order = order;
+}
