@@ -17,7 +17,7 @@ public class SaveFileMenubar : MenubarCommand
 
     public override void Execute(EditorUIContext context)
     {
-        AssetManager.SaveProject(AssetRegistry.Assets);
+        ProjectManager.SaveProject();
     }
 }
 
