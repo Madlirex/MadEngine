@@ -46,7 +46,7 @@ public class ProjectSettingsDrawer : PanelDrawer
         {
             if (SelectedTab != null)
             {
-                ImGui.TextDisabled($"Project Settings > {SelectedTab.Path}");
+                ImGui.TextDisabled($"{string.Join(" > ", SelectedTab.Path.Split('/'))}");
                 ImGui.Separator();
                 ImGui.Spacing();
                 
