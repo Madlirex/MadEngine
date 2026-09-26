@@ -14,20 +14,18 @@ public class PackageManagerDrawer : PanelDrawer
     
     public override void Draw(EditorUIContext context)
     {
-        if (ImGui.BeginTable($"PackageManagerLayout##{Guid}", 2,
-                ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerV))
-        {
-            ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthStretch, 0.3f);
-            ImGui.TableSetupColumn("Right", ImGuiTableColumnFlags.WidthStretch, 0.7f);
+        if (!ImGui.BeginTable($"PackageManagerLayout##{Guid}", 2,
+                ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerV)) return;
+        ImGui.TableSetupColumn("Left", ImGuiTableColumnFlags.WidthStretch, 0.3f);
+        ImGui.TableSetupColumn("Right", ImGuiTableColumnFlags.WidthStretch, 0.7f);
 
-            if(ImGui.TableNextColumn())
-                DrawLeftPanel();
+        if(ImGui.TableNextColumn())
+            DrawLeftPanel();
             
-            if(ImGui.TableNextColumn())
-                DrawRightPanel();
+        if(ImGui.TableNextColumn())
+            DrawRightPanel();
             
-            ImGui.EndTable();
-        }
+        ImGui.EndTable();
     }
 
     private void DrawLeftPanel()

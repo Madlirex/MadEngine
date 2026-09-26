@@ -33,7 +33,7 @@ internal class MenubarCommandsEngine : Registry
     {
         _categoryWeights.Clear();
 
-        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<MenubarCommand>>());
 
         foreach (var attribute in attributes)
         {

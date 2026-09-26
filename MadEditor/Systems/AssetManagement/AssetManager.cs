@@ -6,22 +6,15 @@ namespace MadEditor;
 public static class AssetManager
 {
     public static List<string> PathsToSkip = [];
-    public static string ProjectPath => _projectPath;
-    private static string _projectPath = "";
 
     public static void RecompileScripts(bool performSnapshot = true)
     {
         Console.WriteLine("Recompiling scripts...");
-        if (!Directory.Exists(ProjectPath)) return;
-        var scriptFiles = Directory.GetFiles(ProjectPath, "*.cs", SearchOption.AllDirectories);
+        if (!Directory.Exists(ProjectManager.ProjectPath)) return;
+        var scriptFiles = Directory.GetFiles(ProjectManager.ProjectPath, "*.cs", SearchOption.AllDirectories);
         
         if(performSnapshot) ScriptDomain.ReloadDomain(scriptFiles);
         else ScriptDomain.Compile(scriptFiles);
-    }
-    
-    public static void SetProjectPath(string path)
-    {
-        _projectPath = path;
     }
     
     public static void LoadProject()
