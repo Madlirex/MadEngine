@@ -19,8 +19,9 @@ public class OrderAttribute(int order) : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class, AllowMultiple = true)]
-public class CategoryOrderAttribute(string name, int order) : Attribute
+public class CategoryOrderAttribute<T>(string name, int order) : Attribute
 {
     public string Name { get; } = name;
     public int Order { get; } = order;
+    public Type Target { get; } = typeof(T);
 }

@@ -5,7 +5,7 @@ using MadEngine.Core.SceneManagement;
 
 namespace MadEditor.Commands;
 
-[CategoryOrder("Create", 200)]
+[CategoryOrder<IPopupCommand>("Create", 200)]
 public class CreateTextureCommand : PopupCommand<Asset>
 {
     public override string Path => "Create/Texture";

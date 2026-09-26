@@ -33,7 +33,7 @@ internal class PopupCommandsEngine : Registry
     {
         _categoryWeights.Clear();
 
-        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<IPopupCommand>>());
 
         foreach (var attribute in attributes)
         {

@@ -1,11 +1,12 @@
 ﻿using ImGuiNET;
+using MadEditor;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
-[assembly: CategoryOrder("File", 20)]
-[assembly: CategoryOrder("Edit", 50)]
-[assembly: CategoryOrder("GameObject", 80)]
-[assembly: CategoryOrder("Windows", 110)]
+[assembly: CategoryOrder<MenubarCommand>("File", 20)]
+[assembly: CategoryOrder<MenubarCommand>("Edit", 50)]
+[assembly: CategoryOrder<MenubarCommand>("GameObject", 80)]
+[assembly: CategoryOrder<MenubarCommand>("Windows", 110)]
 
 namespace MadEditor.Menubar;
 

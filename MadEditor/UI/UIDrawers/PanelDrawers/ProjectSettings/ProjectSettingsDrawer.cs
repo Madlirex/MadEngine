@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System.Reflection;
+using ImGuiNET;
 using MadEngine.Core;
 
 namespace MadEditor;
@@ -6,7 +7,14 @@ namespace MadEditor;
 [CustomName("Project Settings")]
 public class ProjectSettingsDrawer : PanelDrawer
 {
-    private ProjectSettingsTab? _selectedTab;
+    private ProjectSettingsTab? SelectedTab => _hierarchyTreeRenderer.SelectedInstance;
+    private HierarchyTreeRenderer<ProjectSettingsTab> _hierarchyTreeRenderer;
+
+    public ProjectSettingsDrawer()
+    {
+        _hierarchyTreeRenderer = new HierarchyTreeRenderer<ProjectSettingsTab>(ProjectSettingsTabsRegistry.LoadCategoryWeights());
+        RebuildTree();
+    }
     
     public override void Draw(EditorUIContext context)
     {
@@ -29,32 +37,20 @@ public class ProjectSettingsDrawer : PanelDrawer
         ImGui.TextDisabled("Project Settings");
         ImGui.Separator();
         
-        ImGui.BeginChild("SettingsSidebar", new System.Numerics.Vector2(200, 0), ImGuiChildFlags.None);
-        {
-            foreach (var tab in ProjectSettingsTabsRegistry.Tabs)
-            {
-                bool isSelected = _selectedTab == tab;
-                if (ImGui.Selectable(tab.Path, isSelected))
-                {
-                    _selectedTab = tab;
-                }
-            }
-        }
-        
-        ImGui.EndChild();
+        _hierarchyTreeRenderer.Draw();
     }
 
     public void DrawRightPanel(EditorUIContext context)
     {
         ImGui.BeginChild("SettingsContent", new System.Numerics.Vector2(0, 0), ImGuiChildFlags.None);
         {
-            if (_selectedTab != null)
+            if (SelectedTab != null)
             {
-                ImGui.TextDisabled($"Project Settings > {_selectedTab.Path}");
+                ImGui.TextDisabled($"Project Settings > {SelectedTab.Path}");
                 ImGui.Separator();
                 ImGui.Spacing();
                 
-                _selectedTab.Draw(context);
+                SelectedTab.Draw(context);
             }
             else
             {
@@ -62,5 +58,15 @@ public class ProjectSettingsDrawer : PanelDrawer
             }
         }
         ImGui.EndChild();
+    }
+    
+    private void RebuildTree()
+    {
+        var menuData = ProjectSettingsTabsRegistry.Tabs.Select(tab => {
+            var orderAttr = tab.GetType().GetCustomAttribute<OrderAttribute>();
+            return new TreeNodeData<ProjectSettingsTab>($"{tab.Path}##{tab.Guid}", orderAttr?.Order ?? 0, tab);
+        });
+        
+        _hierarchyTreeRenderer.RegenerateTree(menuData);
     }
 }

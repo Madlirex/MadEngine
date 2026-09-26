@@ -8,6 +8,7 @@ public static class ProjectSettingsTabsRegistry
     private static ProjectSettingsTabsEngine Instance => RegistryBootstrapper.Get<ProjectSettingsTabsEngine>();
     
     public static IReadOnlyList<ProjectSettingsTab> Tabs => Instance.Tabs;
+    public static Dictionary<string, int> LoadCategoryWeights() => Instance.LoadCategoryWeights();
 }
 
 internal class ProjectSettingsTabsEngine : Registry
@@ -31,13 +32,25 @@ internal class ProjectSettingsTabsEngine : Registry
                 Tabs.Add(tab);
             }
         }
-        
-        Tabs.Sort((x, y) => GetOrder(x).CompareTo(GetOrder(y)));
     }
 
     private int GetOrder(ProjectSettingsTab tab)
     {
         OrderAttribute? attr = tab.GetType().GetCustomAttribute<OrderAttribute>();
         return attr?.Order ?? 0;
+    }
+    
+    internal Dictionary<string, int> LoadCategoryWeights()
+    {
+        Dictionary<string, int> categoryWeights = new Dictionary<string, int>();
+
+        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<ProjectSettingsTab>>());
+
+        foreach (var attribute in attributes)
+        {
+            categoryWeights[attribute.Name] = attribute.Order;
+        }
+
+        return categoryWeights;
     }
 }
