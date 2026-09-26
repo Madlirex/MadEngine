@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ImGuiNET;
+﻿using ImGuiNET;
 
 namespace MadEditor;
 
@@ -17,7 +14,19 @@ internal class MenuTreeRenderer
     private class MenuNode
     {
         public string Name { get; set; } = string.Empty;
-        public int Order { get; set; }
+
+        public int Order
+        {
+            get => _order;
+            set
+            {
+                UseMultiSeparators = value < 0;
+                _order = UseMultiSeparators ? -value : value;
+            }
+        }
+
+        private int _order;
+        public bool UseMultiSeparators { get; private set; }
         public ImGuiKey[] ShortcutKeys { get; set; } = [];
         public string ShortcutText { get; set; } = string.Empty;
         public object? CommandInstance { get; set; }
@@ -140,9 +149,17 @@ internal class MenuTreeRenderer
 
             if (currentBucket == nextBucket) continue;
             int separatorCount = Math.Abs(nextBucket - currentBucket);
-            
-            for (int s = 0; s < separatorCount; s++) 
-                ImGui.Separator();
+
+            if (currentNode.UseMultiSeparators)
+            {
+                if(separatorCount != 0)
+                    ImGui.Separator();
+            }
+            else
+            {
+                for (int s = 0; s < separatorCount; s++) 
+                    ImGui.Separator();
+            }
         }
     }
     

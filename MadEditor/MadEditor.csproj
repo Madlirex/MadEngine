@@ -55,6 +55,7 @@
 
     <ItemGroup>
       <Folder Include="Systems\PackageManagement\Examples\" />
+      <Folder Include="Systems\ProjectManagement\" />
     </ItemGroup>
 
 </Project>

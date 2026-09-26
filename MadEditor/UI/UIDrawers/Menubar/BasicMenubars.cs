@@ -54,6 +54,12 @@ public class RedoMenubarCommand : MenubarCommand
     }
 }
 
+[Order(100_000_500)]
+public class ProjectSettingsCommand : OpenPanelCommand<ProjectSettingsDrawer>
+{
+    public override string Path { get; set; } = $"Edit/{typeof(ProjectSettingsDrawer).GetCustomName()}";
+}
+
 [Order(10)]
 public class CreateGameObjectMenubar : MenubarCommand
 {
@@ -113,3 +119,6 @@ public class OpenStatsCommand : OpenPanelCommand<StatsDrawer>;
 
 [Order(2500)]
 public class OpenPackageManagerCommand : OpenPanelCommand<PackageManagerDrawer>;
+
+[Order(2600)]
+public class OpenProjectSettingsCommand : OpenPanelCommand<ProjectSettingsDrawer>;
