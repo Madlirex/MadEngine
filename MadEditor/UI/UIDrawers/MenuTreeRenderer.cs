@@ -149,16 +149,20 @@ internal class MenuTreeRenderer
 
             if (currentBucket == nextBucket) continue;
             int separatorCount = Math.Abs(nextBucket - currentBucket);
-
-            if (currentNode.UseMultiSeparators)
+            
+            if (!nextNode.UseMultiSeparators)
             {
                 if(separatorCount != 0)
+                {
                     ImGui.Separator();
+                }
             }
             else
             {
-                for (int s = 0; s < separatorCount; s++) 
+                for (int s = 0; s < separatorCount; s++)
+                {
                     ImGui.Separator();
+                }
             }
         }
     }
