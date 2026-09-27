@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using ImGuiNET;
-using MadEngine.Core;
 
 namespace MadEditor;
 
