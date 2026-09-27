@@ -2,17 +2,20 @@
 
 namespace MadEditor;
 
-internal record CommandMenuData(
-    object CommandInstance, 
+internal record TreeNodeData<T>(
     string Path, 
-    int Order, 
-    ImGuiKey[] ShortcutKeys
+    int Order,
+    T Instance
 );
 
-internal class MenuTreeRenderer
+internal class HierarchyTreeRenderer<T> where T : class
 {
-    private class MenuNode
+    public T? SelectedInstance;
+    
+    private class TreeNode
     {
+        public required T Instance;
+        
         public string Name { get; set; } = string.Empty;
 
         public int Order
@@ -27,29 +30,26 @@ internal class MenuTreeRenderer
 
         private int _order;
         public bool UseMultiSeparators { get; private set; }
-        public ImGuiKey[] ShortcutKeys { get; set; } = [];
-        public string ShortcutText { get; set; } = string.Empty;
-        public object? CommandInstance { get; set; }
-        public List<MenuNode> Children { get; } = [];
-        public bool IsLeaf => CommandInstance != null;
+        public bool IsLeaf;
+        public List<TreeNode> Children { get; } = [];
     }
 
-    private readonly List<MenuNode> _treeRoot = [];
+    private readonly List<TreeNode> _treeRoot = [];
     private readonly Dictionary<string, int> _categoryWeights;
 
-    public MenuTreeRenderer(Dictionary<string, int> categoryWeights)
+    public HierarchyTreeRenderer(Dictionary<string, int> categoryWeights)
     {
         _categoryWeights = categoryWeights;
     }
 
-    public void RegenerateTree(IEnumerable<CommandMenuData> flatCommands)
+    public void RegenerateTree(IEnumerable<TreeNodeData<T>> flatTabs)
     {
         _treeRoot.Clear();
 
-        foreach (var data in flatCommands)
+        foreach (var data in flatTabs)
         {
             string[] parts = data.Path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-            List<MenuNode> currentLevel = _treeRoot;
+            List<TreeNode> currentLevel = _treeRoot;
             string currentFullPath = string.Empty;
 
             for (int i = 0; i < parts.Length; i++)
@@ -65,28 +65,21 @@ internal class MenuTreeRenderer
                     int defaultFallback = isLast ? data.Order : 0;
                     int nodeOrder = _categoryWeights.GetValueOrDefault(currentFullPath, defaultFallback);
 
-                    var newNode = new MenuNode
+                    var newNode = new TreeNode()
                     {
                         Name = part,
-                        Order = nodeOrder
+                        Order = nodeOrder,
+                        IsLeaf = isLast,
+                        Instance = data.Instance
                     };
-
-                    if (isLast)
-                    {
-                        newNode.CommandInstance = data.CommandInstance;
-                        newNode.ShortcutKeys = data.ShortcutKeys;
-                        newNode.ShortcutText = ShortcutUtility.ToDisplayString(data.ShortcutKeys);
-                    }
 
                     currentLevel.Add(newNode);
                     existingNode = newNode;
                 }
                 else if (isLast)
                 {
-                    existingNode.CommandInstance = data.CommandInstance;
                     existingNode.Order = data.Order;
-                    existingNode.ShortcutKeys = data.ShortcutKeys;
-                    existingNode.ShortcutText = ShortcutUtility.ToDisplayString(data.ShortcutKeys);
+                    existingNode.Instance = data.Instance;
                 }
 
                 currentLevel = existingNode.Children;
@@ -96,7 +89,7 @@ internal class MenuTreeRenderer
         SortTreeRecursive(_treeRoot);
     }
 
-    private void SortTreeRecursive(List<MenuNode> nodes)
+    private void SortTreeRecursive(List<TreeNode> nodes)
     {
         if (nodes.Count == 0) return;
         
@@ -108,7 +101,7 @@ internal class MenuTreeRenderer
         }
     }
 
-    public void Draw(Action<object> onCommandTriggered)
+    public void Draw()
     {
         if (_treeRoot.Count == 0)
         {
@@ -116,29 +109,31 @@ internal class MenuTreeRenderer
             return;
         }
 
-        RenderMenuLevel(_treeRoot, onCommandTriggered);
-        ProcessShortcuts(onCommandTriggered);
+        RenderMenuLevel(_treeRoot);
     }
 
-    private void RenderMenuLevel(List<MenuNode> nodes, Action<object> onCommandTriggered)
+    private void RenderMenuLevel(List<TreeNode> nodes)
     {
         for (int i = 0; i < nodes.Count; i++)
         {
             var currentNode = nodes[i];
-
+            
             if (currentNode.IsLeaf)
             {
-                if (ImGui.MenuItem(currentNode.Name, currentNode.ShortcutText))
+                bool isSelected = SelectedInstance == currentNode.Instance;
+                if (ImGui.Selectable(currentNode.Name, isSelected))
                 {
-                    onCommandTriggered(currentNode.CommandInstance!);
+                    SelectedInstance = currentNode.Instance;
                 }
             }
             else
             {
-                if (ImGui.BeginMenu(currentNode.Name))
+                ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick;
+                
+                if (ImGui.TreeNodeEx(currentNode.Name, flags))
                 {
-                    RenderMenuLevel(currentNode.Children, onCommandTriggered);
-                    ImGui.EndMenu();
+                    RenderMenuLevel(currentNode.Children);
+                    ImGui.TreePop();
                 }
             }
 
@@ -164,30 +159,6 @@ internal class MenuTreeRenderer
                     ImGui.Separator();
                 }
             }
-        }
-    }
-    
-    private IEnumerable<MenuNode> FlatLeafNodes(List<MenuNode> nodes)
-    {
-        foreach (var node in nodes)
-        {
-            if (node.IsLeaf) yield return node;
-            foreach (var childLeaf in FlatLeafNodes(node.Children))
-            {
-                yield return childLeaf;
-            }
-        }
-    }
-    
-    public void ProcessShortcuts(Action<object> onCommandTriggered)
-    {
-        if (ImGui.GetIO().WantTextInput) return;
-
-        foreach (var node in FlatLeafNodes(_treeRoot))
-        {
-            if (!ShortcutInputEngine.IsShortcutPressed(node.ShortcutKeys)) continue;
-            onCommandTriggered(node.CommandInstance!);
-            break;
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using ImGuiNET;
+using MadEditor;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
-[assembly: CategoryOrder("File", 20)]
-[assembly: CategoryOrder("Edit", 50)]
-[assembly: CategoryOrder("GameObject", 80)]
-[assembly: CategoryOrder("Windows", 110)]
+[assembly: CategoryOrder<MenubarCommand>("File", 20)]
+[assembly: CategoryOrder<MenubarCommand>("Edit", 50)]
+[assembly: CategoryOrder<MenubarCommand>("GameObject", 80)]
+[assembly: CategoryOrder<MenubarCommand>("Windows", 110)]
 
 namespace MadEditor.Menubar;
 
@@ -17,7 +18,7 @@ public class SaveFileMenubar : MenubarCommand
 
     public override void Execute(EditorUIContext context)
     {
-        AssetManager.SaveProject(AssetRegistry.Assets);
+        ProjectManager.SaveProject();
     }
 }
 
@@ -52,6 +53,12 @@ public class RedoMenubarCommand : MenubarCommand
     {
         Debug.Log("Redoing (not implemented yet, sorry)...");
     }
+}
+
+[Order(100_000_500)]
+public class ProjectSettingsCommand : OpenPanelCommand<ProjectSettingsDrawer>
+{
+    public override string Path { get; set; } = $"Edit/{typeof(ProjectSettingsDrawer).GetCustomName()}";
 }
 
 [Order(10)]
@@ -113,3 +120,6 @@ public class OpenStatsCommand : OpenPanelCommand<StatsDrawer>;
 
 [Order(2500)]
 public class OpenPackageManagerCommand : OpenPanelCommand<PackageManagerDrawer>;
+
+[Order(2600)]
+public class OpenProjectSettingsCommand : OpenPanelCommand<ProjectSettingsDrawer>;

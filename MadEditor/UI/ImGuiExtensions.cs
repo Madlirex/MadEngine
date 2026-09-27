@@ -64,6 +64,30 @@ public static class ImGuiEx
 
         ImGui.PopStyleColor();
     }
+    
+    public static bool InputTextDynamic(string label, ref string value, int minimumBuffer = 256, ImGuiInputTextFlags flags = ImGuiInputTextFlags.None)
+    {
+        int requiredSize = Math.Max(value.Length + 128, minimumBuffer);
+    
+        string buffer = value;
+
+        if (!ImGui.InputText(label, ref buffer, (uint)requiredSize, flags)) return false;
+        value = buffer;
+        return true;
+    }
+    
+    public static bool InputTextMultilineDynamic(string label, ref string value, Vector2 size = default, int minimumBuffer = 256, ImGuiInputTextFlags flags = ImGuiInputTextFlags.None)
+    {
+        if (size == default) size = new Vector2(-1, -1);
+        
+        int requiredSize = Math.Max(value.Length + 128, minimumBuffer);
+        
+        string buffer = value;
+
+        if (!ImGui.InputTextMultiline(label, ref buffer, (uint)requiredSize, size, flags)) return false;
+        value = buffer;
+        return true;
+    }
 
     public static bool IsClicked(ImGuiMouseButton button)
     {

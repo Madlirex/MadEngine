@@ -1,4 +1,6 @@
-﻿namespace MadEditor;
+﻿using MadEngine.Core;
+
+namespace MadEditor;
 
 public static class ImporterRegistry
 {
@@ -55,7 +57,7 @@ internal class ImporterEngine : Registry, IDomainResetable
     private void DiscoverImporters()
     {
         _importers.Clear();
-        var importerTypes = ScriptDomain.Assemblies
+        var importerTypes = AssemblyProvider.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(IAssetImporter)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false });

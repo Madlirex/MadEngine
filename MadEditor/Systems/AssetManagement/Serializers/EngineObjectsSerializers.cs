@@ -70,7 +70,7 @@ public class MadObjectSerializer : ClassSerializer<MadObject>
         if (string.IsNullOrEmpty(typeString))
             throw new InvalidOperationException("JSON missing required '$type' metadata tag.");
         
-        Type? type = ScriptDomain.GetType(typeString);
+        Type? type = AssemblyProvider.GetType(typeString);
         if (type == null)
             throw new TypeLoadException($"Unable to find type '{typeString}'.");
 

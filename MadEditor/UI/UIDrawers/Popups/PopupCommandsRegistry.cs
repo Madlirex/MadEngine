@@ -33,7 +33,7 @@ internal class PopupCommandsEngine : Registry
     {
         _categoryWeights.Clear();
 
-        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+        var attributes = AssemblyProvider.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<IPopupCommand>>());
 
         foreach (var attribute in attributes)
         {
@@ -44,7 +44,7 @@ internal class PopupCommandsEngine : Registry
     public void DiscoverCommands()
     {
         PopupCommands.Clear();
-        var types = ScriptDomain.GetTypesImplementing(typeof(IPopupCommand));
+        var types = AssemblyProvider.GetTypesImplementing(typeof(IPopupCommand));
         foreach (var type in types)
         {
             if (Activator.CreateInstance(type) is not IPopupCommand command) continue;

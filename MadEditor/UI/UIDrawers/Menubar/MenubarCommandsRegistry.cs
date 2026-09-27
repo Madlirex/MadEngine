@@ -33,7 +33,7 @@ internal class MenubarCommandsEngine : Registry
     {
         _categoryWeights.Clear();
 
-        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute>());
+        var attributes = AssemblyProvider.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<MenubarCommand>>());
 
         foreach (var attribute in attributes)
         {
@@ -45,7 +45,7 @@ internal class MenubarCommandsEngine : Registry
     {
         MenubarCommands.Clear();
         
-        var types = ScriptDomain.GetTypesImplementing(typeof(MenubarCommand));
+        var types = AssemblyProvider.GetTypesImplementing(typeof(MenubarCommand));
         foreach (var type in types)
         {
             if (Activator.CreateInstance(type) is not MenubarCommand command) continue;

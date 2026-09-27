@@ -27,7 +27,7 @@ class Program
 
                 if (result.IsCancelled) return;
                 if (!result.IsOk) continue;
-                AssetManager.SetProjectPath(result.Path);
+                ProjectManager.SetProjectPath(result.Path);
                 break;
             }
 

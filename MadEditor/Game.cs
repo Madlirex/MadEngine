@@ -52,7 +52,7 @@ public class EditorWindow : GameWindow
     {
         _start = DateTime.Now;
         
-        Application.Directory = AssetManager.ProjectPath;
+        Application.Directory = ProjectManager.ProjectPath;
         
         Engine = new Engine();
         
@@ -75,8 +75,7 @@ public class EditorWindow : GameWindow
         
         PackageManager.LoadPackageMetas();
         
-        PackageManager.LoadPackages();
-        AssetManager.LoadProject();
+        ProjectManager.LoadProject();
         
         _editorUI.Initialize();
 
@@ -120,6 +119,7 @@ public class EditorWindow : GameWindow
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
+        UpdateFrequency = ProjectSettingsRegistry.GetSettings<PerformanceSettings>()?.MaxFps ?? 60;
         
         foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
