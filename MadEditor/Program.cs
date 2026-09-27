@@ -60,6 +60,7 @@ class Program
         }
         finally
         {
+            EditorManifest.Save();
             Console.WriteLine($"--- Engine Session Ended: {DateTime.Now} ---");
         }
     }
