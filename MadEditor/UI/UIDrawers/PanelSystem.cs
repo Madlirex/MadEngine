@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -47,7 +48,7 @@ internal class PanelSystemEngine : Registry
     {
         _panelDrawers.Clear();
         
-        Type[] panels = ScriptDomain.GetTypesImplementing(typeof(PanelDrawer));
+        Type[] panels = AssemblyProvider.GetTypesImplementing(typeof(PanelDrawer));
         
         foreach (Type panelDrawer in panels)
         {

@@ -1,6 +1,6 @@
-﻿namespace MadEditor;
+﻿namespace MadEngine.Core;
 
-public class ProjectInfo
+public class ProjectInfo : ProjectSettings
 {
     public string Name { get; set; } = "New Project";
     public string Description { get; set; } = "Cool new game!";
@@ -8,4 +8,6 @@ public class ProjectInfo
     
     public string Author { get; set; } = "DefaultAuthor";
     public string Company { get; set; } = "DefaultCompany";
+    public override string GetFileName() => "project.madx";
+    public override string GetFolderPath() => Application.Directory;
 }

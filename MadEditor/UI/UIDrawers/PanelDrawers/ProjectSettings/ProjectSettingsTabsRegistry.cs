@@ -22,7 +22,7 @@ internal class ProjectSettingsTabsEngine : Registry
     
     private void Discover()
     {
-        var types = ScriptDomain.GetTypesImplementing(typeof(ProjectSettingsTab));
+        var types = AssemblyProvider.GetTypesImplementing(typeof(ProjectSettingsTab));
 
         foreach (var type in types)
         {
@@ -44,7 +44,7 @@ internal class ProjectSettingsTabsEngine : Registry
     {
         Dictionary<string, int> categoryWeights = new Dictionary<string, int>();
 
-        var attributes = ScriptDomain.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<ProjectSettingsTab>>());
+        var attributes = AssemblyProvider.Assemblies.SelectMany(x => x.GetCustomAttributes<CategoryOrderAttribute<ProjectSettingsTab>>());
 
         foreach (var attribute in attributes)
         {

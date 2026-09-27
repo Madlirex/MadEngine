@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Nodes;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -26,7 +27,7 @@ internal class SerializerEngine : Registry, IDomainResetable
     {
         _serializers.Clear();
         
-        var serializerTypes = ScriptDomain.Assemblies
+        var serializerTypes = AssemblyProvider.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(ISerializer)
                 .IsAssignableFrom(type) && type is { IsAbstract: false, IsInterface: false, IsGenericTypeDefinition: false });

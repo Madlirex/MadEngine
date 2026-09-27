@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace MadEditor;
+namespace MadEngine.Core;
 
 public static class SerializerSettings
 {

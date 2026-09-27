@@ -73,7 +73,7 @@ public class SceneImporter : Importer<Scene>
             Guid guid = compJson["$guid"]!.GetGuid();
 
             if (string.IsNullOrEmpty(typeStr)) continue;
-            Type compType = ScriptDomain.GetType(typeStr)!;
+            Type compType = AssemblyProvider.GetType(typeStr)!;
             
             if (compType is { IsAbstract: false })
             {
@@ -110,7 +110,7 @@ public class SceneImporter : Importer<Scene>
             
             if (string.IsNullOrEmpty(typeStr)) continue;
             
-            Type compType = ScriptDomain.GetType(typeStr)!;
+            Type compType = AssemblyProvider.GetType(typeStr)!;
             
             if (compType is { IsAbstract: false })
             {

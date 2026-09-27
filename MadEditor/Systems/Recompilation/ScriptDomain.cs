@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using MadEditor.PackageManagement;
+﻿using System.Reflection;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
@@ -13,24 +6,9 @@ namespace MadEditor;
 
 public static class ScriptDomain
 {
-    public static IReadOnlyList<Assembly> Assemblies => _assemblies;
-    private static List<Assembly> _assemblies = [];
-
     public static Assembly? RuntimeAssembly { get; private set; }
     public static Assembly? EditorAssembly { get; private set; }
     public static ScriptLoadContext? CurrentContext { get; private set; }
-    
-    private static WeakReference? _zombieContextRef;
-
-    public static Type? GetType(string typeName)
-    {
-        foreach (var assembly in Assemblies)
-        {
-            var type = assembly.GetType(typeName.Split(',')[0].Trim());
-            if (type != null) return type;
-        }
-        return null;
-    }
     
     public static void ReloadDomain(string[] sourceFiles)
     {
@@ -45,8 +23,7 @@ public static class ScriptDomain
 
         AssetManager.PathsToSkip.Add(activeScenePath);
     
-        PackageManager.LoadPackages();
-        AssetManager.LoadProject();
+        ProjectManager.LoadProject();
 
         AssetManager.PathsToSkip.Clear();
         
@@ -78,14 +55,14 @@ public static class ScriptDomain
 
         var context = new ScriptLoadContext();
         CurrentContext = context;
-        _assemblies.Clear();
+        AssemblyProvider.ClearAssemblies();
         
         AddCoreEngineAssemblies();
         
         using (var ms = new MemoryStream(runtimeDll))
         {
             RuntimeAssembly = context.LoadFromStream(ms);
-            _assemblies.Add(RuntimeAssembly);
+            AssemblyProvider.AddAssembly(RuntimeAssembly);
         }
         
         if (editorDll is not { Length: > 0 }) return;
@@ -93,7 +70,7 @@ public static class ScriptDomain
         using (var ms = new MemoryStream(editorDll))
         {
             EditorAssembly = context.LoadFromStream(ms);
-            _assemblies.Add(EditorAssembly);
+            AssemblyProvider.AddAssembly(EditorAssembly);
         }
     }
     
@@ -102,20 +79,20 @@ public static class ScriptDomain
         Assembly coreAssembly = typeof(MadObject).Assembly;
         Assembly editorAssembly = typeof(ScriptDomain).Assembly;
 
-        if (!_assemblies.Contains(coreAssembly))
+        if (!AssemblyProvider.Assemblies.Contains(coreAssembly))
         {
-            _assemblies.Add(coreAssembly);
+            AssemblyProvider.AddAssembly(coreAssembly);
         }
 
-        if (!_assemblies.Contains(editorAssembly))
+        if (!AssemblyProvider.Assemblies.Contains(editorAssembly))
         {
-            _assemblies.Add(editorAssembly);
+            AssemblyProvider.AddAssembly(editorAssembly);
         }
     }
     
     private static void Unload()
     {
-        _assemblies.Clear();
+        AssemblyProvider.ClearAssemblies();
 
         var context = CurrentContext;
 
@@ -123,36 +100,13 @@ public static class ScriptDomain
         EditorAssembly = null;
         CurrentContext = null;
 
-        if (context != null)
-        {
-            FieldDrawingManager.OnSelectionChanged(null);
+        if (context == null) return;
+        FieldDrawingManager.OnSelectionChanged(null);
 
-            context.Unload();
+        context.Unload();
             
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-        }
-    }
-    
-    public static Type[] GetAllTypes()
-    {
-        return Assemblies.SelectMany(a => a.GetTypes()).ToArray();
-    }
-
-    public static Type[] GetTypesImplementing(Type baseType)
-    {
-        return Assemblies
-            .SelectMany(a => a.GetTypes())
-            .Where(t => t is { IsClass: true, IsAbstract: false } && baseType.IsAssignableFrom(t))
-            .ToArray();
-    }
-
-    public static Type[] GetTypesWithName(string name)
-    {
-        return Assemblies
-            .SelectMany(a => a.GetTypes())
-            .Where(t => t.Name == name)
-            .ToArray();
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
     }
 }

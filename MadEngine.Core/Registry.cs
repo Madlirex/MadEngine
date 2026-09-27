@@ -1,4 +1,4 @@
-﻿namespace MadEditor;
+﻿namespace MadEngine.Core;
 
 public abstract class Registry
 {
@@ -6,7 +6,7 @@ public abstract class Registry
 
     protected IEnumerable<Type> FindTypesImplementing<TInterface>()
     {
-        return ScriptDomain.Assemblies
+        return AssemblyProvider.Assemblies
             .SelectMany(s => s.GetTypes())
             .Where(p => typeof(TInterface).IsAssignableFrom(p) && p is { IsInterface: false, IsAbstract: false });
     }
@@ -27,7 +27,7 @@ public static class RegistryBootstrapper
     public static void InitializeAll()
     {
         Console.WriteLine("Initializing registries...");
-        var registryTypes = ScriptDomain.GetTypesImplementing(typeof(Registry));
+        var registryTypes = AssemblyProvider.GetTypesImplementing(typeof(Registry));
 
         foreach (var registryType in registryTypes)
         {
@@ -51,7 +51,7 @@ public static class RegistryBootstrapper
         InitializeAll();
     }
 
-    internal static T Get<T>() where T : Registry
+    public static T Get<T>() where T : Registry
     {
         if (Instances.TryGetValue(typeof(T), out var value)) return (T)value;
         return Initialize<T>();

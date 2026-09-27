@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using MadEngine.Core;
 
 namespace MadEditor;
 
@@ -10,19 +11,19 @@ public class GeneralProjectSettings : ProjectSettingsTab
         ProjectInfo project = ProjectManager.ProjectInfo;
 
         string nameBuffer = project.Name;
-        if (ImGui.InputText("Project Name", ref nameBuffer, 128))
+        if (ImGuiEx.InputTextDynamic("Project Name", ref nameBuffer))
         {
             project.Name = nameBuffer;
         }
         
+        ImGui.Text("Description");
         string descBuffer = project.Description;
-        if (ImGui.InputTextMultiline("Description", ref descBuffer, 512, new System.Numerics.Vector2(-1, 60)))
+        if (ImGuiEx.InputTextMultilineDynamic("Description", ref descBuffer, new System.Numerics.Vector2(-1, 60)))
         {
             project.Description = descBuffer;
         }
         ImGui.Spacing();
         
-        ImGui.Text("Version Matrix");
         int major = project.Version.Major;
         int minor = project.Version.Minor;
         int build = project.Version.Build < 0 ? 0 : project.Version.Build;
@@ -60,13 +61,13 @@ public class GeneralProjectSettings : ProjectSettingsTab
         ImGui.Spacing();
         
         string authorBuffer = project.Author;
-        if (ImGui.InputText("Author", ref authorBuffer, 128))
+        if (ImGuiEx.InputTextDynamic("Author", ref authorBuffer))
         {
             project.Author = authorBuffer;
         }
         
         string companyBuffer = project.Company;
-        if (ImGui.InputText("Company", ref companyBuffer, 128))
+        if (ImGuiEx.InputTextDynamic("Company", ref companyBuffer))
         {
             project.Company = companyBuffer;
         }
@@ -78,6 +79,6 @@ public class PerformanceProjectSettings : ProjectSettingsTab
     public override string Path => "Other/Performance";
     public override void Draw(EditorUIContext context)
     {
-        ImGui.Text("Hello World!");
+        
     }
 }
