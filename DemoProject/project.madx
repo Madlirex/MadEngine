@@ -2,6 +2,8 @@
     "Name": "New Project",
     "Description": "Cool new game!",
     "Version": "1.0.0",
+    "EditorVersion": "0.1.0",
+    "LastOpened": "2026-09-27T21:50:25.1922463+02:00",
     "Author": "Madlirex",
     "Company": "DefaultCompany"
 }
