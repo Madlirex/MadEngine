@@ -8,7 +8,7 @@ public class EditorManifestData
     public string Name = "MadEditor";
     public string Path = string.Empty;
     public string PathToExecutable = Environment.ProcessPath!;
-    public Version Version = new Version(1, 0, 0);
+    public Version Version = new(0, 1, 0);
     public DateTime ReleaseDate = new(2026, 9, 27);
     public bool IsLts;
     public List<string> Platforms = [];

@@ -21,14 +21,21 @@ class Program
 
         try
         {
-            while (true)
+            if(args.Length == 0 || !Path.Exists(args[0]))
             {
-                DialogResult result = Dialog.FolderPicker();
+                while (true)
+                {
+                    DialogResult result = Dialog.FolderPicker();
 
-                if (result.IsCancelled) return;
-                if (!result.IsOk) continue;
-                ProjectManager.SetProjectPath(result.Path);
-                break;
+                    if (result.IsCancelled) return;
+                    if (!result.IsOk) continue;
+                    ProjectManager.SetProjectPath(result.Path);
+                    break;
+                }
+            }
+            else
+            {
+                ProjectManager.SetProjectPath(args[0]);
             }
 
             Diagnostics.EngineCrashHook.Initialize();

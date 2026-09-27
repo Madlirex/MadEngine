@@ -85,6 +85,9 @@ public class EditorWindow : GameWindow
         DateTime end = DateTime.Now;
         Debug.Log($"Startup finished in: {end - _start}");
         
+        ProjectManager.ProjectInfo.RefreshLastOpened();
+        ProjectManager.ProjectInfo.EditorVersion = EditorManifest.Data.Version;
+        
         Engine.EditorStart(SceneManager.ActiveScene);
     }
 
@@ -104,6 +107,7 @@ public class EditorWindow : GameWindow
     protected override void OnUnload()
     {
         base.OnUnload();
+        
         PackageManager.SavePackageMetas();
 
         CursorState = CursorState.Normal;
