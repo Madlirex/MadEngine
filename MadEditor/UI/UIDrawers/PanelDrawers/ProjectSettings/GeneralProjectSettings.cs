@@ -77,6 +77,11 @@ public class PerformanceProjectSettingsTab : ProjectSettingsTab<PerformanceSetti
     public override string Path => "Other/Performance";
     public override void Draw(EditorUIContext context)
     {
-        
+        int maxFps = Settings.MaxFps;
+
+        if (ImGui.DragInt("Max FPS", ref maxFps))
+        {
+            Settings.MaxFps = maxFps;
+        }
     }
 }

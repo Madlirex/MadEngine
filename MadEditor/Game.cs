@@ -119,6 +119,7 @@ public class EditorWindow : GameWindow
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
+        UpdateFrequency = ProjectSettingsRegistry.GetSettings<PerformanceSettings>()?.MaxFps ?? 60;
         
         foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
