@@ -3,30 +3,28 @@ using MadEngine.Core;
 
 namespace MadEditor;
 
-public class GeneralProjectSettings : ProjectSettingsTab
+public class GeneralProjectSettings : ProjectSettingsTab<ProjectInfo>
 {
     public override string Path => "General";
     public override void Draw(EditorUIContext context)
     {
-        ProjectInfo project = ProjectManager.ProjectInfo;
-
-        string nameBuffer = project.Name;
+        string nameBuffer = Settings.Name;
         if (ImGuiEx.InputTextDynamic("Project Name", ref nameBuffer))
         {
-            project.Name = nameBuffer;
+            Settings.Name = nameBuffer;
         }
         
         ImGui.Text("Description");
-        string descBuffer = project.Description;
+        string descBuffer = Settings.Description;
         if (ImGuiEx.InputTextMultilineDynamic("Description", ref descBuffer, new System.Numerics.Vector2(-1, 60)))
         {
-            project.Description = descBuffer;
+            Settings.Description = descBuffer;
         }
         ImGui.Spacing();
         
-        int major = project.Version.Major;
-        int minor = project.Version.Minor;
-        int build = project.Version.Build < 0 ? 0 : project.Version.Build;
+        int major = Settings.Version.Major;
+        int minor = Settings.Version.Minor;
+        int build = Settings.Version.Build < 0 ? 0 : Settings.Version.Build;
         
         ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new System.Numerics.Vector2(2.0f, ImGui.GetStyle().ItemSpacing.Y));
 
@@ -55,26 +53,26 @@ public class GeneralProjectSettings : ProjectSettingsTab
 
         if (majorChanged || minorChanged || buildChanged)
         {
-            project.Version = new Version(Math.Max(0, major), Math.Max(0, minor), Math.Max(0, build));
+            Settings.Version = new Version(Math.Max(0, major), Math.Max(0, minor), Math.Max(0, build));
         }
         ImGui.Separator();
         ImGui.Spacing();
         
-        string authorBuffer = project.Author;
+        string authorBuffer = Settings.Author;
         if (ImGuiEx.InputTextDynamic("Author", ref authorBuffer))
         {
-            project.Author = authorBuffer;
+            Settings.Author = authorBuffer;
         }
         
-        string companyBuffer = project.Company;
+        string companyBuffer = Settings.Company;
         if (ImGuiEx.InputTextDynamic("Company", ref companyBuffer))
         {
-            project.Company = companyBuffer;
+            Settings.Company = companyBuffer;
         }
     }
 }
 
-public class PerformanceProjectSettings : ProjectSettingsTab
+public class PerformanceProjectSettingsTab : ProjectSettingsTab<PerformanceSettings>
 {
     public override string Path => "Other/Performance";
     public override void Draw(EditorUIContext context)

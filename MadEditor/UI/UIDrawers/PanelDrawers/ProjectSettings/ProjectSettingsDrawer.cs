@@ -7,12 +7,13 @@ namespace MadEditor;
 [CustomName("Project Settings")]
 public class ProjectSettingsDrawer : PanelDrawer
 {
-    private ProjectSettingsTab? SelectedTab => _hierarchyTreeRenderer.SelectedInstance;
-    private HierarchyTreeRenderer<ProjectSettingsTab> _hierarchyTreeRenderer;
+    private IProjectSettingsTab? SelectedTab => _hierarchyTreeRenderer.SelectedInstance;
+    private IProjectSettingsTab? _lastSelectedTab;
+    private HierarchyTreeRenderer<IProjectSettingsTab> _hierarchyTreeRenderer;
 
     public ProjectSettingsDrawer()
     {
-        _hierarchyTreeRenderer = new HierarchyTreeRenderer<ProjectSettingsTab>(ProjectSettingsTabsRegistry.LoadCategoryWeights());
+        _hierarchyTreeRenderer = new HierarchyTreeRenderer<IProjectSettingsTab>(ProjectSettingsTabsRegistry.LoadCategoryWeights());
         RebuildTree();
     }
     
@@ -38,6 +39,11 @@ public class ProjectSettingsDrawer : PanelDrawer
         ImGui.Separator();
         
         _hierarchyTreeRenderer.Draw();
+
+        if (_lastSelectedTab == SelectedTab) return;
+        if(_lastSelectedTab != null)
+            ProjectSettingsManager.SaveSettings(_lastSelectedTab.Settings);
+        _lastSelectedTab = SelectedTab;
     }
 
     public void DrawRightPanel(EditorUIContext context)
@@ -64,7 +70,7 @@ public class ProjectSettingsDrawer : PanelDrawer
     {
         var menuData = ProjectSettingsTabsRegistry.Tabs.Select(tab => {
             var orderAttr = tab.GetType().GetCustomAttribute<OrderAttribute>();
-            return new TreeNodeData<ProjectSettingsTab>($"{tab.Path}##{tab.Guid}", orderAttr?.Order ?? 0, tab);
+            return new TreeNodeData<IProjectSettingsTab>($"{tab.Path}##{tab.Guid}", orderAttr?.Order ?? 0, tab);
         });
         
         _hierarchyTreeRenderer.RegenerateTree(menuData);

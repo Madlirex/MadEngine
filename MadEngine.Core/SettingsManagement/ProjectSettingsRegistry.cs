@@ -7,6 +7,7 @@ public static class ProjectSettingsRegistry
     public static IReadOnlyList<ProjectSettings> ProjectSettingsList => Instance.ProjectSettings;
     
     public static T? GetSettings<T>() where T : ProjectSettings => Instance.GetSettings<T>();
+    public static T CreateSettings<T>() where T : ProjectSettings, new() => Instance.CreateSettings<T>();
 }
 
 internal class ProjectSettingsEngine : Registry
@@ -34,5 +35,12 @@ internal class ProjectSettingsEngine : Registry
     public T? GetSettings<T>() where T : ProjectSettings
     {
         return (T?)_projectSettings.Find(x => x.GetType() == typeof(T));
+    }
+
+    public T CreateSettings<T>() where T : ProjectSettings, new()
+    {
+        T settings = new T();
+        _projectSettings.Add(settings);
+        return settings;
     }
 }

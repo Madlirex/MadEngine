@@ -9,7 +9,7 @@ public static class ProjectManager
     public static string ProjectPath => _projectPath;
     private static string _projectPath = "";
     
-    public static ProjectInfo ProjectInfo => ProjectSettingsRegistry.GetSettings<ProjectInfo>() ?? new ProjectInfo();
+    public static ProjectInfo ProjectInfo => ProjectSettingsRegistry.GetSettings<ProjectInfo>() ?? ProjectSettingsRegistry.CreateSettings<ProjectInfo>();
     
     public static void LoadProject()
     {

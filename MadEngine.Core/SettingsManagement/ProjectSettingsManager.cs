@@ -15,7 +15,7 @@ public static class ProjectSettingsManager
     {
         Type concreteType = settings.GetType();
         string dir = settings.GetFolderPath();
-        string name = settings.GetFileName();
+        string name = $"{settings.GetFileName()}.{settings.GetFileExtension()}";
         string filePath = Path.Combine(dir, name);
 
         if (!File.Exists(filePath))
@@ -56,7 +56,7 @@ public static class ProjectSettingsManager
     {
         Type concreteType = settings.GetType();
         string dir = settings.GetFolderPath();
-        string name = settings.GetFileName();
+        string name = $"{settings.GetFileName()}.{settings.GetFileExtension()}";
         
         try
         {

@@ -8,6 +8,7 @@ public class ProjectInfo : ProjectSettings
     
     public string Author { get; set; } = "DefaultAuthor";
     public string Company { get; set; } = "DefaultCompany";
-    public override string GetFileName() => "project.madx";
+    public override string GetFileName() => "project";
+    public override string GetFileExtension() => "madx";
     public override string GetFolderPath() => Application.Directory;
 }

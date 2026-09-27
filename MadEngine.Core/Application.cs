@@ -2,9 +2,9 @@
 
 public static class Application
 {
-    private static ProjectInfo _projectInfo => ProjectSettingsRegistry.GetSettings<ProjectInfo>() ?? new ProjectInfo();
+    private static ProjectInfo ProjectInfo => ProjectSettingsRegistry.GetSettings<ProjectInfo>() ?? ProjectSettingsRegistry.CreateSettings<ProjectInfo>();
     
-    public static string PersistentDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), _projectInfo.Company, _projectInfo.Name);
+    public static string PersistentDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ProjectInfo.Company, ProjectInfo.Name);
     public static string Directory = string.Empty;
     public static string AssetsPath => Directory + @"\Assets\";
     public static string PackagesPath => Directory + @"\Packages\";
