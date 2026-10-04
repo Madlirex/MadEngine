@@ -22,6 +22,9 @@ public static class PanelLayoutManager
     {
         if(!Panels.ContainsKey(panel.PanelRegion)) Panels.Add(panel.PanelRegion, []);
         Panels[panel.PanelRegion].Add(panel);
+        
+        if (panel.PanelRegion == PanelRegion.Floating || !DockIDs.TryGetValue(panel.PanelRegion, out var region)) return;
+        ImGuiInternal.DockBuilderDockWindow(panel.ToString(), region);
     }
 
     public static void DeletePanel(PanelDrawer panel)
@@ -81,7 +84,6 @@ public static class PanelLayoutManager
         uint bottomDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Down, 0.25f, out _, out centralNodeId);
         uint leftDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Left, 0.18f, out _, out centralNodeId);
         uint rightDockId = ImGuiInternal.DockBuilderSplitNode(centralNodeId, ImGuiDir.Right, 0.22f, out _, out uint centerDockId);
-        
         
         DockIDs[PanelRegion.Left] = leftDockId;
         DockIDs[PanelRegion.Right] = rightDockId;

@@ -124,7 +124,7 @@ public class EditorWindow : GameWindow
     {
         base.OnRenderFrame(args);
         UpdateFrequency = ProjectSettingsRegistry.GetSettings<PerformanceSettings>()?.MaxFps ?? 60;
-        
+       
         foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
             if (vp.Size.X <= 1 || vp.Size.Y <= 1) continue;
@@ -136,7 +136,7 @@ public class EditorWindow : GameWindow
             Camera camera = vp.CameraComponent;
         
             Engine.Render(SceneManager.ActiveScene, camera);
-
+            
             if (!vp.EditMode) continue;
             
             _gridRenderer.Render(

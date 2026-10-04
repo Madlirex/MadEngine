@@ -89,10 +89,7 @@ public abstract class OpenPanelCommand<T> : MenubarCommand where T : PanelDrawer
 
     public override void Execute(EditorUIContext context)
     {
-        var panelDrawer = new T
-        {
-            PanelRegion = PanelRegion.Floating
-        };
+        var panelDrawer = new T();
         PanelSystem.AddPanel(panelDrawer);
     }
 }

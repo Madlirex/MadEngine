@@ -103,26 +103,21 @@ internal class PanelSystemEngine : Registry
             if (panelDrawer is IBorderlessPanel)
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, Vector2.Zero);
             
-            if (panelDrawer.PanelRegion != PanelRegion.Floating)
+            
+            bool openStateCheck = true;
+            
+            ImGui.SetNextWindowSize(panelDrawer.MinSize, ImGuiCond.FirstUseEver);
+            
+            ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
+            if (!openStateCheck)
             {
-                ImGui.Begin(panelDrawer.ToString(), ImGuiWindowFlags.NoCollapse);
+                context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
+                ImGui.End();
+                if (panelDrawer is IBorderlessPanel)
+                    ImGui.PopStyleVar();
+                continue;
             }
-            else
-            {
-                bool openStateCheck = true;
-                
-                ImGui.SetNextWindowSize(panelDrawer.MinSize, ImGuiCond.FirstUseEver);
-                
-                ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
-                if (!openStateCheck)
-                {
-                    context.EnqueueCommand(new ClosePanelCommand(panelDrawer));
-                    ImGui.End();
-                    if (panelDrawer is IBorderlessPanel)
-                        ImGui.PopStyleVar();
-                    continue;
-                }
-            }
+            
 
             if (panelDrawer is IBorderlessPanel)
                 ImGui.PopStyleVar();
