@@ -8,7 +8,7 @@ namespace MadEditor;
 [CustomName("Package Manager")]
 public class PackageManagerDrawer : PanelDrawer
 {
-    public override PanelRegion PanelRegion { get; set; }
+    public override PanelRegion PanelRegion { get; set; } = PanelRegion.Floating;
     
     private Guid? _selectedPackageGuid;
     
