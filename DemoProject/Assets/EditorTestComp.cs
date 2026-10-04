@@ -3,19 +3,18 @@ using MadEngine;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
-public enum Test
-{
-	Value1,
-	Value2,
-	_ef
-}
-
 public class EditorTestComp : Component
 {
-    public int Count = 0;
-    public Mesh? mesh = null;
-    public Material? material = null;
-    public Test test;
+	public Material? Material;
+	public Mesh? Mesh;
+	public bool Wait = true;
+	
+	public int Count = 0;
+	public int SpawnCount = 1;
+	private bool _spawn = true;
+	[ShowInInspector] public bool Spawn { get => _spawn;
+		set => SpawnCubes();
+	}
 
     public override void Awake()
     {
@@ -37,25 +36,28 @@ public class EditorTestComp : Component
 	    Debug.Log("EditorTestComp Start");
     }
 
-    public override void EditorUpdate(float deltaTime)
+    public void SpawnCubes()
     {
-	   
-	    Debug.LogWarning(test.ToString());
-	    
-	    if (mesh == null || material == null)
+	    if ((Mesh == null || Material == null) && Wait)
 	    {
 		    return;
 	    }
 	
-	    for(int i = 0; i<=1; i++)
+	    for(int i = 0; i < SpawnCount; i++)
 	    {
 		    GameObject obj = new GameObject();
 		    MeshRenderer renderer = new MeshRenderer();
-		    renderer.Mesh = mesh;
-		    renderer.Material = material;
+		    renderer.Mesh = Mesh;
+		    renderer.Material = Material;
 		    obj.AddComponent(renderer);
 		    SceneManager.ActiveScene.Add(obj);
 	    }
-	    Count += 1;
+
+	    Count += SpawnCount;
+    }
+
+    public override void EditorUpdate(float deltaTime)
+    {
+	    
     }
 }

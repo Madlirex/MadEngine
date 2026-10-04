@@ -22,6 +22,7 @@ internal class ProjectSettingsTabsEngine : Registry
     
     private void Discover()
     {
+        Tabs.Clear();
         var types = AssemblyProvider.GetTypesImplementing(typeof(IProjectSettingsTab));
 
         foreach (var type in types)
