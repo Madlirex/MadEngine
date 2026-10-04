@@ -21,7 +21,7 @@
                     "50bb5b87-7f98-4cb1-b3ac-a60096c3ae68",
                     "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
                     "273f3f45-54b7-4b5a-b3ff-29ee95358a4f",
-                    "c84799c0-f458-4f73-a58c-da62d7a4ad48"
+                    "f2923abd-d56e-4b8c-b585-6a8f19510c8c"
                 ],
                 "Name": "NewGameObject",
                 "NameInternal": "NewGameObject",
@@ -60,7 +60,7 @@
                 "Position": [
                     0,
                     1,
-                    0
+                    -1
                 ],
                 "Rotation": [
                     0,
@@ -91,7 +91,7 @@
             "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
             "$guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
             "$data": {
-                "Mesh": "05cba1b5-1287-485e-8485-da94246575ed",
+                "Mesh": "0ba72dd3-2a1b-488a-b0e6-35822c9889a7",
                 "Material": "94f8c704-bb7b-40f0-ac32-117fb501b719",
                 "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
                 "Name": "NewComponent",
@@ -141,7 +141,7 @@
         },
         {
             "$type": "MadEngine.Core.PointLight, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "c84799c0-f458-4f73-a58c-da62d7a4ad48",
+            "$guid": "f2923abd-d56e-4b8c-b585-6a8f19510c8c",
             "$data": {
                 "Constant": 1,
                 "Linear": 0.07,
@@ -167,8 +167,8 @@
                 "_gameObject": "e1f87b3b-a32a-4630-88f7-303b043088e8",
                 "Name": "NewComponent",
                 "NameInternal": "NewComponent",
-                "Guid": "c84799c0-f458-4f73-a58c-da62d7a4ad48",
-                "_guid": "c84799c0-f458-4f73-a58c-da62d7a4ad48"
+                "Guid": "f2923abd-d56e-4b8c-b585-6a8f19510c8c",
+                "_guid": "f2923abd-d56e-4b8c-b585-6a8f19510c8c"
             }
         },
         {
@@ -182,7 +182,7 @@
                 ],
                 "Parent": null,
                 "Position": [
-                    2,
+                    1,
                     0,
                     0
                 ],
@@ -254,7 +254,7 @@
             "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
             "$guid": "0461b9f4-fc43-4944-9133-b565265d9dbf",
             "$data": {
-                "Mesh": "05cba1b5-1287-485e-8485-da94246575ed",
+                "Mesh": "0ba72dd3-2a1b-488a-b0e6-35822c9889a7",
                 "Material": "94f8c704-bb7b-40f0-ac32-117fb501b719",
                 "_gameObject": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
                 "Name": "NewComponent",

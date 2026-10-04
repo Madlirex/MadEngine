@@ -42,7 +42,7 @@ public class CreateMeshCommand : PopupCommand<Asset>
         
         mesh.SetVertices(Defaults.Vertices);
         mesh.Indices = Defaults.Indices;
-        mesh.RecalculateNormals();
+        //mesh.RecalculateNormals();
         mesh.UpdateState();
         AssetManager.SaveAsset(mesh);
     }
