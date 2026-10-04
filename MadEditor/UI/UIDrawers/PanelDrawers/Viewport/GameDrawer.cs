@@ -17,6 +17,8 @@ public class GameDrawer : PanelDrawer, IBorderlessPanel
     {
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
+
+         viewportContext.IsOpen = IsOpen;
          
          if(Camera.MainCamera != null)
          {

@@ -14,6 +14,7 @@ public class ViewportDrawer : PanelDrawer, IBorderlessPanel
          string panelTitle = ToString();
          ViewportContext viewportContext = context.GetOrCreateViewport(panelTitle);
          viewportContext.EditMode = true;
+         viewportContext.IsOpen = IsOpen;   
          
          Vector2 availableSpace = ImGui.GetContentRegionAvail();
 

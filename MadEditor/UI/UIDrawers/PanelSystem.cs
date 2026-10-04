@@ -108,7 +108,7 @@ internal class PanelSystemEngine : Registry
             
             ImGui.SetNextWindowSize(panelDrawer.MinSize, ImGuiCond.FirstUseEver);
             
-            ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
+            panelDrawer.IsOpen = ImGui.Begin(panelDrawer.ToString(), ref openStateCheck, ImGuiWindowFlags.None);
             if (!openStateCheck)
             {
                 context.EnqueueCommand(new ClosePanelCommand(panelDrawer));

@@ -6,6 +6,7 @@ namespace MadEditor;
 public class ViewportContext : IDisposable
 {
     public bool EditMode { get; internal set; }
+    public bool IsOpen { get; set; }
     
     public string Id { get; }
     public GameObject CameraObject

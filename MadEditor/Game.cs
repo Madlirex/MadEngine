@@ -124,10 +124,10 @@ public class EditorWindow : GameWindow
     {
         base.OnRenderFrame(args);
         UpdateFrequency = ProjectSettingsRegistry.GetSettings<PerformanceSettings>()?.MaxFps ?? 60;
-       
+        
         foreach (var vp in EditorUI.UiContext.GetAllViewports())
         {
-            if (vp.Size.X <= 1 || vp.Size.Y <= 1) continue;
+            if (vp.Size.X <= 1 || vp.Size.Y <= 1 || !vp.IsOpen) continue;
         
             vp.Framebuffer.Bind();
             GL.Viewport(0, 0, (int)vp.Size.X, (int)vp.Size.Y);

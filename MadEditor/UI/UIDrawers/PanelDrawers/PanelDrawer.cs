@@ -8,6 +8,8 @@ public abstract class PanelDrawer
     public virtual PanelRegion PanelRegion { get; set; } = PanelRegion.Floating;
     public virtual Vector2 MinSize { get; } = new(500, 400);
     public abstract void Draw(EditorUIContext context);
+    
+    public bool IsOpen { get; internal set; }
 
     public override string ToString()
     {
