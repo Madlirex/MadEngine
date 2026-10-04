@@ -11,35 +11,32 @@ public class ProjectPanelDrawer : PanelDrawer
     private readonly NoneAsset _noneAsset = new();
     
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
-
-    private readonly string _rootAssetsPath = Application.Directory;
     
-    private string _selectedDirectory = "";
-
-    public ProjectPanelDrawer()
-    {
-        if (Directory.Exists(_rootAssetsPath))
-        {
-            _selectedDirectory = _rootAssetsPath;
-        }
-    }
+    private string? _selectedDirectory;
 
     public override void Draw(EditorUIContext context)
     {
-        
-        if (!Directory.Exists(_rootAssetsPath))
-        {
-            ImGui.TextColored(new Vector4(1, 0, 0, 1), $"Assets directory not found at: {_rootAssetsPath}");
-            return;
-        }
-        
         ImGui.Columns(2, "ProjectPanelSplit", true);
         
-        ImGui.SetColumnWidth(0, 200.0f); 
+        ImGui.SetColumnWidth(0, 200.0f);
+
+        if (!Directory.Exists(Application.AssetsPath))
+        {
+            ImGui.TextColored(new Vector4(1, 0, 0, 1), $"Assets directory not found at: {Application.AssetsPath}");
+        }
+        else
+        {
+            RenderDirectoryNode(new DirectoryInfo(Application.AssetsPath));
+        }
         
-        ImGui.BeginChild("DirectoryTreeChild");
-        RenderDirectoryNode(new DirectoryInfo(_rootAssetsPath));
-        ImGui.EndChild();
+        if (!Directory.Exists(Application.PackagesPath))
+        {
+            ImGui.TextColored(new Vector4(1, 0, 0, 1), $"Packages directory not found at: {Application.PackagesPath}");
+        }
+        else
+        {
+            RenderDirectoryNode(new DirectoryInfo(Application.PackagesPath));
+        }
         
         ImGui.NextColumn();
         
@@ -49,7 +46,7 @@ public class ProjectPanelDrawer : PanelDrawer
         if (ImGuiEx.IsClickedOutside(ImGuiMouseButton.Right))
         {
             context.RightClicked = _noneAsset;
-            _noneAsset.FullDir = _selectedDirectory;
+            _noneAsset.FullDir = _selectedDirectory ?? Application.AssetsPath;
             _projectPopup.Open();
         }
         

@@ -159,15 +159,6 @@ public class QuaternionDrawer : FieldDrawer
     }
 }
 
-[CustomFieldDrawer(typeof(Component))]
-public class ComponentDrawer : FieldDrawer
-{
-    public override void Draw(object target, InspectorMember member)
-    {
-        ImGui.Text(member.GetCustomName() + " " + member.Type.Name);
-    }
-}
-
 [CustomFieldDrawer(typeof(bool))]
 public class BoolDrawer : FieldDrawer
 {
