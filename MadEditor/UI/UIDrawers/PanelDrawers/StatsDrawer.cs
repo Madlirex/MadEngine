@@ -8,10 +8,27 @@ namespace MadEditor;
 public class StatsDrawer : PanelDrawer
 {
     public override PanelRegion PanelRegion { get; set; } = PanelRegion.Bottom;
+    public double LowestFrameTime = double.MaxValue;
     public override void Draw(EditorUIContext context)
     {
-        ImGui.Text($"FPS        : {1.0 / context.Window.UpdateTime:F0}");
-        ImGui.Text($"Frame time : {context.Window.UpdateTime * 1000.0:F2} ms");
+        double currentFrameTime = context.Window.UpdateTime;
+
+        // Prevent checking uninitialized or zero-value frames
+        if (currentFrameTime > 0)
+        {
+            // Find the absolute lowest frame time (which is the highest FPS)
+            if (currentFrameTime < LowestFrameTime)
+            {
+                LowestFrameTime = currentFrameTime;
+            }
+        }
+
+        // Safely calculate your absolute highest FPS peak
+        double peakFps = LowestFrameTime > 0 ? (1.0 / LowestFrameTime) : 0;
+
+        ImGui.Text($"Peak FPS   : {peakFps:F0}");
+        ImGui.Text($"Min Frame  : {LowestFrameTime * 1000.0:F2} ms");
+        ImGui.Text($"FPS        : {1.0 / currentFrameTime:F0}");
 
         Vector3? pos = context.ActiveViewport?.CameraObject.Transform.Position;
         

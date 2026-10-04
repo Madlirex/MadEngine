@@ -38,7 +38,13 @@ public class CreateMeshCommand : PopupCommand<Asset>
     public override string Path => "Create/Mesh";
     public override void Execute(Asset target)
     {
-        AssetManager.CreateAsset<Mesh>(target.FullDir);
+        if (AssetManager.CreateAsset<Mesh>(target.FullDir) is not { } mesh) return;
+        
+        mesh.SetVertices(Defaults.Vertices);
+        mesh.Indices = Defaults.Indices;
+        mesh.RecalculateNormals();
+        mesh.UpdateState();
+        AssetManager.SaveAsset(mesh);
     }
 }
 

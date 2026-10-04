@@ -36,6 +36,15 @@ public class Mesh : Asset, IStateUpdateable
     
     public Mesh(float[] vertices, uint[] indices)
     {
+        SetVertices(vertices);
+        Indices = indices;
+        
+        RecalculateNormals();
+        Initialize();
+    }
+
+    public void SetVertices(float[] vertices)
+    {
         const int stride = 8;
 
         Vertices = new Vertex[vertices.Length / stride];
@@ -62,10 +71,6 @@ public class Mesh : Asset, IStateUpdateable
                 )
             };
         }
-        
-        Indices = indices;
-        CalculateNormals(this);
-        Initialize();
     }
 
     public void Initialize()
@@ -114,7 +119,7 @@ public class Mesh : Asset, IStateUpdateable
     public void Draw()
     {
         GL.BindVertexArray(_vertexArrayObject);
-        GL.DrawArrays(PrimitiveType.Triangles, 0, Vertices.Length);
+        GL.DrawElements(PrimitiveType.Triangles, Indices.Length, DrawElementsType.UnsignedInt, 0);
     }
 
     protected override void OnDispose(bool disposing)
@@ -125,10 +130,10 @@ public class Mesh : Asset, IStateUpdateable
         base.OnDispose(disposing);
     }
     
-    public static void CalculateNormals(Mesh mesh)
+    public void RecalculateNormals()
     {
-        var vertices = mesh.Vertices;
-        var indices = mesh.Indices;
+        var vertices = Vertices;
+        var indices = Indices;
         
         for (int i = 0; i < vertices.Length; i++)
         {

@@ -47,7 +47,7 @@ public class EditorTestComp : Component
 		    return;
 	    }
 	
-	    for(int i = 0; i<=100; i++)
+	    for(int i = 0; i<=1; i++)
 	    {
 		    GameObject obj = new GameObject();
 		    MeshRenderer renderer = new MeshRenderer();
@@ -56,6 +56,6 @@ public class EditorTestComp : Component
 		    obj.AddComponent(renderer);
 		    SceneManager.ActiveScene.Add(obj);
 	    }
-	    Count += 100;
+	    Count += 1;
     }
 }

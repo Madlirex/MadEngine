@@ -12,10 +12,10 @@ public static class Debug
     
     public static event Action? OnLogAdded;
 
-    public static void Log(string message) => AddEntry(message, LogType.Info);
-    public static void LogWarning(string message) => AddEntry(message, LogType.Warning);
-    public static void LogError(string message) => AddEntry(message, LogType.Error);
-    public static void LogError(string message, string stackTrace) => AddEntry(message, LogType.Error, stackTrace);
+    public static void Log<T>(T message) => AddEntry(message?.ToString() ?? "", LogType.Info);
+    public static void LogWarning<T>(T message) => AddEntry(message?.ToString() ?? "", LogType.Warning);
+    public static void LogError<T>(T message) => AddEntry(message?.ToString() ?? "", LogType.Error);
+    public static void LogError<T>(T message, string stackTrace) => AddEntry(message?.ToString() ?? "", LogType.Error, stackTrace);
     
     private static void AddEntry(string message, LogType type, string? customStackTrace = null)
     {

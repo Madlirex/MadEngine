@@ -113,12 +113,13 @@ public static class AssetManager
         AssetMeta.Save(asset);
     }
 
-    public static void CreateAsset<T>(string path) where T : Asset, new()
-    { 
+    public static T? CreateAsset<T>(string path) where T : Asset, new()
+    {
+        T? asset;
         try
         {
             MadObject.SuppressRegistration = true;
-            T asset = new T();
+            asset = new T();
 
             asset.FullDir = path;
             MadObject.SuppressRegistration = false;
@@ -131,5 +132,7 @@ public static class AssetManager
         {
             MadObject.SuppressRegistration = false;
         }
+
+        return asset;
     }
 }
