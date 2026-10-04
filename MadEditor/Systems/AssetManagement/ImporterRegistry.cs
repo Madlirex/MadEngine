@@ -56,7 +56,7 @@ internal class ImporterEngine : Registry, IDomainResetable
 
     private void DiscoverImporters()
     {
-        _importers.Clear();
+        ResetCache();
         var importerTypes = AssemblyProvider.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
             .Where(type => typeof(IAssetImporter)

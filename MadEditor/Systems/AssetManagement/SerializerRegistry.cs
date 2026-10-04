@@ -25,7 +25,7 @@ internal class SerializerEngine : Registry, IDomainResetable
     
     private void DiscoverSerializers()
     {
-        _serializers.Clear();
+        ResetCache();
         
         var serializerTypes = AssemblyProvider.Assemblies
             .SelectMany(assembly => assembly.GetTypes())
