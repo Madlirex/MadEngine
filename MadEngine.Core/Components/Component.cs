@@ -27,6 +27,6 @@ public abstract class Component : MadObject
 
     public override string ToString()
     {
-        return $"{GameObject.Guid}/{Guid}";
+        return $"{Name}##{GameObject.Guid}/{Guid}";
     }
 }

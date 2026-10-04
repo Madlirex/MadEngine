@@ -235,26 +235,38 @@ public class MadObjectDrawer : FieldDrawer
         
         ImGui.InputText(label, ref text, (uint)text.Length + 1, flags);
         
-        if (DragDrop.TryAcceptTarget(member.Type, out var droppedObj))
+        bool isComponentType = typeof(Component).IsAssignableFrom(member.Type) || member.Type.IsInterface;
+        Type acceptedType = isComponentType ? typeof(GameObject) : member.Type;
+        
+        if (DragDrop.TryAcceptTarget(acceptedType, out var droppedObj))
         {
-            if (droppedObj != null && member.Type.IsInstanceOfType(droppedObj))
+            if (droppedObj != null)
             {
-                member.SetValue(target, droppedObj);
+                if (member.Type.IsInstanceOfType(droppedObj))
+                {
+                    member.SetValue(target, droppedObj);
+                }
+                else if (droppedObj is GameObject obj)
+                {
+                    var component = obj.GetComponent(member.Type);
+                    if (component != null)
+                    {
+                        member.SetValue(target, component);
+                    }
+                }
             }
         }
-        
-        if (ImGui.IsItemClicked(ImGuiMouseButton.Left))
-        {
-            _popup.Type = member.Type;
-            _popup.Selected = value;
-            
-            _popup.OnObjectSelected = selectedObj => 
-            {
-                member.SetValue(target, selectedObj);
-            };
 
-            _popup.Open();
-        }
+        if (!ImGui.IsItemClicked(ImGuiMouseButton.Left)) return;
+        _popup.Type = member.Type;
+        _popup.Selected = value;
+            
+        _popup.OnObjectSelected = selectedObj => 
+        {
+            member.SetValue(target, selectedObj);
+        };
+
+        _popup.Open();
     }
 }
 

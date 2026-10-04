@@ -179,7 +179,7 @@ public class GameObject : MadObject
 
     public Component? GetComponent(Type type)
     {
-        return Components.FirstOrDefault(c => c.GetType() == type);
+        return Components.FirstOrDefault(c => c.GetType() == type) ?? Components.FirstOrDefault(type.IsInstanceOfType);
     }
 
     public T[] GetComponents<T>() where T : Component

@@ -13,6 +13,7 @@ public class EditorTestComp : Component
 	public int SpawnCount = 1;
 	private bool _spawn = true;
 	public MeshRenderer Something;
+	public Light Second;
 	[ShowInInspector] public bool Spawn { get => _spawn;
 		set => SpawnCubes();
 	}
