@@ -1,4 +1,6 @@
-﻿using MadEngine.Core;
+﻿using System.Reflection;
+using MadEngine.Core;
+using MadEngine.Core.AssetManagement;
 using MadEngine.Core.SceneManagement;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
@@ -40,16 +42,8 @@ public class RuntimeWindow : GameWindow
     
     public RuntimeWindow(GameWindowSettings gameSettings, NativeWindowSettings windowSettings) : base(gameSettings, windowSettings)
     {
-        GameObject obj = new GameObject();
-        
-        var cam = (Camera?)obj.AddComponentUnsafe(new Camera());
-        
-        cam!.IsMainCamera = true;
-        cam.Width = ClientSize.X;
-        cam.Height = ClientSize.Y;
-        
-        SceneManager.ActiveScene.AddObjectUnsafe(obj);
         _engine = new Engine();
+        Application.Directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
     }
 
     protected override void OnLoad()
@@ -57,6 +51,15 @@ public class RuntimeWindow : GameWindow
         base.OnLoad();
         
         _engine.Initialize();
+        
+        RegistryBootstrapper.InitializeAll();
+        
+        AssetManager.InitializeAssets(Application.PackagesPath);
+        AssetManager.LoadAssets(Application.PackagesPath);
+        AssetManager.InitializeAssets(Application.AssetsPath);
+        AssetManager.LoadAssets(Application.AssetsPath);
+        
+        SceneManager.LoadScene(0);
         
         _engine.Awake(SceneManager.ActiveScene);
         _engine.Start(SceneManager.ActiveScene);
