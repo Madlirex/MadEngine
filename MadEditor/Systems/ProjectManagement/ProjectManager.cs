@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using MadEditor.PackageManagement;
 using MadEngine.Core;
+using MadEngine.Core.AssetManagement;
 
 namespace MadEditor;
 

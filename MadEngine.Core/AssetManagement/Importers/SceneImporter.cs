@@ -1,8 +1,7 @@
 ﻿using System.Text.Json.Nodes;
-using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
 
-namespace MadEditor;
+namespace MadEngine.Core.AssetManagement;
 
 public class SceneImporter : Importer<Scene>
 {

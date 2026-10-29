@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace MadEditor;
+namespace MadEngine.Core.AssetManagement;
 
 public interface ISerializer
 {

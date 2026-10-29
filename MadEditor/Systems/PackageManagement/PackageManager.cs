@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using MadEngine.Core;
+using MadEngine.Core.AssetManagement;
 
 namespace MadEditor.PackageManagement;
 

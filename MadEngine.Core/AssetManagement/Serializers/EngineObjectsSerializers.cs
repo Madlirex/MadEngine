@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using System.Text.Json.Nodes;
-using MadEngine.Core;
 
-namespace MadEditor;
+namespace MadEngine.Core.AssetManagement;
 
 public class MadObjectSerializer : ClassSerializer<MadObject>
 {

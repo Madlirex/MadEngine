@@ -1,6 +1,4 @@
-﻿using MadEngine.Core;
-
-namespace MadEditor;
+﻿namespace MadEngine.Core.AssetManagement;
 
 public class EmptyAssetImporter<T> : Importer<T> where T : Asset, new()
 {

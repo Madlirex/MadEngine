@@ -1,9 +1,4 @@
-﻿using System;
-using System.Text.Json.Nodes;
-using MadEngine;
-using MadEngine.Core;
-
-namespace MadEditor;
+﻿namespace MadEngine.Core.AssetManagement;
 
 public class Texture2DImporter : DefaultAssetImporter<Texture2D>
 {

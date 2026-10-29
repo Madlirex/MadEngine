@@ -1,6 +1,4 @@
-﻿using MadEngine;
-
-namespace MadEditor;
+﻿namespace MadEngine.Core.AssetManagement;
 
 public class FolderAssetImporter : EmptyAssetImporter<FolderAsset>
 {
