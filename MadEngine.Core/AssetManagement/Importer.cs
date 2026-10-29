@@ -1,4 +1,6 @@
-﻿namespace MadEngine.Core.AssetManagement;
+﻿using System.Text.Json.Nodes;
+
+namespace MadEngine.Core.AssetManagement;
 
 public interface IAssetImporter
 {
@@ -11,18 +13,39 @@ public interface IAssetImporter
     public Asset Import(string path);
     
     public void Save(Asset asset);
+    public void Pack(Asset asset);
+    
+    public string GetJsonString(Asset asset);
 }
 
-public abstract class Importer<T> : IAssetImporter where T : Asset
+public abstract class Importer<T> : IAssetImporter where T : Asset, new()
 {
     public Type Type => typeof(T);
     public abstract string Name { get; }
     public abstract string[] Extensions { get; }
-    public abstract T Initialize(string path);
-    public abstract T Initialize(AssetMeta meta);
-    public abstract T Import(string path);
-    
-    public abstract void Save(T asset);
+    public virtual T Initialize(string path) => SerializerRegistry.GetSerializer(typeof(T))!.Deserialize(Unpack(path)) as T ?? new T();
+    public virtual T Initialize(AssetMeta meta) => new() { Guid = meta.Guid, Name = meta.Name };
+    public virtual T Import(string path)
+    {
+        JsonNode json = Unpack(path);
+        
+        Guid guid = json["$guid"]!.GetValue<Guid>();
+        T asset = (T)AssetRegistry.GetAsset(guid);
+
+        SerializerRegistry.GetClassSerializer(typeof(T))!.DeserializeInto(asset, json["$data"]!);
+        return asset;
+    }
+
+    public virtual void Save(T asset)
+    {
+        File.WriteAllText(asset.AbsolutePath, GetJsonString(asset));
+    }
+
+    public virtual string GetJsonString(T asset)
+    {
+        JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(T))!.Serialize(asset);
+        return jsonObject.ToJsonString(SerializerSettings.SerializerOptions);
+    }
 
     Asset IAssetImporter.Initialize(string path) => Initialize(path);
     Asset IAssetImporter.Initialize(AssetMeta meta) => Initialize(meta);
@@ -30,4 +53,19 @@ public abstract class Importer<T> : IAssetImporter where T : Asset
     Asset IAssetImporter.Import(string path) => Import(path);
     
     void IAssetImporter.Save(Asset asset) => Save((T)asset);
+    string IAssetImporter.GetJsonString(Asset asset) => GetJsonString((T)asset);
+
+    protected JsonNode Unpack(string path)
+    {
+        if (!File.Exists(path))
+            throw new FileNotFoundException($"Asset target missing: {path}");
+        
+        string data = Path.GetExtension(path) == ".packt" ? AssetPacker.UnpackAsset(path) : File.ReadAllText(path);
+        return JsonNode.Parse(data)!;
+    }
+
+    void IAssetImporter.Pack(Asset asset)
+    {
+        AssetPacker.PackAsset(GetJsonString((T)asset), asset.AbsolutePath);
+    }
 }
