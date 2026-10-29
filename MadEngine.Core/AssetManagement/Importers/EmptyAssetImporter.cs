@@ -40,6 +40,6 @@ public class EmptyAssetImporter<T> : Importer<T> where T : Asset, new()
 
     public override T Import(string path)
     {
-        return (T)AssetRegistry.GetAsset(AssetRegistry.GetGuid(path));
+        return ((T)AssetRegistry.GetAsset((Guid)AssetRegistry.GetGuid(path)!)!)!;
     }
 }

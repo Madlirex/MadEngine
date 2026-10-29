@@ -6,7 +6,7 @@ public static class RecompilationManager
     {
         Console.WriteLine("Recompiling scripts...");
         if (!Directory.Exists(ProjectManager.ProjectPath)) return;
-        var scriptFiles = Directory.GetFiles(ProjectManager.ProjectPath, "*.cs", SearchOption.AllDirectories);
+        var scriptFiles = ProjectManager.GetAllFiles("*.cs");
         
         if(performSnapshot) ScriptDomain.ReloadDomain(scriptFiles);
         else ScriptDomain.Compile(scriptFiles);

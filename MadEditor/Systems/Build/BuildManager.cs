@@ -5,7 +5,7 @@ namespace MadEditor;
 
 public static class BuildManager
 {
-    public static void ExportGame(string outputDirectory, string gameName, byte[] runtimeDllBytes, string resourceDir)
+    public static void ExportGame(string outputDirectory, string gameName, byte[] runtimeDllBytes)
     {
         string runtimeTemplateSourceDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "runtime");
 
@@ -32,12 +32,14 @@ public static class BuildManager
         string targetScriptPath = Path.Combine(outputDirectory, "GameScripts.Runtime.dll");
         File.WriteAllBytes(targetScriptPath, runtimeDllBytes);
         
-        PackAssets(resourceDir, Path.Combine(outputDirectory, "Resources"));
+        PackAssets(Path.Combine(outputDirectory, "Resources"));
     }
 
-    public static void PackAssets(string resourceDir, string outputDirectory)
+    public static void PackAssets(string outputDirectory)
     {
-        foreach (string path in Directory.GetFiles(resourceDir, "*.*", SearchOption.AllDirectories))
+        var paths = ProjectManager.GetAllFiles();
+        
+        foreach (string path in paths)
         {
             if(AssetRegistry.GetGuid(path) is { } guid)
             {
@@ -45,12 +47,12 @@ public static class BuildManager
                 
                 if (asset is null) continue;
                 
-                PackAsset(asset, Path.Combine(outputDirectory, asset.RelativePath, SerializerSettings.PackedExtension));            
+                PackAsset(asset, Path.Combine(outputDirectory, asset.RelativePath));
             }
             else
             {
-                CopyFile(path, Path.Combine(outputDirectory, Path.GetRelativePath(resourceDir, path)));
-                Console.WriteLine(Path.GetRelativePath(resourceDir, path));
+                if (Path.GetExtension(path) == ".cs") continue;
+                CopyFile(path, Path.Combine(outputDirectory, Path.GetRelativePath(ProjectManager.ProjectPath, path)));
             }
         }
     }
@@ -74,7 +76,7 @@ public static class BuildManager
         var importer = ImporterRegistry.GetImporter(asset.GetType());
         if (importer is { } imp)
         {
-            importer.Pack(asset, outputPath);
+            imp.Pack(asset, outputPath);
         }
         AssetMeta.Save(asset, outputPath);
     }

@@ -30,7 +30,7 @@ public abstract class Importer<T> : IAssetImporter where T : Asset, new()
         JsonNode json = Unpack(path);
         
         Guid guid = json["$guid"]!.GetValue<Guid>();
-        T asset = (T)AssetRegistry.GetAsset(guid);
+        T asset = (T)AssetRegistry.GetAsset(guid)!;
 
         SerializerRegistry.GetClassSerializer(typeof(T))!.DeserializeInto(asset, json["$data"]!);
         return asset;

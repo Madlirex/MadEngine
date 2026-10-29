@@ -21,25 +21,17 @@
 
     <Target Name="CopyRuntimeTemplate" AfterTargets="Build">
         <PropertyGroup>
-            <RuntimeProjectPath>$(ProjectDir)..\MadEngine.Runtime\MadEngine.Runtime.csproj</RuntimeProjectPath>
+            <RuntimeProjectPath>$([System.IO.Path]::GetFullPath('$(ProjectDir)..\MadEngine.Runtime\MadEngine.Runtime.csproj'))</RuntimeProjectPath>
             <RuntimeTargetDir>$(TargetDir)runtime\</RuntimeTargetDir>
         </PropertyGroup>
 
-        <Message Text="====== Building and deploying MadEngine.Runtime Template ======" Importance="high" />
+        <Message Text="====== Natively Building Self-Contained Runtime Template ======" Importance="high" />
         
         <MSBuild Projects="$(RuntimeProjectPath)"
-                 Properties="Configuration=$(Configuration);Platform=$(Platform)"
-                 Targets="Build" />
-        
-        <ItemGroup>
-            <RuntimeFiles Include="$(ProjectDir)..\MadEngine.Runtime\bin\$(Configuration)\$(TargetFramework)\**\*.*" />
-        </ItemGroup>
-        
-        <Copy SourceFiles="@(RuntimeFiles)"
-              DestinationFolder="$(RuntimeTargetDir)%(RecursiveDir)"
-              SkipUnchangedFiles="true" />
+                 Properties="Configuration=$(Configuration);Platform=$(Platform);RuntimeIdentifier=win-x64;SelfContained=true;PublishDir=$(RuntimeTargetDir)"
+                 Targets="Restore;Build;Publish" />
 
-        <Message Text="====== Runtime Template successfully deployed to $(RuntimeTargetDir) ======" Importance="high" />
+        <Message Text="====== Native Runtime Template successfully deployed to $(RuntimeTargetDir) ======" Importance="high" />
     </Target>
 
 

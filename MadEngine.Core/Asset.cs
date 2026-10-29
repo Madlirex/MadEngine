@@ -6,7 +6,7 @@ public abstract class Asset : MadObject
     
     protected override string NameInternal { get; set; } = "NewAsset";
     [DoNotSave] public string AbsolutePath => Path.Combine(FullDir, $"{Name}{Extension}");
-    [DoNotSave] public string RelativePath => Path.Combine(RelativeDir, $"{Name}{Extension}");
+    [DoNotSave] public string RelativePath => Path.GetRelativePath(Application.Directory, AbsolutePath);
     [DoNotSave] public string Extension
     {
         get => ExtensionInternal;
@@ -29,7 +29,7 @@ public abstract class Asset : MadObject
         }
     }
     [DoNotSave] private string _fullDir = Application.AssetsPath;
-    [DoNotSave] public string RelativeDir => FullDir.Replace(Application.Directory, "");
+    [DoNotSave] public string RelativeDir => Path.GetRelativePath(Application.Directory, FullDir);
 
     public Asset() : base(false) 
     {

@@ -107,7 +107,12 @@ public static class AssetRegistry
     
     public static Guid? GetGuid(string path)
     {
-        return _guidByPath.GetValueOrDefault(path);
+        if (_guidByPath.TryGetValue(path, out Guid guid))
+        {
+            return guid;
+        }
+    
+        return null;
     }
 
     public static string? GetPath(Guid guid)
