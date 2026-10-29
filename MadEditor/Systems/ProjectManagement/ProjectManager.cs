@@ -16,7 +16,8 @@ public static class ProjectManager
     {
         return [
             .. Directory.GetFiles(Application.AssetsPath, filter, SearchOption.AllDirectories),
-            .. Directory.GetFiles(Application.PackagesPath, filter, SearchOption.AllDirectories)
+            .. Directory.GetFiles(Application.PackagesPath, filter, SearchOption.AllDirectories),
+            .. Directory.GetFiles(Application.ConfigPath, filter, SearchOption.AllDirectories)
         ];
     }
     
