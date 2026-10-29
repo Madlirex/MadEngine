@@ -24,8 +24,13 @@ public class AssetMeta
 
     public static void Save(Asset asset)
     {
+        Save(asset, asset.AbsolutePath);
+    }
+
+    public static void Save(Asset asset, string path)
+    {
         AssetMeta meta = Generate(asset);
-        File.WriteAllText(asset.AbsolutePath + ".meta", JsonSerializer.Serialize(meta, SerializerSettings.SerializerOptions));
+        File.WriteAllText(path + ".meta", JsonSerializer.Serialize(meta, SerializerSettings.SerializerOptions));
     }
 
     public static AssetMeta Load(string file)

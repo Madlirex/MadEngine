@@ -19,6 +19,30 @@
         <ProjectReference Include="..\MadEngine.Core\MadEngine.Core.csproj" />
     </ItemGroup>
 
+    <Target Name="CopyRuntimeTemplate" AfterTargets="Build">
+        <PropertyGroup>
+            <RuntimeProjectPath>$(ProjectDir)..\MadEngine.Runtime\MadEngine.Runtime.csproj</RuntimeProjectPath>
+            <RuntimeTargetDir>$(TargetDir)runtime\</RuntimeTargetDir>
+        </PropertyGroup>
+
+        <Message Text="====== Building and deploying MadEngine.Runtime Template ======" Importance="high" />
+        
+        <MSBuild Projects="$(RuntimeProjectPath)"
+                 Properties="Configuration=$(Configuration);Platform=$(Platform)"
+                 Targets="Build" />
+        
+        <ItemGroup>
+            <RuntimeFiles Include="$(ProjectDir)..\MadEngine.Runtime\bin\$(Configuration)\$(TargetFramework)\**\*.*" />
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(RuntimeFiles)"
+              DestinationFolder="$(RuntimeTargetDir)%(RecursiveDir)"
+              SkipUnchangedFiles="true" />
+
+        <Message Text="====== Runtime Template successfully deployed to $(RuntimeTargetDir) ======" Importance="high" />
+    </Target>
+
+
     <ItemGroup>
       <None Remove="Shaders\lamp.frag" />
       <None Remove="Shaders\shader.frag" />
@@ -51,10 +75,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="Textures\skybox.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Systems\Build\" />
     </ItemGroup>
 
 </Project>
