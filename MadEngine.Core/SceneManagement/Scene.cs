@@ -41,6 +41,8 @@ public class Scene : Asset
         EngineCommandsManager.Enqueue(new DestroyGameObjectCommand(gameObject));
     }
 
+    public void AddObjectUnsafe(GameObject gameObject) => AddObjectSafe(gameObject);
+    
     internal void AddObjectSafe(GameObject gameObject)
     {
         if (_gameObjects.Contains(gameObject)) return;
@@ -55,6 +57,8 @@ public class Scene : Asset
         }
     }
 
+    public void DestroyObjectUnsafe(GameObject gameObject) => DestroyObjectSafe(gameObject);
+    
     internal void DestroyObjectSafe(GameObject gameObject)
     {
         _gameObjects.Remove(gameObject);

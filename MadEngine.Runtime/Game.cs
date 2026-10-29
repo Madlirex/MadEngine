@@ -12,12 +12,7 @@ namespace MadEngine.Runtime;
 public class RuntimeWindow : GameWindow
 {
     private Engine _engine;
-    
-    private GameObject _camera;
-    private GameObject _light;
-
-    private Vector2 _lastPos;
-    private bool _firstMove = true;
+    private Camera Camera => Camera.MainCamera ?? GameObject.FindFirstComponent<Camera>();
 
     public static RuntimeWindow Create(int width, int height, string title)
     {
@@ -45,44 +40,16 @@ public class RuntimeWindow : GameWindow
     
     public RuntimeWindow(GameWindowSettings gameSettings, NativeWindowSettings windowSettings) : base(gameSettings, windowSettings)
     {
+        GameObject obj = new GameObject();
+        
+        var cam = (Camera?)obj.AddComponentUnsafe(new Camera());
+        
+        cam!.IsMainCamera = true;
+        cam.Width = ClientSize.X;
+        cam.Height = ClientSize.Y;
+        
+        SceneManager.ActiveScene.AddObjectUnsafe(obj);
         _engine = new Engine();
-        
-        ShaderSystem.InitializeLitShader("Shaders/lit.vert", "Shaders/lit.frag");
-        ShaderSystem.InitializeUnlitShader("Shaders/unlit.vert", "Shaders/unlit.frag");
-
-        _camera = new GameObject();
-        _camera.Name = "MainCamera";
-        _camera.AddComponent(new Camera());
-        
-        CursorState = CursorState.Grabbed; // changed: editor uses normal cursor by default
-        _camera.GetComponent<Camera>()!.Width = windowSettings.ClientSize.X;
-        _camera.GetComponent<Camera>()!.Height = windowSettings.ClientSize.Y;
-        
-        MeshRenderer defaultRenderer = new MeshRenderer
-        {
-            Material = new Material(ShaderSystem.LitShader, new Texture("Textures/container2.png"), new Texture("Textures/container2_specular.png"))
-        };
-
-        _light = new GameObject();
-        _light.Transform.Position = new Vector3(-4f, 4f, 0f);
-        _light.Transform.Rotation = new Quaternion(new Vector3(-1, 1, 0f) * 180);
-        _light.Name = "Light";
-        Light light = new SpotLight
-        {
-            Direction = new Vector3(1f, -1f, 0f),
-            CutOff = 30f,
-            OuterCutOff = 35f
-        };
-        _light.AddComponent(light);
-        GameObject cube = new GameObject();
-        cube.Name = "Cube";
-        cube.AddComponent(defaultRenderer);
-        
-        Scene scene = new Scene();
-        scene.Add(_camera);
-        scene.Add(_light);
-        scene.Add(cube);
-        SceneManager.ActiveScene = scene;
     }
 
     protected override void OnLoad()
@@ -113,13 +80,8 @@ public class RuntimeWindow : GameWindow
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
-
-        Camera camera = _camera.GetComponent<Camera>()!;
         
-        _light.Transform.Position = _camera.Transform.Position;
-        _light.GetComponent<SpotLight>()!.Direction = camera.Front;
-
-        _engine.Render(SceneManager.ActiveScene, camera);
+        _engine.Render(SceneManager.ActiveScene, Camera);
 
         SwapBuffers();
     }
@@ -127,94 +89,15 @@ public class RuntimeWindow : GameWindow
     protected override void OnUpdateFrame(FrameEventArgs args)
     {
         base.OnUpdateFrame(args);
-
-        UpdateCamera(args);
+        
         _engine.Update((float)args.Time, SceneManager.ActiveScene);
-    }
-
-    public void UpdateCamera(FrameEventArgs args)
-    {
-        if (!IsFocused)
-        {
-            return;
-        }
-
-        if (KeyboardState.IsKeyDown(Keys.Escape))
-        {
-            Close();
-        }
-
-        Camera camera = _camera.GetComponent<Camera>()!;
-        KeyboardState input = KeyboardState;
-        float speed = camera.Speed * (float)args.Time;
-
-        if (input.IsKeyDown(Keys.LeftControl))
-        {
-            speed *= 5;
-        }
-        
-        if (input.IsKeyDown(Keys.W))
-        {
-            _camera.Transform.Position += camera.Front * speed; //Forward 
-        }
-
-        if (input.IsKeyDown(Keys.S))
-        {
-            _camera.Transform.Position -= camera.Front * speed; //Backwards
-        }
-
-        if (input.IsKeyDown(Keys.A))
-        {
-            _camera.Transform.Position -= Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Left
-        }
-
-        if (input.IsKeyDown(Keys.D))
-        {
-            _camera.Transform.Position += Vector3.Normalize(Vector3.Cross(camera.Front, camera.Up)) * speed; //Right
-        }
-
-        if (input.IsKeyDown(Keys.Space))
-        {
-            _camera.Transform.Position += camera.Up * speed; //Up 
-        }
-
-        if (input.IsKeyDown(Keys.LeftShift))
-        {
-            _camera.Transform.Position -= camera.Up * speed; //Down
-        }
-        
-        const float sensitivity = 0.2f;
-        
-        MouseState mouse = MouseState;
-        if (_firstMove)
-        {
-            _lastPos = new Vector2(mouse.X, mouse.Y);
-            _firstMove = false;
-        }
-        else
-        {
-            float deltaX = mouse.X - _lastPos.X;
-            float deltaY = mouse.Y - _lastPos.Y;
-            _lastPos = new Vector2(mouse.X, mouse.Y);
-            
-            camera.Yaw += deltaX * sensitivity;
-            camera.Pitch -= deltaY * sensitivity;
-        }
-    }
-    
-    protected override void OnMouseWheel(MouseWheelEventArgs e)
-    {
-        base.OnMouseWheel(e);
-
-        if (CursorState == CursorState.Grabbed)
-            _camera.GetComponent<Camera>()!.Fov -= e.OffsetY;
     }
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
         base.OnFramebufferResize(e);
-        _camera.GetComponent<Camera>()!.Width = e.Width;
-        _camera.GetComponent<Camera>()!.Height = e.Height;
+        Camera.Width = e.Width;
+        Camera.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
     }
 }
