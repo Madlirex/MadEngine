@@ -11,7 +11,7 @@ public static class AssetPacker
     {
         byte[] rawBytes = Encoding.UTF8.GetBytes(jsonText);
 
-        using var outputStream = new FileStream(targetBinaryFilePath + ".packt", FileMode.Create, FileAccess.Write);
+        using var outputStream = new FileStream(targetBinaryFilePath + SerializerSettings.PackedExtension, FileMode.Create, FileAccess.Write);
         using var memoryStream = new MemoryStream();
         
         using (var compressionStream = new GZipStream(memoryStream, CompressionMode.Compress, true))

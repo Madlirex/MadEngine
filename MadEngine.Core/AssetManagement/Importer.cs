@@ -13,7 +13,7 @@ public interface IAssetImporter
     public Asset Import(string path);
     
     public void Save(Asset asset);
-    public void Pack(Asset asset);
+    public void Pack(Asset asset, string path);
     
     public string GetJsonString(Asset asset);
 }
@@ -41,6 +41,11 @@ public abstract class Importer<T> : IAssetImporter where T : Asset, new()
         File.WriteAllText(asset.AbsolutePath, GetJsonString(asset));
     }
 
+    public virtual void Pack(T asset, string targetPath)
+    {
+        AssetPacker.PackAsset(GetJsonString(asset), targetPath);
+    }
+
     public virtual string GetJsonString(T asset)
     {
         JsonObject jsonObject = (JsonObject)SerializerRegistry.GetSerializer(typeof(T))!.Serialize(asset);
@@ -60,12 +65,9 @@ public abstract class Importer<T> : IAssetImporter where T : Asset, new()
         if (!File.Exists(path))
             throw new FileNotFoundException($"Asset target missing: {path}");
         
-        string data = Path.GetExtension(path) == ".packt" ? AssetPacker.UnpackAsset(path) : File.ReadAllText(path);
+        string data = Path.GetExtension(path) == SerializerSettings.PackedExtension ? AssetPacker.UnpackAsset(path) : File.ReadAllText(path);
         return JsonNode.Parse(data)!;
     }
 
-    void IAssetImporter.Pack(Asset asset)
-    {
-        AssetPacker.PackAsset(GetJsonString((T)asset), asset.AbsolutePath);
-    }
+    void IAssetImporter.Pack(Asset asset, string path) => Pack((T)asset, path);
 }

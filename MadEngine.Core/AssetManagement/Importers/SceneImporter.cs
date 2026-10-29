@@ -7,12 +7,11 @@ public class SceneImporter : Importer<Scene>
 {
     public override string Name => "SceneImporter";
     public override string[] Extensions => [".madscene"];
-    
-    public override void Save(Scene asset)
+
+    public override string GetJsonString(Scene asset)
     {
         JsonNode jsonObject = SaveToJson(asset);
-
-        File.WriteAllText(asset.AbsolutePath, jsonObject.ToJsonString(SerializerSettings.SerializerOptions));
+        return jsonObject.ToJsonString(SerializerSettings.SerializerOptions);
     }
 
     public JsonNode SaveToJson(Scene asset)
@@ -38,15 +37,9 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Initialize(string path)
     {
-        string data = File.ReadAllText(path);
-        JsonNode json = JsonNode.Parse(data)!;
+        JsonNode json = Unpack(path);
 
         return InstantiateFromJson(json);
-    }
-
-    public override Scene Initialize(AssetMeta meta)
-    {
-        return new Scene {Guid = meta.Guid, Name = meta.Name};
     }
     
     public static void InstantiateObjects(JsonNode json)
@@ -93,7 +86,6 @@ public class SceneImporter : Importer<Scene>
                 Guid guid = goJson["$guid"]!.GetGuid();
                 GameObject obj = (GameObject)AssetRegistry.GetObject(guid)!;
                 SerializerRegistry.GetClassSerializer(typeof(GameObject))!.DeserializeInto(obj, goJson["$data"]!);
-                if(obj == null) Console.WriteLine("hovno");
                 scene.Register(obj);
             }
         }
@@ -121,8 +113,7 @@ public class SceneImporter : Importer<Scene>
 
     public override Scene Import(string path)
     {
-        string data = File.ReadAllText(path);
-        JsonNode json = JsonNode.Parse(data)!;
+        JsonNode json = Unpack(path);
 
         Scene obj = ImportFromJson(json);
         
