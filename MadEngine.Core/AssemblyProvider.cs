@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.Loader;
 
 namespace MadEngine.Core;
 
@@ -51,5 +52,26 @@ public static class AssemblyProvider
             .SelectMany(a => a.GetTypes())
             .Where(t => t.Name == name)
             .ToArray();
+    }
+
+    public static void InitializeAssemblies()
+    {
+        _assemblies.AddRange(AppDomain.CurrentDomain.GetAssemblies());
+        string scriptsDllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GameScripts.Runtime.dll");
+
+        if (!File.Exists(scriptsDllPath)) return;
+        try
+        {
+            var scriptAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(scriptsDllPath);
+                
+            if (!_assemblies.Contains(scriptAssembly))
+            {
+                _assemblies.Add(scriptAssembly);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Engine Error] Failed to load dynamic GameScripts.dll: {ex.Message}");
+        }
     }
 }

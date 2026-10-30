@@ -31,6 +31,7 @@ public static class RegistryBootstrapper
 
         foreach (var registryType in registryTypes)
         {
+            Console.WriteLine($"Initializing {registryType.Name}...");
             Initialize(registryType);
         }
         _initialized = true;

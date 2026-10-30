@@ -47,4 +47,11 @@ public static class AssetPacker
 
         return reader.ReadToEnd();
     }
+
+    public static string UnpackedPath(string binaryFilePath)
+    {
+        return Path.GetExtension(binaryFilePath) == SerializerSettings.PackedExtension
+            ? binaryFilePath[..^SerializerSettings.PackedExtension.Length]
+            : binaryFilePath;
+    }
 }

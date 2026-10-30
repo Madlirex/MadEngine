@@ -1,25 +1,6 @@
-﻿using MadEditor;
-using MadEngine;
+﻿using MadEngine;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
-using NVector2 = System.Numerics.Vector2;
-using OpenTK.Mathematics;
-using ImGuiNET;
-
-[CustomFieldDrawer(typeof(Vector2))]
-public class Vector2Drawer : FieldDrawer
-{
-    public override void Draw(object target, InspectorMember member)
-    {
-        Vector2 otkValue = (Vector2)member.GetValue(target)!;
-	NVector2 value = new NVector2(otkValue.X, otkValue.Y);
-
-        if (ImGui.DragFloat2(member.GetCustomName(), ref value))
-        {
-            member.SetValue(target, new Vector2(value.X, value.Y));
-        }
-    }
-}
 
 public class EditorTestComp : Component
 {

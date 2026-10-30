@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
 using MadEngine.Core;
 
 namespace MadEngine.Runtime;
@@ -20,11 +21,16 @@ class Program
         Console.WriteLine($"--- Engine Session Started: {DateTime.Now} ---");
         try
         {
+            AssemblyProvider.InitializeAssemblies();
+            
             Application.Directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
             RegistryBootstrapper.InitializeAll();
+            ProjectSettingsManager.LoadAllSettings();
 
             using RuntimeWindow game =
-                RuntimeWindow.Create(1200, 800, ProjectSettingsRegistry.GetSettings<ProjectInfo>()!.Name);
+                RuntimeWindow.Create(1200, 800, ProjectSettingsRegistry.GetSettings<ProjectInfo>()?.Name ?? Assembly.GetEntryAssembly()?.GetName().Name ?? "MadGame");
+            Console.WriteLine(Assembly.GetEntryAssembly()?.GetName().Name);
+            Console.WriteLine(game.Title);
             game.Run();
         }
         catch (Exception ex)

@@ -27,7 +27,6 @@ public static class ProjectSettingsManager
         try
         {
             string json = File.ReadAllText(filePath);
-
             
             object? loadedData = JsonSerializer.Deserialize(json, concreteType, SerializerSettings.SerializerOptions);
 

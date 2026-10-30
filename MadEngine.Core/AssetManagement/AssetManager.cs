@@ -33,21 +33,23 @@ public static class AssetManager
         {
             Asset? asset;
 
-            if (File.Exists(file + ".meta"))
+            string realPath = AssetPacker.UnpackedPath(file);
+            
+            if (File.Exists(realPath + ".meta"))
             {
-                AssetMeta meta = AssetMeta.Load(file + ".meta");
+                AssetMeta meta = AssetMeta.Load(realPath + ".meta");
                 var importer = ImporterRegistry.GetImporter(meta.Importer);
                 asset = importer?.Initialize(meta);
             }
             else
             {
-                var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file));
+                var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(realPath));
                 asset = importer?.Initialize(file);
             }
 
             if (asset == null) return;
             asset.FullDir = Path.GetFullPath(Path.GetDirectoryName(file)!);
-            asset.Extension = Path.GetExtension(file);
+            asset.Extension = Path.GetExtension(realPath);
 
             asset.EndInit();
             Console.WriteLine($"[Registry Success] Loaded: {asset.AbsolutePath}");
@@ -79,9 +81,9 @@ public static class AssetManager
         }
     }
 
-    public static Asset? LoadAsset(string file)
+    public static Asset? LoadAsset(string file) 
     {
-        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(file) ?? "");
+        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(AssetPacker.UnpackedPath(file)));
         return importer?.Import(file);
     }
 
