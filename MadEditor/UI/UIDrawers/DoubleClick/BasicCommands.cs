@@ -1,6 +1,11 @@
-﻿namespace MadEditor.DoubleClick;
+﻿using MadEngine.Core.SceneManagement;
 
-public class BasicCommands
+namespace MadEditor.DoubleClick;
+
+public class SceneDoubleClickCommand : DoubleClickCommand<Scene>
 {
-    
+    public override void Execute(Scene target)
+    {
+        SceneManager.LoadScene(target);
+    }
 }

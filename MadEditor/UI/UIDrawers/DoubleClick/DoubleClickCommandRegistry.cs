@@ -27,6 +27,7 @@ internal class DoubleClickCommandEngine : Registry
         var types = AssemblyProvider.GetTypesImplementing(typeof(IDoubleClickCommand));
         foreach (var type in types)
         {
+            Console.WriteLine(type);
             var instance = Activator.CreateInstance(type);
             if (instance is IDoubleClickCommand inst) Commands.Add(inst);
         }
@@ -34,7 +35,7 @@ internal class DoubleClickCommandEngine : Registry
 
     public IDoubleClickCommand? GetCommand(Type type)
     {
-        return Commands.FirstOrDefault(c => c.GetType() == type);
+        return Commands.FirstOrDefault(c => c.TargetType == type);
     }
 
     public DoubleClickCommand<T>? GetCommand<T>()

@@ -131,13 +131,14 @@ public class ProjectPanelDrawer : PanelDrawer
             }
         }
 
-        if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left) && mappedAsset != null)
+        if (mappedAsset == null) return;
+        
+        if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
         {
+            context.DoubleClicked = mappedAsset;
             if(DoubleClickCommandRegistry.GetCommand(mappedAsset.GetType()) is { } command)
                 context.EnqueueCommand(command);
         }
-
-        if (mappedAsset == null) return;
             
         DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
 
