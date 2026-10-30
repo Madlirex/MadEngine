@@ -2,6 +2,43 @@
 
 public class Scene : Asset
 {
+    public Camera MainCamera
+    {
+        get
+        {
+            Console.WriteLine(AssetRegistry.ObjectMap.Count);
+            if (_mainCamera != null) return _mainCamera;
+            
+            Camera? cam = GameObject.FindFirstComponent<Camera>();
+            if (cam is { } camera)
+            {
+                cam.IsMainCameraInstance = true;
+                _mainCamera = camera;
+                return cam;
+            }
+
+            GameObject obj = new GameObject();
+            cam = (Camera?)obj.AddComponentUnsafe(new Camera());
+            if (cam is not { } cameraComp)
+            {
+                _mainCamera = new Camera();
+                return _mainCamera;
+            }
+            AddObjectUnsafe(obj);
+            _mainCamera = cameraComp;
+            
+            return cameraComp;
+
+        }
+
+        internal set => _mainCamera = value;
+    }
+
+    public void ClearMainCamera() => _mainCamera = null;
+    public Camera? GetMainCamera() => _mainCamera;
+
+    private Camera? _mainCamera;
+    
     private readonly List<GameObject> _gameObjects = [];
     public IReadOnlyList<GameObject> GameObjects => _gameObjects;
 
