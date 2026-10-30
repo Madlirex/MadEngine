@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using MadEngine.Core;
 using NativeFileDialogSharp;
 
 namespace MadEditor;

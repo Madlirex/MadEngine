@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using MadEditor;
-using MadEngine.Core.SceneManagement;
+﻿using MadEngine.Core.SceneManagement;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL4;
 

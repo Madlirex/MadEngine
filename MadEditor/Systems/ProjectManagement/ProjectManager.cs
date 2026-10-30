@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using MadEditor.PackageManagement;
 using MadEngine.Core;
+using MadEngine.Core.AssetManagement;
 
 namespace MadEditor;
 
@@ -10,6 +11,16 @@ public static class ProjectManager
     private static string _projectPath = "";
     
     public static ProjectInfo ProjectInfo => ProjectSettingsRegistry.GetSettings<ProjectInfo>() ?? ProjectSettingsRegistry.CreateSettings<ProjectInfo>();
+
+    public static string[] GetAllFiles(string filter = "*")
+    {
+        return [
+            .. Directory.GetFiles(Application.AssetsPath, filter, SearchOption.AllDirectories),
+            .. Directory.GetFiles(Application.PackagesPath, filter, SearchOption.AllDirectories),
+            .. Directory.GetFiles(Application.ConfigPath, filter, SearchOption.AllDirectories)
+        ];
+    }
+    
     
     public static void LoadProject()
     {

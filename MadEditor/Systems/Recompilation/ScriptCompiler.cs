@@ -24,31 +24,37 @@ public static class ScriptCompiler
     public static (byte[]? runtimeDll, byte[]? editorDll) CompileProject(string[] allSourceFiles)
     {
         var editorFiles = allSourceFiles
-            .Where(f => f.Split(Path.DirectorySeparatorChar).Contains("Editor"))
+            .Where(f => {
+                var dir = Path.GetDirectoryName(f);
+                return dir != null && dir.Split(Path.DirectorySeparatorChar)
+                    .Any(part => part.Equals("Editor", StringComparison.OrdinalIgnoreCase) || 
+                                 part.StartsWith("Editor", StringComparison.OrdinalIgnoreCase));
+            })
             .ToArray();
+
         var runtimeFiles = allSourceFiles.Except(editorFiles).ToArray();
         
-        var runtimeBytes = CompileToBytes(runtimeFiles, RuntimeAssemblyName, null);
+        var runtimeBytes = CompileToBytes(runtimeFiles, RuntimeAssemblyName, null, isEditor: false);
         if (runtimeBytes == null) return (null, null);
         
-        var editorBytes = CompileToBytes(editorFiles, EditorAssemblyName, runtimeBytes);
+        var editorBytes = CompileToBytes(editorFiles, EditorAssemblyName, runtimeBytes, isEditor: true);
 
         return (runtimeBytes, editorBytes);
     }
-    
-    private static byte[]? CompileToBytes(string[] sourceFiles, string assemblyName, byte[]? runtimeDependency)
+
+    private static byte[]? CompileToBytes(string[] sourceFiles, string assemblyName, byte[]? runtimeDependency, bool isEditor)
     {
         if (sourceFiles.Length == 0) return [];
 
         var treesList = sourceFiles
-            .Select(f => CSharpSyntaxTree.ParseText(File.ReadAllText(f)))
+            .Select(f => CSharpSyntaxTree.ParseText(File.ReadAllText(f), path: f))
             .ToList();
 
         treesList.Add(CSharpSyntaxTree.ParseText(GlobalUsingsSource));
         
         var syntaxTrees = treesList.ToArray();
         
-        var references = GetReferences();
+        var references = GetReferences(isEditor);
         
         if (runtimeDependency != null)
         {
@@ -119,24 +125,25 @@ public static class ScriptCompiler
         return result.Success ? ms.ToArray() : null;
     }
 
-    public static Assembly LoadAssembly(byte[] dllBytes, out ScriptLoadContext context)
-    {
-        context = new ScriptLoadContext();
-
-        using var ms = new MemoryStream(dllBytes);
-        return context.LoadFromStream(ms);
-    }
-    
-    private static List<PortableExecutableReference> GetReferences()
+    private static List<PortableExecutableReference> GetReferences(bool includeEditorAssembly)
     {
         if (AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") is not string trustedAssemblies)
             throw new InvalidOperationException("Could not obtain trusted platform assemblies.");
 
         var references = trustedAssemblies
             .Split(Path.PathSeparator)
+            .Where(path => includeEditorAssembly || !Path.GetFileName(path).Equals("MadEditor.dll", StringComparison.OrdinalIgnoreCase))
             .Select(path => MetadataReference.CreateFromFile(path))
             .ToList();
         
         return references;
+    }
+
+    public static Assembly LoadAssembly(byte[] dllBytes, out ScriptLoadContext context)
+    {
+        context = new ScriptLoadContext();
+
+        using var ms = new MemoryStream(dllBytes);
+        return context.LoadFromStream(ms);
     }
 }

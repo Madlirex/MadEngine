@@ -1,7 +1,7 @@
 ﻿using MadEngine.Core;
+using MadEngine.Core.AssetManagement;
 using MadEngine.Core.SceneManagement;
 using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -12,7 +12,7 @@ namespace MadEngine.Runtime;
 public class RuntimeWindow : GameWindow
 {
     private Engine _engine;
-    private Camera Camera => Camera.MainCamera ?? GameObject.FindFirstComponent<Camera>();
+    private Camera Camera => Camera.MainCamera ?? GameObject.FindFirstComponent<Camera>() ?? GenerateFallbackCamera();
 
     public static RuntimeWindow Create(int width, int height, string title)
     {
@@ -40,16 +40,8 @@ public class RuntimeWindow : GameWindow
     
     public RuntimeWindow(GameWindowSettings gameSettings, NativeWindowSettings windowSettings) : base(gameSettings, windowSettings)
     {
-        GameObject obj = new GameObject();
-        
-        var cam = (Camera?)obj.AddComponentUnsafe(new Camera());
-        
-        cam!.IsMainCamera = true;
-        cam.Width = ClientSize.X;
-        cam.Height = ClientSize.Y;
-        
-        SceneManager.ActiveScene.AddObjectUnsafe(obj);
         _engine = new Engine();
+        Application.Directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
     }
 
     protected override void OnLoad()
@@ -57,6 +49,16 @@ public class RuntimeWindow : GameWindow
         base.OnLoad();
         
         _engine.Initialize();
+        Console.WriteLine(ProjectSettingsRegistry.GetSettings<ProjectInfo>());
+        
+        AssetManager.InitializeAssets(Application.PackagesPath);
+        AssetManager.LoadAssets(Application.PackagesPath);
+        AssetManager.InitializeAssets(Application.AssetsPath);
+        AssetManager.LoadAssets(Application.AssetsPath);
+        
+        SceneManager.LoadScene(0);
+        Camera.MainCamera?.Width = Size.X;
+        Camera.MainCamera?.Height = Size.Y;
         
         _engine.Awake(SceneManager.ActiveScene);
         _engine.Start(SceneManager.ActiveScene);
@@ -99,5 +101,20 @@ public class RuntimeWindow : GameWindow
         Camera.Width = e.Width;
         Camera.Height = e.Height;
         GL.Viewport(0, 0, e.Width, e.Height);
+    }
+
+    private Camera GenerateFallbackCamera()
+    {
+        Debug.LogError("Camera not found! Generating fallback...");
+        GameObject obj = new GameObject();
+        Camera cam = (Camera)obj.AddComponentUnsafe(new Camera())!;
+        cam.IsMainCamera = true;
+        cam.Width = Size.X;
+        cam.Height = Size.Y;
+        
+        
+        SceneManager.ActiveScene.AddObjectUnsafe(obj);
+        
+        return cam;
     }
 }

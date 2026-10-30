@@ -10,4 +10,6 @@ public static class SerializerSettings
         IndentSize = 4,
         IncludeFields = true
     };
+
+    public static string PackedExtension => ".packt";
 }

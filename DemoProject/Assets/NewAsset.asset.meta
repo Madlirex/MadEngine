@@ -1,7 +1,7 @@
 {
-    "Guid": "17693958-e6e6-435e-8b61-39710316f6c9",
+    "Guid": "2fea3e3d-4aee-42f9-b76c-9924edb278fc",
     "Name": "NewAsset",
-    "RelativePath": "\\Assets\\NewAsset.asset",
+    "RelativePath": "Assets\\NewAsset.asset",
     "Importer": "MissingImporter",
     "ImportSettings": {}
 }

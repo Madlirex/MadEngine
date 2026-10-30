@@ -1,0 +1,7 @@
+{
+    "Guid": "64e303c1-e39f-4a60-9b01-3c38acf75df9",
+    "Name": "Importers",
+    "RelativePath": "Packages\\BuiltIn\\Content\\Importers",
+    "Importer": "FolderImporter",
+    "ImportSettings": {}
+}

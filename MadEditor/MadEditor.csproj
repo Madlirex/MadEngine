@@ -19,6 +19,22 @@
         <ProjectReference Include="..\MadEngine.Core\MadEngine.Core.csproj" />
     </ItemGroup>
 
+    <Target Name="CopyRuntimeTemplate" AfterTargets="Build">
+        <PropertyGroup>
+            <RuntimeProjectPath>$([System.IO.Path]::GetFullPath('$(ProjectDir)..\MadEngine.Runtime\MadEngine.Runtime.csproj'))</RuntimeProjectPath>
+            <RuntimeTargetDir>$(TargetDir)runtime\</RuntimeTargetDir>
+        </PropertyGroup>
+
+        <Message Text="====== Natively Building Self-Contained Runtime Template ======" Importance="high" />
+        
+        <MSBuild Projects="$(RuntimeProjectPath)"
+                 Properties="Configuration=$(Configuration);Platform=$(Platform);RuntimeIdentifier=win-x64;SelfContained=true;PublishDir=$(RuntimeTargetDir)"
+                 Targets="Restore;Build;Publish" />
+
+        <Message Text="====== Native Runtime Template successfully deployed to $(RuntimeTargetDir) ======" Importance="high" />
+    </Target>
+
+
     <ItemGroup>
       <None Remove="Shaders\lamp.frag" />
       <None Remove="Shaders\shader.frag" />
@@ -51,10 +67,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <None Remove="Textures\skybox.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Systems\PackageManagement\Examples\" />
     </ItemGroup>
 
 </Project>

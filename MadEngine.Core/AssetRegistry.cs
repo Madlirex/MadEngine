@@ -100,19 +100,24 @@ public static class AssetRegistry
         return _objectMap.GetValueOrDefault(guid);
     }
     
-    public static Asset GetAsset(Guid guid)
+    public static Asset? GetAsset(Guid guid)
     {
-        return _assets[guid];
+        return _assets.GetValueOrDefault(guid);
     }
     
-    public static Guid GetGuid(string path)
+    public static Guid? GetGuid(string path)
     {
-        return _guidByPath[path];
+        if (_guidByPath.TryGetValue(path, out Guid guid))
+        {
+            return guid;
+        }
+    
+        return null;
     }
 
-    public static string GetPath(Guid guid)
+    public static string? GetPath(Guid guid)
     {
-        return _pathByGuid[guid];
+        return _pathByGuid.GetValueOrDefault(guid);
     }
 
     public static MadObject[] GetObjectsImplementing(Type type)

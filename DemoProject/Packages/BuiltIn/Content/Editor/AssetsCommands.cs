@@ -2,6 +2,7 @@
 using MadEngine;
 using MadEngine.Core;
 using MadEngine.Core.SceneManagement;
+using MadEngine.Core.AssetManagement;
 
 namespace MadEditor.Commands;
 

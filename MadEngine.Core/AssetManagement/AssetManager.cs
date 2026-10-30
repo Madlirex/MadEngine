@@ -1,0 +1,127 @@
+﻿namespace MadEngine.Core.AssetManagement;
+
+public static class AssetManager
+{
+    public static List<string> PathsToSkip = [];
+    
+    public static void LoadProject()
+    {
+        InitializeAssets(Application.AssetsPath);
+        LoadAssets(Application.AssetsPath);
+    }
+
+    public static void SaveProject(Asset[] assets)
+    {
+        SaveAssets(assets);
+    }
+    
+    public static void InitializeAssets(string path)
+    {
+        Console.WriteLine($"Initializing assets at {path}...");
+        var paths = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Concat(Directory.GetDirectories(path, "*", SearchOption.AllDirectories)).ToList();
+        foreach (string file in paths)
+        {
+            if (PathsToSkip.Contains(file)) continue;
+            InitializeAsset(file);
+        }
+    }
+
+    public static void InitializeAsset(string file)
+    {
+        MadObject.SuppressRegistration = true;
+        try
+        {
+            Asset? asset;
+
+            string realPath = AssetPacker.UnpackedPath(file);
+            
+            if (File.Exists(realPath + ".meta"))
+            {
+                AssetMeta meta = AssetMeta.Load(realPath + ".meta");
+                var importer = ImporterRegistry.GetImporter(meta.Importer);
+                asset = importer?.Initialize(meta);
+            }
+            else
+            {
+                var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(realPath));
+                asset = importer?.Initialize(file);
+            }
+
+            if (asset == null) return;
+            asset.FullDir = Path.GetFullPath(Path.GetDirectoryName(file)!);
+            asset.Extension = Path.GetExtension(realPath);
+
+            asset.EndInit();
+            Console.WriteLine($"[Registry Success] Loaded: {asset.AbsolutePath}");
+        }
+        finally
+        {
+            MadObject.SuppressRegistration = false;
+        }
+    }
+
+    public static void LoadAssets(string path)
+    {
+        Console.WriteLine($"Loading assets at {path}...");
+        List<Asset> assets = [];
+        
+        var paths = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Concat(Directory.GetDirectories(path, "*", SearchOption.AllDirectories)).ToList();
+        
+        foreach (string file in paths)
+        {
+            if (PathsToSkip.Contains(file)) continue;
+            var asset = LoadAsset(file);
+            if(asset != null) assets.Add(asset);
+        }
+
+        foreach (Asset asset in assets)
+        {
+            if(asset is IStateUpdateable stateUpdateable) stateUpdateable.UpdateState();
+            ;
+        }
+    }
+
+    public static Asset? LoadAsset(string file) 
+    {
+        var importer = ImporterRegistry.GetImporterByExtension(Path.GetExtension(AssetPacker.UnpackedPath(file)));
+        return importer?.Import(file);
+    }
+
+    public static void SaveAssets(Asset[] assets)
+    {
+        foreach (Asset asset in assets)
+        {
+            SaveAsset(asset);
+        }
+    }
+
+    public static void SaveAsset(Asset asset)
+    {
+        var importer = ImporterRegistry.GetImporter(asset.GetType());
+        importer?.Save(asset);
+        AssetMeta.Save(asset);
+    }
+
+    public static T? CreateAsset<T>(string path) where T : Asset, new()
+    {
+        T? asset;
+        try
+        {
+            MadObject.SuppressRegistration = true;
+            asset = new T();
+
+            asset.FullDir = path;
+            MadObject.SuppressRegistration = false;
+
+            asset.EndInit();
+
+            SaveAsset(asset);
+        }
+        finally
+        {
+            MadObject.SuppressRegistration = false;
+        }
+
+        return asset;
+    }
+}

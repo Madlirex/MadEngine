@@ -11,7 +11,7 @@ public class RecompilationCommand : IEditorCommand
 
         Guid? selectedGuid = EditorUI.UiContext.Selected?.Guid;
         
-        AssetManager.RecompileScripts();
+        RecompilationManager.RecompileScripts();
         DateTime end = DateTime.Now;
 
         if (selectedGuid.HasValue)

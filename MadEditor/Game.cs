@@ -69,7 +69,7 @@ public class EditorWindow : GameWindow
         Console.WriteLine("Initializing engine...");
         Engine.Initialize();
         
-        AssetManager.RecompileScripts(false);
+        RecompilationManager.RecompileScripts(false);
         
         RegistryBootstrapper.InitializeAll();
         
