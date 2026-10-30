@@ -1,12 +1,12 @@
 {
     "$type": "MadEngine.Core.Shader, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-    "$guid": "752a19bd-4808-45d2-a75e-85fc6709cfd9",
+    "$guid": "6fd0cb41-a5cd-436e-bcef-4cae1de6b638",
     "$data": {
+        "AbsoluteFragmentPath": "C:\\Users\\simon\\Projekty\\C#\\MadEngine\\DemoProject\\Packages\\BuiltIn\\Content\\Shaders\\lit.frag",
         "NameInternal": "NewShader",
-        "VertexPath": "Shaders/lit.vert",
-        "FragmentPath": "Shaders/lit.frag",
+        "_projectVertexPath": "Packages\\BuiltIn\\Content\\Shaders\\lit.vert",
         "Name": "NewShader",
-        "Guid": "752a19bd-4808-45d2-a75e-85fc6709cfd9",
-        "_guid": "752a19bd-4808-45d2-a75e-85fc6709cfd9"
+        "Guid": "6fd0cb41-a5cd-436e-bcef-4cae1de6b638",
+        "_guid": "6fd0cb41-a5cd-436e-bcef-4cae1de6b638"
     }
 }

@@ -8,8 +8,51 @@ public class Shader : Asset
     [DoNotSave] private bool _initialized;
     [DoNotSave] private int _handle;
 
-    public string VertexPath = "";
-    public string FragmentPath = "";
+    [ShowInInspector]
+    [DoNotSave] public string VertexPath
+    {
+        get => _relativeVertexPath;
+        set
+        {
+            _relativeVertexPath = value;
+            AbsoluteVertexPath = Path.Combine(FullDir, value);
+        }
+    }
+
+    [DoNotSave] private string AbsoluteVertexPath
+    {
+        get => Path.Combine(Application.Directory, _projectVertexPath);
+        set
+        {
+            _projectVertexPath = Path.GetRelativePath(Application.Directory, value);
+        }
+    }
+
+    private string _projectVertexPath = "";
+    [DoNotSave] private string _relativeVertexPath = "";
+
+    [ShowInInspector]
+    [DoNotSave] public string FragmentPath
+    {
+        get => _relativeFragmentPath;
+        set
+        {
+            _relativeFragmentPath = value;
+            AbsoluteFragmentPath = Path.Combine(FullDir, value);
+        }
+    }
+    
+    private string AbsoluteFragmentPath
+    {
+        get => Path.Combine(Application.Directory, _projectFragmentPath);
+        set
+        {
+            _projectFragmentPath = Path.GetRelativePath(Application.Directory, value);
+        }
+    }
+
+    [DoNotSave] private string _projectFragmentPath = "";
+    [DoNotSave] private string _relativeFragmentPath = "";
 
     protected override string NameInternal { get; set; } = "NewShader";
     protected override string ExtensionInternal { get; set; } = ".shader";
@@ -29,10 +72,10 @@ public class Shader : Asset
     public void Initialize()
     {
         if(_initialized) return;
-        Console.WriteLine($"Compiling shaders {VertexPath}...");
-        Console.WriteLine($"Compiling shaders {FragmentPath}...");
-        string vertexShaderSource = File.ReadAllText(VertexPath);
-        string fragmentShaderSource = File.ReadAllText(FragmentPath);
+        Console.WriteLine($"Compiling shaders {AbsoluteVertexPath}...");
+        Console.WriteLine($"Compiling shaders {AbsoluteFragmentPath}...");
+        string vertexShaderSource = File.ReadAllText(AbsoluteVertexPath);
+        string fragmentShaderSource = File.ReadAllText(AbsoluteFragmentPath);
         
         int vertexShader = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(vertexShader, vertexShaderSource);

@@ -37,7 +37,7 @@
                 "_components": [
                     "97911796-c499-4422-834f-f7b837d3d090",
                     "2a55121c-2ea8-4f99-b16e-35cd4f65781c",
-                    "0461b9f4-fc43-4944-9133-b565265d9dbf"
+                    "979d2fb2-6c03-4433-b44a-097f42d46cbe"
                 ],
                 "Name": "NewGameObject",
                 "NameInternal": "NewGameObject",
@@ -88,7 +88,7 @@
             }
         },
         {
-            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "$guid": "b5348f91-8c0a-485b-b930-5d43c3ee2d43",
             "$data": {
                 "Mesh": "0ba72dd3-2a1b-488a-b0e6-35822c9889a7",
@@ -251,16 +251,15 @@
             }
         },
         {
-            "$type": "MadEngine.MeshRenderer, GameScripts.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
-            "$guid": "0461b9f4-fc43-4944-9133-b565265d9dbf",
+            "$type": "EditorTestComp, GameScripts.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "$guid": "979d2fb2-6c03-4433-b44a-097f42d46cbe",
             "$data": {
-                "Mesh": "0ba72dd3-2a1b-488a-b0e6-35822c9889a7",
-                "Material": "94f8c704-bb7b-40f0-ac32-117fb501b719",
+                "obj": "e1f87b3b-a32a-4630-88f7-303b043088e8",
                 "_gameObject": "98b8e77f-5dd3-4fe4-b7bd-d4181360d77e",
                 "Name": "NewComponent",
                 "NameInternal": "NewComponent",
-                "Guid": "0461b9f4-fc43-4944-9133-b565265d9dbf",
-                "_guid": "0461b9f4-fc43-4944-9133-b565265d9dbf"
+                "Guid": "979d2fb2-6c03-4433-b44a-097f42d46cbe",
+                "_guid": "979d2fb2-6c03-4433-b44a-097f42d46cbe"
             }
         }
     ]
