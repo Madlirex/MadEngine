@@ -6,7 +6,6 @@ public class Scene : Asset
     {
         get
         {
-            Console.WriteLine(AssetRegistry.ObjectMap.Count);
             if (_mainCamera != null) return _mainCamera;
             
             Camera? cam = GameObject.FindFirstComponent<Camera>();
