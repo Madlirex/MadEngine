@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using MadEditor.DoubleClick;
 using MadEngine.Core;
 using OpenTK.Windowing.Desktop;
 
@@ -10,6 +11,7 @@ public class EditorUIContext
     
     public MadObject? Selected;
     public MadObject? RightClicked;
+    public object? DoubleClicked;
     public GameWindow Window = null!;
     public bool IsPlaying { get; internal set; }
     
@@ -55,10 +57,18 @@ public class EditorUIContext
         {
             var command = _commands.Dequeue();
 
-            if (command is IPopupCommand popupCommand) 
-                popupCommand.Execute(RightClicked!);
-            else 
-                command.Execute(this);
+            switch (command)
+            {
+                case IPopupCommand popupCommand:
+                    popupCommand.Execute(RightClicked!);
+                    break;
+                case IDoubleClickCommand doubleClickCommand:
+                    doubleClickCommand.Execute(DoubleClicked!);
+                    break;
+                default:
+                    command.Execute(this);
+                    break;
+            }
         }
     }
     

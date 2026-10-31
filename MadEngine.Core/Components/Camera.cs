@@ -1,10 +1,15 @@
-﻿using OpenTK.Mathematics;
+﻿using MadEngine.Core.SceneManagement;
+using OpenTK.Mathematics;
 
 namespace MadEngine.Core;
 
 public class Camera : Component
 {
-    public static Camera? MainCamera { get; private set; }
+    public static Camera MainCamera
+    {
+        get => SceneManager.ActiveScene.MainCamera;
+        set => SceneManager.ActiveScene.MainCamera = value;
+    }
     private bool _isMainCamera;
     
     [DoNotSave] [ShowInInspector] public bool IsMainCamera
@@ -14,16 +19,16 @@ public class Camera : Component
         {
             if (value)
             {
-                if (MainCamera != null && MainCamera != this)
-                    MainCamera._isMainCamera = false;
+                if (SceneManager.ActiveScene.GetMainCamera() is { } cam && cam != this)
+                    cam.IsMainCamera = false;
                 
                 MainCamera = this;
                 _isMainCamera = true;
             }
             else
             {
-                if (MainCamera == this)
-                    MainCamera = null;
+                if (SceneManager.ActiveScene.GetMainCamera() == this)
+                    SceneManager.ActiveScene.ClearMainCamera();
                 
                 _isMainCamera = false;
             }
@@ -32,7 +37,7 @@ public class Camera : Component
     
     public bool IsMainCameraInstance
     {
-        get => MainCamera == this;
+        get =>  SceneManager.ActiveScene.GetMainCamera() == this;
         set 
         {
             if (value) 

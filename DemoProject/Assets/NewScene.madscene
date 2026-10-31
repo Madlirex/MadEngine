@@ -1,0 +1,13 @@
+{
+    "$type": "MadEngine.Core.SceneManagement.Scene, MadEngine.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "$guid": "08b613e3-3f40-4309-9cf1-47e412190c10",
+    "$data": {
+        "NameInternal": "NewScene",
+        "_gameObjects": [],
+        "Name": "NewScene",
+        "Guid": "08b613e3-3f40-4309-9cf1-47e412190c10",
+        "_guid": "08b613e3-3f40-4309-9cf1-47e412190c10"
+    },
+    "GameObjects": [],
+    "Components": []
+}

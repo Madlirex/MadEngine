@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using System.Numerics;
+using MadEditor.DoubleClick;
 using MadEngine.Core;
 
 namespace MadEditor;
@@ -131,6 +132,13 @@ public class ProjectPanelDrawer : PanelDrawer
         }
 
         if (mappedAsset == null) return;
+        
+        if (ImGui.IsItemHovered() && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
+        {
+            context.DoubleClicked = mappedAsset;
+            if(DoubleClickCommandRegistry.GetCommand(mappedAsset.GetType()) is { } command)
+                context.EnqueueCommand(command);
+        }
             
         DragDrop.BeginSource(mappedAsset, mappedAsset.Name);
 
